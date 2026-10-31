@@ -1,0 +1,34 @@
+{
+  "jobs": [
+    {
+      "id": 8102540,
+      "title": "[CFN] Staff Back-end Engineer (Lending Engineering)",
+      "absolute_url": "https://www.coupang.jobs/en/jobs/?gh_jid=8102540",
+      "location": { "name": "Seoul, South Korea" },
+      "first_published": "2026-08-03T05:47:24-04:00",
+      "company_name": "Coupang",
+      "departments": [{ "name": "Coupang Financial Tech" }],
+      "offices": [{ "name": "Seoul" }],
+      "metadata": [{ "id": 121690, "name": "Job Level (All Offices)", "value": "Lv. 6-I", "value_type": "single_select" }],
+      "content": "&lt;p&gt;&lt;strong&gt;회사 소개&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;span data-contrast=&quot;none&quot;&gt;쿠팡파이낸셜(CFN)은 쿠팡의&amp;nbsp;계열사입니다.&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;담당 업무&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;Java, Spring Boot 기반 대출 시스템 설계·개발&lt;/li&gt;&lt;li&gt;Kafka 이벤트 파이프라인 운영&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;자격 요건&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;백엔드 개발 경력 10년 이상&lt;/li&gt;&lt;li&gt;MySQL, Redis 운영 경험&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;우대 사항&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;&lt;li&gt;Kubernetes 운영 경험&lt;/li&gt;&lt;/ul&gt;"
+    },
+    {
+      "id": 8212721,
+      "title": "[쿠팡] 임원 비서 - 쿠팡플레이",
+      "absolute_url": "https://www.coupang.jobs/en/jobs/?gh_jid=8212721",
+      "location": { "name": "Seoul, South Korea" },
+      "departments": [{ "name": "Coupang Play" }],
+      "offices": [{ "name": "Seoul" }],
+      "content": "&lt;p&gt;&lt;strong&gt;업무 내용&lt;/strong&gt;&lt;/p&gt;"
+    },
+    {
+      "id": 8248535,
+      "title": "Automation Maintenance Engineer",
+      "absolute_url": "https://www.coupang.jobs/en/jobs/?gh_jid=8248535",
+      "location": { "name": "Taoyuan, Taiwan" },
+      "departments": [{ "name": "Logistics (CLS)" }],
+      "offices": [{ "name": "Taoyuan" }],
+      "content": ""
+    }
+  ]
+}

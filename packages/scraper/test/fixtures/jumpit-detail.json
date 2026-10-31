@@ -1,0 +1,61 @@
+{
+ "message": "조회에 성공하셨습니다.",
+ "status": 200,
+ "code": "C001",
+ "result": {
+  "id": 55376222,
+  "title": "프론트엔드 개발자 (경력)",
+  "companyName": "아인잡",
+  "logo": "https://cdn.jumpit.co.kr/images/hmlee_4/20210618100616106_314_304.png",
+  "techStacks": [
+   {
+    "stack": "CSS 3",
+    "imagePath": ""
+   },
+   {
+    "stack": "Next.js",
+    "imagePath": ""
+   },
+   {
+    "stack": "React",
+    "imagePath": ""
+   },
+   {
+    "stack": "TypeScript",
+    "imagePath": ""
+   },
+   {
+    "stack": "Webpack",
+    "imagePath": ""
+   }
+  ],
+  "serviceInfo": "(주)아인잡은 2017년에 설립된 회사로\r\n인공지능 platform사업을 하고 있습니다.",
+  "responsibility": "[주요 업무]\r\n\r\n1. HR 서비스 웹 프론트 개발\r\n• Next.js(React) 기반 웹 서비스 개발\r\n\r\n6. WebView 기반 Hybrid App 화면 개발",
+  "qualifications": "1.프런트엔드 실무 경력 3~4년\n2.React 기반 개발 경험\n3.Next.js(12~13+) 기반 SSR/CSR 개발 경험\n4.Typescript 기반 개발 능력\n9.WebView 기반 모바일 앱 화면 구현 경험",
+  "preferredRequirements": "• Next.js 13 (app router) 경험\n• React Query, Zustand, SWR 등 최신 데이터 패칭 라이브러리 사용 경험\n• Storybook 기반 컴포넌트 문서화\n• Jest / Testing-library 기반 테스트 경험\n",
+  "welfares": "• 인센티브, 스톡옵션, 4대 보험 등\r\n• 야근없음",
+  "recruitProcess": "[근무조건]\r\n• 고용형태 : 정규직(수습 3개월)\r\n• 근무요일/시간 : 주5일(월~금) 09:00~18:00\r\n• 연봉 5,000 ~ 6,500만원\r\n\r\n[전형절차]\r\n• 서류전형 > 코딩 테스트 혹은 과제 >인터뷰> 처우협의 > 최종합격",
+  "newcomer": false,
+  "minCareer": 3,
+  "maxCareer": 10,
+  "publishedAt": "2026-10-25 00:00:00",
+  "closedAt": "2026-11-23 23:59:59",
+  "location": "서울 강남구 강남대로310, 1701호",
+  "tags": [
+   {
+    "id": "281",
+    "name": "급성장중",
+    "emoticon": "invest"
+   }
+  ],
+  "alwaysOpen": false,
+  "education": 8,
+  "educationName": "대학교졸업(4년) 이상",
+  "jobCategories": [
+   {
+    "id": 2,
+    "name": "프론트엔드 개발자"
+   }
+  ]
+ }
+}

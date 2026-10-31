@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>오승민 | 프론트엔드 개발자</title>
+  <meta name="description" content="웹과 모바일 서비스를 만드는 프론트엔드 개발자 오승민의 이력입니다. 렌더링 구조, 배포 파이프라인, AWS 인프라까지 다룹니다.">
+  <link rel="canonical" href="https://mlnl.site/">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://mlnl.site/">
+  <meta property="og:title" content="오승민 | 프론트엔드 개발자">
+  <meta property="og:description" content="렌더링 구조, 배포 파이프라인, AWS 인프라까지 다루는 프론트엔드 개발자">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": "https://mlnl.site/#page",
+    "url": "https://mlnl.site/",
+    "inLanguage": "ko",
+    "mainEntity": {
+      "@type": "Person",
+      "@id": "https://mlnl.site/#person",
+      "name": "오승민",
+      "alternateName": "mlnls",
+      "url": "https://mlnl.site/",
+      "image": "https://mlnl.site/profile.jpg",
+      "jobTitle": "프론트엔드 개발자",
+      "worksFor": { "@type": "Organization", "name": "벽촌", "url": "https://www.byuckchon.com/" },
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "숭실대학교" },
+      "knowsAbout": ["React", "Next.js", "React Native", "TypeScript", "웹 성능 최적화", "SEO", "GEO", "AWS", "CI/CD"],
+      "sameAs": ["https://github.com/mlnls", "https://blog.mlnl.site"]
+    }
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <div>
+        <h1>오승민</h1>
+        <p class="role">프론트엔드 개발자</p>
+        <p class="lead">웹과 모바일 서비스를 만듭니다. 화면에서 시작한 문제를 렌더링 구조, 배포 파이프라인, 인프라까지 따라가서 해결합니다.</p>
+        <nav class="links" aria-label="외부 링크">
+          <a href="https://blog.mlnl.site">블로그</a>
+          <a href="https://github.com/mlnls" rel="me">GitHub</a>
+        </nav>
+      </div>
+      <img class="photo" src="/profile.jpg" width="162" height="208" alt="오승민 증명사진">
+    </header>
+
+    <section aria-labelledby="work">
+      <h2 id="work">경력</h2>
+      <div class="body">
+        <div class="org">
+          <h3><a href="https://www.byuckchon.com/">벽촌</a> <span>프론트엔드 개발자</span></h3>
+          <p class="date">2025.06 – 현재</p>
+        </div>
+
+        <article>
+          <h4><a href="https://lawvax.co.kr">법무법인 로백스 홈페이지</a></h4>
+          <ul>
+            <li>CRA 레거시를 Next.js App Router로 옮겨 크롤러가 받는 첫 HTML의 본문을 0자에서 680자로, JS 전송량을 2,512KB에서 251KB로 줄였습니다.</li>
+            <li>법인·구성원·글을 JSON-LD 그래프로 연결하고 canonical, sitemap, 실제 404, 레거시 주소 21개 패턴의 308 리디렉트를 구성했습니다.</li>
+            <li>관리자까지 한 번들로 받던 첫 진입 JS를 라우트 단위로 분리해 7.2MB에서 171KB로 줄였습니다.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h4><a href="https://lawpeople.lawtimes.co.kr">법률신문 법조인대관</a></h4>
+          <ul>
+            <li>SSR을 무력화하던 클라이언트 렌더링 범위를 좁히고 폰트를 dynamic subset으로 바꿔 Lighthouse 성능을 80에서 99로, FCP를 77%, LCP를 73% 개선했습니다.</li>
+            <li>SPA 라우팅에서 누락되던 GA4 추적을 고쳐 월 103만 건 규모의 행동 데이터를 확보했습니다.</li>
+            <li>VPN 뒤 서버의 수동 배포를 베스천 self-hosted runner와 롤링 교체 스크립트로 자동화해, 머지 한 번으로 배포되고 실패하면 자동 복구되게 했습니다.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h4>마켓:D</h4>
+          <ul>
+            <li>관리자, 사용자 앱, 웹뷰로 흩어진 레포를 pnpm workspace와 Turborepo 모노레포로 합치고 앱-웹뷰 메시지 타입을 공통 패키지로 묶었습니다.</li>
+            <li>Expo EAS Update를 도입해 웹뷰, 연결 로직, 바이너리로 배포 경로를 나누고 긴급 수정을 스토어 심사 없이 내보낼 수 있게 했습니다.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h4><a href="https://jejuyouthdream.com">제주이어드림</a></h4>
+          <ul>
+            <li>CloudFormation과 Auto Scaling으로 신청 기간 트래픽 피크에 대응하고, 메인 조회 API에 5분 주기 ISR을 적용했습니다.</li>
+            <li>IP 차단 로직이 Next 서버 자체를 막아 생긴 장애를 x-forwarded-for 전달로 해결했습니다.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h4><a href="https://www.legislation21.org">경인교대 입법학센터</a>, <a href="https://www.enjoysoft.net/">엔조이소프트</a></h4>
+          <ul>
+            <li>프론트엔드를 처음부터 끝까지 혼자 구축했습니다.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="activity">
+      <h2 id="activity">활동</h2>
+      <div class="body rows">
+        <div class="row">
+          <div><h3>디프만 18기, Readum <span>팀장, PO, 프론트엔드</span></h3>
+          <p>예상 사용자 50명 UT로 서비스 방향을 AI 대화 중심으로 바꿨고, 재평가 4.31/5점과 초기 사용자 100명 이상을 얻었습니다.</p></div>
+          <p class="date">2026.03 – 06</p>
+        </div>
+        <div class="row">
+          <div><h3>좋아하면 숭리는 <span>프론트엔드</span></h3>
+          <p>2주 만에 출시한 축제 매칭 PWA에 기획에 없던 FCM 백그라운드 푸시를 제안해 구축했습니다.</p></div>
+          <p class="date">2025.08 – 09</p>
+        </div>
+        <div class="row">
+          <div><h3>SSUMC 8기 <span>부회장, 프론트엔드 리드</span></h3>
+          <p>GitHub 협업 세션을 직접 진행하고 팀원 진행 상황을 점검했습니다.</p></div>
+          <p class="date">2025.03 – 08</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="talks">
+      <h2 id="talks">발표</h2>
+      <div class="body rows">
+        <div class="row"><p>Next.js에서 React Query를 제대로 쓰는 법</p><p class="date">2026.01</p></div>
+        <div class="row"><p>useMemo, 정말 쓰면 빨라지긴 하는 걸까?</p><p class="date">2026.01</p></div>
+        <div class="row"><p>React에서 SEO가 어려운 이유, 그리고 Next.js만이 답일까?</p><p class="date">2025.12</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="skills">
+      <h2 id="skills">기술</h2>
+      <dl class="body skills">
+        <dt>주력</dt><dd>TypeScript, React, Next.js, Tailwind CSS</dd>
+        <dt>모바일</dt><dd>React Native, Expo, WebView</dd>
+        <dt>상태·데이터</dt><dd>TanStack Query, Zustand, Zod, React Hook Form</dd>
+        <dt>인프라</dt><dd>AWS, CloudFormation, Docker, GitHub Actions, Jenkins, Vercel</dd>
+        <dt>구조</dt><dd>Turborepo, pnpm workspace, SSR/ISR, SEO, GA4</dd>
+      </dl>
+    </section>
+
+    <section aria-labelledby="edu">
+      <h2 id="edu">학력·자격</h2>
+      <div class="body rows">
+        <div class="row"><p>숭실대학교 소프트웨어학부 졸업예정</p><p class="date">2020 – 2027.02</p></div>
+        <div class="row"><p>정보처리기사</p><p class="date">2025.09</p></div>
+        <div class="row"><p>숭실대학교 소프트웨어 공모전 은상</p><p class="date">2025.08</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "isSuccess": true,
+  "errorMessage": null,
+  "data": [
+    {
+      "company": "kt sat",
+      "isInProgress": true,
+      "receiveEndDatetime": "2026-10-28 23:59:59",
+      "receiveStartDatetime": "2026-10-19 00:00:00",
+      "recruitClassName": "경력",
+      "recruitNoticeName": "[kt sat] 2026년 하반기 경력직 공개채용",
+      "recruitNoticeSn": 269556,
+      "recruitNoticeUrl": "https://kt.recruiter.co.kr/career/jobs/131543",
+      "recruitSectorList": [
+        { "recruitSectorSn": 761476, "recruitSectorName": "AX개발" },
+        { "recruitSectorSn": 761477, "recruitSectorName": "NW설계/구축" },
+        { "recruitSectorSn": 761478, "recruitSectorName": "해양서비스영업" }
+      ],
+      "recruitTypeName": "일반채용",
+      "title": "2026년 하반기 경력직 공개채용"
+    },
+    {
+      "company": "KT",
+      "isInProgress": true,
+      "receiveEndDatetime": "2026-11-03 17:00:00",
+      "receiveStartDatetime": "2026-10-20 10:00:00",
+      "recruitClassName": "신입",
+      "recruitNoticeName": "2026 하반기 KT 신입사원 채용 (경영지원)",
+      "recruitNoticeSn": 269600,
+      "recruitNoticeUrl": null,
+      "recruitSectorList": "[{\"recruitSectorSn\":1,\"recruitSectorName\":\"재무\"},{\"recruitSectorSn\":2,\"recruitSectorName\":\"인사\"}]",
+      "recruitTypeName": "공개채용"
+    }
+  ]
+}

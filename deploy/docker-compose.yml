@@ -1,0 +1,53 @@
+# /srv/archiev/docker-compose.yml
+# 이미 80/443을 쓰는 more-mlnls의 Caddy가 앞단입니다. 같은 도커 네트워크에 붙어 이름으로 찾습니다.
+# 포트를 외부에 열지 않으므로 Caddy를 거치지 않고는 접근할 수 없습니다.
+name: archiev
+
+services:
+  mlnl-cv:
+    image: ${CV_IMAGE:-ghcr.io/mlnls/archiev-mlnls/cv:latest}
+    restart: unless-stopped
+    mem_limit: 48m
+    networks: [edge]
+
+  mlnl-employ:
+    image: ${EMPLOY_IMAGE:-ghcr.io/mlnls/archiev-mlnls/employ:latest}
+    restart: unless-stopped
+    mem_limit: 48m
+    networks: [edge]
+
+  mlnl-blog:
+    image: ${BLOG_IMAGE:-ghcr.io/mlnls/archiev-mlnls/blog:latest}
+    restart: unless-stopped
+    mem_limit: 320m
+    environment:
+      API_INTERNAL_URL: http://mlnl-api:4000
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    networks: [edge]
+
+  mlnl-api:
+    image: ${API_IMAGE:-ghcr.io/mlnls/archiev-mlnls/api:latest}
+    restart: unless-stopped
+    mem_limit: 512m
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH}
+      WORKER_TOKEN: ${WORKER_TOKEN}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+      BLOG_INTERNAL_URL: http://mlnl-blog:3000
+      ALLOWED_ORIGINS: https://blog.mlnl.site,https://employ.mlnl.site
+      COOKIE_DOMAIN: .mlnl.site
+      BATCH_CRON: "0 8 * * *"
+      SARAMIN_ACCESS_KEY: ${SARAMIN_ACCESS_KEY:-}
+      ROCKETPUNCH_API_KEY: ${ROCKETPUNCH_API_KEY:-}
+    volumes:
+      - data:/data
+    networks: [edge]
+
+volumes:
+  data:
+
+networks:
+  edge:
+    external: true
+    name: more-mlnls_default

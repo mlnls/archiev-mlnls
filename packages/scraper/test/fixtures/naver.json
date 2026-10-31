@@ -1,0 +1,44 @@
+{
+  "result": "SUCCESS",
+  "totalSize": 3,
+  "list": [
+    {
+      "annoId": 30005601,
+      "annoSubject": "[NAVER] 검색 프론트엔드 개발 (경력)",
+      "classCdNm": "Tech",
+      "subJobCdNm": "Frontend",
+      "sysCompanyCdNm": "NAVER",
+      "empTypeCdNm": "정규",
+      "entTypeCdNm": "경력",
+      "reqTypeCdNm": "수시",
+      "staYmdTime": "2026.10.08 12:00:00",
+      "endYmdTime": "2026.11.07 18:00:00",
+      "jobDetailLink": "https://recruit.navercorp.com/rcrt/view.do?annoId=30005601"
+    },
+    {
+      "annoId": 30005610,
+      "annoSubject": "[NAVER Cloud] 클라우드 인프라 엔지니어 (상시)",
+      "classCdNm": "Tech",
+      "subJobCdNm": "공통",
+      "sysCompanyCdNm": "NAVER Cloud",
+      "empTypeCdNm": "정규",
+      "entTypeCdNm": "무관",
+      "reqTypeCdNm": "수시",
+      "staYmdTime": "2026.09.01 12:00:00",
+      "endYmdTime": "2999.12.31 23:59:00"
+    },
+    {
+      "annoId": 30005533,
+      "annoSubject": "[NAVER] 해외 변호사(외국법자문사) (경력)",
+      "classCdNm": "Corporate",
+      "subJobCdNm": "법무",
+      "sysCompanyCdNm": "NAVER",
+      "empTypeCdNm": "정규",
+      "entTypeCdNm": "경력",
+      "reqTypeCdNm": "수시",
+      "staYmdTime": "2026.10.08 12:00:00",
+      "endYmdTime": "2026.10.27 18:00:00",
+      "jobDetailLink": "https://recruit.navercorp.com/rcrt/view.do?annoId=30005533"
+    }
+  ]
+}

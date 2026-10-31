@@ -1,0 +1,83 @@
+{
+ "error_code": null,
+ "message": "ok",
+ "data": {
+  "application": null,
+  "job": {
+   "id": 335808,
+   "status": "active",
+   "due_time": null,
+   "detail": {
+    "id": 347567,
+    "position": "AI Driven Product Engineer",
+    "intro": "제이앤피메디는 임상 운영 및 데이터 관리 솔루션 기업입니다.",
+    "main_tasks": "[이런 업무를 담당합니다]\n- AI 기반 비즈니스 로직 및 에이전트 설계\n\n[이런 기술스택으로 이루어져 있습니다]\n- Core Stack: Node.js(TypeScript), React, AWS",
+    "requirements": "- System Design Capability: 시스템 구조를 먼저 고민하고 설계해 본 경험",
+    "preferred_points": "- Agent System Implementation: AI 에이전트 구조 설계·구현 경험",
+    "benefits": "• 최고급 사양의 IT 장비 지급",
+    "hire_rounds": "서류전형 ＞ 폰 스크리닝 ＞ 1차 실무면접 ＞ 처우협의 ＞ 합류"
+   },
+   "attraction_tags": [
+    {
+     "tag_type_id": 10439,
+     "title": "장비지원",
+     "kind_title": "ATTRACTION",
+     "tag_category_id": 7
+    },
+    {
+     "tag_type_id": 10509,
+     "title": "유연근무",
+     "kind_title": "ATTRACTION",
+     "tag_category_id": 6
+    }
+   ],
+   "company": {
+    "id": 26254,
+    "name": "제이앤피메디(JNPMEDI)",
+    "logo_img": {
+     "origin": "https://static.wanted.co.kr/logo.jpg",
+     "thumb": "https://static.wanted.co.kr/logo_thumb.jpg"
+    }
+   },
+   "address": {
+    "country": "한국",
+    "full_location": "연수구 컨벤시아대로 165, 포스코타워 31층",
+    "location": "인천",
+    "district": "연수구"
+   },
+   "skill_tags": [
+    {
+     "tag_type_id": 1469,
+     "text": "React"
+    },
+    {
+     "tag_type_id": 1564,
+     "text": "TypeScript"
+    },
+    {
+     "tag_type_id": 1849,
+     "text": "REST"
+    }
+   ],
+   "employment_type": "regular",
+   "annual_from": 2,
+   "annual_to": 100,
+   "category_tag": {
+    "child_tags": [
+     {
+      "id": 660,
+      "text": "자바 개발자"
+     },
+     {
+      "id": 669,
+      "text": "프론트엔드 개발자"
+     }
+    ],
+    "parent_tag": {
+     "id": 518,
+     "text": "개발"
+    }
+   }
+  }
+ }
+}

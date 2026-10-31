@@ -1,0 +1,81 @@
+{
+  "resultType": "SUCCESS",
+  "error": null,
+  "success": [
+    {
+      "id": 5311744003,
+      "title": "Frontend Developer",
+      "jobs": [
+        {
+          "id": 5311744003,
+          "title": "Frontend Developer",
+          "absolute_url": "https://toss.im/career/job-detail?gh_jid=5311744003",
+          "location": { "name": "Seoul" },
+          "updated_at": "2026-10-11T11:00:09-04:00",
+          "first_published": "2022-09-15T02:41:27-04:00",
+          "company_name": "Toss",
+          "metadata": [
+            { "id": 4112432003, "name": "Employment_Type", "value": "정규직", "value_type": "single_select" },
+            { "id": 4169410003, "name": "포지션의 소속 자회사를 선택해 주세요.", "value": "토스플레이스", "value_type": "single_select" },
+            { "id": 24623243003, "name": "커리어 페이지 노출 Job Category 값을 선택해주세요", "value": "Frontend", "value_type": "single_select" },
+            {
+              "id": 4155730003,
+              "name": "Job Description을 작성해 주세요.",
+              "value": "> 지금 합류하시면 이런 경험을 할 수 있어요\n\n# 합류하게 될 팀에 대해 알려드려요\n- 토스플레이스 Frontend Developer는 오프라인 결제 시장의 문제를 처음부터 고민해요.\n\n# 합류하면 함께할 업무예요\n- React와 TypeScript로 결제 단말기 화면을 만들어요.\n\n# 이런 분과 함께하고 싶어요\n- React, TypeScript로 3년 이상 서비스를 개발해 보신 분\n\n# 이런 경험이 있다면 더 좋아요\n- Electron이나 Next.js 경험\n\n# 토스플레이스로의 합류 여정\n- 서류 접수 > 직무 인터뷰 > 문화적합성 인터뷰 > 처우 협의",
+              "value_type": "long_text"
+            },
+            { "id": 4194643003, "name": "외부 노출용 키워드", "value": "React,Typescript,Next.js", "value_type": "long_text" },
+            { "id": 5038345003, "name": "커리어페이지 미노출 여부", "value": false, "value_type": "yes_no" },
+            { "id": 11431213003, "name": "클로징 일자", "value": "", "value_type": "date" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4071172003,
+      "title": "Network Engineer",
+      "jobs": [
+        {
+          "id": 4071172003,
+          "title": "Network Engineer",
+          "absolute_url": "https://toss.im/career/job-detail?gh_jid=4071172003",
+          "location": { "name": "Seoul" },
+          "first_published": "2020-07-21T04:14:45-04:00",
+          "company_name": "Toss",
+          "metadata": [
+            { "id": 4112432003, "name": "Employment_Type", "value": "정규직", "value_type": "single_select" },
+            { "id": 4169410003, "name": "포지션의 소속 자회사를 선택해 주세요.", "value": "토스", "value_type": "single_select" },
+            { "id": 24623243003, "name": "커리어 페이지 노출 Job Category 값을 선택해주세요", "value": "Infra", "value_type": "single_select" },
+            { "id": 4155730003, "name": "Job Description", "value": "# 이런 분과 함께하고 싶어요\n- 5년 이상 네트워크 구축·운영 경험이 있는 분", "value_type": "long_text" },
+            { "id": 4194643003, "name": "외부 노출용 키워드", "value": "인프라,네트워크,스위치,방화벽", "value_type": "long_text" },
+            { "id": 5038345003, "name": "커리어페이지 미노출 여부", "value": null, "value_type": "yes_no" },
+            { "id": 11431213003, "name": "클로징 일자", "value": "2026-11-01", "value_type": "date" }
+          ]
+        },
+        {
+          "id": 4071172999,
+          "title": "Network Engineer (숨김)",
+          "absolute_url": "https://toss.im/career/job-detail?gh_jid=4071172999",
+          "location": { "name": "Seoul" },
+          "metadata": [{ "id": 5038345003, "name": "커리어페이지 미노출 여부", "value": true, "value_type": "yes_no" }]
+        }
+      ]
+    },
+    {
+      "id": 4734599003,
+      "title": "Account Manager",
+      "jobs": [
+        {
+          "id": 4734599003,
+          "title": "Account Manager (Credit) ",
+          "absolute_url": "https://toss.im/career/job-detail?gh_jid=4734599003",
+          "location": { "name": "Seoul" },
+          "metadata": [
+            { "id": 24623243003, "name": "Job Category", "value": "Sales", "value_type": "single_select" },
+            { "id": 4194643003, "name": "외부 노출용 키워드", "value": "Credit, 금융영업, 영업", "value_type": "long_text" }
+          ]
+        }
+      ]
+    }
+  ]
+}
