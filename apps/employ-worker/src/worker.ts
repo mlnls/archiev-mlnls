@@ -57,7 +57,7 @@ export async function processJob(claimed: ClaimedJob, api: WorkerApi, run: RunCl
       log(`#${claimed.id} ${company}: 피그마 작성`);
       const output = parseClaudeOutput(await run(figmaArgs(opts.model), buildFigmaPrompt(resume, company, opts.figmaFileKey), 10 * 60_000));
       const { figmaUrl } = FigmaResultSchema.parse(output.data);
-      if (!/^https:\/\/(www\.)?figma\.com\//.test(figmaUrl)) throw new Error("피그마 주소가 아닌 값을 받았습니다");
+      if (!/^https:\/\/(www\.)?figma\.com\//.test(figmaUrl)) throw new Error("피그마 주소를 받지 못했습니다. Figma MCP 로그인 상태를 확인해 주세요");
       await api.finish(claimed.id, { figmaUrl, figmaError: null });
     } catch (e) {
       log(`#${claimed.id} 피그마 실패: ${(e as Error).message}`);
