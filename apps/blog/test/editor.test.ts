@@ -1,43 +1,130 @@
+import { Editor } from "@tiptap/core";
 import { describe, expect, it } from "vitest";
-import { applySlash, filterCommands, insertLink, parseTags, slashQuery, SLASH_COMMANDS, toggleWrap } from "@/lib/editor";
+import { filterSlashItems, matchSlash } from "@/components/editor/slash";
+import { cleanMarkdown, looksLikeMarkdown, normalizeLink, parseTags } from "@/lib/editor";
+import { bodyExtensions } from "@/lib/editorExtensions";
 import { buildLlmsTxt, buildRss } from "@/lib/feeds";
+import { plainText, renderMarkdown } from "@/lib/markdown";
 import type { PostSummary } from "@/lib/types";
 
-describe("toggleWrap", () => {
-  it("wraps and unwraps the selection", () => {
-    const on = toggleWrap("가나다", 1, 2, "**");
-    expect(on).toEqual({ value: "가**나**다", start: 3, end: 4 });
-    expect(toggleWrap(on.value, on.start, on.end, "**")).toEqual({ value: "가나다", start: 1, end: 2 });
+const open = (markdown: string) => new Editor({ extensions: bodyExtensions(), content: markdown, contentType: "markdown" });
+const roundTrip = (markdown: string) => cleanMarkdown(open(markdown).getMarkdown());
+
+describe("markdown round trip", () => {
+  const SAMPLE = `## 제목 둘
+
+본문 **굵게** *기울임* ~~취소~~ \`코드\` [링크](https://a.com/x_y) 끝.
+둘째 줄
+
+### 제목 셋
+
+- 하나
+  - 중첩
+- 둘
+
+1. 첫째
+2. 둘째
+
+- [ ] 할 일
+- [x] 끝난 일
+
+> 인용 문단
+
+\`\`\`ts
+const a: number = 1;
+
+// 빈 줄 포함
+\`\`\`
+
+\`\`\`
+plain
+\`\`\`
+
+| 항목 | 내용 |
+| --- | --- |
+| a | **b** |
+| c \\| d | e |
+
+---
+
+![대체 글](https://a.com/i.png)
+
+1 * 2 * 3 그리고 snake_case_word, 100% &lt;tag&gt; & [not link]
+`;
+
+  it("keeps what readers see after going through the editor", async () => {
+    expect(await renderMarkdown(roundTrip(SAMPLE))).toBe(await renderMarkdown(SAMPLE));
+  });
+
+  it("is stable when saved repeatedly", () => {
+    const once = roundTrip(SAMPLE);
+    expect(roundTrip(once)).toBe(once);
+  });
+
+  it("does not leave &nbsp; from the trailing empty line", () => {
+    const editor = open("가나다");
+    editor.commands.insertContentAt(editor.state.doc.content.size, { type: "paragraph" });
+    editor.commands.insertContentAt(editor.state.doc.content.size, { type: "paragraph" });
+    expect(editor.getMarkdown()).toContain("&nbsp;");
+    expect(cleanMarkdown(editor.getMarkdown())).toBe("가나다");
+  });
+
+  it("treats an empty document as empty so it cannot be saved", () => {
+    expect(cleanMarkdown(open("").getMarkdown())).toBe("");
   });
 });
 
-describe("insertLink", () => {
-  it("selects the url placeholder", () => {
-    const e = insertLink("글자", 0, 2);
-    expect(e.value).toBe("[글자](url)");
-    expect(e.value.slice(e.start, e.end)).toBe("url");
+describe("plainText", () => {
+  it("undoes the escaping added by the editor", () => {
+    expect(plainText("R&amp;D 1 \\+ 2 &lt;기록&gt;")).toBe("R&D 1 + 2 <기록>");
   });
 });
 
-describe("slash commands", () => {
-  it("opens only at the start of a line", () => {
-    expect(slashQuery("/", 1)).toEqual({ lineStart: 0, query: "" });
-    expect(slashQuery("첫 줄\n/코드", 8)).toEqual({ lineStart: 4, query: "코드" });
-    expect(slashQuery("중간 /코드", 6)).toBeNull();
-    expect(slashQuery("/a b", 4)).toBeNull();
+describe("slash menu", () => {
+  it("opens at the start of a line or after a space", () => {
+    expect(matchSlash("/")).toEqual({ offset: 0, query: "" });
+    expect(matchSlash("/코드")).toEqual({ offset: 0, query: "코드" });
+    expect(matchSlash("중간 /코드")).toEqual({ offset: 3, query: "코드" });
+    expect(matchSlash("a/b")).toBeNull();
+    expect(matchSlash("/a b")).toBeNull();
   });
 
-  it("filters by label or id", () => {
-    expect(filterCommands("코드").map((c) => c.id)).toEqual(["code"]);
-    expect(filterCommands("h3").map((c) => c.id)).toEqual(["h3"]);
-    expect(filterCommands("zzz")).toEqual([]);
+  it("filters by label or keyword", () => {
+    expect(filterSlashItems("코드", false).map((c) => c.id)).toEqual(["code"]);
+    expect(filterSlashItems("h3", false).map((c) => c.id)).toEqual(["h3"]);
+    expect(filterSlashItems("zzz", false)).toEqual([]);
   });
 
-  it("replaces the typed command and places the cursor inside a code block", () => {
-    const code = SLASH_COMMANDS.find((c) => c.id === "code")!;
-    const e = applySlash("앞\n/코드", 2, 5, code);
-    expect(e.value).toBe("앞\n```ts\n\n```");
-    expect(e.value.slice(0, e.start)).toBe("앞\n```ts\n");
+  it("shows table actions only inside a table", () => {
+    expect(filterSlashItems("", false).some((c) => c.id === "row")).toBe(false);
+    expect(filterSlashItems("", true).some((c) => c.id === "row")).toBe(true);
+  });
+});
+
+describe("normalizeLink", () => {
+  it("adds https only when no protocol is given", () => {
+    expect(normalizeLink(" a.com/x ")).toBe("https://a.com/x");
+    expect(normalizeLink("https://a.com")).toBe("https://a.com");
+    expect(normalizeLink("/posts/a")).toBe("/posts/a");
+    expect(normalizeLink("mailto:a@b.c")).toBe("mailto:a@b.c");
+  });
+
+  it("neutralizes script urls", () => {
+    expect(normalizeLink("javascript:alert(1)")).toBe("https://javascript:alert(1)");
+  });
+});
+
+describe("looksLikeMarkdown", () => {
+  it("detects markdown blocks and inline marks", () => {
+    expect(looksLikeMarkdown("## 제목\n본문")).toBe(true);
+    expect(looksLikeMarkdown("앞 줄\n- 목록")).toBe(true);
+    expect(looksLikeMarkdown("글 **굵게** 글")).toBe(true);
+    expect(looksLikeMarkdown("[링크](https://a.com)")).toBe(true);
+  });
+
+  it("leaves ordinary text alone", () => {
+    expect(looksLikeMarkdown("그냥 글입니다. 2 * 3 = 6")).toBe(false);
+    expect(looksLikeMarkdown("https://a.com/x_y")).toBe(false);
   });
 });
 

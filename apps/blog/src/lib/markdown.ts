@@ -50,10 +50,16 @@ export function extractHeadings(html: string): Heading[] {
 export function plainText(source: string, max = 150): string {
   const text = source
     .replace(/```[\s\S]*?```/g, " ")
+    // 편집기가 저장할 때 붙이는 이스케이프를 되돌립니다 (snake\_case, R&amp;D)
+    .replace(/\\([!-/:-@[-`{-~])/g, "$1")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/^#{1,6}\s+/gm, "")
     .replace(/[*_`>~|-]/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
     .replace(/\s+/g, " ")
     .trim();
   return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
