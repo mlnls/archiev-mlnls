@@ -23,6 +23,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+          package-manager-cache: false
       - name: PR 제목 규칙
         env:
           # 제목은 사용자 입력이므로 스크립트에 직접 넣지 않고 환경 변수로 넘깁니다
@@ -40,6 +41,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+          package-manager-cache: false
       - name: 저장소 파일 검사
         run: node packages/conventions/check-secrets.mjs --all
       - name: gitleaks로 커밋 기록 전체 검사
