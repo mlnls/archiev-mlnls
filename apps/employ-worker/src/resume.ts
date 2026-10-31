@@ -85,12 +85,12 @@ export function buildFigmaPrompt(resume: Resume, company: string, fileKey: strin
   return `피그마 파일 ${fileKey} 안에 이력서 프레임을 하나 새로 만들어 주세요. 기존 프레임은 수정하거나 지우지 않습니다.
 
 방법:
-1. figma-use 스킬을 먼저 불러온 뒤 use_figma 도구를 씁니다.
+1. figma-use 스킬을 먼저 불러온 뒤 ToolSearch로 use_figma 도구를 찾아 씁니다. 피그마 서버가 아직 연결 중이면 다시 검색합니다.
 2. "Resumes" 페이지가 없으면 만들고, 그 페이지에서 기존 프레임과 겹치지 않는 자리에 만듭니다.
 3. 프레임 이름은 "${company.replace(/"/g, "")} - ${new Date().toISOString().slice(0, 10)}", 크기는 폭 794px(A4), 세로 auto layout, 안쪽 여백 56px, 배경 #FFFFFF입니다.
 4. 글꼴은 Pretendard를, 없으면 Noto Sans KR을 씁니다. 이름 28px Semi Bold, 소개 15px, 섹션 제목 13px Semi Bold #6D6A62, 본문 13px #1D1C19입니다. 섹션 사이에 1px #DFDCD3 구분선을 넣습니다.
 5. 아래 JSON의 title, headline, summary, skills, experience, activities, education, certifications만 순서대로 넣습니다. tailoringNotes와 gaps는 넣지 않습니다.
-6. 끝나면 만든 프레임의 URL을 figmaUrl로 돌려줍니다.
+6. 끝나면 만든 프레임의 URL을 figmaUrl로 돌려줍니다. 만들지 못했으면 주소를 지어내지 말고 실패한 이유를 figmaUrl에 적습니다.
 
 <resume>
 ${JSON.stringify(resume)}
