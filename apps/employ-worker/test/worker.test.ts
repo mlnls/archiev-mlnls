@@ -75,8 +75,8 @@ describe("claude arguments", () => {
 
   it("allows only Figma and skills for the drawing step", () => {
     const args = figmaArgs("sonnet");
-    expect(args[args.indexOf("--tools") + 1]).toBe("Skill");
-    expect(args[args.indexOf("--allowedTools") + 1]).toBe("mcp__plugin_figma_figma,Skill");
+    expect(args[args.indexOf("--tools") + 1]).toBe("Skill,ToolSearch");
+    expect(args[args.indexOf("--allowedTools") + 1]).toBe("mcp__claude_ai_Figma,mcp__plugin_figma_figma,Skill,ToolSearch");
     expect(args[args.indexOf("--permission-mode") + 1]).toBe("dontAsk");
     expect(args.join(" ")).not.toMatch(/Bash|Write|Edit|dangerously|bypass/);
   });
@@ -118,7 +118,7 @@ describe("processJob", () => {
     const api = fakeApi();
     const run: RunClaude = vi.fn().mockResolvedValueOnce(output(resume)).mockResolvedValueOnce(output({ figmaUrl: "https://evil.example/x" }));
     await processJob(claimed, api, run, opts);
-    expect(api.finish).toHaveBeenCalledWith(1, { figmaUrl: null, figmaError: expect.stringContaining("Figma MCP 로그인") });
+    expect(api.finish).toHaveBeenCalledWith(1, { figmaUrl: null, figmaError: expect.stringContaining("응답: https://evil.example/x") });
   });
 
   it("fails the job when the draft is invalid", async () => {
