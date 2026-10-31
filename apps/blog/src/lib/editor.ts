@@ -1,73 +1,33 @@
-/** 에디터의 순수 텍스트 조작. 화면과 분리해 테스트합니다 */
-
-export interface Edit {
-  value: string;
-  start: number;
-  end: number;
-}
-
-/** 선택 영역을 기호로 감쌉니다. 이미 감싸져 있으면 풉니다 */
-export function toggleWrap(value: string, start: number, end: number, mark: string): Edit {
-  const before = value.slice(0, start);
-  const selected = value.slice(start, end);
-  const after = value.slice(end);
-  if (before.endsWith(mark) && after.startsWith(mark)) {
-    return {
-      value: before.slice(0, -mark.length) + selected + after.slice(mark.length),
-      start: start - mark.length,
-      end: end - mark.length,
-    };
-  }
-  return { value: before + mark + selected + mark + after, start: start + mark.length, end: end + mark.length };
-}
-
-/** 선택 영역을 링크로 만들고 커서를 주소 자리에 둡니다 */
-export function insertLink(value: string, start: number, end: number): Edit {
-  const text = value.slice(start, end) || "링크";
-  const inserted = `[${text}](url)`;
-  const urlStart = start + text.length + 3;
-  return { value: value.slice(0, start) + inserted + value.slice(end), start: urlStart, end: urlStart + 3 };
-}
-
-export interface SlashCommand {
-  id: string;
-  label: string;
-  hint: string;
-  /** 줄 전체를 대신할 텍스트 */
-  insert: string;
-  /** insert 안에서 커서가 놓일 위치. 없으면 끝 */
-  cursor?: number;
-}
-
-export const SLASH_COMMANDS: SlashCommand[] = [
-  { id: "h2", label: "제목 2", hint: "##", insert: "## " },
-  { id: "h3", label: "제목 3", hint: "###", insert: "### " },
-  { id: "ul", label: "목록", hint: "-", insert: "- " },
-  { id: "ol", label: "번호 목록", hint: "1.", insert: "1. " },
-  { id: "todo", label: "체크리스트", hint: "- [ ]", insert: "- [ ] " },
-  { id: "quote", label: "인용", hint: ">", insert: "> " },
-  { id: "code", label: "코드 블록", hint: "```", insert: "```ts\n\n```", cursor: 6 },
-  { id: "table", label: "표", hint: "| |", insert: "| 항목 | 내용 |\n| --- | --- |\n|  |  |", cursor: 32 },
-  { id: "hr", label: "구분선", hint: "---", insert: "---\n" },
-];
-
-/** 커서가 있는 줄이 "/검색어" 형태면 검색어를 돌려줍니다 */
-export function slashQuery(value: string, cursor: number): { lineStart: number; query: string } | null {
-  const lineStart = value.lastIndexOf("\n", cursor - 1) + 1;
-  const line = value.slice(lineStart, cursor);
-  const m = /^\/([^\s/]*)$/.exec(line);
-  return m ? { lineStart, query: m[1]!.toLowerCase() } : null;
-}
-
-export function filterCommands(query: string): SlashCommand[] {
-  if (!query) return SLASH_COMMANDS;
-  return SLASH_COMMANDS.filter((c) => c.id.includes(query) || c.label.includes(query));
-}
-
-export function applySlash(value: string, lineStart: number, cursor: number, cmd: SlashCommand): Edit {
-  const next = value.slice(0, lineStart) + cmd.insert + value.slice(cursor);
-  const at = lineStart + (cmd.cursor ?? cmd.insert.length);
-  return { value: next, start: at, end: at };
-}
+/** 에디터의 순수 텍스트 처리. 화면과 분리해 테스트합니다 */
 
 export const parseTags = (text: string) => [...new Set(text.split(",").map((t) => t.trim()).filter(Boolean))].slice(0, 10);
+
+/** 편집기가 문서 끝에 항상 두는 빈 줄이 공개 글에 &nbsp; 문단으로 남지 않게 지웁니다 */
+export const cleanMarkdown = (markdown: string) => markdown.replace(/^(?:\s|&nbsp;)+/, "").replace(/(?:\s|&nbsp;)+$/, "");
+
+/** 프로토콜이 없는 주소는 https로 봅니다. javascript: 같은 주소도 이 경로로 무력화됩니다 */
+export const normalizeLink = (href: string) => {
+  const value = href.trim();
+  return /^(?:https?:|mailto:|\/|#)/i.test(value) ? value : `https://${value}`;
+};
+
+const MARKDOWN_BLOCK = /^(?:#{1,6} |[-*+] |\d+\. |> |```|\|.+\|\s*$|---\s*$)/m;
+const MARKDOWN_INLINE = /\*\*[^*\n]+\*\*|!?\[[^\]\n]*\]\([^)\s]+\)|`[^`\n]+`/;
+
+/** 붙여넣은 글이 마크다운이면 서식으로 풀어서 넣습니다 */
+export const looksLikeMarkdown = (text: string) => MARKDOWN_BLOCK.test(text) || MARKDOWN_INLINE.test(text);
+
+export const CODE_LANGUAGES = [
+  ["", "일반 텍스트"],
+  ["ts", "TypeScript"],
+  ["tsx", "TSX"],
+  ["js", "JavaScript"],
+  ["jsx", "JSX"],
+  ["bash", "Bash"],
+  ["json", "JSON"],
+  ["css", "CSS"],
+  ["html", "HTML"],
+  ["sql", "SQL"],
+  ["python", "Python"],
+  ["yaml", "YAML"],
+] as const;
