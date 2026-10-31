@@ -118,7 +118,7 @@ describe("processJob", () => {
     const api = fakeApi();
     const run: RunClaude = vi.fn().mockResolvedValueOnce(output(resume)).mockResolvedValueOnce(output({ figmaUrl: "https://evil.example/x" }));
     await processJob(claimed, api, run, opts);
-    expect(api.finish).toHaveBeenCalledWith(1, { figmaUrl: null, figmaError: expect.stringContaining("피그마 주소") });
+    expect(api.finish).toHaveBeenCalledWith(1, { figmaUrl: null, figmaError: expect.stringContaining("Figma MCP 로그인") });
   });
 
   it("fails the job when the draft is invalid", async () => {
