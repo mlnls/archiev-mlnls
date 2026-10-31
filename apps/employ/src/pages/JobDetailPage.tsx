@@ -81,7 +81,7 @@ export function JobDetailPage() {
             </section>
           ))
         ) : (
-          <p className="empty">이 출처는 본문을 제공하지 않아 제목과 직무 분류로만 채점했습니다. 자세한 내용은 공고 원문에서 확인해 주세요.</p>
+          <p className="empty">이 출처는 본문을 제공하지 않아 {job.techStacks.length > 0 ? "제목, 직무 분류, 기술 태그" : "제목과 직무 분류"}로만 채점했습니다. 자세한 내용은 공고 원문에서 확인해 주세요.</p>
         )}
       </div>
 

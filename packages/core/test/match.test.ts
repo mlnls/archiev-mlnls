@@ -171,5 +171,7 @@ describe("insights", () => {
     expect(titleOnly.warnings.join()).toContain("제목과 직무 분류로만");
     const tagged = scoreJob(profile, job({ title: "React 프론트엔드 개발자", description: null, techStacks: ["React", "TypeScript"] }), { now: NOW });
     expect(tagged.warnings.join()).not.toContain("제목과 직무 분류로만");
+    expect(tagged.score).toBeLessThanOrEqual(85);
+    expect(tagged.warnings.join()).toContain("기술 태그로만");
   });
 });

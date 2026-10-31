@@ -129,6 +129,7 @@ function includesAny(haystack: string, needles: string[]): string | null {
 }
 
 export const TITLE_ONLY_MAX_SCORE = 75;
+export const TAGS_ONLY_MAX_SCORE = 85;
 
 export function scoreJob(profile: Profile, job: NormalizedJob, opts: MatchOptions = {}): MatchResult {
   const now = opts.now ?? new Date();
@@ -318,6 +319,10 @@ export function scoreJob(profile: Profile, job: NormalizedJob, opts: MatchOption
   if (!job.description && job.techStacks.length === 0) {
     score = Math.min(score, TITLE_ONLY_MAX_SCORE);
     warnings.push("본문이 없어 제목과 직무 분류로만 채점했습니다. 원문 확인 필요");
+  } else if (!job.description) {
+    // 태그 두어 개가 다 맞았다고 본문까지 확인한 공고와 같은 100점을 주지 않습니다
+    score = Math.min(score, TAGS_ONLY_MAX_SCORE);
+    warnings.push("본문이 없어 제목, 직무 분류, 기술 태그로만 채점했습니다. 원문 확인 필요");
   }
   if (careerGap > 3) score = Math.min(score, 50);
   else if (careerGap > 2) score = Math.min(score, 60);
