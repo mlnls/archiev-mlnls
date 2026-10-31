@@ -1,0 +1,28 @@
+{
+  "name": "@archiev/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/server.ts",
+    "build": "esbuild src/server.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/server.js --external:@libsql/client --external:libsql --banner:js=\"import{createRequire}from'node:module';const require=createRequire(import.meta.url);\"",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@archiev/core": "workspace:*",
+    "@archiev/db": "workspace:*",
+    "@archiev/scraper": "workspace:*",
+    "@hono/node-server": "^1.19.5",
+    "croner": "^9.1.0",
+    "hono": "^4.9.10",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
