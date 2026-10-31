@@ -1,0 +1,81 @@
+{
+  "componentChunkName": "component---src-pages-jobs-index-js",
+  "path": "/ko/jobs/",
+  "result": {
+    "data": {
+      "allStrapiJobs": {
+        "totalCount": 4,
+        "edges": [
+          {
+            "node": {
+              "publish": true,
+              "strapiId": 3125,
+              "start_date": "2026-10-01T01:00:00.000Z",
+              "end_date": null,
+              "title": "LINE SRE 개발 엔지니어",
+              "title_en": "LINE SRE Dev Engineer",
+              "until_filled": true,
+              "is_public": true,
+              "employment_type": [{ "id": 1, "name": "Full-time" }],
+              "job_unit": [{ "id": 1, "name": "Engineering" }],
+              "job_fields": [{ "id": 52, "name": "System Engineering", "Priority": 3 }],
+              "companies": [{ "name": "LINE Plus", "id": 1 }],
+              "cities": [{ "name": "Bundang", "id": 1, "country": 1 }]
+            }
+          },
+          {
+            "node": {
+              "publish": true,
+              "strapiId": 3116,
+              "start_date": "2026-10-01T01:00:00.000Z",
+              "end_date": "2026-12-31T14:59:00.000Z",
+              "title": "Technical Partner Solution Specialist",
+              "title_en": "Technical Partner Solution Specialist",
+              "until_filled": false,
+              "is_public": true,
+              "employment_type": [{ "id": 1, "name": "Full-time" }],
+              "job_unit": [{ "id": 1, "name": "Engineering" }],
+              "job_fields": [],
+              "companies": [{ "name": "LINE Pay Taiwan", "id": 10 }],
+              "cities": [{ "name": "Taipei", "id": 5, "country": 3 }]
+            }
+          },
+          {
+            "node": {
+              "publish": true,
+              "strapiId": 3119,
+              "start_date": "2026-10-01T01:00:00.000Z",
+              "end_date": "2026-12-31T14:59:00.000Z",
+              "title": "한일 통번역 (프리랜서)",
+              "title_en": "Korean-Japanese Interpreter",
+              "until_filled": false,
+              "is_public": true,
+              "employment_type": [{ "id": 4, "name": "Temporary" }],
+              "job_unit": [{ "id": 2, "name": "Corporate" }],
+              "job_fields": [{ "id": 12, "name": "Support", "Priority": 1 }],
+              "companies": [{ "name": "LINE Plus", "id": 1 }],
+              "cities": [{ "name": "Bundang", "id": 1, "country": 1 }]
+            }
+          },
+          {
+            "node": {
+              "publish": true,
+              "strapiId": 3001,
+              "start_date": "2026-08-01T01:00:00.000Z",
+              "end_date": "2026-09-30T14:59:00.000Z",
+              "title": "Web 개발 (마감)",
+              "title_en": "Web Developer",
+              "until_filled": false,
+              "is_public": true,
+              "employment_type": [{ "id": 1, "name": "Full-time" }],
+              "job_unit": [{ "id": 1, "name": "Engineering" }],
+              "job_fields": [{ "id": 46, "name": "Web Development", "Priority": 2 }],
+              "companies": [{ "name": "LINE Plus", "id": 1 }],
+              "cities": [{ "name": "Bundang", "id": 1, "country": 1 }]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

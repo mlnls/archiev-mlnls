@@ -1,0 +1,45 @@
+# >>> archiev-mlnls (이 블록은 archiev-mlnls/deploy/Caddyfile.mlnl 에서 관리합니다)
+(mlnl_common) {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+}
+
+mlnl.site {
+	import mlnl_common
+	reverse_proxy mlnl-cv:80
+}
+
+www.mlnl.site {
+	redir https://mlnl.site{uri} permanent
+}
+
+blog.mlnl.site {
+	import mlnl_common
+	handle_path /api/* {
+		request_body {
+			max_size 6MB
+		}
+		reverse_proxy mlnl-api:4000
+	}
+	handle {
+		reverse_proxy mlnl-blog:3000
+	}
+}
+
+employ.mlnl.site {
+	import mlnl_common
+	header X-Robots-Tag "noindex, nofollow"
+	handle_path /api/* {
+		request_body {
+			max_size 2MB
+		}
+		reverse_proxy mlnl-api:4000
+	}
+	handle {
+		reverse_proxy mlnl-employ:80
+	}
+}
+# <<< archiev-mlnls

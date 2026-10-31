@@ -1,0 +1,66 @@
+{
+ "jobs": {
+  "count": 1,
+  "start": 0,
+  "total": "1",
+  "job": [
+   {
+    "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=50000001",
+    "active": 1,
+    "company": {
+     "detail": {
+      "href": "https://www.saramin.co.kr/zf_user/company-info/view?csn=1",
+      "name": "(주)테스트소프트"
+     }
+    },
+    "position": {
+     "title": "프론트엔드 개발자(React) 경력 채용",
+     "industry": {
+      "code": "301",
+      "name": "솔루션·SI·ERP·CRM"
+     },
+     "location": {
+      "code": "101050",
+      "name": "서울 &gt; 강남구"
+     },
+     "job-type": {
+      "code": "1",
+      "name": "정규직"
+     },
+     "job-mid-code": {
+      "code": "2",
+      "name": "IT개발·데이터"
+     },
+     "job-code": {
+      "code": "84,92",
+      "name": "프론트엔드,웹개발"
+     },
+     "experience-level": {
+      "code": 2,
+      "min": 2,
+      "max": 5,
+      "name": "경력 2~5년"
+     },
+     "required-education-level": {
+      "code": "8",
+      "name": "대학교졸업(4년)이상"
+     }
+    },
+    "keyword": "React,TypeScript,Next.js,프론트엔드",
+    "salary": {
+     "code": "99",
+     "name": "면접후 결정"
+    },
+    "id": "50000001",
+    "posting-timestamp": "1792800000",
+    "modification-timestamp": "1792800000",
+    "opening-timestamp": "1792800000",
+    "expiration-timestamp": "1795391999",
+    "close-type": {
+     "code": "1",
+     "name": "접수마감일"
+    }
+   }
+  ]
+ }
+}

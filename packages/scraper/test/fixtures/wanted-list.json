@@ -1,0 +1,69 @@
+{
+ "data": [
+  {
+   "id": 335808,
+   "reward_total": "100만원",
+   "is_bookmark": false,
+   "company": {
+    "id": 26254,
+    "name": "제이앤피메디(JNPMEDI)",
+    "application_response_stats": {
+     "avg_rate": 0,
+     "level": "very_low"
+    }
+   },
+   "title_img": {
+    "origin": "https://static.wanted.co.kr/a.jpg",
+    "thumb": "https://static.wanted.co.kr/b.jpg"
+   },
+   "address": {
+    "country": "한국",
+    "location": "인천",
+    "district": "연수구"
+   },
+   "position": "AI Driven Product Engineer",
+   "category_tag": {
+    "parent_id": 518,
+    "id": 872
+   },
+   "attraction_tags": [
+    10499
+   ],
+   "skill_tags": [],
+   "annual_from": 2,
+   "annual_to": 100,
+   "is_newbie": false,
+   "employment_type": "regular",
+   "is_outlink": false
+  },
+  {
+   "id": 339999,
+   "company": {
+    "id": 1,
+    "name": "텀블벅"
+   },
+   "address": {
+    "country": "한국",
+    "location": "서울",
+    "district": "성동구"
+   },
+   "position": "[텀블벅] 프론트엔드 개발자 (3~5년)",
+   "category_tag": {
+    "parent_id": 518,
+    "id": 873
+   },
+   "skill_tags": [
+    1469,
+    1564
+   ],
+   "annual_from": 3,
+   "annual_to": 5,
+   "is_newbie": false,
+   "employment_type": "regular"
+  }
+ ],
+ "links": {
+  "next": "/api/chaos/navigation/v1/results?offset=20",
+  "prev": null
+ }
+}

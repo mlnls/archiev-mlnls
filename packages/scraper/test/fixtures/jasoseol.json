@@ -1,0 +1,63 @@
+{
+  "dutyGroups": [
+    { "id": 91, "name": "경영·사무", "order_point": 0, "group_id": null, "category": "large" },
+    { "id": 94, "name": "IT·인터넷", "order_point": 300, "group_id": null, "category": "large" },
+    { "id": 96, "name": "영업·고객상담", "order_point": 500, "group_id": null, "category": "large" },
+    { "id": 103, "name": "기획·전략·경영", "order_point": 1200, "group_id": 91, "category": "medium" },
+    { "id": 162, "name": "웹개발", "order_point": 7100, "group_id": 94, "category": "medium" },
+    { "id": 166, "name": "네트워크·보안·운영", "order_point": 7500, "group_id": 94, "category": "medium" },
+    { "id": 175, "name": "프론트엔드개발", "order_point": 8400, "group_id": 162, "category": "small" },
+    { "id": 176, "name": "서버·백엔드개발", "order_point": 8500, "group_id": 162, "category": "small" },
+    { "id": 178, "name": "기타", "order_point": 8700, "group_id": 162, "category": "small" },
+    { "id": 194, "name": "제품·서비스영업", "order_point": 10300, "group_id": 96, "category": "medium" }
+  ],
+  "employment": [
+    {
+      "id": 105357,
+      "name": "NHN",
+      "title": "애플리케이션 보안 진단",
+      "company_group": { "id": 154, "name": "NHN", "business_size": "big_business" },
+      "start_time": "2026-10-01T00:00:00.000+09:00",
+      "end_time": "2026-11-28T23:59:00.000+09:00",
+      "image_file_name": "https://daoift3qrrnil.cloudfront.net/employment_companies/images/000/105/357/original/logo.png",
+      "recruit_type": 1,
+      "business_size": "big_business",
+      "employments": [{ "duty_groups": [{ "group_id": 166 }], "id": 425060, "division": 2, "duty_category": null, "apply": null }]
+    },
+    {
+      "id": 105500,
+      "name": "삼성전자",
+      "title": "2026년 하반기 3급 신입사원 채용",
+      "company_group": { "id": 1, "name": "삼성전자", "business_size": "big_business" },
+      "start_time": "2026-10-20T00:00:00.000+09:00",
+      "end_time": "2026-11-05T17:00:00.000+09:00",
+      "image_file_name": null,
+      "recruit_type": 0,
+      "business_size": "big_business",
+      "employments": [
+        { "duty_groups": [{ "group_id": 175 }, { "group_id": 176 }], "id": 430001, "division": 1 },
+        { "duty_groups": [{ "group_id": 103 }], "id": 430002, "division": 1 }
+      ]
+    },
+    {
+      "id": 105440,
+      "name": "페이히어",
+      "title": "SaaS 영업 컨설턴트 신입 채용",
+      "company_group": { "id": 14421, "name": "페이히어", "business_size": null },
+      "start_time": "2026-10-03T00:00:00.000+09:00",
+      "end_time": "2026-11-02T23:59:00.000+09:00",
+      "recruit_type": 1,
+      "employments": [{ "duty_groups": [{ "group_id": 194 }], "id": 425527, "division": 4 }]
+    },
+    {
+      "id": 105290,
+      "name": "모두닥",
+      "title": "웹 개발 인턴 (마감)",
+      "company_group": { "id": 15916, "name": "모두닥", "business_size": null },
+      "start_time": "2026-09-10T00:00:00.000+09:00",
+      "end_time": "2026-09-30T23:59:00.000+09:00",
+      "recruit_type": 0,
+      "employments": [{ "duty_groups": [{ "group_id": 178 }], "id": 424778, "division": 3, "apply": "CLOSED" }]
+    }
+  ]
+}

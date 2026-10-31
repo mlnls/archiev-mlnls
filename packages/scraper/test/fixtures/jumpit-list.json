@@ -1,0 +1,94 @@
+{
+ "message": "포지션 리스트가 조회되었습니다.",
+ "status": 200,
+ "code": "P004",
+ "result": {
+  "totalCount": 53,
+  "page": 1,
+  "keyword": "",
+  "keywordType": "etc",
+  "positions": [
+   {
+    "id": 55376222,
+    "jobCategory": "프론트엔드 개발자",
+    "logo": "https://cdn.jumpit.co.kr/lg/images/hmlee_4/20210618100616106_314_304.webp",
+    "imagePath": "https://cdn.jumpit.co.kr/x.webp",
+    "title": "프론트엔드 개발자 (경력)",
+    "companyName": "아인잡",
+    "techStacks": [
+     "CSS 3",
+     "GitHub",
+     "Jira",
+     "Next.js",
+     "React",
+     "Slack",
+     "TypeScript",
+     "Webpack",
+     "Notion"
+    ],
+    "viewCount": 8,
+    "newcomer": false,
+    "minCareer": 3,
+    "maxCareer": 10,
+    "locations": [
+     "서울 강남구"
+    ],
+    "alwaysOpen": false,
+    "closedAt": "2026-11-23T23:59:59",
+    "serialNumber": "6628601266",
+    "celebration": 50,
+    "scraped": false,
+    "applied": false
+   },
+   {
+    "id": 55378230,
+    "jobCategory": "웹 풀스택 개발자,SW/솔루션,devops/시스템 엔지니어,서버/백엔드 개발자,프론트엔드 개발자",
+    "logo": "https://cdn.jumpit.co.kr/y.webp",
+    "title": "개발팀 경력직 (중급)",
+    "companyName": "지피에이코리아",
+    "techStacks": [
+     "Amazon EC2",
+     "Android OS",
+     "Flutter",
+     "iOS",
+     "Java",
+     "JavaScript",
+     "Kotlin",
+     "Node.js",
+     "Objective-C",
+     "AWS"
+    ],
+    "viewCount": 14,
+    "newcomer": false,
+    "minCareer": 1,
+    "maxCareer": 3,
+    "locations": [
+     "서울 강남구"
+    ],
+    "alwaysOpen": false,
+    "closedAt": "2026-11-21T23:59:59",
+    "celebration": 50
+   },
+   {
+    "id": 55300001,
+    "jobCategory": "devops/시스템 엔지니어",
+    "logo": null,
+    "title": "DevOps 엔지니어 (신입/경력)",
+    "companyName": "테스트클라우드",
+    "techStacks": [
+     "AWS",
+     "Kubernetes",
+     "Terraform"
+    ],
+    "newcomer": true,
+    "minCareer": 0,
+    "maxCareer": 5,
+    "locations": [
+     "경기 성남시"
+    ],
+    "alwaysOpen": true,
+    "closedAt": null
+   }
+  ]
+ }
+}
