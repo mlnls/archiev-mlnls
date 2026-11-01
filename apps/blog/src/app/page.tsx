@@ -9,7 +9,7 @@ export default async function HomePage() {
   await connection();
   const [{ items }, tags] = await Promise.all([fetchPosts(), fetchTags()]);
   return (
-    <main className="page">
+    <main className="home">
       <JsonLd data={siteGraph()} />
       <h1 className="sr-only">{SITE_NAME}</h1>
       <TagRow tags={tags} />

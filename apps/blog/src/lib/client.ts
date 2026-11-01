@@ -24,6 +24,14 @@ export const formatDate = (iso: string | null) => {
   return new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));
 };
 
+/** 목록의 날짜 칸에 맞춘 짧은 표기: 2026.11.01 */
+export const formatShortDate = (iso: string | null) => {
+  if (!iso) return "";
+  const parts = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date(iso));
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${part("year")}.${part("month")}.${part("day")}`;
+};
+
 /** 제목에서 주소를 만듭니다: 글자와 숫자만 남기고 나머지는 하이픈으로 */
 export function slugify(title: string): string {
   return title
