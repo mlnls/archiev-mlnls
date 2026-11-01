@@ -103,6 +103,21 @@ describe("posts and comments", () => {
     expect([hit.total, miss.total]).toEqual([1, 0]);
   });
 
+  it("uses the cover image, then the first body image, in the public list", async () => {
+    const cover = async (extra: object) => {
+      await send("POST", "/admin/posts", { ...post, ...extra });
+      const { items } = (await (await send("GET", "/posts")).json()) as { items: { id: number; coverImage: string | null; body?: string }[] };
+      const item = items[0]!;
+      expect(item.body).toBeUndefined();
+      await send("DELETE", `/admin/posts/${item.id}`);
+      return item.coverImage;
+    };
+    const body = "```md\n![예시](/code.png)\n```\n\n![첫째](/first.png)\n\n![둘째](/second.png)";
+    expect(await cover({ body })).toBe("/first.png");
+    expect(await cover({ body, coverImage: "/cover.png" })).toBe("/cover.png");
+    expect(await cover({ body: "이미지 없는 글" })).toBeNull();
+  });
+
   it("registers on first comment, verifies the password afterwards, and never returns hashes", async () => {
     await send("POST", "/admin/posts", post);
     const saved = cookie;

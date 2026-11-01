@@ -32,11 +32,9 @@ export function SelectionToolbar({ editor, wrapRef }: { editor: Editor; wrapRef:
     const box = wrap.getBoundingClientRect();
     const width = bar.current?.offsetWidth ?? 300;
     const center = (Math.min(start.left, end.left) + Math.max(start.right, end.right)) / 2;
-    // 왼쪽 손잡이 여백을 덮지 않도록 본문 칸 안에 둡니다
-    const inset = parseFloat(getComputedStyle(wrap).paddingLeft) || 0;
     setSpot({
       top: Math.min(start.top, end.top) - box.top - 44,
-      left: Math.max(inset, Math.min(center - box.left - width / 2, box.width - width)),
+      left: Math.max(0, Math.min(center - box.left - width / 2, box.width - width)),
     });
   }, [editor, wrapRef]);
 

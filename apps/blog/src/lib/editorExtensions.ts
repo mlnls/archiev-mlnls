@@ -29,7 +29,7 @@ export function bodyExtensions(codeBlockView?: NodeViewRenderer) {
     TableKit.configure({ table: { resizable: false } }),
     Placeholder.configure({
       placeholder: ({ node }) =>
-        node.type.name === "heading" ? `제목 ${node.attrs.level as number}` : "글을 써보세요. / 를 누르면 블록을 고를 수 있습니다.",
+        node.type.name === "heading" ? `제목 ${node.attrs.level as number}` : "글을 써보세요.",
     }),
     Markdown,
   ];

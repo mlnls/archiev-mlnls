@@ -2,8 +2,9 @@
 
 import type { Editor as TiptapEditor } from "@tiptap/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { BodyEditor } from "@/components/editor/BodyEditor";
+import { CoverField } from "@/components/editor/CoverField";
 import { api, slugify } from "@/lib/client";
 import { parseTags } from "@/lib/editor";
 import { postPath } from "@/lib/site";
@@ -16,10 +17,11 @@ interface Draft {
   slug: string;
   summary: string;
   tags: string;
+  cover: string;
   body: string;
 }
 
-const EMPTY: Draft = { title: "", slug: "", summary: "", tags: "", body: "" };
+const EMPTY: Draft = { title: "", slug: "", summary: "", tags: "", cover: "", body: "" };
 
 function loadLocalDraft(): Draft | null {
   try {
@@ -34,7 +36,9 @@ export function Editor({ post }: { post?: Post }) {
   const router = useRouter();
   // RequireAdmin 안에서 브라우저에서만 그려지므로 처음부터 임시 보관본을 읽을 수 있습니다
   const [draft, setDraft] = useState<Draft>(() =>
-    post ? { title: post.title, slug: post.slug, summary: post.summary, tags: post.tags.join(", "), body: post.body } : (loadLocalDraft() ?? EMPTY),
+    post
+      ? { title: post.title, slug: post.slug, summary: post.summary, tags: post.tags.join(", "), cover: post.coverImage ?? "", body: post.body }
+      : (loadLocalDraft() ?? EMPTY),
   );
   const [slugTouched, setSlugTouched] = useState(!!post || !!draft.slug);
   const [published, setPublished] = useState(post?.published ?? false);
@@ -43,6 +47,8 @@ export function Editor({ post }: { post?: Post }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [coverUploading, setCoverUploading] = useState(false);
+  const [moreProps, setMoreProps] = useState(!!draft.summary);
   const body = useRef<TiptapEditor | null>(null);
 
   // 새 글은 저장 전까지 브라우저에 임시 보관합니다
@@ -60,7 +66,15 @@ export function Editor({ post }: { post?: Post }) {
     setError(null);
     try {
       const slug = draft.slug || slugify(draft.title);
-      const payload = { title: draft.title, slug, summary: draft.summary, body: draft.body, tags: parseTags(draft.tags), published: nextPublished };
+      const payload = {
+        title: draft.title,
+        slug,
+        summary: draft.summary,
+        body: draft.body,
+        tags: parseTags(draft.tags),
+        coverImage: draft.cover || null,
+        published: nextPublished,
+      };
       const saved = postId
         ? await api<Post>(`/admin/posts/${postId}`, { method: "PUT", json: payload })
         : await api<Post>("/admin/posts", { method: "POST", json: payload });
@@ -84,7 +98,7 @@ export function Editor({ post }: { post?: Post }) {
   }
 
   // 올리는 중에 저장하면 그 이미지가 글에서 빠지므로 끝날 때까지 막습니다
-  const canSave = !!draft.title.trim() && !!draft.body.trim() && !busy && !uploading;
+  const canSave = !!draft.title.trim() && !!draft.body.trim() && !busy && !uploading && !coverUploading;
 
   const onKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "s") {
@@ -93,11 +107,19 @@ export function Editor({ post }: { post?: Post }) {
     }
   };
 
+  // 글 옆이나 아래의 빈 곳을 눌러도 바로 이어서 쓸 수 있게 합니다
+  const onBlankMouseDown = (e: MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target !== e.currentTarget && !target.classList.contains("editor-doc")) return;
+    e.preventDefault();
+    body.current?.commands.focus("end");
+  };
+
   return (
-    <main className="editor" onKeyDown={onKeyDown}>
+    <main className="editor" onKeyDown={onKeyDown} onMouseDown={onBlankMouseDown}>
       <div className="editor-bar">
         <span className="editor-status" role="status">
-          {error ? <span className="error">{error}</span> : uploading ? "이미지 올리는 중" : status || (published ? "공개 중인 글" : "비공개 초안")}
+          {error ? <span className="error">{error}</span> : uploading || coverUploading ? "이미지 올리는 중" : status || (published ? "공개 중인 글" : "비공개 초안")}
         </span>
         <div className="editor-actions">
           <button type="button" className="btn" disabled={!canSave} onClick={() => void save(false)}>
@@ -110,6 +132,7 @@ export function Editor({ post }: { post?: Post }) {
       </div>
       <div className="editor-doc">
         <div className="editor-meta">
+          <CoverField value={draft.cover} onChange={(cover) => update({ cover })} onError={setError} onUploadingChange={setCoverUploading} />
           <input
             className="title-input"
             aria-label="제목"
@@ -127,22 +150,28 @@ export function Editor({ post }: { post?: Post }) {
             <label htmlFor="prop-tags">태그</label>
             <input id="prop-tags" placeholder="쉼표로 구분" value={draft.tags} onChange={(e) => update({ tags: e.target.value })} />
           </div>
-          <div className="prop">
-            <label htmlFor="prop-summary">요약</label>
-            <input id="prop-summary" placeholder="검색 결과와 목록에 보입니다. 비우면 본문 앞부분을 씁니다" maxLength={300} value={draft.summary} onChange={(e) => update({ summary: e.target.value })} />
-          </div>
-          <div className="prop">
-            <label htmlFor="prop-slug">주소</label>
-            <input
-              id="prop-slug"
-              placeholder="제목에서 자동으로 만듭니다"
-              value={draft.slug}
-              onChange={(e) => {
-                setSlugTouched(true);
-                update({ slug: e.target.value });
-              }}
-            />
-          </div>
+          {moreProps ? (
+            <>
+              <div className="prop">
+                <label htmlFor="prop-summary">요약</label>
+                <input id="prop-summary" placeholder="검색 결과와 목록에 보입니다. 비우면 본문 앞부분을 씁니다" maxLength={300} value={draft.summary} onChange={(e) => update({ summary: e.target.value })} />
+              </div>
+              <div className="prop">
+                <label htmlFor="prop-slug">주소</label>
+                <input
+                  id="prop-slug"
+                  placeholder="제목에서 자동으로 만듭니다"
+                  value={draft.slug}
+                  onChange={(e) => {
+                    setSlugTouched(true);
+                    update({ slug: e.target.value });
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <button type="button" className="prop-more" onClick={() => setMoreProps(true)}>속성 더 보기</button>
+          )}
         </div>
         <BodyEditor
           initial={draft.body}
