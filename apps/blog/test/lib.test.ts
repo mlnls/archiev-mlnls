@@ -118,3 +118,10 @@ describe("formatShortDate", () => {
     expect(formatShortDate(null)).toBe("");
   });
 });
+
+describe("firstImage", () => {
+  it("skips addresses a browser cannot open", () => {
+    expect(firstImage("![노션](attachment:a:image.png)\n![실제](https://a.com/x.png)")).toBe("https://a.com/x.png");
+    expect(firstImage("![노션](attachment:a:image.png)")).toBeNull();
+  });
+});

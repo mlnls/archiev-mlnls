@@ -31,9 +31,15 @@ const listColumns = {
   readingMinutes: readingMinutesSql,
 };
 
-/** 대표 이미지가 없는 글은 본문의 첫 이미지를 씁니다. 코드 블록 안의 예시는 이미지가 아닙니다 */
+/**
+ * 대표 이미지가 없는 글은 본문의 첫 이미지를 씁니다. 코드 블록 안의 예시는 이미지가 아닙니다.
+ * 노션에서 붙여 넣으면 attachment: 주소가 남는데 브라우저가 열 수 없으므로 건너뜁니다.
+ */
 function firstBodyImage(body: string) {
-  return /!\[[^\]]*\]\(([^)\s]+)/.exec(body.replace(/```[\s\S]*?```/g, ""))?.[1] ?? null;
+  for (const m of body.replace(/```[\s\S]*?```/g, "").matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) {
+    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return m[1]!;
+  }
+  return null;
 }
 
 export async function listPublishedPosts(db: Db, opts: { tag?: string; limit?: number; offset?: number } = {}) {

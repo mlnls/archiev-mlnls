@@ -116,6 +116,8 @@ describe("posts and comments", () => {
     expect(await cover({ body })).toBe("/first.png");
     expect(await cover({ body, coverImage: "/cover.png" })).toBe("/cover.png");
     expect(await cover({ body: "이미지 없는 글" })).toBeNull();
+    expect(await cover({ body: "![노션](attachment:a:image.png)\n\n![쓸 수 있음](/usable.png)" })).toBe("/usable.png");
+    expect(await cover({ body: "![노션](attachment:a:image.png)" })).toBeNull();
   });
 
   it("registers on first comment, verifies the password afterwards, and never returns hashes", async () => {
