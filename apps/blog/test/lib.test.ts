@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { slugify } from "@/lib/client";
+import { formatShortDate, slugify } from "@/lib/client";
 import { postGraph, serializeJsonLd } from "@/lib/jsonld";
 import { extractHeadings, firstImage, plainText, renderMarkdown } from "@/lib/markdown";
 import type { Post } from "@/lib/types";
@@ -109,5 +109,12 @@ describe("serializeJsonLd", () => {
 describe("slugify", () => {
   it("keeps Korean and collapses separators", () => {
     expect(slugify("  Next.js 16, 써보니! ")).toBe("next-js-16-써보니");
+  });
+});
+
+describe("formatShortDate", () => {
+  it("uses Korean time", () => {
+    expect(formatShortDate("2026-10-31T16:00:00.000Z")).toBe("2026.11.01");
+    expect(formatShortDate(null)).toBe("");
   });
 });

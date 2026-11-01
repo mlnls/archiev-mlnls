@@ -58,16 +58,11 @@ export default async function PostPage({ params }: Props) {
   const edited = post.publishedAt && new Date(post.updatedAt).getTime() - new Date(post.publishedAt).getTime() > 86_400_000;
 
   return (
-    <div className="post-layout">
+    <div className="post-page">
+      <JsonLd data={postGraph(post)} />
       <main>
-        <JsonLd data={postGraph(post)} />
         <article>
           <header className="post-head">
-            <h1>{post.title}</h1>
-            <div className="meta">
-              {AUTHOR.name} · <time dateTime={post.publishedAt ?? undefined}>{formatDate(post.publishedAt)}</time>
-              {edited ? <> · 수정 <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time></> : null}
-            </div>
             {post.tags.length > 0 && (
               <div className="post-tags">
                 {post.tags.map((t) => (
@@ -75,23 +70,35 @@ export default async function PostPage({ params }: Props) {
                 ))}
               </div>
             )}
+            <h1>{post.title}</h1>
+            <div className="post-meta">
+              <span>{AUTHOR.name}</span>
+              <time dateTime={post.publishedAt ?? undefined}>{formatDate(post.publishedAt)}</time>
+              {edited ? <span>수정 <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time></span> : null}
+            </div>
           </header>
-          {/* renderMarkdown이 스크립트, 이벤트 속성, 위험한 링크를 지운 결과입니다 */}
-          <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+          {/* 직접 고른 커버만 보여 줍니다. 본문 첫 이미지는 아래 본문에 이미 있습니다 */}
+          {post.coverImage ? <img className="post-hero" src={post.coverImage} alt="" /> : null}
+          <div className="post-layout">
+            <div>
+              {/* renderMarkdown이 스크립트, 이벤트 속성, 위험한 링크를 지운 결과입니다 */}
+              <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+              <Comments slug={post.slug} initial={comments} />
+            </div>
+            {headings.length > 1 && (
+              <nav className="toc" aria-label="목차">
+                <ul>
+                  {headings.map((h) => (
+                    <li key={h.id} className={h.level === 3 ? "h3" : undefined}>
+                      <a href={`#${h.id}`}>{h.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+          </div>
         </article>
-        <Comments slug={post.slug} initial={comments} />
       </main>
-      {headings.length > 1 && (
-        <nav className="toc" aria-label="목차">
-          <ul>
-            {headings.map((h) => (
-              <li key={h.id} className={h.level === 3 ? "h3" : undefined}>
-                <a href={`#${h.id}`}>{h.text}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
     </div>
   );
 }

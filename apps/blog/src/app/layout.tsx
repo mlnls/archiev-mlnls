@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { AdminLinks } from "@/components/AdminLinks";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f6f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#161513" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfbf8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0f0e" },
   ],
 };
 
@@ -29,13 +29,24 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <header className="site-header">
-          <Link href="/" className="wordmark">mlnl</Link>
-          <nav aria-label="주요 메뉴">
-            <AdminLinks />
-            <a href="https://mlnl.site">소개</a>
-          </nav>
+          <div className="site-header-in">
+            <Link href="/" className="wordmark">mlnl</Link>
+            <nav aria-label="주요 메뉴">
+              <AdminLinks />
+              <a href="https://mlnl.site">소개</a>
+            </nav>
+          </div>
         </header>
         {children}
+        <footer className="site-footer">
+          <div className="site-footer-in">
+            <span>{AUTHOR.name}</span>
+            <nav aria-label="외부 링크">
+              <a href="/feed.xml">RSS</a>
+              <a href="https://github.com/mlnls">GitHub</a>
+            </nav>
+          </div>
+        </footer>
       </body>
     </html>
   );

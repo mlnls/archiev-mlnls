@@ -22,7 +22,7 @@ export default async function TagPage({ params }: Props) {
   const [{ items }, tags] = await Promise.all([fetchPosts({ tag }), fetchTags()]);
   if (!items.length) notFound();
   return (
-    <main className="page">
+    <main className="home">
       <h1 className="sr-only">{tag}</h1>
       <TagRow tags={tags} current={tag} />
       <PostList posts={items} />
