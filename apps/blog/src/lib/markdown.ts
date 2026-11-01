@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
+import { fetchLinkPreview } from "./linkPreview";
+import { transformBlocks, type HastNode, type PreviewFetcher } from "./markdownBlocks";
 
 /** 코드 강조용 class와 제목 id만 추가로 허용합니다. 스크립트, iframe, on* 속성은 지워집니다 */
 const schema: Schema = {
@@ -18,6 +20,12 @@ const schema: Schema = {
   },
 };
 
+function rehypeBlocks() {
+  return async (tree: HastNode, file: { data: { fetchPreview?: PreviewFetcher } }) => {
+    await transformBlocks(tree, file.data.fetchPreview ?? fetchLinkPreview);
+  };
+}
+
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
@@ -25,10 +33,12 @@ const processor = unified()
   .use(rehypeSanitize, schema)
   .use(rehypeSlug)
   .use(rehypeHighlight, { detect: false, ignoreMissing: true })
+  .use(rehypeBlocks as never)
   .use(rehypeStringify);
 
-export async function renderMarkdown(source: string): Promise<string> {
-  return String(await processor.process(source));
+/** 주소만 있는 줄은 외부 사이트 정보를 읽어 카드로 만듭니다. 테스트에서는 fetchPreview를 바꿔 끼웁니다 */
+export async function renderMarkdown(source: string, opts: { fetchPreview?: PreviewFetcher } = {}): Promise<string> {
+  return String(await processor.process({ value: source, data: { fetchPreview: opts.fetchPreview } as never }));
 }
 
 export interface Heading {
@@ -50,6 +60,7 @@ export function extractHeadings(html: string): Heading[] {
 export function plainText(source: string, max = 150): string {
   const text = source
     .replace(/```[\s\S]*?```/g, " ")
+    .replace(/^\s*>\s*\[![a-z]+\]/gim, " ")
     // 편집기가 저장할 때 붙이는 이스케이프를 되돌립니다 (snake\_case, R&amp;D)
     .replace(/\\([!-/:-@[-`{-~])/g, "$1")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")

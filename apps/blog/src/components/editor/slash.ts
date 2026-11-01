@@ -26,6 +26,7 @@ export const SLASH_ITEMS: SlashItem[] = [
   { id: "ol", label: "번호 목록", hint: "1.", keywords: "ol ordered number list 순서", run: ({ editor }) => chain(editor).toggleOrderedList().run() },
   { id: "todo", label: "체크리스트", hint: "[]", keywords: "todo task check 할일 할 일", run: ({ editor }) => chain(editor).toggleTaskList().run() },
   { id: "quote", label: "인용", hint: ">", keywords: "quote blockquote", run: ({ editor }) => chain(editor).toggleBlockquote().run() },
+  { id: "callout", label: "콜아웃", hint: "💡", keywords: "callout 강조 메모 팁 주의 경고 노트 note tip warning", run: ({ editor }) => chain(editor).setCallout().run() },
   { id: "code", label: "코드 블록", hint: "```", keywords: "code", run: ({ editor }) => chain(editor).setCodeBlock({ language: "ts" }).run() },
   { id: "table", label: "표", hint: "| |", keywords: "table 테이블", run: ({ editor }) => chain(editor).insertTable({ rows: 2, cols: 2, withHeaderRow: true }).run() },
   { id: "hr", label: "구분선", hint: "---", keywords: "hr divider line 선", run: ({ editor }) => chain(editor).setHorizontalRule().run() },

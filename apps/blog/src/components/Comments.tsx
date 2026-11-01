@@ -65,7 +65,7 @@ export function Comments({ slug, initial }: { slug: string; initial: Comment[] }
   }
 
   return (
-    <section className="comments" aria-labelledby="comments-title">
+    <section id="comments" className="comments" aria-labelledby="comments-title">
       <h2 id="comments-title">댓글 {comments.length}</h2>
       {comments.length > 0 && (
         <ul className="comment-list">

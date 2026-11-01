@@ -7,6 +7,7 @@ import { Markdown } from "@tiptap/markdown";
 import StarterKit from "@tiptap/starter-kit";
 import type { NodeViewRenderer } from "@tiptap/core";
 import { common, createLowlight } from "lowlight";
+import { Callout } from "./calloutNode";
 
 const lowlight = createLowlight(common);
 
@@ -14,8 +15,10 @@ const lowlight = createLowlight(common);
  * 본문은 마크다운으로 저장되므로 마크다운으로 되돌릴 수 있는 블록만 씁니다.
  * 밑줄처럼 저장하면 사라질 서식은 켜지 않습니다.
  */
-export function bodyExtensions(codeBlockView?: NodeViewRenderer) {
+export function bodyExtensions(views: { codeBlock?: NodeViewRenderer; callout?: NodeViewRenderer } = {}) {
+  const { codeBlock: codeBlockView, callout: calloutView } = views;
   return [
+    Callout.extend(calloutView ? { addNodeView: () => calloutView } : {}),
     StarterKit.configure({
       heading: { levels: [1, 2, 3, 4] },
       codeBlock: false,
