@@ -12,6 +12,13 @@ export async function api<T>(path: string, init: RequestInit & { json?: unknown 
   return data as T;
 }
 
+export async function uploadImage(file: File): Promise<string> {
+  const form = new FormData();
+  form.set("file", file);
+  const { url } = await api<{ url: string }>("/admin/uploads", { method: "POST", body: form });
+  return url;
+}
+
 export const formatDate = (iso: string | null) => {
   if (!iso) return "";
   return new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));

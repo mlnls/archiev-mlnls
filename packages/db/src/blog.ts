@@ -31,16 +31,22 @@ const listColumns = {
   readingMinutes: readingMinutesSql,
 };
 
+/** 대표 이미지가 없는 글은 본문의 첫 이미지를 씁니다. 코드 블록 안의 예시는 이미지가 아닙니다 */
+function firstBodyImage(body: string) {
+  return /!\[[^\]]*\]\(([^)\s]+)/.exec(body.replace(/```[\s\S]*?```/g, ""))?.[1] ?? null;
+}
+
 export async function listPublishedPosts(db: Db, opts: { tag?: string; limit?: number; offset?: number } = {}) {
   const tagCond = opts.tag ? sql`exists (select 1 from json_each(${posts.tags}) where value = ${opts.tag})` : undefined;
   const where = and(eq(posts.published, true), tagCond);
-  const items = await db
-    .select(listColumns)
+  const rows = await db
+    .select({ ...listColumns, body: posts.body })
     .from(posts)
     .where(where)
     .orderBy(desc(posts.publishedAt))
     .limit(opts.limit ?? 50)
     .offset(opts.offset ?? 0);
+  const items = rows.map(({ body, ...row }) => ({ ...row, coverImage: row.coverImage ?? firstBodyImage(body) }));
   const [count] = await db.select({ n: sql<number>`count(*)`.mapWith(Number) }).from(posts).where(where);
   return { items: items as PostListItem[], total: count?.n ?? 0 };
 }

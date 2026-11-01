@@ -3,10 +3,9 @@
 import { NodeSelection, TextSelection } from "@tiptap/pm/state";
 import { EditorContent, ReactNodeViewRenderer, useEditor, type Editor as TiptapEditor } from "@tiptap/react";
 import { useEffect, useRef, type RefObject } from "react";
-import { api } from "@/lib/client";
+import { uploadImage } from "@/lib/client";
 import { cleanMarkdown, looksLikeMarkdown } from "@/lib/editor";
 import { bodyExtensions } from "@/lib/editorExtensions";
-import { BlockHandles } from "./BlockHandles";
 import { CodeBlockView } from "./CodeBlockView";
 import { SelectionToolbar } from "./SelectionToolbar";
 import { SlashKeymap } from "./slash";
@@ -47,9 +46,7 @@ export function BodyEditor({ initial, onChange, onError, onUploadingChange, edit
     try {
       for (const file of files) {
         try {
-          const form = new FormData();
-          form.set("file", file);
-          const { url } = await api<{ url: string }>("/admin/uploads", { method: "POST", body: form });
+          const url = await uploadImage(file);
           const ed = editorRef.current;
           if (ed) insertImage(ed, url);
         } catch (err) {
@@ -110,7 +107,6 @@ export function BodyEditor({ initial, onChange, onError, onUploadingChange, edit
       <EditorContent editor={editor} />
       {editor && (
         <>
-          <BlockHandles editor={editor} wrapRef={wrap} />
           <SlashMenu editor={editor} wrapRef={wrap} pickImage={() => fileInput.current?.click()} />
           <SelectionToolbar editor={editor} wrapRef={wrap} />
         </>

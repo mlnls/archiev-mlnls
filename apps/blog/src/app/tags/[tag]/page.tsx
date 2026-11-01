@@ -23,7 +23,7 @@ export default async function TagPage({ params }: Props) {
   if (!items.length) notFound();
   return (
     <main className="page">
-      <h1 className="page-title">{tag}</h1>
+      <h1 className="sr-only">{tag}</h1>
       <TagRow tags={tags} current={tag} />
       <PostList posts={items} />
     </main>
