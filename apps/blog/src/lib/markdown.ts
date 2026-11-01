@@ -67,5 +67,9 @@ export function plainText(source: string, max = 150): string {
 
 /** 본문의 첫 이미지 (대표 이미지가 없을 때) */
 export function firstImage(source: string): string | null {
-  return /!\[[^\]]*\]\(([^)\s]+)/.exec(source)?.[1] ?? null;
+  for (const m of source.matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) {
+    // 노션에서 붙여 넣은 attachment: 주소는 브라우저가 열 수 없습니다
+    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return m[1]!;
+  }
+  return null;
 }
