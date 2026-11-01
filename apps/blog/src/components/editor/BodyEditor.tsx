@@ -6,12 +6,13 @@ import { useEffect, useRef, type RefObject } from "react";
 import { uploadImage } from "@/lib/client";
 import { cleanMarkdown, looksLikeMarkdown } from "@/lib/editor";
 import { bodyExtensions } from "@/lib/editorExtensions";
+import { CalloutView } from "./CalloutView";
 import { CodeBlockView } from "./CodeBlockView";
 import { SelectionToolbar } from "./SelectionToolbar";
 import { SlashKeymap } from "./slash";
 import { SlashMenu } from "./SlashMenu";
 
-const EXTENSIONS = [...bodyExtensions(ReactNodeViewRenderer(CodeBlockView)), SlashKeymap];
+const EXTENSIONS = [...bodyExtensions({ codeBlock: ReactNodeViewRenderer(CodeBlockView), callout: ReactNodeViewRenderer(CalloutView) }), SlashKeymap];
 
 const imagesOf = (files: FileList | null | undefined) => [...(files ?? [])].filter((f) => f.type.startsWith("image/"));
 

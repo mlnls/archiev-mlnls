@@ -7,6 +7,10 @@ FROM base AS build
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.base.json turbo.json ./
 COPY apps/blog ./apps/blog
 RUN pnpm install --frozen-lockfile --filter @archiev/blog... --ignore-scripts
+# 브라우저에 공개되는 값이라 이미지를 만들 때 넣습니다
+ARG NEXT_PUBLIC_GA_ID=""
+ARG NEXT_PUBLIC_AMPLITUDE_KEY=""
+ARG NEXT_PUBLIC_GSC_TOKEN=""
 RUN pnpm --filter @archiev/blog build
 
 FROM node:24-slim AS runtime

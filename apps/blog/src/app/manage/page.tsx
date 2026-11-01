@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { CommentAlerts } from "@/components/CommentAlerts";
 import { RequireAdmin } from "@/components/RequireAdmin";
 import { api, formatDate } from "@/lib/client";
 import type { PostSummary } from "@/lib/types";
@@ -43,6 +44,7 @@ function Manage() {
           </div>
         ))}
       </div>
+      <CommentAlerts />
     </main>
   );
 }
