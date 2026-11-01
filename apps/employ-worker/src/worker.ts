@@ -32,10 +32,10 @@ export function figmaArgs(model: string) {
     "--output-format", "json",
     "--json-schema", JSON.stringify(FIGMA_JSON_SCHEMA),
     "--model", model,
-    // 피그마와 스킬만 허용합니다. 파일, 셸, 웹 도구는 쓸 수 없습니다.
+    // 피그마만 허용합니다. 파일, 셸, 웹 도구는 쓸 수 없습니다.
     // MCP 도구는 ToolSearch로 불러와야 하므로 이것이 빠지면 피그마 도구를 쓸 수 없습니다.
-    "--tools", "Skill,ToolSearch",
-    "--allowedTools", [...FIGMA_SERVERS, "Skill", "ToolSearch"].join(","),
+    "--tools", "ToolSearch",
+    "--allowedTools", [...FIGMA_SERVERS, "ToolSearch"].join(","),
     "--permission-mode", "dontAsk",
     "--no-session-persistence",
   ];
@@ -57,7 +57,7 @@ export async function processJob(claimed: ClaimedJob, api: WorkerApi, run: RunCl
     }
     try {
       log(`#${claimed.id} ${company}: 피그마 작성`);
-      const output = parseClaudeOutput(await run(figmaArgs(opts.model), buildFigmaPrompt(resume, company, opts.figmaFileKey), 10 * 60_000));
+      const output = parseClaudeOutput(await run(figmaArgs(opts.model), buildFigmaPrompt(claimed, resume, opts.figmaFileKey), 10 * 60_000));
       const { figmaUrl } = FigmaResultSchema.parse(output.data);
       if (!/^https:\/\/(www\.)?figma\.com\//.test(figmaUrl)) throw new Error(`피그마 주소를 받지 못했습니다. 응답: ${figmaUrl.slice(0, 400)}`);
       await api.finish(claimed.id, { figmaUrl, figmaError: null });
