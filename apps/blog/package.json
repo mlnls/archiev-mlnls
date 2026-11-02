@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "2.49.0",
     "@tiptap/core": "^3.32.2",
     "@tiptap/extension-code-block-lowlight": "^3.32.2",
     "@tiptap/extension-image": "^3.32.2",

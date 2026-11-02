@@ -1,10 +1,11 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { closeDb, getDb, jobs, saveProfile } from "@archiev/db";
 import profileJson from "../../../data/profile.example.json";
 import { createApp, type ApiConfig } from "../src/app";
+import { webhookPayload } from "../src/notify";
 import { hashPassword } from "../src/security";
 
 process.env.DB_FILE = "memory";
@@ -141,6 +142,58 @@ describe("posts and comments", () => {
     expect((await send("DELETE", `/comments/${id}`, { username: "other", password: "pass1234" })).status).toBe(401);
     expect((await send("DELETE", `/comments/${id}`, { username, password: "pass1234" })).status).toBe(200);
     cookie = saved;
+  });
+});
+
+describe("comment alerts", () => {
+  const discord = "https://discord.com/api/webhooks/1/secret";
+
+  afterEach(async () => {
+    vi.unstubAllGlobals();
+    await send("PUT", "/admin/notify", { url: null });
+  });
+
+  it("only lets an admin set a known webhook address and never returns it", async () => {
+    expect((await send("PUT", "/admin/notify", { url: "https://evil.example/hook" })).status).toBe(400);
+    expect((await send("PUT", "/admin/notify", { url: "http://discord.com/api/webhooks/1/x" })).status).toBe(400);
+    expect(await (await send("PUT", "/admin/notify", { url: discord })).text()).not.toContain("secret");
+    expect(await (await send("GET", "/admin/notify")).json()).toEqual({ configured: true });
+    const saved = cookie;
+    cookie = "";
+    expect((await send("GET", "/admin/notify")).status).toBe(401);
+    expect((await send("PUT", "/admin/notify", { url: discord })).status).toBe(401);
+    expect((await send("POST", "/admin/notify/test")).status).toBe(401);
+    cookie = saved;
+  });
+
+  it("sends a new comment to the webhook without allowing mentions", async () => {
+    await send("PUT", "/admin/notify", { url: discord });
+    await send("POST", "/admin/posts", { ...post, slug: "알림-글" });
+    const fetchMock = vi.fn(async () => new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const url = `/posts/${encodeURIComponent("알림-글")}/comments`;
+    const res = await send("POST", url, { username: `alert${Date.now()}`, password: "pass1234", body: "@everyone 좋아요" });
+    expect(res.status).toBe(201);
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
+    const [target, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(target).toBe(discord);
+    const payload = JSON.parse(String(init.body)) as { content: string; allowed_mentions: unknown };
+    expect(payload.content).toContain("좋아요");
+    expect(payload.content).toContain(`${ORIGIN}/posts/`);
+    expect(payload.allowed_mentions).toEqual({ parse: [] });
+  });
+
+  it("keeps the comment when the webhook fails, and reports a failed test", async () => {
+    await send("PUT", "/admin/notify", { url: discord });
+    await send("POST", "/admin/posts", { ...post, slug: "실패-글" });
+    vi.stubGlobal("fetch", vi.fn(async () => { throw new Error("down"); }));
+    const url = `/posts/${encodeURIComponent("실패-글")}/comments`;
+    expect((await send("POST", url, { username: `fail${Date.now()}`, password: "pass1234", body: "남아야 함" })).status).toBe(201);
+    expect((await send("POST", "/admin/notify/test")).status).toBe(502);
+  });
+
+  it("escapes control text for slack", () => {
+    expect(webhookPayload("https://hooks.slack.com/services/a/b/c", "<!channel> & 끝")).toEqual({ text: "&lt;!channel&gt; &amp; 끝" });
   });
 });
 

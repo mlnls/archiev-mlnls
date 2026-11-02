@@ -44,6 +44,7 @@ import {
   type PostInput,
 } from "@archiev/db";
 import { rescoreAll, runBatch } from "@archiev/scraper";
+import { notifyComment, sendWebhook, WEBHOOK_KEY, WebhookUrl } from "./notify";
 import { createSession, hashPassword, RateLimiter, safeEqual, SESSION_MAX_AGE, sniffImage, verifyPassword, verifySession } from "./security";
 
 export interface ApiConfig {
@@ -220,6 +221,8 @@ export function createApp(cfg: ApiConfig) {
       user = await createCommentUser(db, username, await hashPassword(password));
     }
     const comment = await addComment(db, post.id, user.id, body);
+    // 알림이 늦거나 실패해도 댓글 등록은 기다리지 않습니다
+    void notifyComment(db, { title: post.title, slug: post.slug, username, body, siteUrl: cfg.allowedOrigins[0] ?? "" });
     return c.json({ id: comment.id, body: comment.body, createdAt: comment.createdAt, username }, 201);
   });
 
@@ -295,6 +298,23 @@ export function createApp(cfg: ApiConfig) {
     const name = `${Date.now().toString(36)}-${randomBytes(6).toString("hex")}.${kind.ext}`;
     await writeFile(path.join(cfg.uploadDir, name), buf);
     return c.json({ url: `/api/uploads/${name}` }, 201);
+  });
+
+  // 주소를 아는 사람은 누구나 메시지를 보낼 수 있으므로 저장한 뒤에는 돌려주지 않습니다
+  admin.get("/notify", async (c) => c.json({ configured: Boolean(await getKv(await getDb(), WEBHOOK_KEY)) }));
+
+  admin.put("/notify", async (c) => {
+    const parsed = z.object({ url: WebhookUrl.nullable() }).safeParse(await c.req.json().catch(() => ({})));
+    if (!parsed.success) return c.json({ error: issue(parsed.error) }, 400);
+    await setKv(await getDb(), WEBHOOK_KEY, parsed.data.url ?? "");
+    return c.json({ configured: Boolean(parsed.data.url) });
+  });
+
+  admin.post("/notify/test", async (c) => {
+    const url = await getKv(await getDb(), WEBHOOK_KEY);
+    if (!url) return c.json({ error: "알림 주소를 먼저 저장해 주세요" }, 400);
+    const ok = await sendWebhook(url, "mlnl 블로그 댓글 알림이 연결되었습니다.");
+    return ok ? c.json({ ok: true }) : c.json({ error: "알림을 보내지 못했습니다. 주소를 확인해 주세요" }, 502);
   });
 
   app.route("/admin", admin);

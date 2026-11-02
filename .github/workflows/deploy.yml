@@ -77,6 +77,10 @@ jobs:
           file: apps/${{ matrix.app }}/Dockerfile
           platforms: linux/amd64
           push: true
+          build-args: |
+            NEXT_PUBLIC_GA_ID=${{ vars.NEXT_PUBLIC_GA_ID }}
+            NEXT_PUBLIC_AMPLITUDE_KEY=${{ vars.NEXT_PUBLIC_AMPLITUDE_KEY }}
+            NEXT_PUBLIC_GSC_TOKEN=${{ vars.NEXT_PUBLIC_GSC_TOKEN }}
           tags: ghcr.io/${{ github.repository }}/${{ matrix.app }}:${{ steps.meta.outputs.sha }}
           cache-from: type=gha,scope=${{ matrix.app }}
           cache-to: type=gha,mode=max,scope=${{ matrix.app }}

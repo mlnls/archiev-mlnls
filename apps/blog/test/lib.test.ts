@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { formatShortDate, slugify } from "@/lib/client";
 import { postGraph, serializeJsonLd } from "@/lib/jsonld";
+import { isPublicAddress, parseLinkPreview } from "@/lib/linkPreview";
 import { extractHeadings, firstImage, plainText, renderMarkdown } from "@/lib/markdown";
+import type { PreviewFetcher } from "@/lib/markdownBlocks";
 import type { Post } from "@/lib/types";
 
 const post: Post = {
@@ -38,6 +40,87 @@ describe("renderMarkdown", () => {
     const html = await renderMarkdown("## 렌더링 구조\n\n```ts\nconst a = 1;\n```");
     expect(html).toContain('<h2 id="렌더링-구조">');
     expect(html).toContain("hljs");
+  });
+});
+
+describe("callout", () => {
+  it("renders the marker as a callout and removes the marker text", async () => {
+    const html = await renderMarkdown("> [!tip]\n> 먼저 **읽기**\n>\n> 둘째 문단");
+    expect(html).toContain('<aside class="callout" data-type="tip" role="note">');
+    expect(html).not.toContain("[!tip]");
+    expect(html).toContain("<strong>읽기</strong>");
+    expect(html).toContain("둘째 문단");
+  });
+
+  it("leaves other quotes and unknown markers alone", async () => {
+    expect(await renderMarkdown("> 인용")).toContain("<blockquote>");
+    expect(await renderMarkdown("> [!없는것]\n> 글")).toContain("<blockquote>");
+  });
+
+  it("keeps the marker out of the summary", () => {
+    expect(plainText("> [!note]\n> 내용")).toBe("내용");
+  });
+});
+
+describe("link cards", () => {
+  const preview: PreviewFetcher = async () => ({ title: "제목 <b>", description: "설명", image: "https://a.com/o.png", icon: "https://a.com/i.ico" });
+  const render = (source: string, fetchPreview = preview) => renderMarkdown(source, { fetchPreview });
+
+  it("turns a url alone on a line into a card and escapes page text", async () => {
+    const html = await render("https://a.com/doc");
+    expect(html).toContain('class="bookmark" href="https://a.com/doc"');
+    expect(html).toContain("제목 &#x3C;b>");
+    expect(html).toContain('src="https://a.com/o.png"');
+    expect(html).not.toContain("<p>");
+  });
+
+  it("reads the editor's link form, list items and lines inside a paragraph", async () => {
+    const saved = "- 문서입니다.\n\n  [https://a.com/x?v=1&amp;t=2](https://a.com/x?v=1&amp;t=2)\n\n  [https://b.com](https://b.com)";
+    const html = await render(saved);
+    expect(html.match(/class="bookmark"/g)).toHaveLength(2);
+    expect(html).toContain("문서입니다.");
+    const lines = await render("앞줄\nhttps://a.com/one\n뒷줄");
+    expect(lines).toContain("<p>앞줄</p>");
+    expect(lines).toContain("<p>뒷줄</p>");
+    expect(await render("- https://a.com/tight")).toContain('class="bookmark"');
+  });
+
+  it("leaves named links and urls inside a sentence as links", async () => {
+    let calls = 0;
+    const count: PreviewFetcher = async () => (calls++, null);
+    const html = await render("[문서](https://a.com)\n\n여기 https://a.com/b 를 보세요", count);
+    expect(html).not.toContain("bookmark");
+    expect(calls).toBe(0);
+  });
+
+  it("still shows a working card when the site cannot be read", async () => {
+    const html = await render("https://www.a.com/doc", async () => { throw new Error("x"); });
+    expect(html).toContain('href="https://www.a.com/doc"');
+    expect(html).toContain("a.com/doc");
+  });
+
+  it("does not make cards from unsafe links", async () => {
+    expect(await render("[javascript:alert(1)](javascript:alert(1))")).not.toContain("bookmark");
+  });
+});
+
+describe("link preview", () => {
+  it("reads open graph values and resolves relative addresses", () => {
+    const got = parseLinkPreview(`<head><title>옛 제목</title><meta content="R&amp;D 글" property="og:title"><meta name='description' content='설명'><meta property="og:image" content="/o.png"><link rel="shortcut icon" href="/i.png"></head>`, "https://a.com/p/q");
+    expect(got).toEqual({ title: "R&D 글", description: "설명", image: "https://a.com/o.png", icon: "https://a.com/i.png" });
+  });
+
+  it("falls back to the title and the default icon, and refuses script image urls", () => {
+    const got = parseLinkPreview(`<title> 그냥 &#51228;&#47785; </title><meta property="og:image" content="javascript:alert(1)">`, "https://a.com");
+    expect(got).toMatchObject({ title: "그냥 제목", image: null, icon: "https://a.com/favicon.ico" });
+  });
+
+  it.each(["127.0.0.1", "10.1.2.3", "172.18.0.4", "192.168.0.1", "169.254.169.254", "::1", "fd00::1", "fe80::1", "::ffff:127.0.0.1", "이상한값"])("blocks internal address %s", (ip) => {
+    expect(isPublicAddress(ip)).toBe(false);
+  });
+
+  it.each(["8.8.8.8", "2606:4700:4700::1111", "::ffff:8.8.8.8"])("allows public address %s", (ip) => {
+    expect(isPublicAddress(ip)).toBe(true);
   });
 });
 

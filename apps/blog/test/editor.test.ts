@@ -53,7 +53,24 @@ plain
 `;
 
   it("keeps what readers see after going through the editor", async () => {
-    expect(await renderMarkdown(roundTrip(SAMPLE))).toBe(await renderMarkdown(SAMPLE));
+    const options = { fetchPreview: async () => null };
+    expect(await renderMarkdown(roundTrip(SAMPLE), options)).toBe(await renderMarkdown(SAMPLE, options));
+  });
+
+  it("keeps a callout, its type and several paragraphs", () => {
+    const source = "앞 문단\n\n> [!warning]\n> 첫 줄 **굵게**\n>\n> - 목록\n\n뒤 문단";
+    expect(roundTrip(source)).toBe(source);
+    expect(open(source).getJSON().content?.[1]).toMatchObject({ type: "callout", attrs: { type: "warning" } });
+  });
+
+  it("leaves an ordinary quote as a quote", () => {
+    expect(open("> 그냥 인용").getJSON().content?.[0]?.type).toBe("blockquote");
+  });
+
+  it("turns the slash command into a callout that saves as markdown", () => {
+    const editor = open("메모");
+    editor.commands.setCallout("tip");
+    expect(cleanMarkdown(editor.getMarkdown())).toBe("> [!tip]\n> 메모");
   });
 
   it("is stable when saved repeatedly", () => {
