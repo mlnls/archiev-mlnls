@@ -14,7 +14,10 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
   openGraph: { type: "website", siteName: SITE_NAME, locale: "ko_KR", url: "/" },
-  verification: process.env.NEXT_PUBLIC_GSC_TOKEN ? { google: process.env.NEXT_PUBLIC_GSC_TOKEN } : undefined,
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_TOKEN || undefined,
+    other: { "naver-site-verification": "a67175777a9500b2cb3811a75879f5b44fabec78" },
+  },
 };
 
 export const viewport: Viewport = {
