@@ -2,9 +2,9 @@
 
 | 경로 | 주소 | 설명 |
 | --- | --- | --- |
-| `apps/cv` | [mlnl.site](https://mlnl.site) | 한 페이지 이력 (정적 HTML) |
-| `apps/blog` | [blog.mlnl.site](https://blog.mlnl.site) | 마크다운 블로그 (Next.js, JSON-LD 자동 생성, 댓글) |
-| `apps/employ` | employ.mlnl.site | 채용 공고 추천과 맞춤 이력서 (관리자 전용) |
+| `apps/cv` | [mlnl.54-116-117-190.sslip.io](https://mlnl.54-116-117-190.sslip.io) | 한 페이지 이력 (정적 HTML) |
+| `apps/blog` | [blog.mlnl.54-116-117-190.sslip.io](https://blog.mlnl.54-116-117-190.sslip.io) | 마크다운 블로그 (Next.js, JSON-LD 자동 생성, 댓글) |
+| `apps/employ` | employ.mlnl.54-116-117-190.sslip.io | 채용 공고 추천과 맞춤 이력서 (관리자 전용) |
 | `apps/employ-worker` | Mac에서 실행 | 이력서 요청을 Claude Code로 처리 |
 | `apps/api` | `/api/*` | Node.js(Hono) API, SQLite, 매일 8시 수집 |
 | `packages/core` | | 프로필, 매칭 엔진 |

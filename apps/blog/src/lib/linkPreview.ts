@@ -1,5 +1,6 @@
 import { lookup } from "node:dns/promises";
 import { BlockList, isIP } from "node:net";
+import { SITE_URL } from "./site";
 
 export interface LinkPreview {
   title: string;
@@ -14,7 +15,7 @@ const MAX_ENTRIES = 500;
 const MAX_BYTES = 1024 * 1024;
 const MAX_REDIRECTS = 4;
 const TIMEOUT_MS = 3000;
-const USER_AGENT = "Mozilla/5.0 (compatible; mlnlBlog/1.0; +https://blog.mlnl.site)";
+const USER_AGENT = `Mozilla/5.0 (compatible; mlnlBlog/1.0; +${SITE_URL})`;
 
 const blocked = new BlockList();
 for (const [net, bits] of [

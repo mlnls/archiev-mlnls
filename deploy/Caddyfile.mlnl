@@ -1,4 +1,4 @@
-# >>> archiev-mlnls (이 블록은 archiev-mlnls/deploy/Caddyfile.mlnl 에서 관리합니다)
+# >>> archiev-mlnls (이 블록은 archiev-mlnls/deploy/Caddyfile.mlnl 에서 관리합니다. __SITE_DOMAIN__ 은 설치할 때 .env의 SITE_DOMAIN으로 바뀝니다)
 (mlnl_common) {
 	encode zstd gzip
 	header {
@@ -7,16 +7,16 @@
 	}
 }
 
-mlnl.site {
+__SITE_DOMAIN__ {
 	import mlnl_common
 	reverse_proxy mlnl-cv:80
 }
 
-www.mlnl.site {
-	redir https://mlnl.site{uri} permanent
+www.__SITE_DOMAIN__ {
+	redir https://__SITE_DOMAIN__{uri} permanent
 }
 
-blog.mlnl.site {
+blog.__SITE_DOMAIN__ {
 	import mlnl_common
 	handle_path /api/* {
 		request_body {
@@ -29,7 +29,7 @@ blog.mlnl.site {
 	}
 }
 
-employ.mlnl.site {
+employ.__SITE_DOMAIN__ {
 	import mlnl_common
 	header X-Robots-Tag "noindex, nofollow"
 	handle_path /api/* {

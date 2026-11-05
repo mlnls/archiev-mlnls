@@ -1,10 +1,12 @@
+/** 도메인은 이미지를 만들 때 정합니다 (deploy.yml의 SITE_DOMAIN) */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://blog.mlnl.site").replace(/\/$/, "");
+export const CV_URL = `${(process.env.NEXT_PUBLIC_CV_URL ?? "https://mlnl.site").replace(/\/$/, "")}/`;
 export const SITE_NAME = "mlnl 블로그";
 export const SITE_DESCRIPTION = "프론트엔드 개발자 오승민이 렌더링, 성능, SEO, 배포를 직접 겪으며 정리한 글을 올립니다.";
 export const AUTHOR = {
   name: "오승민",
-  url: "https://mlnl.site/",
-  sameAs: ["https://github.com/mlnls", "https://mlnl.site/"],
+  url: CV_URL,
+  sameAs: ["https://github.com/mlnls", CV_URL],
 };
 
 /** 공식 주소는 이 함수로만 만듭니다 (canonical, sitemap, JSON-LD가 어긋나지 않도록) */
