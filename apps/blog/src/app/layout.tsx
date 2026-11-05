@@ -5,7 +5,7 @@ import { AdminLinks } from "@/components/AdminLinks";
 import { Analytics } from "@/components/Analytics";
 import { FontPicker } from "@/components/FontPicker";
 import { FONT_INIT_SCRIPT } from "@/lib/fonts";
-import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { AUTHOR, CV_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <nav aria-label="주요 메뉴">
               <FontPicker />
               <AdminLinks />
-              <a href="https://mlnl.site">소개</a>
+              <a href={CV_URL}>소개</a>
             </nav>
           </div>
         </header>

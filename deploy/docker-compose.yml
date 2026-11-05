@@ -35,8 +35,8 @@ services:
       WORKER_TOKEN: ${WORKER_TOKEN}
       REVALIDATE_SECRET: ${REVALIDATE_SECRET}
       BLOG_INTERNAL_URL: http://mlnl-blog:3000
-      ALLOWED_ORIGINS: https://blog.mlnl.site,https://employ.mlnl.site
-      COOKIE_DOMAIN: .mlnl.site
+      ALLOWED_ORIGINS: https://blog.${SITE_DOMAIN:?.env에 SITE_DOMAIN이 필요합니다},https://employ.${SITE_DOMAIN}
+      COOKIE_DOMAIN: .${SITE_DOMAIN}
       BATCH_CRON: "0 8 * * *"
       SARAMIN_ACCESS_KEY: ${SARAMIN_ACCESS_KEY:-}
       ROCKETPUNCH_API_KEY: ${ROCKETPUNCH_API_KEY:-}

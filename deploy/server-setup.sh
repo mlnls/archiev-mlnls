@@ -18,13 +18,15 @@ install -m 644 "$SRC/Caddyfile.mlnl" "$DIR/Caddyfile.mlnl"
 touch "$DIR/images.env"
 [ -f "$DIR/.env" ] || { echo "$DIR/.env 가 없습니다" >&2; exit 1; }
 chmod 600 "$DIR/.env"
+SITE_DOMAIN="$(sed -n 's/^SITE_DOMAIN=//p' "$DIR/.env" | tail -1)"
+[[ "$SITE_DOMAIN" =~ ^[a-z0-9.-]+$ ]] || { echo "$DIR/.env 에 SITE_DOMAIN이 없거나 잘못되었습니다" >&2; exit 1; }
 
 # Caddy 라우트: 우리 블록만 교체하고, 검증에 실패하면 원래대로 되돌립니다
 BACKUP="$DIR/Caddyfile.backup.$(date +%Y%m%d%H%M%S)"
 cp "$CADDYFILE" "$BACKUP"
 NEXT="$(mktemp)"
 sed '/^# >>> archiev-mlnls/,/^# <<< archiev-mlnls/d' "$CADDYFILE" > "$NEXT"
-cat "$DIR/Caddyfile.mlnl" >> "$NEXT"
+sed "s/__SITE_DOMAIN__/$SITE_DOMAIN/g" "$DIR/Caddyfile.mlnl" >> "$NEXT"
 # 단일 파일 바인드 마운트라 inode를 유지해야 컨테이너가 새 내용을 봅니다
 cat "$NEXT" > "$CADDYFILE"
 rm -f "$NEXT"

@@ -11,6 +11,8 @@ RUN pnpm install --frozen-lockfile --filter @archiev/blog... --ignore-scripts
 ARG NEXT_PUBLIC_GA_ID=""
 ARG NEXT_PUBLIC_AMPLITUDE_KEY=""
 ARG NEXT_PUBLIC_GSC_TOKEN=""
+ARG SITE_DOMAIN=mlnl.site
+ENV NEXT_PUBLIC_SITE_URL=https://blog.${SITE_DOMAIN} NEXT_PUBLIC_CV_URL=https://${SITE_DOMAIN}
 RUN pnpm --filter @archiev/blog build
 
 FROM node:24-slim AS runtime
