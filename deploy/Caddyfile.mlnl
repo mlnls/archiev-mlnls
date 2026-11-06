@@ -42,4 +42,12 @@ employ.__SITE_DOMAIN__ {
 		reverse_proxy mlnl-employ:80
 	}
 }
+archiev.__SITE_DOMAIN__ {
+	import mlnl_common
+	header X-Robots-Tag "noindex, nofollow"
+	request_body {
+		max_size 4GB
+	}
+	reverse_proxy mlnl-archive:4100
+}
 # <<< archiev-mlnls

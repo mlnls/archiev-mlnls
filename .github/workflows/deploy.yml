@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "배포할 앱 (공백으로 구분: cv blog employ api)"
+        description: "배포할 앱 (공백으로 구분: cv blog employ api archive)"
         required: true
-        default: "cv blog employ api"
+        default: "cv blog employ api archive"
 
 permissions:
   contents: read

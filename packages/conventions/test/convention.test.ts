@@ -9,6 +9,7 @@ describe("scopeOfFile", () => {
     ["apps/employ/src/App.tsx", "EMPLOY"],
     ["apps/employ-worker/src/main.ts", "EMPLOY"],
     ["apps/api/src/app.ts", "API"],
+    ["apps/archive/server/app.ts", "ARCHIVE"],
     ["packages/core/src/job.ts", "COMMON"],
     ["README.md", "COMMON"],
     [".github/workflows/ci.yml", "COMMON"],
