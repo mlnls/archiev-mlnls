@@ -44,8 +44,22 @@ services:
       - data:/data
     networks: [edge]
 
+  mlnl-archive:
+    image: ${ARCHIVE_IMAGE:-ghcr.io/mlnls/archiev-mlnls/archive:latest}
+    restart: unless-stopped
+    mem_limit: 256m
+    environment:
+      ARCHIVE_USERNAME: ${ARCHIVE_USERNAME:-}
+      ARCHIVE_PASSWORD_HASH: ${ARCHIVE_PASSWORD_HASH:-}
+      ARCHIVE_SESSION_SECRET: ${ARCHIVE_SESSION_SECRET:-}
+      ARCHIVE_ORIGIN: https://archiev.${SITE_DOMAIN}
+    volumes:
+      - archive:/data
+    networks: [edge]
+
 volumes:
   data:
+  archive:
 
 networks:
   edge:

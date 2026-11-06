@@ -1,7 +1,7 @@
 // 커밋과 PR 제목 규칙. husky와 CI가 이 파일 하나를 함께 씁니다.
 // 의존성 없이 돌아가야 하므로 Node 기본 기능만 씁니다.
 
-export const SCOPES = ["BLOG", "CV", "EMPLOY", "API", "COMMON"];
+export const SCOPES = ["BLOG", "CV", "EMPLOY", "API", "ARCHIVE", "COMMON"];
 export const TYPES = ["feature", "fix", "refactor", "style", "docs", "test", "chore", "ci", "perf"];
 
 const TITLE = new RegExp(`^\\[(${SCOPES.join("|")})/(${TYPES.join("|")})\\] \\S.*$`);
@@ -12,6 +12,7 @@ const FOLDER_SCOPES = [
   ["apps/employ/", "EMPLOY"],
   ["apps/employ-worker/", "EMPLOY"],
   ["apps/api/", "API"],
+  ["apps/archive/", "ARCHIVE"],
 ];
 
 export function scopeOfFile(file) {

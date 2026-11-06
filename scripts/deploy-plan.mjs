@@ -2,7 +2,7 @@
 // 어떤 앱을 배포할지 정해 GitHub Actions 출력(apps=["cv",...])으로 내보냅니다.
 import { execFileSync } from "node:child_process";
 
-const DEPLOYABLE = ["cv", "blog", "employ", "api"];
+const DEPLOYABLE = ["cv", "blog", "employ", "api", "archive"];
 const ALL_ZERO = /^0+$/;
 
 function changedApps(before) {
