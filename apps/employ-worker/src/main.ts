@@ -1,6 +1,6 @@
 import { createApi, createRunner, processJob } from "./worker";
 
-const API_URL = process.env.API_URL ?? "https://employ.mlnl.site/api";
+const API_URL = process.env.API_URL ?? "https://blog.mlnl.site/api";
 const WORKER_TOKEN = process.env.WORKER_TOKEN;
 if (!WORKER_TOKEN) {
   console.error("WORKER_TOKEN이 없습니다. ~/.archiev/worker.env 를 확인해 주세요.");
