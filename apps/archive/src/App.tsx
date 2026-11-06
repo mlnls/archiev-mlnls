@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiError, uploadFile } from "./api";
-import { extOf, formatBytes, groupByMonth, makeThumb } from "./lib";
+import { extOf, formatBytes, groupByMonth, makeThumb, pastedFiles } from "./lib";
 import type { Item, Listing } from "./types";
 import { Viewer } from "./Viewer";
 
@@ -141,7 +141,7 @@ function Archive({ onLogout }: { onLogout: () => void }) {
     pump();
   };
 
-  // 창 어디에 끌어다 놓아도 올라갑니다
+  // 창 어디에 끌어다 놓거나 붙여 넣어도(⌘V, Ctrl+V) 올라갑니다
   useEffect(() => {
     let depth = 0;
     const hasFiles = (e: DragEvent) => e.dataTransfer?.types.includes("Files");
@@ -165,12 +165,22 @@ function Archive({ onLogout }: { onLogout: () => void }) {
     window.addEventListener("dragenter", enter);
     window.addEventListener("dragleave", leave);
     window.addEventListener("dragover", over);
+    const paste = (e: ClipboardEvent) => {
+      // 메모 입력처럼 글을 쓰는 곳에서는 평소대로 붙여 넣습니다
+      if ((e.target as HTMLElement | null)?.closest?.("input, textarea, [contenteditable]")) return;
+      const files = pastedFiles(e.clipboardData);
+      if (!files.length) return;
+      e.preventDefault();
+      addFiles(files);
+    };
     window.addEventListener("drop", drop);
+    window.addEventListener("paste", paste);
     return () => {
       window.removeEventListener("dragenter", enter);
       window.removeEventListener("dragleave", leave);
       window.removeEventListener("dragover", over);
       window.removeEventListener("drop", drop);
+      window.removeEventListener("paste", paste);
     };
     // addFiles는 ref만 건드리므로 처음 한 번만 붙입니다
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -254,7 +264,7 @@ function Archive({ onLogout }: { onLogout: () => void }) {
         {data && !items.length && (
           <button className="empty-drop" onClick={() => fileInput.current?.click()}>
             <strong>아직 보관한 파일이 없습니다</strong>
-            <span className="muted">사진이나 동영상을 이 창에 끌어다 놓거나 눌러서 고르세요.</span>
+            <span className="muted">사진이나 동영상을 이 창에 끌어다 놓거나 붙여 넣거나, 눌러서 고르세요.</span>
           </button>
         )}
         {data && items.length > 0 && !visible.length && <p className="empty">이 보기에는 파일이 없습니다.</p>}

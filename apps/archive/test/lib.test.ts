@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { extOf, formatBytes, groupByMonth } from "../src/lib";
+import { extOf, formatBytes, groupByMonth, pastedFiles } from "../src/lib";
 import type { Item } from "../src/types";
 
 const item = (id: string, takenAt: number): Item => ({ id, name: `${id}.jpg`, type: "image/jpeg", kind: "image", size: 1, takenAt, uploadedAt: takenAt, memo: "", thumb: false });
@@ -22,5 +22,16 @@ describe("lib", () => {
   it("reads extensions", () => {
     expect(extOf("IMG_0001.heic")).toBe("HEIC");
     expect(extOf("noext")).toBe("");
+  });
+
+  it("takes images and videos from the clipboard and names screenshots", () => {
+    const shot = new File(["x"], "image.png", { type: "image/png" });
+    const clip = new File(["y"], "trip.mp4", { type: "video/mp4" });
+    const text = new File(["z"], "a.txt", { type: "text/plain" });
+    const data = { items: [], files: [shot, clip, text] } as unknown as DataTransfer;
+    const out = pastedFiles(data, new Date(2026, 10, 6, 9, 5, 3));
+    expect(out.map((f) => f.name)).toEqual(["붙여넣기 2026-11-06 09.05.03 (1).png", "trip.mp4"]);
+    expect(out[0]!.type).toBe("image/png");
+    expect(pastedFiles(null)).toEqual([]);
   });
 });
