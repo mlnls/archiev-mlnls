@@ -36,4 +36,16 @@ if ! docker exec "$CADDY" caddy validate --config /etc/caddy/Caddyfile --adapter
   exit 1
 fi
 docker exec "$CADDY" caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+
+# 개인용 화면은 Tailscale 안에서만 엽니다 (HTTPS 인증서는 Tailscale이 발급합니다)
+#   https://<TAILNET_HOST>/       채용 레이더, /api 는 API
+#   https://<TAILNET_HOST>:8443/  보관함
+if command -v tailscale >/dev/null && tailscale status >/dev/null 2>&1; then
+  sudo tailscale serve --bg --yes --https=443 --set-path=/api http://127.0.0.1:4000 >/dev/null
+  sudo tailscale serve --bg --yes --https=443 --set-path=/ http://127.0.0.1:8081 >/dev/null
+  sudo tailscale serve --bg --yes --https=8443 http://127.0.0.1:4100 >/dev/null
+  tailscale serve status
+else
+  echo "Tailscale이 로그인되지 않아 개인용 화면 설정을 건너뜁니다" >&2
+fi
 echo "설치 완료"

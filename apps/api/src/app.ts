@@ -155,6 +155,19 @@ export function createApp(cfg: ApiConfig) {
 
   // ─────────────── 관리자 로그인 ───────────────
 
+  /** 공개 도메인에서 로그인하면 하위 도메인끼리 쿠키를 나누고, Tailscale 주소처럼 다른 호스트에서는 그 호스트에만 둡니다 */
+  const cookieDomainFor = (c: Context) => {
+    if (!cfg.cookieDomain) return undefined;
+    const base = cfg.cookieDomain.replace(/^\./, "");
+    let host = "";
+    try {
+      host = new URL(c.req.header("origin") ?? "").hostname;
+    } catch {
+      return undefined;
+    }
+    return host === base || host.endsWith(`.${base}`) ? cfg.cookieDomain : undefined;
+  };
+
   app.post("/auth/login", async (c) => {
     if (!loginLimit.allow(clientIp(c))) return c.json({ error: "잠시 후 다시 시도해 주세요" }, 429);
     const { password } = z.object({ password: z.string().max(200) }).parse(await c.req.json());
@@ -166,14 +179,14 @@ export function createApp(cfg: ApiConfig) {
       secure: cfg.secureCookie,
       sameSite: "Lax",
       path: "/",
-      domain: cfg.cookieDomain,
+      domain: cookieDomainFor(c),
       maxAge: SESSION_MAX_AGE,
     });
     return c.json({ ok: true });
   });
 
   app.post("/auth/logout", (c) => {
-    deleteCookie(c, COOKIE, { path: "/", domain: cfg.cookieDomain });
+    deleteCookie(c, COOKIE, { path: "/", domain: cookieDomainFor(c) });
     return c.json({ ok: true });
   });
 

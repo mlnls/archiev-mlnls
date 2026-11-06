@@ -29,25 +29,5 @@ blog.__SITE_DOMAIN__ {
 	}
 }
 
-employ.__SITE_DOMAIN__ {
-	import mlnl_common
-	header X-Robots-Tag "noindex, nofollow"
-	handle_path /api/* {
-		request_body {
-			max_size 2MB
-		}
-		reverse_proxy mlnl-api:4000
-	}
-	handle {
-		reverse_proxy mlnl-employ:80
-	}
-}
-archiev.__SITE_DOMAIN__ {
-	import mlnl_common
-	header X-Robots-Tag "noindex, nofollow"
-	request_body {
-		max_size 4GB
-	}
-	reverse_proxy mlnl-archive:4100
-}
+# employ(채용 레이더)와 archive(보관함)는 공개하지 않고 Tailscale serve로만 엽니다
 # <<< archiev-mlnls

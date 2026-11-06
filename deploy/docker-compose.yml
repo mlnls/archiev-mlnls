@@ -14,6 +14,8 @@ services:
     image: ${EMPLOY_IMAGE:-ghcr.io/mlnls/archiev-mlnls/employ:latest}
     restart: unless-stopped
     mem_limit: 48m
+    # 개인용 화면은 공개 Caddy가 아니라 Tailscale serve로만 엽니다 (deploy/README.md)
+    ports: ["127.0.0.1:8081:80"]
     networks: [edge]
 
   mlnl-blog:
@@ -29,13 +31,14 @@ services:
     image: ${API_IMAGE:-ghcr.io/mlnls/archiev-mlnls/api:latest}
     restart: unless-stopped
     mem_limit: 512m
+    ports: ["127.0.0.1:4000:4000"]
     environment:
       SESSION_SECRET: ${SESSION_SECRET}
       ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH}
       WORKER_TOKEN: ${WORKER_TOKEN}
       REVALIDATE_SECRET: ${REVALIDATE_SECRET}
       BLOG_INTERNAL_URL: http://mlnl-blog:3000
-      ALLOWED_ORIGINS: https://blog.${SITE_DOMAIN:?.env에 SITE_DOMAIN이 필요합니다},https://employ.${SITE_DOMAIN}
+      ALLOWED_ORIGINS: https://blog.${SITE_DOMAIN:?.env에 SITE_DOMAIN이 필요합니다},https://${TAILNET_HOST:-tailnet.invalid}
       COOKIE_DOMAIN: .${SITE_DOMAIN}
       BATCH_CRON: "0 8 * * *"
       SARAMIN_ACCESS_KEY: ${SARAMIN_ACCESS_KEY:-}
@@ -48,11 +51,12 @@ services:
     image: ${ARCHIVE_IMAGE:-ghcr.io/mlnls/archiev-mlnls/archive:latest}
     restart: unless-stopped
     mem_limit: 256m
+    ports: ["127.0.0.1:4100:4100"]
     environment:
       ARCHIVE_USERNAME: ${ARCHIVE_USERNAME:-}
       ARCHIVE_PASSWORD_HASH: ${ARCHIVE_PASSWORD_HASH:-}
       ARCHIVE_SESSION_SECRET: ${ARCHIVE_SESSION_SECRET:-}
-      ARCHIVE_ORIGIN: https://archiev.${SITE_DOMAIN}
+      ARCHIVE_ORIGIN: https://${TAILNET_HOST:-tailnet.invalid}:8443
     volumes:
       - archive:/data
     networks: [edge]

@@ -47,6 +47,21 @@ afterAll(async () => {
 });
 
 describe("auth", () => {
+  it("shares the cookie across public subdomains but keeps it host-only elsewhere", async () => {
+    const tsOrigin = "https://mlnl-server.tail0000.ts.net";
+    const { app: scoped } = createApp({ ...cfg, cookieDomain: ".mlnl.site", allowedOrigins: [ORIGIN, tsOrigin] });
+    const login = (origin: string) =>
+      scoped.request("/auth/login", {
+        method: "POST",
+        headers: { "content-type": "application/json", origin, "x-forwarded-for": `9.9.9.${origin.length}` },
+        body: JSON.stringify({ password: "correct horse" }),
+      });
+    expect((await login(ORIGIN)).headers.get("set-cookie")).toMatch(/Domain=\.mlnl\.site/i);
+    const ts = await login(tsOrigin);
+    expect(ts.status).toBe(200);
+    expect(ts.headers.get("set-cookie")).not.toMatch(/Domain=/i);
+  });
+
   it("rejects a wrong password", async () => {
     const saved = cookie;
     cookie = "";
