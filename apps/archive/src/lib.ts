@@ -93,3 +93,24 @@ function videoThumb(file: File): Promise<Thumb | null> {
     video.src = url;
   });
 }
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+/**
+ * 클립보드에서 사진과 동영상만 꺼냅니다.
+ * 캡처 이미지는 이름이 모두 image.png라서 붙여 넣은 시각으로 이름을 붙입니다.
+ */
+export function pastedFiles(data: DataTransfer | null, now = new Date()): File[] {
+  if (!data) return [];
+  const fromItems = [...(data.items ?? [])].filter((i) => i.kind === "file").map((i) => i.getAsFile()).filter((f): f is File => !!f);
+  const files = fromItems.length ? fromItems : [...(data.files ?? [])];
+  const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}.${pad(now.getMinutes())}.${pad(now.getSeconds())}`;
+  return files
+    .filter((f) => f.type.startsWith("image/") || f.type.startsWith("video/"))
+    .map((f, i, all) => {
+      if (!/^image\.(png|jpe?g|gif|webp)$/i.test(f.name)) return f;
+      const ext = f.name.split(".").pop()!.toLowerCase();
+      const name = `붙여넣기 ${stamp}${all.length > 1 ? ` (${i + 1})` : ""}.${ext}`;
+      return new File([f], name, { type: f.type, lastModified: now.getTime() });
+    });
+}
