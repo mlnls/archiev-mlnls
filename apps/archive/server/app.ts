@@ -133,10 +133,63 @@ export function createApp(cfg: ArchiveConfig, store: Store) {
   app.use("/api/items", requireAuth);
   app.use("/files/*", requireAuth);
 
+  app.use("/api/folders/*", requireAuth);
+  app.use("/api/folders", requireAuth);
+
   app.get("/api/items", async (c) => {
     const items = store.list();
     const used = items.reduce((s, i) => s + i.size, 0);
-    return c.json({ items, used, free: await store.freeBytes() });
+    return c.json({ items, folders: store.listFolders(), used, free: await store.freeBytes() });
+  });
+
+  const folderName = (v: unknown) => {
+    const name = typeof v === "string" ? v.replace(/[\u0000-\u001f\u007f]/g, "").trim() : "";
+    return name && name.length <= 60 ? name : null;
+  };
+
+  app.post("/api/folders", async (c) => {
+    const body = (await c.req.json().catch(() => ({}))) as { name?: unknown };
+    const name = folderName(body.name);
+    if (!name) return c.json({ error: "폴더 이름은 1~60자로 적어 주세요" }, 400);
+    if (store.listFolders().some((f) => f.name === name)) return c.json({ error: "같은 이름의 폴더가 있습니다" }, 409);
+    return c.json(await store.addFolder(name), 201);
+  });
+
+  app.patch("/api/folders/:id", async (c) => {
+    const id = c.req.param("id");
+    if (!ID_PATTERN.test(id) || !store.getFolder(id)) return c.json({ error: "없는 폴더입니다" }, 404);
+    const body = (await c.req.json().catch(() => ({}))) as { name?: unknown };
+    const name = folderName(body.name);
+    if (!name) return c.json({ error: "폴더 이름은 1~60자로 적어 주세요" }, 400);
+    if (store.listFolders().some((f) => f.name === name && f.id !== id)) return c.json({ error: "같은 이름의 폴더가 있습니다" }, 409);
+    return c.json(await store.renameFolder(id, name));
+  });
+
+  app.delete("/api/folders/:id", async (c) => {
+    const id = c.req.param("id");
+    if (!ID_PATTERN.test(id)) return c.json({ error: "없는 폴더입니다" }, 404);
+    return (await store.removeFolder(id)) ? c.json({ ok: true }) : c.json({ error: "없는 폴더입니다" }, 404);
+  });
+
+  const idList = (v: unknown) =>
+    Array.isArray(v) && v.length > 0 && v.length <= 1000 && v.every((x) => typeof x === "string" && ID_PATTERN.test(x)) ? (v as string[]) : null;
+
+  app.post("/api/items/move", async (c) => {
+    const body = (await c.req.json().catch(() => ({}))) as { ids?: unknown; folderId?: unknown };
+    const ids = idList(body.ids);
+    if (!ids) return c.json({ error: "옮길 파일을 골라 주세요" }, 400);
+    const folderId = body.folderId === null ? null : typeof body.folderId === "string" ? body.folderId : undefined;
+    if (folderId === undefined || (folderId !== null && !store.getFolder(folderId))) return c.json({ error: "없는 폴더입니다" }, 404);
+    return c.json({ moved: await store.move(ids, folderId) });
+  });
+
+  app.post("/api/items/delete", async (c) => {
+    const body = (await c.req.json().catch(() => ({}))) as { ids?: unknown };
+    const ids = idList(body.ids);
+    if (!ids) return c.json({ error: "지울 파일을 골라 주세요" }, 400);
+    let deleted = 0;
+    for (const id of ids) if (await store.remove(id)) deleted++;
+    return c.json({ deleted });
   });
 
   // 본문은 파일 그대로, 이름과 시각은 헤더로 받습니다 (multipart 없이 바로 디스크에 씁니다)
@@ -159,6 +212,9 @@ export function createApp(cfg: ArchiveConfig, store: Store) {
     const modified = Number(c.req.header("x-file-modified"));
     const takenAt = Number.isFinite(modified) && modified > 0 && modified <= now + 86_400_000 ? modified : now;
 
+    const folderHeader = c.req.header("x-folder-id") || null;
+    if (folderHeader && !(ID_PATTERN.test(folderHeader) && store.getFolder(folderHeader))) return c.json({ error: "없는 폴더입니다" }, 404);
+
     const id = store.newId();
     let size: number;
     try {
@@ -171,7 +227,7 @@ export function createApp(cfg: ArchiveConfig, store: Store) {
       await rm(store.filePath(id), { force: true });
       return c.json({ error: "빈 파일입니다" }, 400);
     }
-    const item: Item = { id, name, type, kind, size, takenAt, uploadedAt: now, memo: "", thumb: false };
+    const item: Item = { id, name, type, kind, size, takenAt, uploadedAt: now, memo: "", thumb: false, folderId: folderHeader };
     await store.add(item);
     return c.json(item, 201);
   });

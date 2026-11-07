@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { extOf, formatBytes, formatDate } from "./lib";
-import type { Item } from "./types";
+import type { Folder, Item } from "./types";
 
 interface Props {
   item: Item;
+  folders: Folder[];
   hasPrev: boolean;
   hasNext: boolean;
   onPrev: () => void;
@@ -11,9 +12,13 @@ interface Props {
   onClose: () => void;
   onDelete: (item: Item) => void;
   onSaveMemo: (item: Item, memo: string) => Promise<void>;
+  /** 고른 값: 폴더 id, newFolderValue(새 폴더), outValue(폴더에서 빼기) */
+  onMove: (item: Item, value: string) => void;
+  newFolderValue: string;
+  outValue: string;
 }
 
-export function Viewer({ item, hasPrev, hasNext, onPrev, onNext, onClose, onDelete, onSaveMemo }: Props) {
+export function Viewer({ item, folders, hasPrev, hasNext, onPrev, onNext, onClose, onDelete, onSaveMemo, onMove, newFolderValue, outValue }: Props) {
   const [memo, setMemo] = useState(item.memo);
   const [memoState, setMemoState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [broken, setBroken] = useState(false);
@@ -37,7 +42,7 @@ export function Viewer({ item, hasPrev, hasNext, onPrev, onNext, onClose, onDele
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement).closest("textarea")) return;
+      if ((e.target as HTMLElement).closest("textarea, select, input") || document.querySelector("dialog[open]")) return;
       if (e.key === "Escape") onClose();
       else if (e.key === "ArrowLeft" && hasPrev) onPrev();
       else if (e.key === "ArrowRight" && hasNext) onNext();
@@ -102,6 +107,23 @@ export function Viewer({ item, hasPrev, hasNext, onPrev, onNext, onClose, onDele
             {item.width && item.height ? ` · ${item.width}×${item.height}` : ""}
           </dd>
         </dl>
+        <label className="field">
+          폴더
+          <select
+            value={item.folderId ?? outValue}
+            onChange={(e) => {
+              if (e.target.value !== (item.folderId ?? outValue)) onMove(item, e.target.value);
+            }}
+          >
+            <option value={outValue}>폴더 없음</option>
+            {folders.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.name}
+              </option>
+            ))}
+            <option value={newFolderValue}>새 폴더 만들기</option>
+          </select>
+        </label>
         <label className="memo">
           메모
           <textarea

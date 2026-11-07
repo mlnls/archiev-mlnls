@@ -1,4 +1,4 @@
-import type { Item, Listing } from "./types";
+import type { Folder, Item, Listing } from "./types";
 
 export class ApiError extends Error {
   constructor(
@@ -25,6 +25,11 @@ export const api = {
   list: () => call<Listing>("/api/items"),
   setMemo: (id: string, memo: string) => call<Item>(`/api/items/${id}`, { method: "PATCH", ...json({ memo }) }),
   remove: (id: string) => call(`/api/items/${id}`, { method: "DELETE" }),
+  removeMany: (ids: string[]) => call<{ deleted: number }>("/api/items/delete", { method: "POST", ...json({ ids }) }),
+  move: (ids: string[], folderId: string | null) => call<{ moved: number }>("/api/items/move", { method: "POST", ...json({ ids, folderId }) }),
+  createFolder: (name: string) => call<Folder>("/api/folders", { method: "POST", ...json({ name }) }),
+  renameFolder: (id: string, name: string) => call<Folder>(`/api/folders/${id}`, { method: "PATCH", ...json({ name }) }),
+  deleteFolder: (id: string) => call(`/api/folders/${id}`, { method: "DELETE" }),
   putThumb: (id: string, blob: Blob, width: number, height: number) =>
     call<Item>(`/api/items/${id}/thumb`, {
       method: "PUT",
@@ -34,13 +39,14 @@ export const api = {
 };
 
 /** 진행률을 받으려고 업로드만 XHR을 씁니다 */
-export function uploadFile(file: File, onProgress: (ratio: number) => void): { promise: Promise<Item>; abort: () => void } {
+export function uploadFile(file: File, folderId: string | null, onProgress: (ratio: number) => void): { promise: Promise<Item>; abort: () => void } {
   const xhr = new XMLHttpRequest();
   const promise = new Promise<Item>((resolve, reject) => {
     xhr.open("POST", "/api/items");
     xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
     xhr.setRequestHeader("X-File-Name", encodeURIComponent(file.name));
     xhr.setRequestHeader("X-File-Modified", String(file.lastModified || Date.now()));
+    if (folderId) xhr.setRequestHeader("X-Folder-Id", folderId);
     xhr.upload.onprogress = (e) => e.lengthComputable && onProgress(e.loaded / e.total);
     xhr.onload = () => {
       let data: { error?: string } = {};

@@ -17,6 +17,14 @@ export interface Item {
   thumb: boolean;
   width?: number;
   height?: number;
+  /** 들어 있는 폴더. 없으면 어느 폴더에도 넣지 않은 파일입니다 */
+  folderId?: string | null;
+}
+
+export interface Folder {
+  id: string;
+  name: string;
+  createdAt: number;
 }
 
 export const ID_PATTERN = /^[A-Za-z0-9_-]{12}$/;
@@ -31,6 +39,7 @@ export function kindOf(type: string): Kind | null {
 /** 파일 목록은 JSON 하나에 둡니다. 혼자 쓰는 아카이브라 수만 건까지 충분합니다 */
 export class Store {
   private items: Item[] = [];
+  private folders: Folder[] = [];
   private queue: Promise<unknown> = Promise.resolve();
   readonly filesDir: string;
   private indexFile: string;
@@ -43,7 +52,9 @@ export class Store {
   async init() {
     await mkdir(this.filesDir, { recursive: true });
     try {
-      this.items = JSON.parse(await readFile(this.indexFile, "utf8")).items ?? [];
+      const saved = JSON.parse(await readFile(this.indexFile, "utf8"));
+      this.items = saved.items ?? [];
+      this.folders = saved.folders ?? [];
     } catch (e) {
       if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
     }
@@ -80,7 +91,7 @@ export class Store {
     const run = this.queue.then(async () => {
       const result = fn();
       const tmp = `${this.indexFile}.tmp`;
-      await writeFile(tmp, JSON.stringify({ items: this.items }));
+      await writeFile(tmp, JSON.stringify({ items: this.items, folders: this.folders }));
       await rename(tmp, this.indexFile);
       return result;
     });
@@ -100,6 +111,54 @@ export class Store {
       const item = this.items.find((i) => i.id === id);
       if (item) Object.assign(item, patch);
       return item;
+    });
+  }
+
+  listFolders(): Folder[] {
+    return [...this.folders].sort((a, b) => a.name.localeCompare(b.name, "ko"));
+  }
+
+  getFolder(id: string): Folder | undefined {
+    return this.folders.find((f) => f.id === id);
+  }
+
+  addFolder(name: string) {
+    return this.mutate(() => {
+      const folder: Folder = { id: this.newId(), name, createdAt: Date.now() };
+      this.folders.push(folder);
+      return folder;
+    });
+  }
+
+  renameFolder(id: string, name: string) {
+    return this.mutate(() => {
+      const folder = this.folders.find((f) => f.id === id);
+      if (folder) folder.name = name;
+      return folder;
+    });
+  }
+
+  /** 폴더만 지웁니다. 안에 있던 파일은 지우지 않고 폴더 밖으로 꺼냅니다 */
+  removeFolder(id: string) {
+    return this.mutate(() => {
+      const before = this.folders.length;
+      this.folders = this.folders.filter((f) => f.id !== id);
+      for (const item of this.items) if (item.folderId === id) item.folderId = null;
+      return this.folders.length !== before;
+    });
+  }
+
+  /** 여러 파일을 한 폴더로 옮깁니다. null이면 폴더에서 뺍니다 */
+  move(ids: string[], folderId: string | null) {
+    const want = new Set(ids);
+    return this.mutate(() => {
+      let moved = 0;
+      for (const item of this.items) {
+        if (!want.has(item.id)) continue;
+        item.folderId = folderId;
+        moved++;
+      }
+      return moved;
     });
   }
 
