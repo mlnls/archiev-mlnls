@@ -143,6 +143,57 @@ describe("items", () => {
   });
 });
 
+describe("folders", () => {
+  const sendJson = (ck: string, method: string, url: string, body?: unknown) =>
+    app.request(url, { method, headers: { Cookie: ck, Origin: ORIGIN, "Content-Type": "application/json" }, body: body === undefined ? undefined : JSON.stringify(body) });
+
+  it("creates folders, uploads into one, moves files, and keeps files when a folder is removed", async () => {
+    const ck = await cookie();
+    expect((await sendJson(ck, "POST", "/api/folders", { name: "  " })).status).toBe(400);
+    const trip = await (await sendJson(ck, "POST", "/api/folders", { name: "제주 여행" })).json();
+    expect((await sendJson(ck, "POST", "/api/folders", { name: "제주 여행" })).status).toBe(409);
+    const food = await (await sendJson(ck, "POST", "/api/folders", { name: "음식" })).json();
+
+    const inTrip = await (
+      await app.request("/api/items", {
+        method: "POST",
+        headers: { Cookie: ck, Origin: ORIGIN, "Content-Type": "image/png", "X-Folder-Id": trip.id },
+        body: new Uint8Array([1]),
+      })
+    ).json();
+    expect(inTrip.folderId).toBe(trip.id);
+    const loose = await (await upload(ck, new Uint8Array([2]))).json();
+    expect(loose.folderId).toBeNull();
+
+    const badFolder = await app.request("/api/items", {
+      method: "POST",
+      headers: { Cookie: ck, Origin: ORIGIN, "Content-Type": "image/png", "X-Folder-Id": "AAAAAAAAAAAA" },
+      body: new Uint8Array([3]),
+    });
+    expect(badFolder.status).toBe(404);
+
+    expect((await (await sendJson(ck, "POST", "/api/items/move", { ids: [inTrip.id, loose.id], folderId: food.id })).json()).moved).toBe(2);
+    expect((await sendJson(ck, "POST", "/api/items/move", { ids: [loose.id], folderId: "AAAAAAAAAAAA" })).status).toBe(404);
+
+    const renamed = await (await sendJson(ck, "PATCH", `/api/folders/${food.id}`, { name: "맛집" })).json();
+    expect(renamed.name).toBe("맛집");
+
+    expect((await sendJson(ck, "DELETE", `/api/folders/${food.id}`)).status).toBe(200);
+    const list = await (await app.request("/api/items", { headers: { Cookie: ck } })).json();
+    expect(list.folders.map((f: { name: string }) => f.name)).toEqual(["제주 여행"]);
+    expect(list.items).toHaveLength(2);
+    expect(list.items.every((i: { folderId: string | null }) => i.folderId === null)).toBe(true);
+  });
+
+  it("deletes several files at once", async () => {
+    const ck = await cookie();
+    const a = await (await upload(ck, new Uint8Array([1]))).json();
+    const b = await (await upload(ck, new Uint8Array([2]))).json();
+    expect((await (await sendJson(ck, "POST", "/api/items/delete", { ids: [a.id, b.id] })).json()).deleted).toBe(2);
+    expect((await sendJson(ck, "POST", "/api/items/delete", { ids: ["../etc"] })).status).toBe(400);
+  });
+});
+
 describe("parseRange", () => {
   it("handles open and suffix ranges", () => {
     expect(parseRange(undefined, 10)).toBeNull();
