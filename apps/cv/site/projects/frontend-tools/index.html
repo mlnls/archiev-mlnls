@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>벽촌 FE 공통 모듈 · 사내 CLI | 오승민</title>
-  <meta name="description" content="사내 CLI에 모바일(Expo)·데스크톱(Electron) 스타터와 bc deploy를 더해, 어떤 프로젝트든 같은 구조로 시작하고 배포가 성공할 때만 릴리즈 노트가 남게 했습니다.">
+  <meta name="description" content="프로젝트가 계속 새로 생기는 SI 환경에서, 명령 하나로 웹 · 앱 · 데스크톱 프로젝트를 같은 구조로 시작하고 배포가 성공하면 릴리즈 노트까지 남도록 사내 CLI와 공통 패키지를 키웠습니다.">
   <link rel="canonical" href="https://mlnl.site/projects/frontend-tools/">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://mlnl.site/projects/frontend-tools/">
   <meta property="og:title" content="벽촌 FE 공통 모듈 · 사내 CLI | 오승민">
-  <meta property="og:description" content="사내 CLI에 모바일(Expo)·데스크톱(Electron) 스타터와 bc deploy를 더해, 어떤 프로젝트든 같은 구조로 시작하고 배포가 성공할 때만 릴리즈 노트가 남게 했습니다.">
+  <meta property="og:description" content="프로젝트가 계속 새로 생기는 SI 환경에서, 명령 하나로 웹 · 앱 · 데스크톱 프로젝트를 같은 구조로 시작하고 배포가 성공하면 릴리즈 노트까지 남도록 사내 CLI와 공통 패키지를 키웠습니다.">
   <meta property="og:locale" content="ko_KR">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
@@ -24,8 +24,29 @@
     "url": "https://mlnl.site/projects/frontend-tools/",
     "name": "벽촌 FE 공통 모듈 · 사내 CLI",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" },
-    "sameAs": ["https://www.npmjs.com/package/byuckchon-frontend-cli", "https://github.com/RevolutionaryWarrior/byuckchon-frontend-cli"]
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/electron/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/expo/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/deploy/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/release-notes/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/v3/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/frontend-tools/qa/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -36,17 +57,24 @@
       <div class="pj-title">
         <p class="eyebrow">벽촌 · 2025.09 – 현재</p>
         <h1>벽촌 FE 공통 모듈 · 사내 CLI</h1>
-        <p class="lead">프로젝트가 계속 새로 생기는 SI 환경에서, 명령 하나로 웹·앱·데스크톱 프로젝트를 같은 구조로 시작하고 배포가 성공하면 릴리즈 노트까지 남도록 사내 CLI와 공통 패키지를 키웠습니다.</p>
+        <p class="lead">프로젝트가 계속 새로 생기는 SI 환경에서, 명령 하나로 웹 · 앱 · 데스크톱 프로젝트를 같은 구조로 시작하고 배포가 성공하면 릴리즈 노트까지 남도록 사내 CLI와 공통 패키지를 키웠습니다.</p>
         <p class="links"><a class="btn" href="https://www.npmjs.com/package/byuckchon-frontend-cli" rel="noopener">npm · CLI <span aria-hidden="true">↗</span></a><a class="btn" href="https://github.com/RevolutionaryWarrior/byuckchon-frontend-cli" rel="noopener">GitHub · CLI <span aria-hidden="true">↗</span></a><a class="btn" href="https://www.npmjs.com/package/@byuckchon-frontend/settings" rel="noopener">npm · settings <span aria-hidden="true">↗</span></a><a class="btn" href="https://github.com/RevolutionaryWarrior/byuckchon-frontend-packages" rel="noopener">GitHub · 공통 패키지 <span aria-hidden="true">↗</span></a></p>
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>Electron · Expo 스타터 · bc deploy · 릴리즈 노트 · v3 정리 · 공통 패키지 QA</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>Node CLI</li><li>Electron</li><li>Expo · EAS</li><li>GitHub Actions</li><li>changesets</li><li>pnpm 모노레포</li></ul></dd></div></dl>
     </header>
     <figure class="pj-cover"><img src="/projects/frontend-tools/cli-init.webp" alt="bc init에서 React, Next.js, Mobile(Expo), Desktop(Electron) 중 하나를 고르는 화면" width="1750" height="772" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>스타터</dt><dd><b>4종</b><span>React · Next · Expo · Electron</span></dd></div><div><dt>bc deploy</dt><dd><b>질문 4개</b><span>배포 workflow + 릴리즈 노트</span></dd></div><div><dt>CLI v3 정리</dt><dd><b>−5,923줄</b><span>의존성 9개 제거</span></dd></div><div><dt>공통 패키지 QA</dt><dd><b>12건</b><span>결함 수정 (MOD-21~35)</span></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>앱·데스크톱 요청이 들어와도 CLI는 웹(React · Next)만 만들어, Expo · Electron은 매번 손으로 세팅했고 폴더 구조와 API 규칙이 프로젝트마다 달라졌습니다.</li><li>배포 방식이 프로젝트마다 제각각이고 릴리즈 노트는 손으로 쓰거나 아예 남지 않아, 지금 운영에 어떤 버전이 떠 있는지 물어봐야 알았습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>bc init 하나로 웹·앱·데스크톱 4종이 같은 폴더 구조, API 레이어, 린트 설정으로 시작합니다.</li><li>bc deploy 한 번이면 배포 workflow가 생기고, 배포가 성공했을 때만 태그와 Release가 남아 최신 Release가 곧 운영 버전입니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>Desktop (Electron)</h3><p>electron-vite로 main · preload · renderer를 나누고, contextIsolation과 sandbox를 켠 채 preload에서 window.api만 노출했습니다. renderer는 웹과 같은 폴더 구조 · 토큰 · API 레이어를 쓰고, electron-builder로 macOS · Windows 설치 파일을 만듭니다.</p></li><li><span class="n">02</span><h3>Mobile (Expo)</h3><p>create-expo-app 위에 사내 설정을 덮고, 앱 이름 · 번들 ID · 딥링크 scheme을 물어 app.config.ts에 적습니다. EAS에 로그인돼 있으면 projectId까지 연결하고, NativeWind · TanStack Query · axios를 기본으로 갖춥니다.</p></li><li><span class="n">03</span><h3>bc deploy</h3><p>질문 4개(Enter면 기본값)로 배포 workflow를 만듭니다. 릴리즈 단계는 배포가 성공해야만 이어져 실패한 배포는 기록되지 않고, Slack 웹훅은 Secret 이름만 저장합니다. <a href="/projects/lawtimes/">법조인대관</a>에서 먼저 운영한 흐름을 모든 프로젝트로 옮겼습니다.</p></li><li><span class="n">04</span><h3>릴리즈 노트 패키지</h3><p>공통 settings 패키지에 byuckchon-release-notes를 더해, 이전 태그 이후 커밋을 기능 · 수정으로 묶고 날짜 버전(web@2026.11.05, 같은 날 재배포는 .2)으로 태그합니다. 커밋 분류는 PR 본문 자동 작성과 같은 코드를 씁니다.</p></li><li><span class="n">05</span><h3>v3 정리 · 버전 검사</h3><p>쓰지 않는 채팅과 생성 질문을 걷어내 5,923줄과 의존성 9개를 지우고, npm 최신과 버전이 다르면 실행을 멈춰 옛 템플릿으로 만든 프로젝트가 생기지 않게 했습니다.</p></li><li><span class="n">06</span><h3>공통 패키지 QA</h3><p>1월 31일에서 다음 달로 가면 3월이 되던 달력, SSR에서 SanitizeHtml 크래시, 입력 검증 정규식 오류 등 결함 12건을 고쳐 changeset으로 배포했습니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>배포 기록은 '배포 성공'에 묶어야 믿을 수 있습니다. 릴리즈를 배포 뒤에만 실행되게 걸어, 실패한 배포가 Release로 남지 않게 했습니다.</li><li>Release CI에서 npm 11로 만든 lockfile이 Node 20의 npm ci에서 실패했습니다. npm 10으로 다시 만들어 두 버전 모두 통과시켰습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>화면</h2><p class="note">실제 명령을 실행한 화면입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/frontend-tools/cli-deploy.webp" target="_blank" rel="noopener"><figure><img src="/projects/frontend-tools/cli-deploy.webp" alt="bc deploy: 질문 4개에 답하면 bc.config.json과 배포 workflow가 생성되는 화면" width="1750" height="1012" loading="lazy" decoding="async"><figcaption>bc deploy: 질문 4개로 배포 workflow와 릴리즈 노트 단계 생성</figcaption></figure></a><a href="/projects/frontend-tools/cli-releases.webp" target="_blank" rel="noopener"><figure><img src="/projects/frontend-tools/cli-releases.webp" alt="법조인대관 저장소의 GitHub Release 목록: 배포가 성공할 때마다 버전이 쌓인 화면" width="1750" height="340" loading="lazy" decoding="async"><figcaption>법조인대관 운영 저장소: 배포가 성공할 때만 Release가 쌓입니다</figcaption></figure></a></div></section>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">6</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/frontend-tools/electron/"><span class="n">01</span><span class="toc-body"><b>데스크톱 프로젝트도 명령 하나로</b><span>bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.</span></span><span class="toc-metric"><b>+ Electron</b><small>bc init 선택지</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/frontend-tools/expo/"><span class="n">02</span><span class="toc-body"><b>앱 프로젝트도 같은 규칙으로</b><span>create-expo-app 위에 사내 설정을 덮고, 앱 정보와 EAS 연결까지 bc init에서 끝냅니다.</span></span><span class="toc-metric"><b>+ Expo</b><small>bc init 선택지</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/frontend-tools/deploy/"><span class="n">03</span><span class="toc-body"><b>배포가 성공했을 때만 릴리즈가 남게</b><span>질문 4개로 배포 workflow를 만들고, 배포가 성공해야만 태그 · Release · Slack 알림이 남습니다.</span></span><span class="toc-metric"><b>질문 4개</b><small>bc deploy</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/frontend-tools/release-notes/"><span class="n">04</span><span class="toc-body"><b>릴리즈 노트는 커밋에서</b><span>공통 settings 패키지에 커밋을 기능 · 수정으로 묶어 노트를 쓰는 명령을 더했습니다.</span></span><span class="toc-metric"><b>날짜 버전</b><small>web@2026.11.05</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/frontend-tools/v3/"><span class="n">05</span><span class="toc-body"><b>쓰지 않는 기능은 걷어내기</b><span>아무도 쓰지 않던 채팅과 생성 질문을 지우고, 오래된 CLI로는 실행되지 않게 했습니다.</span></span><span class="toc-metric"><b>−5,923줄</b><small>의존성 9개 제거</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/frontend-tools/qa/"><span class="n">06</span><span class="toc-body"><b>공통 패키지 결함 12건</b><span>사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.</span></span><span class="toc-metric"><b>12건</b><small>결함 수정 (MOD-21~35)</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/marketd/"><small>← 이전 프로젝트</small><b>마켓:D</b></a><a class="next" href="/projects/eoullim/"><small>다음 프로젝트 →</small><b>어울림</b></a></nav>
   </main>
 </body>

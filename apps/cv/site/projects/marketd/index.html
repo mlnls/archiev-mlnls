@@ -24,7 +24,29 @@
     "url": "https://mlnl.site/projects/marketd/",
     "name": "마켓:D",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" }
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/marketd/monorepo/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/marketd/ota/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/marketd/admin-test/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/marketd/e2e/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/marketd/signed-url/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/marketd/expiry/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -40,12 +62,19 @@
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>모노레포 전환 · 관리자 테스트 (admin 전담) · 채팅 이미지 연동</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>React Native (Expo)</li><li>React</li><li>Turborepo</li><li>pnpm</li><li>TanStack Query</li><li>zod</li><li>Vitest</li><li>MSW</li><li>Playwright</li></ul></dd></div></dl>
     </header>
-    <figure class="pj-cover"><img src="/projects/marketd/marketd-1.webp" alt="관리자 테스트: 파일 84개, 케이스 935개, E2E 5개" width="1600" height="900" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>관리자 테스트 케이스</dt><dd><b>935개</b><span>테스트 파일 84개</span></dd></div><div><dt>E2E</dt><dd><b>5개</b><span>브라우저로만 되는 곳만</span></dd></div><div><dt>채팅 사진 주소 수명</dt><dd><b>60초</b><span>영구에서</span></dd></div><div><dt>송신 코드 변경</dt><dd><b>0줄</b><span>자동 재발급은 key당 1번</span></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>관리자, 사용자 앱, 웹뷰가 각자 다른 레포에 있어 앱-웹뷰 메시지 타입이 어긋나곤 했습니다.</li><li>관리자 화면은 회원 · 상품 · 결제 · 정산 · 통계 · 배달 · 고객센터까지 넓고 수정이 잦아, 하나를 고치면 어디가 깨졌는지 손으로 확인해야 했습니다.</li><li>이웃거래 채팅 사진(집 앞, 송장, 계좌 캡처)이 공개 버킷에 있어 주소만 알면 누구나 볼 수 있었습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>관리자 테스트는 “~하면 ~한다” 문장이라 요구사항처럼 읽히고, 로컬 재실행 175/175가 약 10초에 통과합니다.</li><li>채팅 사진은 참여자만 60초 동안 볼 수 있고, 보내는 쪽 코드는 한 줄도 바꾸지 않았습니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>모노레포</h3><p>pnpm workspace와 Turborepo로 레포를 합치고 앱-웹뷰 메시지 타입을 공통 패키지로 묶었습니다.</p></li><li><span class="n">02</span><h3>배포 경로 분리</h3><p>Expo EAS Update로 웹뷰, 연결 로직, 바이너리의 배포 경로를 나눠 긴급 수정을 스토어 심사 없이 내보냈습니다.</p></li><li><span class="n">03</span><h3>테스트 기반</h3><p>MSW로 서버 대신 목업 API를, 도메인별 fixture와 alert · table · download 공통 유틸을 만들었습니다.</p></li><li><span class="n">04</span><h3>E2E는 골라서</h3><p>jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃습니다. 전부 옮기지 않고 배너 이미지, 엑셀 업로드, 실제 달력, 체크박스만 Playwright로 옮겼습니다.</p></li><li><span class="n">05</span><h3>서명 URL 이미지</h3><p>비공개 버킷과 60초 서명 URL로 바꾸며, 목록은 initialData로 · 소켓 메시지는 바로 발급받게 쿼리 하나로 두 경로를 처리했습니다.</p></li><li><span class="n">06</span><h3>만료 대응</h3><p>이미 그린 이미지는 미리 갱신하지 않고, 깨지면 key당 한 번만 재발급합니다. 여러 장이 동시에 깨져도 요청은 한 번(cancelRefetch: false)입니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>서명은 “누가”를 모릅니다. URL을 가진 누구나 60초 동안 볼 수 있으니, 발급 API에서 참여자를 확인해야 합니다.</li><li>zod는 모르는 필드를 에러 없이 지웁니다. 관리자 스키마에 새 필드를 넣지 않으면 조용히 사라집니다.</li><li>배포 순서도 설계입니다. 서버 배포 직후 PR을 머지하지 않으면 둘 다 깨집니다.</li><li>“Playwright를 썼다”가 아니라, 통합 테스트가 못 보는 지점만 골라 브라우저 테스트로 옮겼습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/marketd/marketd-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/marketd/marketd-2.webp" alt="테스트 역할 분담과 재실행 결과" width="1600" height="900" loading="lazy" decoding="async"><figcaption>테스트 역할 분담과 재실행 결과</figcaption></figure></a><a href="/projects/marketd/marketd-3.webp" target="_blank" rel="noopener"><figure><img src="/projects/marketd/marketd-3.webp" alt="채팅 사진: 공개 버킷에서 비공개 버킷과 60초 서명 URL로" width="1600" height="900" loading="lazy" decoding="async"><figcaption>채팅 사진: 공개 버킷에서 비공개 버킷과 60초 서명 URL로</figcaption></figure></a><a href="/projects/marketd/marketd-4.webp" target="_blank" rel="noopener"><figure><img src="/projects/marketd/marketd-4.webp" alt="쿼리 하나로 목록과 소켓 두 경로 처리" width="1600" height="900" loading="lazy" decoding="async"><figcaption>쿼리 하나로 목록과 소켓 두 경로 처리</figcaption></figure></a></div></section>
+    <figure class="pj-cover"><img src="/projects/marketd/cover.webp" alt="마켓:D 모바일 웹 메인 화면" width="2400" height="1350" fetchpriority="high" decoding="async"></figure>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">6</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/marketd/monorepo/"><span class="n">01</span><span class="toc-body"><b>한쪽만 바꾸면 상대편이 깨졌다</b><span>관리자 · 앱 · 웹뷰 레포를 합치고 메시지 타입을 공통 패키지로 묶었습니다.</span></span><span class="toc-metric"><b>레포 3개 → 1개</b><small>pnpm workspace</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/marketd/ota/"><span class="n">02</span><span class="toc-body"><b>긴급 수정이 스토어 심사를 기다렸다</b><span>바뀐 것이 화면인지, 연결 로직인지, 바이너리인지에 따라 배포 길을 나눴습니다.</span></span><span class="toc-metric"><b>3갈래</b><small>배포 경로</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/marketd/admin-test/"><span class="n">03</span><span class="toc-body"><b>하나 고치면 어디가 깨졌는지 몰랐다</b><span>넓고 자주 바뀌는 관리자 화면에 요구사항처럼 읽히는 통합 테스트를 깔았습니다.</span></span><span class="toc-metric"><b>935개</b><small>관리자 테스트 케이스</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/marketd/e2e/"><span class="n">04</span><span class="toc-body"><b>jsdom이 못 보는 곳만 브라우저로</b><span>통합 테스트로 확인할 수 없는 지점만 골라 Playwright로 옮겼습니다.</span></span><span class="toc-metric"><b>5개</b><small>E2E</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/marketd/signed-url/"><span class="n">05</span><span class="toc-body"><b>주소만 알면 누구나 보던 채팅 사진</b><span>공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.</span></span><span class="toc-metric"><b>영구 → 60초</b><small>사진 주소 수명</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/marketd/expiry/"><span class="n">06</span><span class="toc-body"><b>60초가 지나면 깨지는 이미지</b><span>미리 갱신하지 않고, 깨진 이미지만 key당 한 번 다시 발급합니다.</span></span><span class="toc-metric"><b>key당 1번</b><small>재발급</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/lawtimes/"><small>← 이전 프로젝트</small><b>법률신문 한국법조인대관</b></a><a class="next" href="/projects/frontend-tools/"><small>다음 프로젝트 →</small><b>벽촌 FE 공통 모듈 · 사내 CLI</b></a></nav>
   </main>
 </body>

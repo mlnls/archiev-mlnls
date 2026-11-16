@@ -24,7 +24,29 @@
     "url": "https://mlnl.site/projects/lawtimes/",
     "name": "법률신문 한국법조인대관",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" }
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/render/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/ga4/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/runner/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/rolling/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/security/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawtimes/release/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -40,12 +62,19 @@
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>렌더링 성능 · GA4 · 배포 파이프라인 · 보안</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>Next.js</li><li>GA4</li><li>GitHub Actions self-hosted runner</li><li>Docker</li></ul></dd></div></dl>
     </header>
-    <figure class="pj-cover"><img src="/projects/lawtimes/lawtimes-site.webp" alt="한국법조인대관 메인 화면" width="1440" height="900" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>Lighthouse 성능</dt><dd><b>99점</b><span>80점에서</span></dd></div><div><dt>FCP · LCP</dt><dd><b>−77% · −73%</b></dd></div><div><dt>GA4로 확보한 행동 데이터</dt><dd><b>월 103만 건</b><span>SPA 라우팅 누락 수정</span></dd></div><div><dt>배포에 사람이 하는 일</dt><dd><b>머지 1번</b><span>5단계 손작업에서</span></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>클라이언트 렌더링 범위가 넓어 SSR의 이점이 사라져 있었고, SPA 라우팅에서 GA4 페이지뷰가 빠지고 있었습니다.</li><li>배포는 맥에서 크로스 빌드 → VPN 접속 → 베스천 SSH → 컨테이너 하나씩 교체 → git 싱크의 다섯 단계 손작업이었습니다.</li><li>EC2는 VPN IP만 받는데 GitHub 러너 IP는 매번 바뀌어서, “빌드 자동화”가 아니라 “못 들어오는 서버에 어떻게 배포하나”가 진짜 질문이었습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>머지 한 번이면 배포되고, 테스트 서버 교체는 정지부터 새 컨테이너 응답까지 약 8초입니다.</li><li>pem · VPN · 비밀번호를 사람끼리 주고받지 않고, 레포 권한만으로 배포됩니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>렌더링</h3><p>SSR을 무력화하던 클라이언트 렌더링 범위를 좁히고 폰트를 dynamic subset으로 바꿨습니다.</p></li><li><span class="n">02</span><h3>베스천 runner</h3><p>베스천에 self-hosted runner를 두고 GitHub으로 나가는 443 롱 폴링만 쓰게 해 VPN 규칙을 그대로 뒀습니다.</p></li><li><span class="n">03</span><h3>빌드는 GitHub에서</h3><p>amd64 네이티브로 빌드하고, 버전은 최신 태그와 PR 라벨로 정했습니다.</p></li><li><span class="n">04</span><h3>롤링 교체</h3><p>포트를 하나씩 교체하고, 60초 안에 응답이 없으면 그 포트만 이전 컨테이너로 되돌립니다.</p></li><li><span class="n">05</span><h3>권한 최소화</h3><p>sudo 없는 전용 계정, main · dev workflow만 허용, 러너 키에는 command=로 배포 스크립트만 실행하게 하고 인자는 정규식으로 검사합니다. 베스천 job에는 Secret을 넘기지 않습니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>set -e는 복구 단계까지 건너뜁니다. 실패하면 기존 컨테이너가 멈춘 채 끝나서 if ! …; then restore로 바꿨습니다.</li><li>새 브랜치를 push하면 paths 필터가 비교할 커밋이 없어 아무 기록 없이 건너뜁니다.</li><li>버전은 push한 순간 “쓴 것”입니다. 같은 번호로 다시 빌드하면 롤백을 보장할 수 없습니다.</li><li>자동화는 실패 경로가 코드에 없으면 그냥 멈춥니다. 사람이 하던 판단까지 스크립트로 옮겼습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/lawtimes/lawtimes-1.webp" target="_blank" rel="noopener"><figure><img src="/projects/lawtimes/lawtimes-1.webp" alt="이전과 이후: 5단계 손작업에서 머지 1번, 테스트 서버 교체 약 8초" width="1600" height="900" loading="lazy" decoding="async"><figcaption>이전과 이후: 5단계 손작업에서 머지 1번, 테스트 서버 교체 약 8초</figcaption></figure></a><a href="/projects/lawtimes/lawtimes-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/lawtimes/lawtimes-2.webp" alt="구조: 베스천 runner, GitHub 빌드, 롤링 교체" width="1600" height="900" loading="lazy" decoding="async"><figcaption>구조: 베스천 runner, GitHub 빌드, 롤링 교체</figcaption></figure></a></div></section>
+    <figure class="pj-cover"><img src="/projects/lawtimes/cover.webp" alt="한국법조인대관 메인 화면" width="2400" height="1500" fetchpriority="high" decoding="async"></figure>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">6</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/lawtimes/render/"><span class="n">01</span><span class="toc-body"><b>SSR이 꺼져 있던 렌더링</b><span>화면 전체를 감싸던 클라이언트 렌더링을 필요한 곳으로 좁히고 폰트를 바꿨습니다.</span></span><span class="toc-metric"><b>80 → 99</b><small>Lighthouse 성능</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawtimes/ga4/"><span class="n">02</span><span class="toc-body"><b>페이지뷰가 빠지고 있었다</b><span>SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.</span></span><span class="toc-metric"><b>월 103만 건</b><small>GA4 이벤트</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawtimes/runner/"><span class="n">03</span><span class="toc-body"><b>들어갈 수 없는 서버에 배포하기</b><span>VPN IP만 받는 EC2에, 베스천에서 밖으로 나가는 연결만으로 배포했습니다.</span></span><span class="toc-metric"><b>5단계 → 머지 1번</b><small>사람이 하는 일</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawtimes/rolling/"><span class="n">04</span><span class="toc-body"><b>실패해도 서비스는 살아 있게</b><span>포트를 하나씩 교체하고, 응답이 없으면 그 포트만 이전 컨테이너로 되돌립니다.</span></span><span class="toc-metric"><b>약 8초</b><small>테스트 서버 교체</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawtimes/security/"><span class="n">05</span><span class="toc-body"><b>배포 권한은 레포 권한만큼만</b><span>운영 서버로 이어지는 베스천 runner의 권한을 배포 스크립트 하나로 좁혔습니다.</span></span><span class="toc-metric"><b>Secret 0개</b><small>베스천 job에 넘기는 값</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawtimes/release/"><span class="n">06</span><span class="toc-body"><b>버전과 릴리스 노트도 자동으로</b><span>PR 라벨로 버전을 정하고, 배포가 끝나면 GitHub Release에 변경 내역을 남깁니다.</span></span><span class="toc-metric"><b>PR 라벨</b><small>버전 결정</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/lawvax/"><small>← 이전 프로젝트</small><b>법무법인 로백스 홈페이지</b></a><a class="next" href="/projects/marketd/"><small>다음 프로젝트 →</small><b>마켓:D</b></a></nav>
   </main>
 </body>

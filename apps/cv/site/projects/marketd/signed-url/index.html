@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주소만 알면 누구나 보던 채팅 사진 · 마켓:D | 오승민</title>
+  <meta name="description" content="공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/marketd/signed-url/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/marketd/signed-url/">
+  <meta property="og:title" content="주소만 알면 누구나 보던 채팅 사진 · 마켓:D | 오승민">
+  <meta property="og:description" content="공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/marketd/signed-url/#note",
+    "url": "https://mlnl.site/projects/marketd/signed-url/",
+    "headline": "주소만 알면 누구나 보던 채팅 사진",
+    "description": "공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/marketd/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">마켓:D · 노트 05 / 06</p>
+      <h1>주소만 알면 누구나 보던 채팅 사진</h1>
+      <p class="lead">공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.</p>
+      <p class="nt-metric"><b>영구 → 60초</b><span>사진 주소 수명</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/" aria-current="page"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>이웃거래 채팅 사진(집 앞, 송장, 계좌 캡처)이 공개 버킷에 있어 주소만 알면 누구나 볼 수 있었다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>비공개 버킷과 60초 서명 URL로 바꾸고, 발급 API에서 채팅 참여자인지 확인한다.</li><li>목록은 <code>initialData</code>로, 소켓 메시지는 바로 발급받게 해 쿼리 하나로 두 경로를 처리했다.</li></ul><figure class="nt-fig"><a href="/projects/marketd/signed-url-flow.webp" target="_blank" rel="noopener"><img src="/projects/marketd/signed-url-flow.webp" alt="목록 API와 소켓 메시지가 하나의 서명 URL 쿼리로 모이는 흐름" width="916" height="541" loading="lazy" decoding="async"></a><figcaption>받는 쪽: 서명 URL을 어디서, 언제, 몇 번 받나</figcaption></figure></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>참여자만 60초 동안 볼 수 있다.</li><li>보내는 쪽 코드는 한 줄도 바꾸지 않았다.</li></ul></section>
+      <aside class="nt-memo"><h2>메모</h2><ul><li>서명은 “누가”를 모른다. URL을 가진 누구나 60초 동안 볼 수 있으니 발급 API에서 참여자를 확인해야 한다.</li><li>배포 순서도 설계다. 서버 배포 직후 PR을 머지하지 않으면 둘 다 깨진다.</li></ul></aside>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/e2e/"><small>← 이전 노트</small><b>jsdom이 못 보는 곳만 브라우저로</b></a><a class="next" href="/projects/marketd/expiry/"><small>다음 노트 →</small><b>60초가 지나면 깨지는 이미지</b></a></nav>
+  </main>
+</body>
+</html>

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx --yes serve@14.2.5 site -l 3003",
+    "build": "node scripts/build-projects.mjs",
     "test": "vitest run"
   },
   "devDependencies": {
