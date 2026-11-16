@@ -207,3 +207,6 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
   .doc { padding: 0; max-width: none; }
   .doc .back, .doc .others, .doc .pager { display: none; }
 }
+
+/* 경력: 프로젝트 아래에는 스택만 */
+.stack { margin-top: 2px; color: var(--muted); font-size: 13px; }
