@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AWS SAA-C03 스터디 사이트 | 오승민</title>
+  <meta name="description" content="스터디장으로 운영하는 AWS 자격증 스터디를 위해, 정적 사이트를 그대로 두고 Postgres 함수를 API로 써서 로그인 · 이어 풀기 · 랭킹 · 오답 리뷰를 만들었습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/aws-study/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/aws-study/">
+  <meta property="og:title" content="AWS SAA-C03 스터디 사이트 | 오승민">
+  <meta property="og:description" content="스터디장으로 운영하는 AWS 자격증 스터디를 위해, 정적 사이트를 그대로 두고 Postgres 함수를 API로 써서 로그인 · 이어 풀기 · 랭킹 · 오답 리뷰를 만들었습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://mlnl.site/projects/aws-study/#work",
+    "url": "https://mlnl.site/projects/aws-study/",
+    "name": "AWS SAA-C03 스터디 사이트",
+    "inLanguage": "ko",
+    "author": { "@id": "https://mlnl.site/#person" }
+  }
+  </script>
+</head>
+<body>
+  <main class="page project">
+    <nav class="crumb" aria-label="이동"><a href="/">← 이력으로</a></nav>
+    <header class="p-head">
+      <p class="eyebrow">활동 · 외부 스터디</p>
+      <h1>AWS SAA-C03 스터디 사이트</h1>
+      <p class="lead">스터디장으로 운영하는 AWS 자격증 스터디를 위해, 정적 사이트를 그대로 두고 Postgres 함수를 API로 써서 로그인 · 이어 풀기 · 랭킹 · 오답 리뷰를 만들었습니다.</p>
+    </header>
+    <dl class="p-meta"><dt>기간</dt><dd>2026.09 – 운영 중</dd><dt>역할</dt><dd>기획 · 설계 · 개발 · 스터디 운영</dd><dt>기술</dt><dd>Vanilla JS, Supabase, PostgREST, pgcrypto, PWA</dd></dl>
+<section aria-labelledby="s-num"><h2 id="s-num">숫자로 보면</h2><dl class="body stats"><div><dt>운영할 백엔드</dt><dd><b>0대</b><span>정적 사이트 + Supabase</span></dd></div><div><dt>기출</dt><dd><b>725문제</b><span>한국어 번역 · 해설</span></dd></div><div><dt>공개 키로 직접 읽는 테이블</dt><dd><b>0줄</b><span>정해진 함수만 호출</span></dd></div></dl></section>
+<section aria-labelledby="s-prob"><h2 id="s-prob">문제</h2><div class="body"><ul><li>index.html 하나에 localStorage로 기록하던 사이트라, 폰과 노트북을 오가며 이어 풀 수도, 누가 무엇을 골라 틀렸는지 같이 볼 수도 없었습니다.</li><li>서버를 따로 두기는 무거웠고, 필요한 건 DB뿐이었습니다.</li></ul></div></section>
+<section aria-labelledby="s-work"><h2 id="s-work">한 일</h2><div class="body"><dl class="steps"><dt>RLS on · 정책 없음</dt><dd>테이블은 공개 키로 한 줄도 읽을 수 없게 막고, security definer 함수만 열었습니다. 첫 인자 token으로 사용자와 관리자를 확인합니다.</dd><dt>SDK 없이</dt><dd>fetch 하나로 함수를 부르고, 설정이 비어 있으면 localStorage로 돌아가게 했습니다.</dd><dt>PIN 로그인</dt><dd>pgcrypto bcrypt로 PIN을 비교하고, 실패 횟수가 롤백되지 않게 예외 대신 JSON을 돌려줍니다.</dd><dt>이어 풀기 충돌</dt><dd>오래된 화면이 최신 기록을 덮어쓰던 문제를 세션 소유권(sid)으로 막고, 밀려나면 최신을 불러오거나 여기서 이어 가게 했습니다.</dd><dt>스터디 기능</dt><dd>실전 모의고사별 오답 노트, 분류별 성적, 29일 학습 교재, 관리자용 사람별 오답 · 문제별 선택지 분포를 만들었습니다.</dd></dl></div></section>
+<section aria-labelledby="s-res"><h2 id="s-res">결과</h2><div class="body"><ul><li>서버 없이 로그인 · 이어 풀기 · 랭킹 · 오답 리뷰까지 만들어, 스터디원 4명이 모의고사를 같이 풀고 제출 뒤 오답을 함께 리뷰합니다.</li></ul></div></section>
+<section aria-labelledby="s-learn"><h2 id="s-learn">배운 것</h2><div class="body"><ul><li>예외는 실패 카운터까지 롤백합니다. 남겨야 할 기록은 예외 대신 값으로 돌려줘야 합니다.</li><li>“없으면 올린다”는 위험합니다. 지운 일시정지가 옛 캐시에서 되살아나 서버를 기준으로 바꿨습니다.</li><li>공개 키는 공개해도 됩니다. 그 키로 할 수 있는 일이 정해진 함수뿐이게 설계하면요.</li></ul></div></section>
+<section aria-labelledby="s-deck"><h2 id="s-deck">발표 자료</h2><div class="body"><p class="note">스터디와 회고에서 발표한 자료 일부입니다.</p><div class="deck"><figure><img src="/projects/aws-study/aws-1.webp" alt="서버 없이 정적 사이트에 기록 붙이기" width="1600" height="900" loading="lazy" decoding="async"></figure><figure><img src="/projects/aws-study/aws-2.webp" alt="정적 사이트에서 바뀐 요구" width="1600" height="900" loading="lazy" decoding="async"></figure></div></div></section>
+<nav class="p-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/stock-research/"><small>이전</small>주식 스윙 리서치 시스템</a></nav>
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>어울림 | 오승민</title>
+  <meta name="description" content="동작구 주민과 구의원이 함께 이야기하는 지역 커뮤니티의 사용자 사이트와 관리자를 개발했습니다. 시안과 디자인 토큰이 계속 바뀌는 동안 화면이 토큰만 보게 만들어 한 번에 따라갔습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/eoullim/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/eoullim/">
+  <meta property="og:title" content="어울림 | 오승민">
+  <meta property="og:description" content="동작구 주민과 구의원이 함께 이야기하는 지역 커뮤니티의 사용자 사이트와 관리자를 개발했습니다. 시안과 디자인 토큰이 계속 바뀌는 동안 화면이 토큰만 보게 만들어 한 번에 따라갔습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://mlnl.site/projects/eoullim/#work",
+    "url": "https://mlnl.site/projects/eoullim/",
+    "name": "어울림",
+    "inLanguage": "ko",
+    "author": { "@id": "https://mlnl.site/#person" }
+  }
+  </script>
+</head>
+<body>
+  <main class="page project">
+    <nav class="crumb" aria-label="이동"><a href="/">← 이력으로</a></nav>
+    <header class="p-head">
+      <p class="eyebrow">벽촌</p>
+      <h1>어울림</h1>
+      <p class="lead">동작구 주민과 구의원이 함께 이야기하는 지역 커뮤니티의 사용자 사이트와 관리자를 개발했습니다. 시안과 디자인 토큰이 계속 바뀌는 동안 화면이 토큰만 보게 만들어 한 번에 따라갔습니다.</p>
+    </header>
+    <dl class="p-meta"><dt>기간</dt><dd>2026.10 – 현재</dd><dt>역할</dt><dd>사용자 · 관리자 프론트엔드 전체</dd><dt>기술</dt><dd>Next.js, Turborepo, Tailwind CSS, TipTap, Lightsail</dd><dt>링크</dt><dd><span class="ext"><a href="https://withlim.kr" rel="noopener">withlim.kr ↗</a> <a href="https://admin.withlim.kr" rel="noopener">관리자 ↗</a></span></dd></dl>
+<section aria-labelledby="s-num"><h2 id="s-num">숫자로 보면</h2><dl class="body stats"><div><dt>디자인 토큰</dt><dd><b>v0.2 → v0.5</b><span>2주 사이 여러 번</span></dd></div><div><dt>시안 반영</dt><dd><b>17번</b><span>10/22 ~ 11/06</span></dd></div><div><dt>실 API 연동</dt><dd><b>전 도메인</b><span>콘텐츠 · 계정 · 신고 · 통계</span></dd></div></dl></section>
+<section aria-labelledby="s-prob"><h2 id="s-prob">문제</h2><div class="body"><ul><li>토큰이 v0.2 → v0.3 → v0.5로, 시안이 1차 → 2차 → 수정 시안으로 바뀌는 동안 디자인과 개발이 동시에 진행됐습니다.</li></ul></div></section>
+<section aria-labelledby="s-work"><h2 id="s-work">한 일</h2><div class="body"><dl class="steps"><dt>토큰만 보는 화면</dt><dd>색 · 글꼴 · 그림자를 토큰으로만 쓰게 해, 토큰 export를 바꾸면 화면 전체가 한 번에 바뀌게 했습니다.</dd><dt>시안 추적</dt><dd>커밋에 Figma 노드 ID를 남겨 어느 시안을 반영했는지 커밋만 보고 알 수 있게 했습니다.</dd><dt>모노레포</dt><dd>사내 CLI로 만든 Turborepo 모노레포에서 사용자 사이트와 관리자를 함께 개발합니다.</dd><dt>실 API 연동</dt><dd>사용자는 fetch, 관리자는 axios로 공통 HTTP 계층을 두고 게시글 · 댓글 · 한마디 · 검색 · 알림 · 신고와 관리자 통계까지 연동했습니다.</dd><dt>에디터</dt><dd>TipTap 문서와 화면 블록을 서로 바꾸는 변환 계층을 만들었습니다.</dd><dt>설치와 로그인</dt><dd>PWA 설치 안내, 휴대폰 번호 로그인, 로그인 뒤 보려던 화면으로 돌아가는 흐름을 만들었습니다.</dd></dl></div></section>
+<section aria-labelledby="s-res"><h2 id="s-res">결과</h2><div class="body"><ul><li>2주 동안 17번 바뀐 시안을 토큰째로 따라가며 사용자 사이트와 관리자를 함께 열었습니다.</li></ul></div></section>
+<section aria-labelledby="s-deck"><h2 id="s-deck">발표 자료</h2><div class="body"><p class="note">스터디와 회고에서 발표한 자료 일부입니다.</p><div class="deck"><figure><img src="/projects/eoullim/eoullim-1.webp" alt="바뀌는 시안을 토큰째로 따라가기" width="1600" height="900" loading="lazy" decoding="async"></figure><figure><img src="/projects/eoullim/eoullim-2.webp" alt="토큰 교체와 시안 추적, 17번의 시안 반영" width="1600" height="900" loading="lazy" decoding="async"></figure></div></div></section>
+<nav class="p-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/frontend-tools/"><small>이전</small>벽촌 FE 공통 모듈 · 사내 CLI</a><a class="next" href="/projects/sogang/"><small>다음</small>서강교육그룹 성취도 평가 · 배치고사</a></nav>
+  </main>
+</body>
+</html>
