@@ -94,7 +94,8 @@
           <h4><a class="go" href="/projects/frontend-tools/">벽촌 FE 공통 모듈 · 사내 CLI</a></h4>
           <ul>
             <li>사내 서비스가 함께 쓰는 core, basic-ui, utils, hooks 4개 패키지를 운영하며 달력·타이머·페이지네이션 훅, 입력 검증, SSR 환경 크래시 등 결함 12건을 찾아 고쳤습니다.</li>
-            <li>팀 스타터 CLI를 만들어 명령 한 번으로 Next, React, React Native(Expo), Electron 프로젝트가 모노레포 구조, HTTP 에러 처리와 Sentry, 라이트·다크 테마, Figma·OpenAPI 작업 규칙을 갖추고 시작하게 했습니다.</li>
+            <li>사내 CLI에 Mobile(Expo)·Desktop(Electron) 스타터를 더해 명령 한 번으로 웹·앱·데스크톱 프로젝트가 같은 구조로 시작하게 했습니다.</li>
+            <li>bc deploy로 어느 프로젝트든 질문 4개면 배포 workflow가 생기고, 배포가 성공했을 때만 태그·GitHub Release·Slack 알림이 남게 했습니다.</li>
           </ul>
         </article>
 
@@ -146,30 +147,10 @@
       </div>
     </section>
 
-    <section aria-labelledby="side">
-      <h2 id="side">개인 프로젝트</h2>
-      <div class="body rows">
-        <div class="row">
-          <div><h3><a class="go" href="/projects/mlnl/">mlnl 개인 플랫폼</a> <span>설계, 개발, 운영</span></h3>
-          <p>이력, 블로그, 채용 레이더, 사진 보관함, API 5개 앱을 pnpm 모노레포로 운영합니다. 바뀐 앱만 테스트하고 이미지를 만들어 명령이 제한된 배포 키로 올리며, 헬스체크에 실패하면 이전 이미지로 되돌립니다. 채용 레이더는 매일 공고를 모아 내 프로필 기준으로 점수를 매기고 Claude로 공고 분석과 맞춤 이력서 초안을 만듭니다.</p></div>
-          <p class="date">2026.10 – 운영 중</p>
-        </div>
-        <div class="row">
-          <div><h3><a class="go" href="/projects/stock-research/">주식 스윙 리서치 시스템</a> <span>설계, 개발, 운영</span></h3>
-          <p>미국·국내 일봉 데이터(국내 1,000종목, 4년치 115만 행)로 매매 규칙을 백테스트하고, 미래 정보를 쓰지 않는 과거 재생과 기록을 고칠 수 없는 실전 모의투자로 전략을 검증합니다. 뉴스와 공시는 Claude로 분류해 학습 데이터로 쓰고, Slack 봇과 대시보드로 매일 결과를 받습니다. (Python, SQLite, scikit-learn)</p></div>
-          <p class="date">2026.11 – 운영 중</p>
-        </div>
-      </div>
-    </section>
 
     <section aria-labelledby="activity">
       <h2 id="activity">활동</h2>
       <div class="body rows">
-        <div class="row">
-          <div><h3><a class="go" href="/projects/aws-study/">외부 스터디</a> <span>스터디장</span></h3>
-          <p>AWS SAA-C03 스터디를 운영하며 모의고사별 오답 노트, 분류별 성적, 29일 학습 교재, 관리자용 문항별 오답 분포를 담은 학습 PWA를 직접 만들어 함께 쓰고 있습니다.</p></div>
-          <p class="date">운영 중</p>
-        </div>
         <div class="row">
           <div><h3>디프만 18기, Readum <span>팀장, PO, 프론트엔드</span></h3>
           <p>예상 사용자 50명 UT로 서비스 방향을 AI 대화 중심으로 바꿨고, 재평가 4.31/5점과 초기 사용자 100명 이상을 얻었습니다.</p></div>
@@ -198,14 +179,6 @@
       </div>
     </section>
 
-    <section aria-labelledby="talks">
-      <h2 id="talks">발표</h2>
-      <div class="body rows">
-        <div class="row"><p>Next.js에서 React Query를 제대로 쓰는 법</p><p class="date">2026.01</p></div>
-        <div class="row"><p>useMemo, 정말 쓰면 빨라지긴 하는 걸까?</p><p class="date">2026.01</p></div>
-        <div class="row"><p>React에서 SEO가 어려운 이유, 그리고 Next.js만이 답일까?</p><p class="date">2025.12</p></div>
-      </div>
-    </section>
 
     <section aria-labelledby="skills">
       <h2 id="skills">기술</h2>
@@ -222,6 +195,8 @@
       <h2 id="edu">학력·자격</h2>
       <div class="body rows">
         <div class="row"><p>숭실대학교 소프트웨어학부 졸업예정</p><p class="date">2020 – 2027.02</p></div>
+        <div class="row"><p>SQLD</p><p class="date">2026.11</p></div>
+        <div class="row"><p>Google Analytics 자격증 (GA4)</p><p class="date">2026.11</p></div>
         <div class="row"><p>정보처리기사</p><p class="date">2025.09</p></div>
         <div class="row"><p>숭실대학교 소프트웨어 공모전 은상</p><p class="date">2025.08</p></div>
       </div>
