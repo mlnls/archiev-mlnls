@@ -34,23 +34,41 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">벽촌 FE 공통 모듈 · 사내 CLI · 노트 03 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
+    <header>
       <h1>배포가 성공했을 때만 릴리즈가 남게</h1>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 3/6 · 질문 4개 (bc deploy)</p>
       <p class="lead">질문 4개로 배포 workflow를 만들고, 배포가 성공해야만 태그 · Release · Slack 알림이 남습니다.</p>
-      <p class="nt-metric"><b>질문 4개</b><span>bc deploy</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/frontend-tools/electron/"><span>01</span><span class="t">데스크톱 프로젝트도 명령 하나로</span></a></li><li><a href="/projects/frontend-tools/expo/"><span>02</span><span class="t">앱 프로젝트도 같은 규칙으로</span></a></li><li><a href="/projects/frontend-tools/deploy/" aria-current="page"><span>03</span><span class="t">배포가 성공했을 때만 릴리즈가 남게</span></a></li><li><a href="/projects/frontend-tools/release-notes/"><span>04</span><span class="t">릴리즈 노트는 커밋에서</span></a></li><li><a href="/projects/frontend-tools/v3/"><span>05</span><span class="t">쓰지 않는 기능은 걷어내기</span></a></li><li><a href="/projects/frontend-tools/qa/"><span>06</span><span class="t">공통 패키지 결함 12건</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>배포 방식이 프로젝트마다 제각각이었다.</li><li>릴리즈 노트는 손으로 쓰거나 아예 남지 않아, 지금 운영에 어떤 버전이 떠 있는지 물어봐야 알았다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li><code>bc deploy</code>가 질문 4개(Enter면 기본값)로 <code>.github/workflows/deploy.yml</code>을 만든다.</li><li>릴리즈 단계는 배포가 성공해야만 이어져, 실패한 배포는 기록되지 않는다.</li><li>Slack 웹훅은 Secret 이름만 저장한다.</li><li><a href="/projects/lawtimes/release/">법조인대관</a>에서 먼저 운영한 흐름을 모든 프로젝트로 옮겼다.</li></ul><figure class="nt-fig"><a href="/projects/frontend-tools/deploy-flow.webp" target="_blank" rel="noopener"><img src="/projects/frontend-tools/deploy-flow.webp" alt="deploy job이 성공하면 release job, 실패하면 기록 없음" width="2400" height="746" loading="lazy" decoding="async"></a><figcaption>배포와 릴리즈의 순서</figcaption></figure><figure class="nt-fig"><a href="/projects/frontend-tools/cli-deploy.webp" target="_blank" rel="noopener"><img src="/projects/frontend-tools/cli-deploy.webp" alt="bc deploy: 질문 4개에 답하면 bc.config.json과 배포 workflow가 생성되는 화면" width="1750" height="1012" loading="lazy" decoding="async"></a><figcaption>bc deploy 실행 화면</figcaption></figure></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>최신 Release가 곧 지금 운영 버전이다.</li></ul><figure class="nt-fig"><a href="/projects/frontend-tools/cli-releases.webp" target="_blank" rel="noopener"><img src="/projects/frontend-tools/cli-releases.webp" alt="법조인대관 저장소의 GitHub Release 목록" width="1750" height="340" loading="lazy" decoding="async"></a><figcaption>같은 흐름을 먼저 운영한 법조인대관의 Release 목록</figcaption></figure></section>
-      <aside class="nt-memo"><h2>메모</h2><ul><li>배포 기록은 ‘배포 성공’에 묶어야 믿을 수 있다.</li></ul></aside>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>배포 방식이 프로젝트마다 제각각이었다.</li>
+        <li>릴리즈 노트는 손으로 쓰거나 아예 남지 않아, 지금 운영에 어떤 버전이 떠 있는지 물어봐야 알았다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li><code>bc deploy</code>가 질문 4개(Enter면 기본값)로 <code>.github/workflows/deploy.yml</code>을 만든다.</li>
+        <li>릴리즈 단계는 배포가 성공해야만 이어져, 실패한 배포는 기록되지 않는다.</li>
+        <li>Slack 웹훅은 Secret 이름만 저장한다.</li>
+        <li><a href="/projects/lawtimes/release/">법조인대관</a>에서 먼저 운영한 흐름을 모든 프로젝트로 옮겼다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>최신 Release가 곧 지금 운영 버전이다.</li>
+      </ul>
+      <h2>메모</h2>
+      <ul>
+        <li>배포 기록은 ‘배포 성공’에 묶어야 믿을 수 있다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/frontend-tools/expo/"><small>← 이전 노트</small><b>앱 프로젝트도 같은 규칙으로</b></a><a class="next" href="/projects/frontend-tools/release-notes/"><small>다음 노트 →</small><b>릴리즈 노트는 커밋에서</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
+      <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><b>3. 배포가 성공했을 때만 릴리즈가 남게</b></li><li><a href="/projects/frontend-tools/release-notes/">4. 릴리즈 노트는 커밋에서</a></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/expo/">← 앱 프로젝트도 같은 규칙으로</a><a href="/projects/frontend-tools/release-notes/">릴리즈 노트는 커밋에서 →</a></nav>
   </main>
 </body>
 </html>

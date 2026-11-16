@@ -34,22 +34,33 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">마켓:D · 노트 02 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header>
       <h1>긴급 수정이 스토어 심사를 기다렸다</h1>
+      <p class="meta">마켓:D · 2/6 · 3갈래 (배포 경로)</p>
       <p class="lead">바뀐 것이 화면인지, 연결 로직인지, 바이너리인지에 따라 배포 길을 나눴습니다.</p>
-      <p class="nt-metric"><b>3갈래</b><span>배포 경로</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/" aria-current="page"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>RN Bridge 긴급 버그도 스토어 재심사를 거쳐야 고칠 수 있었다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>Expo EAS Update(OTA)를 도입하고, 화면(웹뷰) · 연결 로직(OTA) · 바이너리(스토어)로 배포 경로를 나눴다.</li></ul><figure class="nt-fig"><a href="/projects/marketd/ota-paths.webp" target="_blank" rel="noopener"><img src="/projects/marketd/ota-paths.webp" alt="웹뷰는 웹 배포, 연결 로직은 EAS Update, 바이너리는 스토어 배포" width="2400" height="888" loading="lazy" decoding="async"></a><figcaption>변경 종류별 배포 경로</figcaption></figure></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>연결 로직 수정은 스토어 심사 없이 내보낸다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>RN Bridge 긴급 버그도 스토어 재심사를 거쳐야 고칠 수 있었다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>Expo EAS Update(OTA)를 도입하고, 화면(웹뷰) · 연결 로직(OTA) · 바이너리(스토어)로 배포 경로를 나눴다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>연결 로직 수정은 스토어 심사 없이 내보낸다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/monorepo/"><small>← 이전 노트</small><b>한쪽만 바꾸면 상대편이 깨졌다</b></a><a class="next" href="/projects/marketd/admin-test/"><small>다음 노트 →</small><b>하나 고치면 어디가 깨졌는지 몰랐다</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>마켓:D</h2>
+      <ol><li><a href="/projects/marketd/monorepo/">1. 한쪽만 바꾸면 상대편이 깨졌다</a></li><li><b>2. 긴급 수정이 스토어 심사를 기다렸다</b></li><li><a href="/projects/marketd/admin-test/">3. 하나 고치면 어디가 깨졌는지 몰랐다</a></li><li><a href="/projects/marketd/e2e/">4. jsdom이 못 보는 곳만 브라우저로</a></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><a href="/projects/marketd/expiry/">6. 60초가 지나면 깨지는 이미지</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/monorepo/">← 한쪽만 바꾸면 상대편이 깨졌다</a><a href="/projects/marketd/admin-test/">하나 고치면 어디가 깨졌는지 몰랐다 →</a></nav>
   </main>
 </body>
 </html>

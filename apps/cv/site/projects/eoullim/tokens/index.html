@@ -34,22 +34,34 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/eoullim/">← 어울림</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">어울림 · 노트 01 / 05</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/eoullim/">← 어울림</a></nav>
+    <header>
       <h1>시안이 바뀌는 동안 같이 개발하기</h1>
+      <p class="meta">어울림 · 1/5 · v0.2 → v0.5 (디자인 토큰)</p>
       <p class="lead">화면이 디자인 토큰만 보게 해, 토큰이 바뀌면 화면 전체가 한 번에 따라가게 했습니다.</p>
-      <p class="nt-metric"><b>v0.2 → v0.5</b><span>디자인 토큰</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/eoullim/tokens/" aria-current="page"><span>01</span><span class="t">시안이 바뀌는 동안 같이 개발하기</span></a></li><li><a href="/projects/eoullim/figma/"><span>02</span><span class="t">어느 시안을 반영했는지 커밋으로</span></a></li><li><a href="/projects/eoullim/api/"><span>03</span><span class="t">사용자 · 관리자 실 API 연동</span></a></li><li><a href="/projects/eoullim/editor/"><span>04</span><span class="t">에디터 문서와 화면 블록</span></a></li><li><a href="/projects/eoullim/login/"><span>05</span><span class="t">설치와 로그인</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>토큰이 v0.2 → v0.3 → v0.5로, 시안이 1차 → 2차 → 수정 시안으로 바뀌는 동안 디자인과 개발이 동시에 진행됐다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>색 · 글꼴 · 그림자는 토큰으로만 쓰게 했다.</li><li>디자이너가 넘긴 <code>tokens.json</code>을 style-dictionary로 <code>tokens.css</code>로 바꾸고, 변환 규칙은 사내 settings 패키지가 맡는다.</li></ul><figure class="nt-fig"><a href="/projects/eoullim/tokens.webp" target="_blank" rel="noopener"><img src="/projects/eoullim/tokens.webp" alt="tokens.json에서 style-dictionary, tokens.css를 거쳐 화면으로" width="2400" height="564" loading="lazy" decoding="async"></a><figcaption>토큰이 화면까지 가는 길</figcaption></figure></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>토큰이 v0.2 → v0.3 → v0.5로, 시안이 1차 → 2차 → 수정 시안으로 바뀌는 동안 디자인과 개발이 동시에 진행됐다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>색 · 글꼴 · 그림자는 토큰으로만 쓰게 했다.</li>
+        <li>디자이너가 넘긴 <code>tokens.json</code>을 style-dictionary로 <code>tokens.css</code>로 바꾸고, 변환 규칙은 사내 settings 패키지가 맡는다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/eoullim/"><small>← 목차</small><b>어울림</b></a><a class="next" href="/projects/eoullim/figma/"><small>다음 노트 →</small><b>어느 시안을 반영했는지 커밋으로</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>어울림</h2>
+      <ol><li><b>1. 시안이 바뀌는 동안 같이 개발하기</b></li><li><a href="/projects/eoullim/figma/">2. 어느 시안을 반영했는지 커밋으로</a></li><li><a href="/projects/eoullim/api/">3. 사용자 · 관리자 실 API 연동</a></li><li><a href="/projects/eoullim/editor/">4. 에디터 문서와 화면 블록</a></li><li><a href="/projects/eoullim/login/">5. 설치와 로그인</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/eoullim/">← 목차</a><a href="/projects/eoullim/figma/">어느 시안을 반영했는지 커밋으로 →</a></nav>
   </main>
 </body>
 </html>

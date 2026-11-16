@@ -34,23 +34,37 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">마켓:D · 노트 04 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header>
       <h1>jsdom이 못 보는 곳만 브라우저로</h1>
+      <p class="meta">마켓:D · 4/6 · 5개 (E2E)</p>
       <p class="lead">통합 테스트로 확인할 수 없는 지점만 골라 Playwright로 옮겼습니다.</p>
-      <p class="nt-metric"><b>5개</b><span>E2E</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/" aria-current="page"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃어, 업로드를 통합 테스트로 확인할 수 없었다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>전부 옮기지 않고 배너 이미지, 엑셀 업로드, 실제 달력, 체크박스만 Playwright로 옮겼다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>E2E는 브라우저로만 되는 곳 5개만 남겼다.</li></ul></section>
-      <aside class="nt-memo"><h2>메모</h2><ul><li>“Playwright를 썼다”가 아니라, 통합 테스트가 못 보는 지점만 골라 브라우저 테스트로 옮겼다.</li></ul></aside>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃어, 업로드를 통합 테스트로 확인할 수 없었다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>전부 옮기지 않고 배너 이미지, 엑셀 업로드, 실제 달력, 체크박스만 Playwright로 옮겼다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>E2E는 브라우저로만 되는 곳 5개만 남겼다.</li>
+      </ul>
+      <h2>메모</h2>
+      <ul>
+        <li>“Playwright를 썼다”가 아니라, 통합 테스트가 못 보는 지점만 골라 브라우저 테스트로 옮겼다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/admin-test/"><small>← 이전 노트</small><b>하나 고치면 어디가 깨졌는지 몰랐다</b></a><a class="next" href="/projects/marketd/signed-url/"><small>다음 노트 →</small><b>주소만 알면 누구나 보던 채팅 사진</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>마켓:D</h2>
+      <ol><li><a href="/projects/marketd/monorepo/">1. 한쪽만 바꾸면 상대편이 깨졌다</a></li><li><a href="/projects/marketd/ota/">2. 긴급 수정이 스토어 심사를 기다렸다</a></li><li><a href="/projects/marketd/admin-test/">3. 하나 고치면 어디가 깨졌는지 몰랐다</a></li><li><b>4. jsdom이 못 보는 곳만 브라우저로</b></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><a href="/projects/marketd/expiry/">6. 60초가 지나면 깨지는 이미지</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/admin-test/">← 하나 고치면 어디가 깨졌는지 몰랐다</a><a href="/projects/marketd/signed-url/">주소만 알면 누구나 보던 채팅 사진 →</a></nav>
   </main>
 </body>
 </html>

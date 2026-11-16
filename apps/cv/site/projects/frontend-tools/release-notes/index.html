@@ -34,22 +34,36 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">벽촌 FE 공통 모듈 · 사내 CLI · 노트 04 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
+    <header>
       <h1>릴리즈 노트는 커밋에서</h1>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 4/6 · 날짜 버전 (web@2026.11.05)</p>
       <p class="lead">공통 settings 패키지에 커밋을 기능 · 수정으로 묶어 노트를 쓰는 명령을 더했습니다.</p>
-      <p class="nt-metric"><b>날짜 버전</b><span>web@2026.11.05</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/frontend-tools/electron/"><span>01</span><span class="t">데스크톱 프로젝트도 명령 하나로</span></a></li><li><a href="/projects/frontend-tools/expo/"><span>02</span><span class="t">앱 프로젝트도 같은 규칙으로</span></a></li><li><a href="/projects/frontend-tools/deploy/"><span>03</span><span class="t">배포가 성공했을 때만 릴리즈가 남게</span></a></li><li><a href="/projects/frontend-tools/release-notes/" aria-current="page"><span>04</span><span class="t">릴리즈 노트는 커밋에서</span></a></li><li><a href="/projects/frontend-tools/v3/"><span>05</span><span class="t">쓰지 않는 기능은 걷어내기</span></a></li><li><a href="/projects/frontend-tools/qa/"><span>06</span><span class="t">공통 패키지 결함 12건</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>릴리즈 노트를 쓰는 방식도 프로젝트마다 달랐다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>settings 패키지에 <code>byuckchon-release-notes</code>를 더했다.</li><li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다.</li><li>날짜 버전(<code>web@2026.11.05</code>, 같은 날 재배포는 <code>.2</code>)으로 태그한다.</li><li>커밋 분류는 PR 본문 자동 작성과 같은 코드를 쓴다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>릴리즈 노트를 쓰는 방식도 프로젝트마다 달랐다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>settings 패키지에 <code>byuckchon-release-notes</code>를 더했다.</li>
+        <li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다.</li>
+        <li>날짜 버전(<code>web@2026.11.05</code>, 같은 날 재배포는 <code>.2</code>)으로 태그한다.</li>
+        <li>커밋 분류는 PR 본문 자동 작성과 같은 코드를 쓴다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/frontend-tools/deploy/"><small>← 이전 노트</small><b>배포가 성공했을 때만 릴리즈가 남게</b></a><a class="next" href="/projects/frontend-tools/v3/"><small>다음 노트 →</small><b>쓰지 않는 기능은 걷어내기</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
+      <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><a href="/projects/frontend-tools/deploy/">3. 배포가 성공했을 때만 릴리즈가 남게</a></li><li><b>4. 릴리즈 노트는 커밋에서</b></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/deploy/">← 배포가 성공했을 때만 릴리즈가 남게</a><a href="/projects/frontend-tools/v3/">쓰지 않는 기능은 걷어내기 →</a></nav>
   </main>
 </body>
 </html>

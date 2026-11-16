@@ -34,22 +34,34 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">마켓:D · 노트 01 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header>
       <h1>한쪽만 바꾸면 상대편이 깨졌다</h1>
+      <p class="meta">마켓:D · 1/6 · 레포 3개 → 1개 (pnpm workspace)</p>
       <p class="lead">관리자 · 앱 · 웹뷰 레포를 합치고 메시지 타입을 공통 패키지로 묶었습니다.</p>
-      <p class="nt-metric"><b>레포 3개 → 1개</b><span>pnpm workspace</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/" aria-current="page"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>관리자, 사용자 앱, 웹뷰가 각자 다른 레포라 앱-웹뷰 메시지 타입을 바꾸면 상대편이 예고 없이 깨졌다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>pnpm workspace와 Turborepo로 레포를 합쳤다.</li><li><code>APP_MSG</code> / <code>WEB_MSG</code> 타입 · 스키마 · 설정 · env schema를 공통 패키지로 묶었다.</li></ul><figure class="nt-fig"><a href="/projects/marketd/monorepo.webp" target="_blank" rel="noopener"><img src="/projects/marketd/monorepo.webp" alt="레포 3개에서 apps와 packages로 나눈 모노레포로" width="2400" height="971" loading="lazy" decoding="async"></a><figcaption>레포 구조 이전과 이후</figcaption></figure></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>메시지 타입이 어긋나는 장애를 구조적으로 없앴고, 한 워크스페이스에서 모든 앱을 실행한다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>관리자, 사용자 앱, 웹뷰가 각자 다른 레포라 앱-웹뷰 메시지 타입을 바꾸면 상대편이 예고 없이 깨졌다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>pnpm workspace와 Turborepo로 레포를 합쳤다.</li>
+        <li><code>APP_MSG</code> / <code>WEB_MSG</code> 타입 · 스키마 · 설정 · env schema를 공통 패키지로 묶었다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>메시지 타입이 어긋나는 장애를 구조적으로 없앴고, 한 워크스페이스에서 모든 앱을 실행한다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/"><small>← 목차</small><b>마켓:D</b></a><a class="next" href="/projects/marketd/ota/"><small>다음 노트 →</small><b>긴급 수정이 스토어 심사를 기다렸다</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>마켓:D</h2>
+      <ol><li><b>1. 한쪽만 바꾸면 상대편이 깨졌다</b></li><li><a href="/projects/marketd/ota/">2. 긴급 수정이 스토어 심사를 기다렸다</a></li><li><a href="/projects/marketd/admin-test/">3. 하나 고치면 어디가 깨졌는지 몰랐다</a></li><li><a href="/projects/marketd/e2e/">4. jsdom이 못 보는 곳만 브라우저로</a></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><a href="/projects/marketd/expiry/">6. 60초가 지나면 깨지는 이미지</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/">← 목차</a><a href="/projects/marketd/ota/">긴급 수정이 스토어 심사를 기다렸다 →</a></nav>
   </main>
 </body>
 </html>

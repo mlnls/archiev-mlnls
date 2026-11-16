@@ -34,22 +34,35 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">수자원기술 홈페이지 · 노트 01 / 05</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
+    <header>
       <h1>머지하면 출시까지</h1>
+      <p class="meta">수자원기술 홈페이지 · 1/5 · 무중단 (reload)</p>
       <p class="lead">바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.</p>
-      <p class="nt-metric"><b>무중단</b><span>reload</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/wareco/deploy/" aria-current="page"><span>01</span><span class="t">머지하면 출시까지</span></a></li><li><a href="/projects/wareco/cms/"><span>02</span><span class="t">해외사업을 지도에서</span></a></li><li><a href="/projects/wareco/load/"><span>03</span><span class="t">서버 한 대가 얼마까지 버티나</span></a></li><li><a href="/projects/wareco/php2shell/"><span>04</span><span class="t">패치가 나오지 않는 PHP 7.4</span></a></li><li><a href="/projects/wareco/forensics/"><span>05</span><span class="t">흔적 없음이 안전하다는 뜻은 아니다</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>CMS · 문의 · 검색 때문에 정적 사이트로 바꿀 수 없는 PHP 레거시였다.</li><li>그 위에 영문판을 새로 열어야 했다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>main에 머지하면 바뀐 PHP 파일 문법 검사 → 배포 → Caddy 설정 검사 → 무중단 reload, 실패하면 복구된다.</li><li><code>/kor/</code> 주소는 <code>/eng/</code>로 301 처리했다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>영문판을 출시했고, 이후 수정도 머지 한 번으로 나간다.</li></ul><figure class="nt-fig"><a href="/projects/wareco/deploy-redirect.webp" target="_blank" rel="noopener"><img src="/projects/wareco/deploy-redirect.webp" alt="curl로 확인한 /kor/에서 /eng/로의 301 응답" width="1728" height="292" loading="lazy" decoding="async"></a><figcaption>운영 서버 응답: /kor/ → /eng/</figcaption></figure></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>CMS · 문의 · 검색 때문에 정적 사이트로 바꿀 수 없는 PHP 레거시였다.</li>
+        <li>그 위에 영문판을 새로 열어야 했다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>main에 머지하면 바뀐 PHP 파일 문법 검사 → 배포 → Caddy 설정 검사 → 무중단 reload, 실패하면 복구된다.</li>
+        <li><code>/kor/</code> 주소는 <code>/eng/</code>로 301 처리했다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>영문판을 출시했고, 이후 수정도 머지 한 번으로 나간다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/wareco/"><small>← 목차</small><b>수자원기술 홈페이지</b></a><a class="next" href="/projects/wareco/cms/"><small>다음 노트 →</small><b>해외사업을 지도에서</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>수자원기술 홈페이지</h2>
+      <ol><li><b>1. 머지하면 출시까지</b></li><li><a href="/projects/wareco/cms/">2. 해외사업을 지도에서</a></li><li><a href="/projects/wareco/load/">3. 서버 한 대가 얼마까지 버티나</a></li><li><a href="/projects/wareco/php2shell/">4. 패치가 나오지 않는 PHP 7.4</a></li><li><a href="/projects/wareco/forensics/">5. 흔적 없음이 안전하다는 뜻은 아니다</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/wareco/">← 목차</a><a href="/projects/wareco/cms/">해외사업을 지도에서 →</a></nav>
   </main>
 </body>
 </html>

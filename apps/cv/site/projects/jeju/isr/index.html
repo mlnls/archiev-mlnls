@@ -34,22 +34,33 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">제주이어드림 · 노트 04 / 05</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
+    <header>
       <h1>메인 조회 API에 ISR</h1>
+      <p class="meta">제주이어드림 · 4/5 · 5분 (ISR 재검증)</p>
       <p class="lead">메인 화면의 조회 API 응답을 5분마다 다시 만들어 피크와 비용을 같이 잡았습니다.</p>
-      <p class="nt-metric"><b>5분</b><span>ISR 재검증</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/jeju/scaling/"><span>01</span><span class="t">한 달에 하루 몰리는 트래픽</span></a></li><li><a href="/projects/jeju/golden-image/"><span>02</span><span class="t">콘솔 수작업 대신 yaml</span></a></li><li><a href="/projects/jeju/cutover/"><span>03</span><span class="t">언제든 되돌릴 수 있는 전환</span></a></li><li><a href="/projects/jeju/isr/" aria-current="page"><span>04</span><span class="t">메인 조회 API에 ISR</span></a></li><li><a href="/projects/jeju/ip-block/"><span>05</span><span class="t">IP 차단이 서버 자신을 막았다</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>메인 화면은 접속할 때마다 같은 조회 API를 불렀다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>메인 조회 API에 5분 주기 ISR을 적용했다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>피크 대응과 평상시 비용 절감을 같이 얻었다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>메인 화면은 접속할 때마다 같은 조회 API를 불렀다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>메인 조회 API에 5분 주기 ISR을 적용했다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>피크 대응과 평상시 비용 절감을 같이 얻었다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/jeju/cutover/"><small>← 이전 노트</small><b>언제든 되돌릴 수 있는 전환</b></a><a class="next" href="/projects/jeju/ip-block/"><small>다음 노트 →</small><b>IP 차단이 서버 자신을 막았다</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>제주이어드림</h2>
+      <ol><li><a href="/projects/jeju/scaling/">1. 한 달에 하루 몰리는 트래픽</a></li><li><a href="/projects/jeju/golden-image/">2. 콘솔 수작업 대신 yaml</a></li><li><a href="/projects/jeju/cutover/">3. 언제든 되돌릴 수 있는 전환</a></li><li><b>4. 메인 조회 API에 ISR</b></li><li><a href="/projects/jeju/ip-block/">5. IP 차단이 서버 자신을 막았다</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/jeju/cutover/">← 언제든 되돌릴 수 있는 전환</a><a href="/projects/jeju/ip-block/">IP 차단이 서버 자신을 막았다 →</a></nav>
   </main>
 </body>
 </html>

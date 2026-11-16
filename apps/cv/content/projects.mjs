@@ -1,7 +1,6 @@
 // 프로젝트 상세 페이지의 원본입니다. 고친 뒤 `pnpm --filter @archiev/cv build` 로 site/projects 를 다시 만듭니다.
 //
 // 노트 하나 = 문제 하나. problem → solution → result 순서로 짧게 적고,
-// figures 의 at 으로 어느 블록 아래에 그림을 둘지 정합니다 ('problem' | 'solution' | 'result').
 // 글 안에서는 `코드`, **강조**, [글자](주소) 만 씁니다.
 
 export const projects = [
@@ -13,7 +12,6 @@ export const projects = [
     links: [{ href: "https://lawvax.co.kr", label: "lawvax.co.kr" }],
     role: "SSR 마이그레이션 · 메타데이터 · 구조화 데이터 · 배포",
     stack: ["Next.js App Router", "React 19", "JSON-LD", "Caddy"],
-    cover: { src: "cover.webp", alt: "로백스 홈페이지 메인 화면" },
     notes: [
       {
         id: "ssr",
@@ -39,11 +37,6 @@ export const projects = [
           "Lighthouse는 JS를 다 실행한 뒤 검사해서 크롤러 시점을 못 본다. 그래서 원본 HTML을 직접 셌다.",
           "`'use client'`도 서버에서 그려지지만, 마운트 뒤에 그리는 것은 서버 HTML에 없다.",
         ],
-        figures: [
-          { at: "problem", src: "ssr-nojs.webp", alt: "JS를 끈 상태에서 연 업무분야 페이지: SPA는 빈 화면, Next.js는 본문이 보임", caption: "같은 업무분야 페이지를 JS를 끄고 연 화면" },
-          { at: "solution", src: "ssr-layers.webp", alt: "page, Container, View 세 층 구조", caption: "한 화면을 세 층으로 나눈 구조" },
-          { at: "result", src: "ssr-chart.webp", alt: "Lighthouse 항목별 비교와 JS −90%, 총 전송량 −86%, TBT −61%, 이미지 −92%", caption: "이전과 이후 측정 결과" },
-        ],
       },
       {
         id: "urls",
@@ -61,7 +54,6 @@ export const projects = [
         ],
         result: ["어느 옛 주소로 들어와도 공식 주소 하나로 모인다."],
         memo: ["크롤러는 상태 코드부터 읽는다. soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다."],
-        figures: [{ at: "result", src: "urls-redirect.webp", alt: "curl로 확인한 옛 도메인 301과 레거시 주소 308 응답", caption: "운영 서버 응답: 옛 도메인은 301, 레거시 주소는 308" }],
       },
       {
         id: "cache",
@@ -74,7 +66,6 @@ export const projects = [
           "유튜브 링크만 넣으면 제목과 게시일이 채워지게 했다.",
         ],
         result: ["정적 성능과 최신성을 같이 지킨다."],
-        figures: [{ at: "result", src: "cache-header.webp", alt: "운영 응답 헤더의 x-nextjs-cache와 cache-control", caption: "운영 응답 헤더: Next.js 캐시에서 나간 응답" }],
       },
       {
         id: "geo",
@@ -91,7 +82,6 @@ export const projects = [
         ],
         result: ["구조화 데이터 타입 **0 → 7종** (LegalService, Person, Service, BreadcrumbList, WebSite 등)"],
         memo: ["GEO는 SEO 위에 “그 페이지가 말하는 사실이 정확한가”가 더해진 일이었다."],
-        figures: [{ at: "result", src: "geo-jsonld.webp", alt: "업무분야 페이지 HTML에서 뽑은 JSON-LD 타입 목록", caption: "형사 업무분야 페이지의 첫 HTML에 들어 있는 JSON-LD 타입" }],
       },
       {
         id: "bundle",
@@ -104,7 +94,6 @@ export const projects = [
           "루트 배럴 export와 import 경로를 정리해 사용자 번들에 관리자 코드가 섞이지 않게 했다.",
         ],
         result: ["첫 진입 JS **7.2MB → 171KB**"],
-        figures: [{ at: "solution", src: "bundle-treemap.webp", alt: "분리 전후 사용자 메인 번들 트리맵", caption: "분리 커밋 전후를 다시 빌드해 본 사용자 번들 구성" }],
       },
     ],
   },
@@ -116,7 +105,6 @@ export const projects = [
     links: [{ href: "https://lawpeople.lawtimes.co.kr", label: "lawpeople.lawtimes.co.kr" }],
     role: "렌더링 성능 · GA4 · 배포 파이프라인 · 보안",
     stack: ["Next.js", "GA4", "GitHub Actions self-hosted runner", "Docker"],
-    cover: { src: "cover.webp", alt: "한국법조인대관 메인 화면" },
     notes: [
       {
         id: "render",
@@ -129,7 +117,6 @@ export const projects = [
           "한글 폰트를 dynamic subset으로 바꾸고 캐시를 적용했다.",
         ],
         result: ["Lighthouse Performance **80 → 99**", "FCP **−77%**, LCP **−73%**"],
-        figures: [{ at: "result", src: "render-mobile.webp", alt: "한국법조인대관 모바일 메인 화면", caption: "운영 화면 (모바일)" }],
       },
       {
         id: "ga4",
@@ -161,11 +148,6 @@ export const projects = [
           "pem · VPN · 비밀번호를 사람끼리 주고받지 않는다.",
         ],
         memo: ["새 브랜치를 push하면 paths 필터가 비교할 커밋이 없어 아무 기록 없이 건너뛴다."],
-        figures: [
-          { at: "problem", src: "runner-steps.webp", alt: "다섯 단계 손작업 배포와 머지 한 번 배포 비교", caption: "이전과 이후 배포 과정" },
-          { at: "solution", src: "runner-diagram.webp", alt: "GitHub, 베스천 runner, 운영 · 테스트 서버로 이어지는 배포 구조", caption: "들어오는 연결 대신 나가는 연결로 배포하는 구조" },
-          { at: "result", src: "runner-runs.webp", alt: "lawpeople deploy workflow 실행 목록", caption: "머지할 때마다 돈 배포 workflow" },
-        ],
       },
       {
         id: "rolling",
@@ -184,10 +166,6 @@ export const projects = [
         memo: [
           "`set -e`는 복구 단계까지 건너뛴다. 실패하면 기존 컨테이너가 멈춘 채 끝나서 `if ! ...; then restore`로 바꿨다.",
           "버전은 push한 순간 “쓴 것”이다. 같은 번호로 다시 빌드하면 롤백을 보장할 수 없다.",
-        ],
-        figures: [
-          { at: "solution", src: "rolling-code.webp", alt: "헬스체크와 복구 함수가 있는 배포 스크립트", caption: "헬스체크와 복구 함수" },
-          { at: "result", src: "rolling-log.webp", alt: "테스트 서버 배포 로그: 05:55:21 교체 시작, 05:55:29 응답 OK", caption: "실제 테스트 서버 배포 로그: 교체부터 응답까지 8초" },
         ],
       },
       {
@@ -215,7 +193,6 @@ export const projects = [
           "배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.",
         ],
         result: ["운영 버전과 변경 내역이 Release 목록에 쌓인다. 이 흐름은 이후 [사내 CLI의 bc deploy](/projects/frontend-tools/deploy/)로 옮겼다."],
-        figures: [{ at: "result", src: "release-list.webp", alt: "lawpeople GitHub Release 목록", caption: "운영 저장소의 Release 목록" }],
       },
     ],
   },
@@ -227,7 +204,6 @@ export const projects = [
     links: [{ href: "https://m.dongjakmarket.co.kr", label: "m.dongjakmarket.co.kr" }],
     role: "모노레포 전환 · 관리자 테스트 (admin 전담) · 채팅 이미지 연동",
     stack: ["React Native (Expo)", "React", "Turborepo", "pnpm", "TanStack Query", "zod", "Vitest", "MSW", "Playwright"],
-    cover: { src: "cover.webp", alt: "마켓:D 모바일 웹 메인 화면" },
     notes: [
       {
         id: "monorepo",
@@ -240,7 +216,6 @@ export const projects = [
           "`APP_MSG` / `WEB_MSG` 타입 · 스키마 · 설정 · env schema를 공통 패키지로 묶었다.",
         ],
         result: ["메시지 타입이 어긋나는 장애를 구조적으로 없앴고, 한 워크스페이스에서 모든 앱을 실행한다."],
-        figures: [{ at: "solution", src: "monorepo.webp", alt: "레포 3개에서 apps와 packages로 나눈 모노레포로", caption: "레포 구조 이전과 이후" }],
       },
       {
         id: "ota",
@@ -250,7 +225,6 @@ export const projects = [
         problem: ["RN Bridge 긴급 버그도 스토어 재심사를 거쳐야 고칠 수 있었다."],
         solution: ["Expo EAS Update(OTA)를 도입하고, 화면(웹뷰) · 연결 로직(OTA) · 바이너리(스토어)로 배포 경로를 나눴다."],
         result: ["연결 로직 수정은 스토어 심사 없이 내보낸다."],
-        figures: [{ at: "solution", src: "ota-paths.webp", alt: "웹뷰는 웹 배포, 연결 로직은 EAS Update, 바이너리는 스토어 배포", caption: "변경 종류별 배포 경로" }],
       },
       {
         id: "admin-test",
@@ -291,7 +265,6 @@ export const projects = [
           "서명은 “누가”를 모른다. URL을 가진 누구나 60초 동안 볼 수 있으니 발급 API에서 참여자를 확인해야 한다.",
           "배포 순서도 설계다. 서버 배포 직후 PR을 머지하지 않으면 둘 다 깨진다.",
         ],
-        figures: [{ at: "solution", src: "signed-url-flow.webp", alt: "목록 API와 소켓 메시지가 하나의 서명 URL 쿼리로 모이는 흐름", caption: "받는 쪽: 서명 URL을 어디서, 언제, 몇 번 받나" }],
       },
       {
         id: "expiry",
@@ -320,7 +293,6 @@ export const projects = [
     ],
     role: "Electron · Expo 스타터 · bc deploy · 릴리즈 노트 · v3 정리 · 공통 패키지 QA",
     stack: ["Node CLI", "Electron", "Expo · EAS", "GitHub Actions", "changesets", "pnpm 모노레포"],
-    cover: { src: "cli-init.webp", alt: "bc init에서 React, Next.js, Mobile(Expo), Desktop(Electron) 중 하나를 고르는 화면" },
     notes: [
       {
         id: "electron",
@@ -335,7 +307,6 @@ export const projects = [
           "electron-builder로 macOS · Windows 설치 파일을 만든다.",
         ],
         result: ["Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다."],
-        figures: [{ at: "result", src: "cli-init.webp", alt: "bc init에서 Desktop(Electron)을 고르는 화면", caption: "bc init 실행 화면" }],
       },
       {
         id: "expo",
@@ -368,11 +339,6 @@ export const projects = [
         ],
         result: ["최신 Release가 곧 지금 운영 버전이다."],
         memo: ["배포 기록은 ‘배포 성공’에 묶어야 믿을 수 있다."],
-        figures: [
-          { at: "solution", src: "deploy-flow.webp", alt: "deploy job이 성공하면 release job, 실패하면 기록 없음", caption: "배포와 릴리즈의 순서" },
-          { at: "solution", src: "cli-deploy.webp", alt: "bc deploy: 질문 4개에 답하면 bc.config.json과 배포 workflow가 생성되는 화면", caption: "bc deploy 실행 화면" },
-          { at: "result", src: "cli-releases.webp", alt: "법조인대관 저장소의 GitHub Release 목록", caption: "같은 흐름을 먼저 운영한 법조인대관의 Release 목록" },
-        ],
       },
       {
         id: "release-notes",
@@ -429,7 +395,6 @@ export const projects = [
     ],
     role: "사용자 · 관리자 프론트엔드 전체",
     stack: ["Next.js", "Turborepo", "Tailwind CSS", "TipTap", "Lightsail"],
-    cover: { src: "cover.webp", alt: "어울림 사용자 사이트 메인 화면" },
     notes: [
       {
         id: "tokens",
@@ -442,7 +407,6 @@ export const projects = [
           "디자이너가 넘긴 `tokens.json`을 style-dictionary로 `tokens.css`로 바꾸고, 변환 규칙은 사내 settings 패키지가 맡는다.",
         ],
         result: ["토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다."],
-        figures: [{ at: "solution", src: "tokens.webp", alt: "tokens.json에서 style-dictionary, tokens.css를 거쳐 화면으로", caption: "토큰이 화면까지 가는 길" }],
       },
       {
         id: "figma",
@@ -452,7 +416,6 @@ export const projects = [
         problem: ["2주 사이 시안이 여러 번 바뀌어, 어느 화면이 어느 시안까지 반영됐는지 헷갈렸다."],
         solution: ["커밋 메시지에 Figma 노드 ID를 남겼다."],
         result: ["10/22 ~ 11/06 사이 17번 바뀐 시안을 커밋만 보고 따라간다."],
-        figures: [{ at: "result", src: "figma-log.webp", alt: "Figma 노드 ID가 남은 커밋 목록", caption: "git log: 커밋마다 반영한 Figma 노드" }],
       },
       {
         id: "api",
@@ -465,7 +428,6 @@ export const projects = [
           "사용자는 fetch, 관리자는 axios 위에 공통 HTTP 계층을 두었다.",
         ],
         result: ["게시글 · 댓글 · 한마디 · 검색 · 알림 · 신고와 관리자 통계까지 실 API에 연동했다."],
-        figures: [{ at: "result", src: "api-mobile.webp", alt: "어울림 모바일 메인 화면", caption: "운영 화면 (모바일)" }],
       },
       {
         id: "editor",
@@ -499,7 +461,6 @@ export const projects = [
     links: [{ href: "https://eduslp.ac.kr", label: "eduslp.ac.kr" }],
     role: "대시보드 · 리포트 프론트엔드, 배치고사 QA",
     stack: ["React", "Vite", "TanStack Query", "Zustand", "Recharts", "Chart.js"],
-    cover: { src: "cover.webp", alt: "EDUSLP 로그인 화면" },
     notes: [
       {
         id: "roles",
@@ -541,7 +502,6 @@ export const projects = [
     ],
     role: "배포 구성 · 부하 테스트 · 취약점 분석과 패치 빌드",
     stack: ["PHP 7.4", "Apache mod_php", "Docker", "Caddy", "AWS Lightsail", "GitHub Actions"],
-    cover: { src: "cover.webp", alt: "수자원기술 영문 홈페이지 메인 화면" },
     notes: [
       {
         id: "deploy",
@@ -557,7 +517,6 @@ export const projects = [
           "`/kor/` 주소는 `/eng/`로 301 처리했다.",
         ],
         result: ["영문판을 출시했고, 이후 수정도 머지 한 번으로 나간다."],
-        figures: [{ at: "result", src: "deploy-redirect.webp", alt: "curl로 확인한 /kor/에서 /eng/로의 301 응답", caption: "운영 서버 응답: /kor/ → /eng/" }],
       },
       {
         id: "cms",
@@ -588,7 +547,6 @@ export const projects = [
           "실패 0%가 괜찮다는 뜻은 아니다. Apache는 줄을 세우고, p99 12초는 사용자에게 실패다.",
           "측정 타이밍이 숫자를 속인다. 끝난 뒤 찍은 CPU 0.5%는 거짓이었고, 부하 중에 찍자 70%였다.",
         ],
-        figures: [{ at: "result", src: "load-chart.webp", alt: "동시 접속 단계별 처리량과 지연 그래프", caption: "동시 접속을 20배 늘려도 처리량은 그대로, 대기 시간만 늘었다" }],
       },
       {
         id: "php2shell",
@@ -612,7 +570,6 @@ export const projects = [
           "`ini_set`은 본문 파싱 뒤라 늦다. 설정은 무엇보다 “언제” 적용되는지가 중요했다.",
           "백포트는 버전을 올리지 않는다. 버전 문자열 대신 패치가 추가한 설정을 마커로 확인했다.",
         ],
-        figures: [{ at: "solution", src: "patch-layers.webp", alt: "요청이 지나는 L1 Caddy부터 L5 패치된 PHP까지 다섯 겹", caption: "요청이 지나는 다섯 겹" }],
       },
       {
         id: "forensics",
@@ -636,7 +593,6 @@ export const projects = [
     links: [{ href: "https://jejuyouthdream.com", label: "jejuyouthdream.com" }],
     role: "사용자 · 관리자 프론트엔드, 프론트 배포 IaC",
     stack: ["Next.js SSR", "CloudFormation", "EC2 Image Builder", "ALB", "Auto Scaling"],
-    cover: { src: "cover.webp", alt: "청년이어드림 메인 화면" },
     notes: [
       {
         id: "scaling",
@@ -653,7 +609,6 @@ export const projects = [
         ],
         result: ["평소에는 1대(최대 5대), 몰릴 때만 늘어난다."],
         memo: ["결국 클라이언트가 원한 것은 비용과 안정성을 같이 설계하는 능력이었다."],
-        figures: [{ at: "solution", src: "stack-diagram.webp", alt: "이미지 스택과 환경 스택으로 나눈 배포 구조", caption: "스택 두 개로 나눈 배포" }],
       },
       {
         id: "golden-image",
