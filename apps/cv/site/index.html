@@ -46,7 +46,6 @@
       <div>
         <h1>오승민</h1>
         <p class="role">프론트엔드 개발자</p>
-        <p class="lead">웹과 모바일 서비스를 만듭니다. 화면에서 시작한 문제를 렌더링 구조, 배포 파이프라인, 인프라까지 따라가서 해결합니다.</p>
         <nav class="links" aria-label="외부 링크">
           <a href="https://blog.mlnl.site">블로그</a>
           <a href="https://github.com/mlnls" rel="me">GitHub</a>
@@ -66,83 +65,53 @@
 
         <article>
           <h4><a class="go" href="/projects/lawvax/">법무법인 로백스 홈페이지</a><a class="ext" href="https://lawvax.co.kr" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>CRA 레거시를 Next.js App Router로 옮겨 크롤러가 받는 첫 HTML의 본문을 0자에서 680자로, JS 전송량을 2,512KB에서 251KB로 줄였습니다.</li>
-            <li>법인·구성원·글을 JSON-LD 그래프로 연결하고 canonical, sitemap, 실제 404, 레거시 주소 21개 패턴의 308 리디렉트를 구성했습니다.</li>
-            <li>관리자까지 한 번들로 받던 첫 진입 JS를 라우트 단위로 분리해 7.2MB에서 171KB로 줄였습니다.</li>
-          </ul>
+          <p class="stack">Next.js App Router · React 19 · JSON-LD · Caddy</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/lawtimes/">법률신문 법조인대관</a><a class="ext" href="https://lawpeople.lawtimes.co.kr" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>SSR을 무력화하던 클라이언트 렌더링 범위를 좁히고 폰트를 dynamic subset으로 바꿔 Lighthouse 성능을 80에서 99로, FCP를 77%, LCP를 73% 개선했습니다.</li>
-            <li>SPA 라우팅에서 누락되던 GA4 추적을 고쳐 월 103만 건 규모의 행동 데이터를 확보했습니다.</li>
-            <li>VPN 뒤 서버의 수동 배포를 베스천 self-hosted runner와 롤링 교체 스크립트로 자동화해, 머지 한 번으로 배포되고 실패하면 자동 복구되게 했습니다.</li>
-          </ul>
+          <p class="stack">Next.js · GA4 · GitHub Actions self-hosted runner · Docker</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/marketd/">마켓:D</a><a class="ext" href="https://m.dongjakmarket.co.kr" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>관리자, 사용자 앱, 웹뷰로 흩어진 레포를 pnpm workspace와 Turborepo 모노레포로 합치고 앱-웹뷰 메시지 타입을 공통 패키지로 묶었습니다.</li>
-            <li>Expo EAS Update를 도입해 웹뷰, 연결 로직, 바이너리로 배포 경로를 나누고 긴급 수정을 스토어 심사 없이 내보낼 수 있게 했습니다.</li>
-          </ul>
+          <p class="stack">React Native (Expo) · React · Turborepo · pnpm · TanStack Query · zod · Vitest · MSW · Playwright</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/frontend-tools/">벽촌 FE 공통 모듈 · 사내 CLI</a></h4>
-          <ul>
-            <li>사내 서비스가 함께 쓰는 core, basic-ui, utils, hooks 4개 패키지를 운영하며 달력·타이머·페이지네이션 훅, 입력 검증, SSR 환경 크래시 등 결함 12건을 찾아 고쳤습니다.</li>
-            <li>사내 CLI에 Mobile(Expo)·Desktop(Electron) 스타터를 더해 명령 한 번으로 웹·앱·데스크톱 프로젝트가 같은 구조로 시작하게 했습니다.</li>
-            <li>bc deploy로 어느 프로젝트든 질문 4개면 배포 workflow가 생기고, 배포가 성공했을 때만 태그·GitHub Release·Slack 알림이 남게 했습니다.</li>
-          </ul>
+          <p class="stack">Node CLI · Electron · Expo · EAS · GitHub Actions · changesets · pnpm 모노레포</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/eoullim/">어울림</a><a class="ext" href="https://withlim.kr" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>사내 CLI로 만든 Turborepo 모노레포에서 사용자 사이트와 관리자를 함께 개발하고, 콘텐츠·계정·신고·통계 전 도메인을 실 API에 연동했습니다.</li>
-            <li>에디터(TipTap) 문서와 화면 블록을 오가는 변환 계층, PWA 설치, 휴대폰 번호 로그인을 구현했습니다.</li>
-          </ul>
+          <p class="stack">Next.js · Turborepo · Tailwind CSS · TipTap · Lightsail</p>
         </article>
 
 
         <article>
           <h4><a class="go" href="/projects/sogang/">서강교육그룹 성취도 평가 · 배치고사</a><a class="ext" href="https://eduslp.ac.kr" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>본사, 학당, 학습자 세 권한의 성취도 평가 대시보드를 만들고 반·개인 성적 리포트를 차트와 인쇄용 화면으로 제공했습니다.</li>
-          </ul>
+          <p class="stack">React · Vite · TanStack Query · Zustand · Recharts · Chart.js</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/wareco/">수자원기술 홈페이지</a><a class="ext" href="https://www.warecoglobal.com" rel="noopener">영문 사이트 ↗</a></h4>
-          <ul>
-            <li>PHP 레거시 사이트의 영문판을 출시하고, 머지하면 문법 검사, 배포, 무중단 reload가 이어지고 실패하면 복구되게 했습니다.</li>
-            <li>운영 중인 PHP 7.4에 PHP2Shell 취약점 패치를 백포트해 빌드하고 요청 크기·메모리 상한으로 피해 범위를 줄였습니다.</li>
-          </ul>
+          <p class="stack">PHP 7.4 · Apache mod_php · Docker · Caddy · AWS Lightsail · GitHub Actions</p>
         </article>
 
         <article>
           <h4><a class="go" href="/projects/jeju/">제주이어드림</a><a class="ext" href="https://jejuyouthdream.com" rel="noopener">사이트 ↗</a></h4>
-          <ul>
-            <li>CloudFormation과 Auto Scaling으로 신청 기간 트래픽 피크에 대응하고, 메인 조회 API에 5분 주기 ISR을 적용했습니다.</li>
-            <li>IP 차단 로직이 Next 서버 자체를 막아 생긴 장애를 x-forwarded-for 전달로 해결했습니다.</li>
-          </ul>
+          <p class="stack">Next.js SSR · CloudFormation · EC2 Image Builder · ALB · Auto Scaling</p>
         </article>
 
         <article>
           <h4><a href="https://www.legislation21.org">경인교대 입법학센터</a>, <a href="https://www.enjoysoft.net/">엔조이소프트</a></h4>
-          <ul>
-            <li>프론트엔드를 처음부터 끝까지 혼자 구축했습니다.</li>
-          </ul>
+          <p class="stack">Next.js · React</p>
         </article>
 
         <article>
           <h4>그 외</h4>
-          <ul>
-            <li><a href="https://www.byuckchon.com" rel="noopener">벽촌</a>·Ingensrota 회사 사이트, FuturePlatform 사용자 서비스 5종 등 10여 개 서비스의 프론트엔드에 참여했습니다.</li>
-          </ul>
+          <p class="stack">벽촌 · Ingensrota 회사 사이트, FuturePlatform 사용자 서비스 5종 등 10여 개 서비스</p>
         </article>
       </div>
     </section>

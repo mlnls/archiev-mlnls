@@ -2,7 +2,7 @@
 //
 //   node scripts/build-projects.mjs          파일을 씁니다
 //   import { render } from ...               { "projects/<slug>/index.html": html, ... } 만 돌려줍니다 (테스트용)
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync, statSync } from "node:fs";
+import { writeFileSync, mkdirSync, readdirSync, rmSync, existsSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -18,28 +18,7 @@ export function inline(text) {
   return esc(text)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, href) => {
-      const ext = /^https?:/.test(href);
-      return `<a href="${href}"${ext ? ' rel="noopener"' : ""}>${t}</a>`;
-    });
-}
-
-/** webp 헤더에서 가로 · 세로를 읽습니다 (VP8 · VP8L · VP8X). */
-export function webpSize(file) {
-  const b = readFileSync(file);
-  const kind = b.toString("ascii", 12, 16);
-  if (kind === "VP8X") return [1 + b.readUIntLE(24, 3), 1 + b.readUIntLE(27, 3)];
-  if (kind === "VP8L") {
-    const n = b.readUInt32LE(21);
-    return [1 + (n & 0x3fff), 1 + ((n >> 14) & 0x3fff)];
-  }
-  if (kind === "VP8 ") return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
-  throw new Error(`webp 형식을 읽지 못했습니다: ${file}`);
-}
-
-function img(slug, f, extra = "") {
-  const [w, h] = webpSize(join(root, "projects", slug, f.src));
-  return `<img src="/projects/${slug}/${f.src}" alt="${esc(f.alt)}" width="${w}" height="${h}"${extra}>`;
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, href) => `<a href="${href}"${/^https?:/.test(href) ? ' rel="noopener"' : ""}>${t}</a>`);
 }
 
 function head({ title, description, url, jsonld }) {
@@ -67,18 +46,21 @@ function head({ title, description, url, jsonld }) {
 </head>`;
 }
 
-const two = (i) => String(i + 1).padStart(2, "0");
+const ext = (l) => `<a href="${l.href}" rel="noopener">${esc(l.label)}</a>`;
 
 function projectPage(p, i) {
   const url = `${SITE}/projects/${p.slug}/`;
   const prev = projects[i - 1];
   const next = projects[i + 1];
-  const links = p.links.map((l) => `<a class="btn" href="${l.href}" rel="noopener">${esc(l.label)} <span aria-hidden="true">↗</span></a>`).join("");
-  const toc = p.notes
+  const items = p.notes
     .map(
-      (n, k) => `<li><a class="toc-item" href="/projects/${p.slug}/${n.id}/"><span class="n">${two(k)}</span><span class="toc-body"><b>${esc(n.title)}</b><span>${esc(n.summary)}</span></span>${
-        n.metric ? `<span class="toc-metric"><b>${esc(n.metric[0])}</b><small>${esc(n.metric[1])}</small></span>` : ""
-      }<span class="toc-go" aria-hidden="true">→</span></a></li>`,
+      (n, k) => `<li>
+          <span class="no">${k + 1}.</span>
+          <div>
+            <a class="ti" href="/projects/${p.slug}/${n.id}/">${esc(n.title)}</a>${n.metric ? ` <span class="mt">${esc(n.metric[0])} · ${esc(n.metric[1])}</span>` : ""}
+            <p>${esc(n.summary)}</p>
+          </div>
+        </li>`,
     )
     .join("\n        ");
   return `${head({
@@ -87,29 +69,19 @@ function projectPage(p, i) {
     url,
     jsonld: { "@context": "https://schema.org", "@type": "CreativeWork", "@id": `${url}#work`, url, name: p.title, inLanguage: "ko", author: { "@id": `${SITE}/#person` }, hasPart: p.notes.map((n) => ({ "@id": `${url}${n.id}/#note` })) },
   })}
-<body class="pj-body">
-  <main class="pj">
-    <nav class="crumb" aria-label="이동"><a href="/">← 오승민 이력</a></nav>
-    <header class="pj-hero">
-      <div class="pj-title">
-        <p class="eyebrow">${esc(p.period)}</p>
-        <h1>${esc(p.title)}</h1>
-        <p class="lead">${esc(p.lead)}</p>
-        <p class="links">${links}</p>
-      </div>
-      <dl class="pj-meta"><div><dt>역할</dt><dd>${esc(p.role)}</dd></div><div><dt>기술</dt><dd><ul class="chips">${p.stack.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></dd></div></dl>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/">← 오승민 이력</a></nav>
+    <header>
+      <h1>${esc(p.title)}</h1>
+      <p class="meta">${esc(p.period)} · ${p.links.map(ext).join(" · ")}</p>
+      <p class="lead">${esc(p.lead)}</p>
+      <p class="meta">역할: ${esc(p.role)}<br>기술: ${p.stack.map(esc).join(", ")}</p>
     </header>
-    <figure class="pj-cover">${img(p.slug, p.cover, ' fetchpriority="high" decoding="async"')}</figure>
-    <section class="pj-sec" aria-labelledby="notes">
-      <h2 id="notes"><span class="idx">${p.notes.length}</span>문제 노트</h2>
-      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
-      <ol class="toc">
-        ${toc}
-      </ol>
-    </section>
-    <nav class="pj-nav" aria-label="다른 프로젝트">${prev ? `<a class="prev" href="/projects/${prev.slug}/"><small>← 이전 프로젝트</small><b>${esc(prev.title)}</b></a>` : ""}${
-      next ? `<a class="next" href="/projects/${next.slug}/"><small>다음 프로젝트 →</small><b>${esc(next.title)}</b></a>` : ""
-    }</nav>
+    <ol class="list">
+        ${items}
+    </ol>
+    <nav class="pager" aria-label="다른 프로젝트">${prev ? `<a href="/projects/${prev.slug}/">← ${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a href="/projects/${next.slug}/">${esc(next.title)} →</a>` : ""}</nav>
   </main>
 </body>
 </html>
@@ -120,23 +92,18 @@ const BLOCKS = [
   ["problem", "문제"],
   ["solution", "해결"],
   ["result", "결과"],
+  ["memo", "메모"],
 ];
 
 function notePage(p, n, k) {
   const url = `${SITE}/projects/${p.slug}/${n.id}/`;
   const prev = p.notes[k - 1];
   const next = p.notes[k + 1];
-  const figs = (at) =>
-    (n.figures ?? [])
-      .filter((f) => f.at === at)
-      .map((f) => `<figure class="nt-fig"><a href="/projects/${p.slug}/${f.src}" target="_blank" rel="noopener">${img(p.slug, f, ' loading="lazy" decoding="async"')}</a><figcaption>${inline(f.caption)}</figcaption></figure>`)
-      .join("");
-  const blocks = BLOCKS.map(
-    ([key, label]) => `<section class="nt-blk ${key}"><h2><span class="nt-tag">${label}</span></h2><ul>${n[key].map((t) => `<li>${inline(t)}</li>`).join("")}</ul>${figs(key)}</section>`,
-  ).join("\n      ");
-  const memo = n.memo?.length ? `\n      <aside class="nt-memo"><h2>메모</h2><ul>${n.memo.map((t) => `<li>${inline(t)}</li>`).join("")}</ul></aside>` : "";
-  const chips = p.notes
-    .map((m, j) => `<li><a href="/projects/${p.slug}/${m.id}/"${m.id === n.id ? ' aria-current="page"' : ""}><span>${two(j)}</span><span class="t">${esc(m.title)}</span></a></li>`)
+  const blocks = BLOCKS.filter(([key]) => n[key]?.length)
+    .map(([key, label]) => `<h2>${label}</h2>\n      <ul>${n[key].map((t) => `\n        <li>${inline(t)}</li>`).join("")}\n      </ul>`)
+    .join("\n      ");
+  const others = p.notes
+    .map((m, j) => (m.id === n.id ? `<li><b>${j + 1}. ${esc(m.title)}</b></li>` : `<li><a href="/projects/${p.slug}/${m.id}/">${j + 1}. ${esc(m.title)}</a></li>`))
     .join("");
   return `${head({
     title: `${n.title} · ${p.title} | 오승민`,
@@ -144,21 +111,24 @@ function notePage(p, n, k) {
     url,
     jsonld: { "@context": "https://schema.org", "@type": "Article", "@id": `${url}#note`, url, headline: n.title, description: n.summary, inLanguage: "ko", author: { "@id": `${SITE}/#person` }, isPartOf: { "@id": `${SITE}/projects/${p.slug}/#work` } },
   })}
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/${p.slug}/">← ${esc(p.title)}</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">${esc(p.title)} · 노트 ${two(k)} / ${two(p.notes.length - 1)}</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/${p.slug}/">← ${esc(p.title)}</a></nav>
+    <header>
       <h1>${esc(n.title)}</h1>
-      <p class="lead">${esc(n.summary)}</p>${n.metric ? `\n      <p class="nt-metric"><b>${esc(n.metric[0])}</b><span>${esc(n.metric[1])}</span></p>` : ""}
+      <p class="meta">${esc(p.title)} · ${k + 1}/${p.notes.length}${n.metric ? ` · ${esc(n.metric[0])} (${esc(n.metric[1])})` : ""}</p>
+      <p class="lead">${esc(n.summary)}</p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol>${chips}</ol></nav>
-    <article class="nt-body">
-      ${blocks}${memo}
+    <article class="body">
+      ${blocks}
     </article>
-    <nav class="pj-nav" aria-label="다른 노트">${
-      prev ? `<a class="prev" href="/projects/${p.slug}/${prev.id}/"><small>← 이전 노트</small><b>${esc(prev.title)}</b></a>` : `<a class="prev" href="/projects/${p.slug}/"><small>← 목차</small><b>${esc(p.title)}</b></a>`
-    }${next ? `<a class="next" href="/projects/${p.slug}/${next.id}/"><small>다음 노트 →</small><b>${esc(next.title)}</b></a>` : `<a class="next" href="/projects/${p.slug}/"><small>목차로 →</small><b>${esc(p.title)}</b></a>`}</nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>${esc(p.title)}</h2>
+      <ol>${others}</ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트">${prev ? `<a href="/projects/${p.slug}/${prev.id}/">← ${esc(prev.title)}</a>` : `<a href="/projects/${p.slug}/">← 목차</a>`}${
+      next ? `<a href="/projects/${p.slug}/${next.id}/">${esc(next.title)} →</a>` : `<a href="/projects/${p.slug}/">목차 →</a>`
+    }</nav>
   </main>
 </body>
 </html>
@@ -181,15 +151,16 @@ ${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  // 지운 노트의 폴더가 남지 않게, 각 프로젝트 아래 하위 폴더를 먼저 비웁니다 (이미지는 그대로)
+  // 지운 노트의 폴더가 남지 않게, 각 프로젝트 아래 하위 폴더를 먼저 비웁니다
   for (const p of projects) {
     const dir = join(root, "projects", p.slug);
     if (!existsSync(dir)) continue;
     for (const name of readdirSync(dir)) if (statSync(join(dir, name)).isDirectory()) rmSync(join(dir, name), { recursive: true });
   }
-  for (const [rel, html] of Object.entries(render())) {
+  const out = render();
+  for (const [rel, html] of Object.entries(out)) {
     mkdirSync(dirname(join(root, rel)), { recursive: true });
     writeFileSync(join(root, rel), html);
   }
-  console.log(`${Object.keys(render()).length}개 파일을 만들었습니다.`);
+  console.log(`${Object.keys(out).length}개 파일을 만들었습니다.`);
 }

@@ -34,23 +34,42 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">수자원기술 홈페이지 · 노트 03 / 05</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
+    <header>
       <h1>서버 한 대가 얼마까지 버티나</h1>
+      <p class="meta">수자원기술 홈페이지 · 3/5 · 분당 1,500 (실패 0 · p95 164ms)</p>
       <p class="lead">자동 확장 없는 서버 한 대에 단계별 부하를 걸어 처리량 천장과 편한 구간을 확인했습니다.</p>
-      <p class="nt-metric"><b>분당 1,500</b><span>실패 0 · p95 164ms</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/wareco/deploy/"><span>01</span><span class="t">머지하면 출시까지</span></a></li><li><a href="/projects/wareco/cms/"><span>02</span><span class="t">해외사업을 지도에서</span></a></li><li><a href="/projects/wareco/load/" aria-current="page"><span>03</span><span class="t">서버 한 대가 얼마까지 버티나</span></a></li><li><a href="/projects/wareco/php2shell/"><span>04</span><span class="t">패치가 나오지 않는 PHP 7.4</span></a></li><li><a href="/projects/wareco/forensics/"><span>05</span><span class="t">흔적 없음이 안전하다는 뜻은 아니다</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>자동 확장이 없는 버스트형 CPU 서버 한 대로 운영해야 했다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>10명부터 200명까지 단계별 30초씩 부하를 걸었다.</li><li>초당 처리량, p50 / 95 / 99, 서버 load · 메모리 · 컨테이너별 CPU를 함께 기록했다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>200명까지 실패 0, 처리량은 초당 약 50에서 평평했다.</li><li>편하게 버티는 속도는 <b>분당 1,500</b> (실패 0 · p95 164ms)</li><li>실제 트래픽은 그 수백 분의 1이라 2GB · 월 $12 플랜 그대로 운영에 들어갔다.</li></ul><figure class="nt-fig"><a href="/projects/wareco/load-chart.webp" target="_blank" rel="noopener"><img src="/projects/wareco/load-chart.webp" alt="동시 접속 단계별 처리량과 지연 그래프" width="1301" height="589" loading="lazy" decoding="async"></a><figcaption>동시 접속을 20배 늘려도 처리량은 그대로, 대기 시간만 늘었다</figcaption></figure></section>
-      <aside class="nt-memo"><h2>메모</h2><ul><li>리틀의 법칙(L = λ × W)으로 계산한 0.9초가 실측 p50 864ms와 맞았다.</li><li>실패 0%가 괜찮다는 뜻은 아니다. Apache는 줄을 세우고, p99 12초는 사용자에게 실패다.</li><li>측정 타이밍이 숫자를 속인다. 끝난 뒤 찍은 CPU 0.5%는 거짓이었고, 부하 중에 찍자 70%였다.</li></ul></aside>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>자동 확장이 없는 버스트형 CPU 서버 한 대로 운영해야 했다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>10명부터 200명까지 단계별 30초씩 부하를 걸었다.</li>
+        <li>초당 처리량, p50 / 95 / 99, 서버 load · 메모리 · 컨테이너별 CPU를 함께 기록했다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>200명까지 실패 0, 처리량은 초당 약 50에서 평평했다.</li>
+        <li>편하게 버티는 속도는 <b>분당 1,500</b> (실패 0 · p95 164ms)</li>
+        <li>실제 트래픽은 그 수백 분의 1이라 2GB · 월 $12 플랜 그대로 운영에 들어갔다.</li>
+      </ul>
+      <h2>메모</h2>
+      <ul>
+        <li>리틀의 법칙(L = λ × W)으로 계산한 0.9초가 실측 p50 864ms와 맞았다.</li>
+        <li>실패 0%가 괜찮다는 뜻은 아니다. Apache는 줄을 세우고, p99 12초는 사용자에게 실패다.</li>
+        <li>측정 타이밍이 숫자를 속인다. 끝난 뒤 찍은 CPU 0.5%는 거짓이었고, 부하 중에 찍자 70%였다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/wareco/cms/"><small>← 이전 노트</small><b>해외사업을 지도에서</b></a><a class="next" href="/projects/wareco/php2shell/"><small>다음 노트 →</small><b>패치가 나오지 않는 PHP 7.4</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>수자원기술 홈페이지</h2>
+      <ol><li><a href="/projects/wareco/deploy/">1. 머지하면 출시까지</a></li><li><a href="/projects/wareco/cms/">2. 해외사업을 지도에서</a></li><li><b>3. 서버 한 대가 얼마까지 버티나</b></li><li><a href="/projects/wareco/php2shell/">4. 패치가 나오지 않는 PHP 7.4</a></li><li><a href="/projects/wareco/forensics/">5. 흔적 없음이 안전하다는 뜻은 아니다</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/wareco/cms/">← 해외사업을 지도에서</a><a href="/projects/wareco/php2shell/">패치가 나오지 않는 PHP 7.4 →</a></nav>
   </main>
 </body>
 </html>

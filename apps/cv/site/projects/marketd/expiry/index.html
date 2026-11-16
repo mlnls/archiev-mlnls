@@ -34,22 +34,34 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">마켓:D · 노트 06 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header>
       <h1>60초가 지나면 깨지는 이미지</h1>
+      <p class="meta">마켓:D · 6/6 · key당 1번 (재발급)</p>
       <p class="lead">미리 갱신하지 않고, 깨진 이미지만 key당 한 번 다시 발급합니다.</p>
-      <p class="nt-metric"><b>key당 1번</b><span>재발급</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/" aria-current="page"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>서명 URL은 60초 뒤 만료돼, 오래 띄워 둔 채팅의 사진이 깨진다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>이미 그린 이미지는 미리 갱신하지 않는다.</li><li>깨지면(<code>onError</code>) key당 한 번만 재발급한다. 여러 장이 동시에 깨져도 요청은 한 번이다 (<code>cancelRefetch: false</code>).</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>쓸데없는 재발급 없이 깨진 사진만 다시 보인다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>서명 URL은 60초 뒤 만료돼, 오래 띄워 둔 채팅의 사진이 깨진다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>이미 그린 이미지는 미리 갱신하지 않는다.</li>
+        <li>깨지면(<code>onError</code>) key당 한 번만 재발급한다. 여러 장이 동시에 깨져도 요청은 한 번이다 (<code>cancelRefetch: false</code>).</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>쓸데없는 재발급 없이 깨진 사진만 다시 보인다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/signed-url/"><small>← 이전 노트</small><b>주소만 알면 누구나 보던 채팅 사진</b></a><a class="next" href="/projects/marketd/"><small>목차로 →</small><b>마켓:D</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>마켓:D</h2>
+      <ol><li><a href="/projects/marketd/monorepo/">1. 한쪽만 바꾸면 상대편이 깨졌다</a></li><li><a href="/projects/marketd/ota/">2. 긴급 수정이 스토어 심사를 기다렸다</a></li><li><a href="/projects/marketd/admin-test/">3. 하나 고치면 어디가 깨졌는지 몰랐다</a></li><li><a href="/projects/marketd/e2e/">4. jsdom이 못 보는 곳만 브라우저로</a></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><b>6. 60초가 지나면 깨지는 이미지</b></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/signed-url/">← 주소만 알면 누구나 보던 채팅 사진</a><a href="/projects/marketd/">목차 →</a></nav>
   </main>
 </body>
 </html>

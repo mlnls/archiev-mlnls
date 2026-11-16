@@ -50,32 +50,60 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj">
-    <nav class="crumb" aria-label="이동"><a href="/">← 오승민 이력</a></nav>
-    <header class="pj-hero">
-      <div class="pj-title">
-        <p class="eyebrow">벽촌 · 2026.03 – 10</p>
-        <h1>마켓:D</h1>
-        <p class="lead">동네 가게의 마감 임박 상품을 거래하는 서비스에서 흩어진 레포를 모노레포로 합치고, 관리자 화면의 테스트 구조와 앱 채팅 이미지의 보안 구조를 맡았습니다.</p>
-        <p class="links"><a class="btn" href="https://m.dongjakmarket.co.kr" rel="noopener">m.dongjakmarket.co.kr <span aria-hidden="true">↗</span></a></p>
-      </div>
-      <dl class="pj-meta"><div><dt>역할</dt><dd>모노레포 전환 · 관리자 테스트 (admin 전담) · 채팅 이미지 연동</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>React Native (Expo)</li><li>React</li><li>Turborepo</li><li>pnpm</li><li>TanStack Query</li><li>zod</li><li>Vitest</li><li>MSW</li><li>Playwright</li></ul></dd></div></dl>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/">← 오승민 이력</a></nav>
+    <header>
+      <h1>마켓:D</h1>
+      <p class="meta">벽촌 · 2026.03 – 10 · <a href="https://m.dongjakmarket.co.kr" rel="noopener">m.dongjakmarket.co.kr</a></p>
+      <p class="lead">동네 가게의 마감 임박 상품을 거래하는 서비스에서 흩어진 레포를 모노레포로 합치고, 관리자 화면의 테스트 구조와 앱 채팅 이미지의 보안 구조를 맡았습니다.</p>
+      <p class="meta">역할: 모노레포 전환 · 관리자 테스트 (admin 전담) · 채팅 이미지 연동<br>기술: React Native (Expo), React, Turborepo, pnpm, TanStack Query, zod, Vitest, MSW, Playwright</p>
     </header>
-    <figure class="pj-cover"><img src="/projects/marketd/cover.webp" alt="마켓:D 모바일 웹 메인 화면" width="2400" height="1350" fetchpriority="high" decoding="async"></figure>
-    <section class="pj-sec" aria-labelledby="notes">
-      <h2 id="notes"><span class="idx">6</span>문제 노트</h2>
-      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
-      <ol class="toc">
-        <li><a class="toc-item" href="/projects/marketd/monorepo/"><span class="n">01</span><span class="toc-body"><b>한쪽만 바꾸면 상대편이 깨졌다</b><span>관리자 · 앱 · 웹뷰 레포를 합치고 메시지 타입을 공통 패키지로 묶었습니다.</span></span><span class="toc-metric"><b>레포 3개 → 1개</b><small>pnpm workspace</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-        <li><a class="toc-item" href="/projects/marketd/ota/"><span class="n">02</span><span class="toc-body"><b>긴급 수정이 스토어 심사를 기다렸다</b><span>바뀐 것이 화면인지, 연결 로직인지, 바이너리인지에 따라 배포 길을 나눴습니다.</span></span><span class="toc-metric"><b>3갈래</b><small>배포 경로</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-        <li><a class="toc-item" href="/projects/marketd/admin-test/"><span class="n">03</span><span class="toc-body"><b>하나 고치면 어디가 깨졌는지 몰랐다</b><span>넓고 자주 바뀌는 관리자 화면에 요구사항처럼 읽히는 통합 테스트를 깔았습니다.</span></span><span class="toc-metric"><b>935개</b><small>관리자 테스트 케이스</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-        <li><a class="toc-item" href="/projects/marketd/e2e/"><span class="n">04</span><span class="toc-body"><b>jsdom이 못 보는 곳만 브라우저로</b><span>통합 테스트로 확인할 수 없는 지점만 골라 Playwright로 옮겼습니다.</span></span><span class="toc-metric"><b>5개</b><small>E2E</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-        <li><a class="toc-item" href="/projects/marketd/signed-url/"><span class="n">05</span><span class="toc-body"><b>주소만 알면 누구나 보던 채팅 사진</b><span>공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.</span></span><span class="toc-metric"><b>영구 → 60초</b><small>사진 주소 수명</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-        <li><a class="toc-item" href="/projects/marketd/expiry/"><span class="n">06</span><span class="toc-body"><b>60초가 지나면 깨지는 이미지</b><span>미리 갱신하지 않고, 깨진 이미지만 key당 한 번 다시 발급합니다.</span></span><span class="toc-metric"><b>key당 1번</b><small>재발급</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
-      </ol>
-    </section>
-    <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/lawtimes/"><small>← 이전 프로젝트</small><b>법률신문 한국법조인대관</b></a><a class="next" href="/projects/frontend-tools/"><small>다음 프로젝트 →</small><b>벽촌 FE 공통 모듈 · 사내 CLI</b></a></nav>
+    <ol class="list">
+        <li>
+          <span class="no">1.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/monorepo/">한쪽만 바꾸면 상대편이 깨졌다</a> <span class="mt">레포 3개 → 1개 · pnpm workspace</span>
+            <p>관리자 · 앱 · 웹뷰 레포를 합치고 메시지 타입을 공통 패키지로 묶었습니다.</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">2.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/ota/">긴급 수정이 스토어 심사를 기다렸다</a> <span class="mt">3갈래 · 배포 경로</span>
+            <p>바뀐 것이 화면인지, 연결 로직인지, 바이너리인지에 따라 배포 길을 나눴습니다.</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">3.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/admin-test/">하나 고치면 어디가 깨졌는지 몰랐다</a> <span class="mt">935개 · 관리자 테스트 케이스</span>
+            <p>넓고 자주 바뀌는 관리자 화면에 요구사항처럼 읽히는 통합 테스트를 깔았습니다.</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">4.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/e2e/">jsdom이 못 보는 곳만 브라우저로</a> <span class="mt">5개 · E2E</span>
+            <p>통합 테스트로 확인할 수 없는 지점만 골라 Playwright로 옮겼습니다.</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">5.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/signed-url/">주소만 알면 누구나 보던 채팅 사진</a> <span class="mt">영구 → 60초 · 사진 주소 수명</span>
+            <p>공개 버킷의 채팅 사진을 비공개 버킷과 60초 서명 URL로 옮겼습니다.</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">6.</span>
+          <div>
+            <a class="ti" href="/projects/marketd/expiry/">60초가 지나면 깨지는 이미지</a> <span class="mt">key당 1번 · 재발급</span>
+            <p>미리 갱신하지 않고, 깨진 이미지만 key당 한 번 다시 발급합니다.</p>
+          </div>
+        </li>
+    </ol>
+    <nav class="pager" aria-label="다른 프로젝트"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a><a href="/projects/frontend-tools/">벽촌 FE 공통 모듈 · 사내 CLI →</a></nav>
   </main>
 </body>
 </html>

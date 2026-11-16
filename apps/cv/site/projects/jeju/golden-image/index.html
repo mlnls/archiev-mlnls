@@ -34,22 +34,34 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">제주이어드림 · 노트 02 / 05</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
+    <header>
       <h1>콘솔 수작업 대신 yaml</h1>
+      <p class="meta">제주이어드림 · 2/5 · yaml (콘솔 수작업 대신)</p>
       <p class="lead">코드를 AMI로 굳히고, 인프라 전체를 템플릿 하나로 만들어 실패하면 통째로 되돌립니다.</p>
-      <p class="nt-metric"><b>yaml</b><span>콘솔 수작업 대신</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/jeju/scaling/"><span>01</span><span class="t">한 달에 하루 몰리는 트래픽</span></a></li><li><a href="/projects/jeju/golden-image/" aria-current="page"><span>02</span><span class="t">콘솔 수작업 대신 yaml</span></a></li><li><a href="/projects/jeju/cutover/"><span>03</span><span class="t">언제든 되돌릴 수 있는 전환</span></a></li><li><a href="/projects/jeju/isr/"><span>04</span><span class="t">메인 조회 API에 ISR</span></a></li><li><a href="/projects/jeju/ip-block/"><span>05</span><span class="t">IP 차단이 서버 자신을 막았다</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>콘솔에서 손으로 만든 인프라는 다시 만들 수도, 되돌릴 수도 없다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>Git 브랜치를 빌드해 AMI(Golden Image)로 굳히고, 환경 스택에서는 AMI ID만 바꿔 Launch Template과 ASG를 만든다.</li><li>VPC · 보안 그룹 · ASG · ALB를 CloudFormation 템플릿 하나로 만든다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>하나라도 잘못되면 스택 전체가 되돌아간다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>콘솔에서 손으로 만든 인프라는 다시 만들 수도, 되돌릴 수도 없다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>Git 브랜치를 빌드해 AMI(Golden Image)로 굳히고, 환경 스택에서는 AMI ID만 바꿔 Launch Template과 ASG를 만든다.</li>
+        <li>VPC · 보안 그룹 · ASG · ALB를 CloudFormation 템플릿 하나로 만든다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>하나라도 잘못되면 스택 전체가 되돌아간다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/jeju/scaling/"><small>← 이전 노트</small><b>한 달에 하루 몰리는 트래픽</b></a><a class="next" href="/projects/jeju/cutover/"><small>다음 노트 →</small><b>언제든 되돌릴 수 있는 전환</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>제주이어드림</h2>
+      <ol><li><a href="/projects/jeju/scaling/">1. 한 달에 하루 몰리는 트래픽</a></li><li><b>2. 콘솔 수작업 대신 yaml</b></li><li><a href="/projects/jeju/cutover/">3. 언제든 되돌릴 수 있는 전환</a></li><li><a href="/projects/jeju/isr/">4. 메인 조회 API에 ISR</a></li><li><a href="/projects/jeju/ip-block/">5. IP 차단이 서버 자신을 막았다</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/jeju/scaling/">← 한 달에 하루 몰리는 트래픽</a><a href="/projects/jeju/cutover/">언제든 되돌릴 수 있는 전환 →</a></nav>
   </main>
 </body>
 </html>

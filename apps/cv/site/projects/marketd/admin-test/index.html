@@ -34,23 +34,40 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">마켓:D · 노트 03 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
+    <header>
       <h1>하나 고치면 어디가 깨졌는지 몰랐다</h1>
+      <p class="meta">마켓:D · 3/6 · 935개 (관리자 테스트 케이스)</p>
       <p class="lead">넓고 자주 바뀌는 관리자 화면에 요구사항처럼 읽히는 통합 테스트를 깔았습니다.</p>
-      <p class="nt-metric"><b>935개</b><span>관리자 테스트 케이스</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/marketd/monorepo/"><span>01</span><span class="t">한쪽만 바꾸면 상대편이 깨졌다</span></a></li><li><a href="/projects/marketd/ota/"><span>02</span><span class="t">긴급 수정이 스토어 심사를 기다렸다</span></a></li><li><a href="/projects/marketd/admin-test/" aria-current="page"><span>03</span><span class="t">하나 고치면 어디가 깨졌는지 몰랐다</span></a></li><li><a href="/projects/marketd/e2e/"><span>04</span><span class="t">jsdom이 못 보는 곳만 브라우저로</span></a></li><li><a href="/projects/marketd/signed-url/"><span>05</span><span class="t">주소만 알면 누구나 보던 채팅 사진</span></a></li><li><a href="/projects/marketd/expiry/"><span>06</span><span class="t">60초가 지나면 깨지는 이미지</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>관리자 화면은 회원 · 상품 · 결제 · 정산 · 통계 · 배달 · 고객센터까지 넓고 수정이 잦아, 고칠 때마다 손으로 확인해야 했다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>MSW로 서버 대신 목업 API를 띄웠다.</li><li>도메인별 fixture와 alert · table · download 공통 유틸을 만들었다.</li><li>테스트 이름을 “~하면 ~한다” 문장으로 써서 요구사항처럼 읽히게 했다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>테스트 파일 <b>84개</b> · 케이스 <b>935개</b></li><li>로컬 재실행 175/175가 약 10초에 통과</li></ul></section>
-      <aside class="nt-memo"><h2>메모</h2><ul><li>zod는 모르는 필드를 에러 없이 지운다. 관리자 스키마에 새 필드를 넣지 않으면 조용히 사라진다.</li></ul></aside>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>관리자 화면은 회원 · 상품 · 결제 · 정산 · 통계 · 배달 · 고객센터까지 넓고 수정이 잦아, 고칠 때마다 손으로 확인해야 했다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>MSW로 서버 대신 목업 API를 띄웠다.</li>
+        <li>도메인별 fixture와 alert · table · download 공통 유틸을 만들었다.</li>
+        <li>테스트 이름을 “~하면 ~한다” 문장으로 써서 요구사항처럼 읽히게 했다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>테스트 파일 <b>84개</b> · 케이스 <b>935개</b></li>
+        <li>로컬 재실행 175/175가 약 10초에 통과</li>
+      </ul>
+      <h2>메모</h2>
+      <ul>
+        <li>zod는 모르는 필드를 에러 없이 지운다. 관리자 스키마에 새 필드를 넣지 않으면 조용히 사라진다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/marketd/ota/"><small>← 이전 노트</small><b>긴급 수정이 스토어 심사를 기다렸다</b></a><a class="next" href="/projects/marketd/e2e/"><small>다음 노트 →</small><b>jsdom이 못 보는 곳만 브라우저로</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>마켓:D</h2>
+      <ol><li><a href="/projects/marketd/monorepo/">1. 한쪽만 바꾸면 상대편이 깨졌다</a></li><li><a href="/projects/marketd/ota/">2. 긴급 수정이 스토어 심사를 기다렸다</a></li><li><b>3. 하나 고치면 어디가 깨졌는지 몰랐다</b></li><li><a href="/projects/marketd/e2e/">4. jsdom이 못 보는 곳만 브라우저로</a></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><a href="/projects/marketd/expiry/">6. 60초가 지나면 깨지는 이미지</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/ota/">← 긴급 수정이 스토어 심사를 기다렸다</a><a href="/projects/marketd/e2e/">jsdom이 못 보는 곳만 브라우저로 →</a></nav>
   </main>
 </body>
 </html>

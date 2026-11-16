@@ -34,22 +34,36 @@
   }
   </script>
 </head>
-<body class="pj-body">
-  <main class="pj nt">
-    <nav class="crumb" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
-    <header class="nt-head">
-      <p class="eyebrow">법률신문 한국법조인대관 · 노트 05 / 06</p>
+<body>
+  <main class="doc">
+    <nav class="back" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
+    <header>
       <h1>배포 권한은 레포 권한만큼만</h1>
+      <p class="meta">법률신문 한국법조인대관 · 5/6 · Secret 0개 (베스천 job에 넘기는 값)</p>
       <p class="lead">운영 서버로 이어지는 베스천 runner의 권한을 배포 스크립트 하나로 좁혔습니다.</p>
-      <p class="nt-metric"><b>Secret 0개</b><span>베스천 job에 넘기는 값</span></p>
     </header>
-    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/lawtimes/render/"><span>01</span><span class="t">SSR이 꺼져 있던 렌더링</span></a></li><li><a href="/projects/lawtimes/ga4/"><span>02</span><span class="t">페이지뷰가 빠지고 있었다</span></a></li><li><a href="/projects/lawtimes/runner/"><span>03</span><span class="t">들어갈 수 없는 서버에 배포하기</span></a></li><li><a href="/projects/lawtimes/rolling/"><span>04</span><span class="t">실패해도 서비스는 살아 있게</span></a></li><li><a href="/projects/lawtimes/security/" aria-current="page"><span>05</span><span class="t">배포 권한은 레포 권한만큼만</span></a></li><li><a href="/projects/lawtimes/release/"><span>06</span><span class="t">버전과 릴리스 노트도 자동으로</span></a></li></ol></nav>
-    <article class="nt-body">
-      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>베스천 runner는 운영 서버로 이어지는 자리라 권한을 최소로 둬야 했다.</li></ul></section>
-      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>sudo 없는 전용 계정으로 runner를 돌린다.</li><li>main · dev workflow만 runner를 쓸 수 있다.</li><li>runner 키는 <code>authorized_keys</code>의 <code>command=</code>로 배포 스크립트만 실행하고, 인자는 정규식으로 검사한다.</li><li>베스천 job에는 Secret을 넘기지 않는다.</li></ul></section>
-      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>사람이 서버에 들어가지 않고 레포 권한만으로 배포된다.</li></ul></section>
+    <article class="body">
+      <h2>문제</h2>
+      <ul>
+        <li>베스천 runner는 운영 서버로 이어지는 자리라 권한을 최소로 둬야 했다.</li>
+      </ul>
+      <h2>해결</h2>
+      <ul>
+        <li>sudo 없는 전용 계정으로 runner를 돌린다.</li>
+        <li>main · dev workflow만 runner를 쓸 수 있다.</li>
+        <li>runner 키는 <code>authorized_keys</code>의 <code>command=</code>로 배포 스크립트만 실행하고, 인자는 정규식으로 검사한다.</li>
+        <li>베스천 job에는 Secret을 넘기지 않는다.</li>
+      </ul>
+      <h2>결과</h2>
+      <ul>
+        <li>사람이 서버에 들어가지 않고 레포 권한만으로 배포된다.</li>
+      </ul>
     </article>
-    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/lawtimes/rolling/"><small>← 이전 노트</small><b>실패해도 서비스는 살아 있게</b></a><a class="next" href="/projects/lawtimes/release/"><small>다음 노트 →</small><b>버전과 릴리스 노트도 자동으로</b></a></nav>
+    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+      <h2>법률신문 한국법조인대관</h2>
+      <ol><li><a href="/projects/lawtimes/render/">1. SSR이 꺼져 있던 렌더링</a></li><li><a href="/projects/lawtimes/ga4/">2. 페이지뷰가 빠지고 있었다</a></li><li><a href="/projects/lawtimes/runner/">3. 들어갈 수 없는 서버에 배포하기</a></li><li><a href="/projects/lawtimes/rolling/">4. 실패해도 서비스는 살아 있게</a></li><li><b>5. 배포 권한은 레포 권한만큼만</b></li><li><a href="/projects/lawtimes/release/">6. 버전과 릴리스 노트도 자동으로</a></li></ol>
+    </nav>
+    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawtimes/rolling/">← 실패해도 서비스는 살아 있게</a><a href="/projects/lawtimes/release/">버전과 릴리스 노트도 자동으로 →</a></nav>
   </main>
 </body>
 </html>
