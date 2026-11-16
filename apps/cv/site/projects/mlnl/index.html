@@ -28,23 +28,25 @@
   }
   </script>
 </head>
-<body>
-  <main class="page project">
-    <nav class="crumb" aria-label="이동"><a href="/">← 이력으로</a></nav>
-    <header class="p-head">
-      <p class="eyebrow">개인 프로젝트</p>
-      <h1>mlnl 개인 플랫폼</h1>
-      <p class="lead">채용 공고를 찾고 이력서를 맞추는 반복을 줄이려고, 이력 · 블로그 · 채용 레이더 · 사진 보관함을 모노레포 하나로 만들고 서버 한 대에서 혼자 운영합니다. 지금 보고 계신 이 페이지도 그중 하나입니다.</p>
+<body class="pj-body">
+  <main class="pj">
+    <nav class="crumb" aria-label="이동"><a href="/">← 오승민 이력</a></nav>
+    <header class="pj-hero">
+      <div class="pj-title">
+        <p class="eyebrow">개인 프로젝트 · 2026.10 – 운영 중</p>
+        <h1>mlnl 개인 플랫폼</h1>
+        <p class="lead">채용 공고를 찾고 이력서를 맞추는 반복을 줄이려고, 이력 · 블로그 · 채용 레이더 · 사진 보관함을 모노레포 하나로 만들고 서버 한 대에서 혼자 운영합니다. 지금 보고 계신 이 페이지도 그중 하나입니다.</p>
+        <p class="links"><a class="btn" href="https://mlnl.site" rel="noopener">mlnl.site <span aria-hidden="true">↗</span></a><a class="btn" href="https://blog.mlnl.site" rel="noopener">블로그 <span aria-hidden="true">↗</span></a></p>
+      </div>
+      <dl class="pj-meta"><div><dt>역할</dt><dd>기획 · 개발 · 배포 · 운영</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>Next.js</li><li>Hono</li><li>SQLite</li><li>Docker</li><li>GHCR</li><li>Caddy</li><li>AWS Lightsail</li><li>Claude Code</li><li>Figma</li></ul></dd></div></dl>
     </header>
-    <dl class="p-meta"><dt>기간</dt><dd>2026.10 – 운영 중</dd><dt>역할</dt><dd>기획 · 개발 · 배포 · 운영</dd><dt>기술</dt><dd>Next.js, Hono, SQLite, Docker, GHCR, Caddy, AWS Lightsail, Claude Code, Figma</dd><dt>링크</dt><dd><span class="ext"><a href="https://mlnl.site" rel="noopener">mlnl.site ↗</a> <a href="https://blog.mlnl.site" rel="noopener">블로그 ↗</a></span></dd></dl>
-<div class="shot"><figure><img src="/projects/mlnl/mlnl-site.webp" alt="mlnl 이력 페이지" width="1440" height="900" fetchpriority="high" decoding="async"></figure></div>
-<section aria-labelledby="s-num"><h2 id="s-num">숫자로 보면</h2><dl class="body stats"><div><dt>앱</dt><dd><b>5개</b><span>이력 · 블로그 · 채용 · 보관함 · API</span></dd></div><div><dt>공고 매칭</dt><dd><b>100점</b><span>프로필 기준 + 근거 · 경고</span></dd></div><div><dt>배포</dt><dd><b>자동</b><span>GHCR → Lightsail</span></dd></div></dl></section>
-<section aria-labelledby="s-prob"><h2 id="s-prob">문제</h2><div class="body"><ul><li>공고가 채용 플랫폼과 기업 채용 페이지에 흩어져 있고, 내 스택 · 경력에 맞는지 매번 직접 판단해야 했습니다.</li><li>공고마다 강조할 경험을 다시 정리해 이력서를 고치는 일이 반복됐습니다.</li></ul></div></section>
-<section aria-labelledby="s-work"><h2 id="s-work">한 일</h2><div class="body"><dl class="steps"><dt>수집</dt><dd>채용 플랫폼과 기업 채용 페이지를 매일 아침 모읍니다.</dd><dt>매칭</dt><dd>스킬 · 트랙 · 경력 · 근무지로 점수를 매기고, 마감 · SI/파견 · 학력 · 필수 스택 공백을 근거와 경고로 표시합니다.</dd><dt>맞춤 이력서</dt><dd>Mac 워커가 API 큐에서 일을 가져가 Claude Code로 공고별 Figma 이력서를 만듭니다. spawn으로 실행해 공고 텍스트가 셸 명령이 되는 경로를 막았습니다.</dd><dt>배포</dt><dd>바뀐 앱만 테스트하고 이미지를 만들어, 명령이 제한된 전용 키로 서버에 올립니다. 헬스체크에 실패하면 이전 이미지로 되돌립니다.</dd><dt>운영</dt><dd>같은 서버의 다른 서비스와 Caddy 하나를 나눠 쓰고, 개인 화면은 Tailscale 안에서만 엽니다.</dd></dl></div></section>
-<section aria-labelledby="s-res"><h2 id="s-res">결과</h2><div class="body"><ul><li>매일 아침 점수 · 근거 · 경고가 붙은 공고 목록과, 공고마다 구성이 달라지는 이력서를 받습니다.</li></ul></div></section>
-<section aria-labelledby="s-learn"><h2 id="s-learn">배운 것</h2><div class="body"><ul><li>GEO · SEO · 배포 · AI 워커까지, 회사와 스터디에서 공부한 것을 내 서비스에 직접 적용했습니다.</li></ul></div></section>
-<section aria-labelledby="s-deck"><h2 id="s-deck">발표 자료</h2><div class="body"><p class="note">스터디와 회고에서 발표한 자료 일부입니다.</p><div class="deck"><figure><img src="/projects/mlnl/mlnl-1.webp" alt="공부한 것을 내 서비스에 직접 적용하기" width="1600" height="900" loading="lazy" decoding="async"></figure><figure><img src="/projects/mlnl/mlnl-2.webp" alt="워커 구조와 셸 미경유 실행" width="1600" height="900" loading="lazy" decoding="async"></figure></div></div></section>
-<nav class="p-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/jeju/"><small>이전</small>제주이어드림</a><a class="next" href="/projects/stock-research/"><small>다음</small>주식 스윙 리서치 시스템</a></nav>
+    <figure class="pj-cover"><img src="/projects/mlnl/mlnl-site.webp" alt="mlnl 이력 페이지" width="1440" height="900" fetchpriority="high" decoding="async"></figure>
+    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>앱</dt><dd><b>5개</b><span>이력 · 블로그 · 채용 · 보관함 · API</span></dd></div><div><dt>공고 매칭</dt><dd><b>100점</b><span>프로필 기준 + 근거 · 경고</span></dd></div><div><dt>배포</dt><dd><b>자동</b><span>GHCR → Lightsail</span></dd></div></dl>
+    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>공고가 채용 플랫폼과 기업 채용 페이지에 흩어져 있고, 내 스택 · 경력에 맞는지 매번 직접 판단해야 했습니다.</li><li>공고마다 강조할 경험을 다시 정리해 이력서를 고치는 일이 반복됐습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>매일 아침 점수 · 근거 · 경고가 붙은 공고 목록과, 공고마다 구성이 달라지는 이력서를 받습니다.</li></ul></div></div></section>
+    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>수집</h3><p>채용 플랫폼과 기업 채용 페이지를 매일 아침 모읍니다.</p></li><li><span class="n">02</span><h3>매칭</h3><p>스킬 · 트랙 · 경력 · 근무지로 점수를 매기고, 마감 · SI/파견 · 학력 · 필수 스택 공백을 근거와 경고로 표시합니다.</p></li><li><span class="n">03</span><h3>맞춤 이력서</h3><p>Mac 워커가 API 큐에서 일을 가져가 Claude Code로 공고별 Figma 이력서를 만듭니다. spawn으로 실행해 공고 텍스트가 셸 명령이 되는 경로를 막았습니다.</p></li><li><span class="n">04</span><h3>배포</h3><p>바뀐 앱만 테스트하고 이미지를 만들어, 명령이 제한된 전용 키로 서버에 올립니다. 헬스체크에 실패하면 이전 이미지로 되돌립니다.</p></li><li><span class="n">05</span><h3>운영</h3><p>같은 서버의 다른 서비스와 Caddy 하나를 나눠 쓰고, 개인 화면은 Tailscale 안에서만 엽니다.</p></li></ol></section>
+    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>GEO · SEO · 배포 · AI 워커까지, 회사와 스터디에서 공부한 것을 내 서비스에 직접 적용했습니다.</li></ul></section>
+    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/mlnl/mlnl-1.webp" target="_blank" rel="noopener"><figure><img src="/projects/mlnl/mlnl-1.webp" alt="공부한 것을 내 서비스에 직접 적용하기" width="1600" height="900" loading="lazy" decoding="async"><figcaption>공부한 것을 내 서비스에 직접 적용하기</figcaption></figure></a><a href="/projects/mlnl/mlnl-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/mlnl/mlnl-2.webp" alt="워커 구조와 셸 미경유 실행" width="1600" height="900" loading="lazy" decoding="async"><figcaption>워커 구조와 셸 미경유 실행</figcaption></figure></a></div></section>
+    <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/jeju/"><small>← 이전 프로젝트</small><b>제주이어드림</b></a><a class="next" href="/projects/stock-research/"><small>다음 프로젝트 →</small><b>주식 스윙 리서치 시스템</b></a></nav>
   </main>
 </body>
 </html>
