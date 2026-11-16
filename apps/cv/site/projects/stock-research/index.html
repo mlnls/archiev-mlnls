@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주식 스윙 리서치 시스템 | 오승민</title>
+  <meta name="description" content="유명 트레이더의 매매 규칙을 매일 백테스트와 모의투자로 검증하고, “지나고 나서 고른” 성적을 걸러 정직한 숫자만 남기는 개인 연구 도구입니다. 추천은 자동으로, 결정과 주문은 사람이 합니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/stock-research/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/stock-research/">
+  <meta property="og:title" content="주식 스윙 리서치 시스템 | 오승민">
+  <meta property="og:description" content="유명 트레이더의 매매 규칙을 매일 백테스트와 모의투자로 검증하고, “지나고 나서 고른” 성적을 걸러 정직한 숫자만 남기는 개인 연구 도구입니다. 추천은 자동으로, 결정과 주문은 사람이 합니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://mlnl.site/projects/stock-research/#work",
+    "url": "https://mlnl.site/projects/stock-research/",
+    "name": "주식 스윙 리서치 시스템",
+    "inLanguage": "ko",
+    "author": { "@id": "https://mlnl.site/#person" }
+  }
+  </script>
+</head>
+<body>
+  <main class="page project">
+    <nav class="crumb" aria-label="이동"><a href="/">← 이력으로</a></nav>
+    <header class="p-head">
+      <p class="eyebrow">개인 프로젝트</p>
+      <h1>주식 스윙 리서치 시스템</h1>
+      <p class="lead">유명 트레이더의 매매 규칙을 매일 백테스트와 모의투자로 검증하고, “지나고 나서 고른” 성적을 걸러 정직한 숫자만 남기는 개인 연구 도구입니다. 추천은 자동으로, 결정과 주문은 사람이 합니다.</p>
+    </header>
+    <dl class="p-meta"><dt>기간</dt><dd>2026.11 – 운영 중</dd><dt>역할</dt><dd>설계 · 개발 · 운영</dd><dt>기술</dt><dd>Python, SQLite, scikit-learn, Claude, Slack, AWS Lightsail (systemd)</dd></dl>
+<section aria-labelledby="s-num"><h2 id="s-num">숫자로 보면</h2><dl class="body stats"><div><dt>전략 규칙</dt><dd><b>11개+</b><span>미국 · 한국 따로 학습</span></dd></div><div><dt>국내 데이터</dt><dd><b>115만 행</b><span>1,000종목 · 4년</span></dd></div><div><dt>모의투자</dt><dd><b>1,000만 원</b><span>방법마다 · 시작일부터</span></dd></div><div><dt>주문</dt><dd><b>사람이</b><span>Claude는 제안만</span></dd></div></dl></section>
+<section aria-labelledby="s-prob"><h2 id="s-prob">문제</h2><div class="body"><ul><li>감 대신 숫자로 규칙을 검증하고 싶었지만, 시세 · 신호 · 리포트를 매일 사람이 보기는 어려웠습니다.</li><li>백테스트 성적은 “결과를 보고 고른” 방법이 섞이면 실제보다 좋아 보입니다.</li></ul></div></section>
+<section aria-labelledby="s-work"><h2 id="s-work">한 일</h2><div class="body"><dl class="steps"><dt>규칙 DSL</dt><dd>진입 · 순위 · 청산을 식 언어로 쓰고, ast 화이트리스트로 허용된 노드만 실행해 임의 코드 실행을 막았습니다. 모든 규칙에 손절을 강제합니다.</dd><dt>매일 배치</dt><dd>시세 갱신 → 신호 → 학습 → Slack 리포트를 미국 · 한국 시장별로 저녁 · 아침 · 주간 배치로 돌립니다.</dd><dt>타임머신 리플레이</dt><dd>그날 장 마감까지 알 수 있던 것만으로 매일 다시 계산해, 미래 정보가 섞인 방법은 순위에서 뺐습니다.</dd><dt>앞으로만 가는 장부</dt><dd>시작일부터 방법마다 1,000만 원으로 실제처럼 사고팔고, 한 번 기록한 날은 다시 고치지 않습니다.</dd><dt>뉴스 · 공시</dt><dd>뉴스와 DART 공시를 수집 시각과 함께 저장하고 Claude로 분류합니다. 위험 단어와 낮은 점수가 둘 다 있을 때만 경고해 오탐을 줄였습니다.</dd><dt>사람 승인</dt><dd>새 규칙과 원칙 수정은 백테스트 게이트를 통과한 뒤 사람이 승인해야 반영됩니다.</dd></dl></div></section>
+<section aria-labelledby="s-res"><h2 id="s-res">결과</h2><div class="body"><ul><li>미국에서 가져온 돌파 · 추세 전략은 국내에서 대부분 손실이었고, 국내 데이터로 따로 학습한 AI 점수 전략만 거래당 +1.7%로 확실히 벌었습니다. 그래서 미국과 한국을 완전히 따로 학습하게 나눴습니다.</li><li>매주 모의투자 결과로 지난주 투자 노트를 이어서 고쳐 쓰고, 다섯 가지 조건이 채워지기 전에는 실제 돈을 넣지 않습니다.</li></ul></div></section>
+<section aria-labelledby="s-learn"><h2 id="s-learn">배운 것</h2><div class="body"><ul><li>성적은 “그 방법을 그때 실제로 쓸 수 있었나”부터 따져야 합니다. 결과를 보고 고른 방법은 아무리 좋아도 빼야 했습니다.</li><li>백테스트로 검증할 수 없는 데이터(뉴스)는 앞으로의 기록으로만 판단합니다.</li></ul></div></section>
+<section aria-labelledby="s-deck"><h2 id="s-deck">발표 자료</h2><div class="body"><p class="note">스터디와 회고에서 발표한 자료 일부입니다.</p><div class="deck"><figure><img src="/projects/stock-research/stock-1.webp" alt="규칙은 숫자로 검증하고, 주문은 사람이" width="1600" height="900" loading="lazy" decoding="async"></figure><figure><img src="/projects/stock-research/stock-2.webp" alt="hindsight 분리, 타임머신 리플레이, 앞으로만 가는 장부" width="1600" height="900" loading="lazy" decoding="async"></figure></div></div></section>
+<nav class="p-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/mlnl/"><small>이전</small>mlnl 개인 플랫폼</a><a class="next" href="/projects/aws-study/"><small>다음</small>AWS SAA-C03 스터디 사이트</a></nav>
+  </main>
+</body>
+</html>

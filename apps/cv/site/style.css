@@ -149,3 +149,70 @@ dt { color: var(--muted); }
   .intro { margin-bottom: 24px; }
   a { text-decoration: none; }
 }
+
+/* ---------- 이력 → 프로젝트 상세로 가는 링크 ---------- */
+.hint { color: var(--muted); font-size: 13px; }
+h4 .ext, h3 .ext { margin-left: 8px; font-size: 13px; font-weight: 400; color: var(--muted); }
+h4 a.go, h3 a.go { text-decoration: none; }
+h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transition: color 160ms ease-out; }
+@media (hover: hover) { h4 a.go:hover::after, h3 a.go:hover::after { color: var(--accent); } }
+
+/* ---------- 프로젝트 상세 ---------- */
+.crumb { margin-bottom: 40px; font-size: 14px; }
+.crumb a { text-decoration: none; color: var(--muted); }
+.eyebrow { color: var(--muted); font-size: 14px; }
+.p-head h1 { margin-top: 6px; }
+.p-head .lead { max-width: 38em; }
+.p-meta {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 6px 24px;
+  margin: 32px 0 40px;
+}
+.p-meta dt { color: var(--muted); }
+.ext { display: inline-flex; flex-wrap: wrap; gap: 4px 16px; }
+
+figure { margin: 0; }
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--rule);
+}
+.shot { margin-bottom: 8px; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px 24px; }
+.stats dt { color: var(--muted); font-size: 13px; }
+.stats dd b { display: block; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stats dd span { color: var(--muted); font-size: 13px; }
+
+.steps dt { font-weight: 600; }
+.steps dt + dd { margin-top: 2px; }
+.steps dd + dt { margin-top: 14px; }
+
+.note { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+.deck { display: grid; gap: 16px; }
+
+.p-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.p-nav a { text-decoration: none; }
+.p-nav small { display: block; color: var(--muted); font-size: 13px; }
+.p-nav .next { grid-column: 2; text-align: right; }
+
+@media (max-width: 640px) {
+  .p-meta { grid-template-columns: 72px minmax(0, 1fr); gap: 4px 12px; }
+  .p-nav { grid-template-columns: 1fr; }
+  .p-nav .next { grid-column: 1; text-align: left; }
+}
+
+@media print {
+  .crumb, .p-nav, .deck { display: none; }
+  figure img { border: 0; }
+}

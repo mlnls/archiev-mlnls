@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mlnl.site/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/</loc></url>
+  <url><loc>https://mlnl.site/projects/sogang/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/</loc></url>
+  <url><loc>https://mlnl.site/projects/mlnl/</loc></url>
+  <url><loc>https://mlnl.site/projects/stock-research/</loc></url>
+  <url><loc>https://mlnl.site/projects/aws-study/</loc></url>
 </urlset>

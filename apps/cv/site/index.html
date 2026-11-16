@@ -62,9 +62,10 @@
           <h3><a href="https://www.byuckchon.com/">벽촌</a> <span>프론트엔드 개발자</span></h3>
           <p class="date">2025.06 – 현재</p>
         </div>
+        <p class="hint">프로젝트 이름을 누르면 문제, 해결 과정, 결과를 자세히 볼 수 있습니다.</p>
 
         <article>
-          <h4><a href="https://lawvax.co.kr">법무법인 로백스 홈페이지</a></h4>
+          <h4><a class="go" href="/projects/lawvax/">법무법인 로백스 홈페이지</a><a class="ext" href="https://lawvax.co.kr" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>CRA 레거시를 Next.js App Router로 옮겨 크롤러가 받는 첫 HTML의 본문을 0자에서 680자로, JS 전송량을 2,512KB에서 251KB로 줄였습니다.</li>
             <li>법인·구성원·글을 JSON-LD 그래프로 연결하고 canonical, sitemap, 실제 404, 레거시 주소 21개 패턴의 308 리디렉트를 구성했습니다.</li>
@@ -73,7 +74,7 @@
         </article>
 
         <article>
-          <h4><a href="https://lawpeople.lawtimes.co.kr">법률신문 법조인대관</a></h4>
+          <h4><a class="go" href="/projects/lawtimes/">법률신문 법조인대관</a><a class="ext" href="https://lawpeople.lawtimes.co.kr" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>SSR을 무력화하던 클라이언트 렌더링 범위를 좁히고 폰트를 dynamic subset으로 바꿔 Lighthouse 성능을 80에서 99로, FCP를 77%, LCP를 73% 개선했습니다.</li>
             <li>SPA 라우팅에서 누락되던 GA4 추적을 고쳐 월 103만 건 규모의 행동 데이터를 확보했습니다.</li>
@@ -82,7 +83,7 @@
         </article>
 
         <article>
-          <h4>마켓:D</h4>
+          <h4><a class="go" href="/projects/marketd/">마켓:D</a><a class="ext" href="https://m.dongjakmarket.co.kr" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>관리자, 사용자 앱, 웹뷰로 흩어진 레포를 pnpm workspace와 Turborepo 모노레포로 합치고 앱-웹뷰 메시지 타입을 공통 패키지로 묶었습니다.</li>
             <li>Expo EAS Update를 도입해 웹뷰, 연결 로직, 바이너리로 배포 경로를 나누고 긴급 수정을 스토어 심사 없이 내보낼 수 있게 했습니다.</li>
@@ -90,7 +91,7 @@
         </article>
 
         <article>
-          <h4>벽촌 FE 공통 모듈 · 사내 CLI</h4>
+          <h4><a class="go" href="/projects/frontend-tools/">벽촌 FE 공통 모듈 · 사내 CLI</a></h4>
           <ul>
             <li>사내 서비스가 함께 쓰는 core, basic-ui, utils, hooks 4개 패키지를 운영하며 달력·타이머·페이지네이션 훅, 입력 검증, SSR 환경 크래시 등 결함 12건을 찾아 고쳤습니다.</li>
             <li>팀 스타터 CLI를 만들어 명령 한 번으로 Next, React, React Native(Expo), Electron 프로젝트가 모노레포 구조, HTTP 에러 처리와 Sentry, 라이트·다크 테마, Figma·OpenAPI 작업 규칙을 갖추고 시작하게 했습니다.</li>
@@ -98,30 +99,23 @@
         </article>
 
         <article>
-          <h4>어울림</h4>
+          <h4><a class="go" href="/projects/eoullim/">어울림</a><a class="ext" href="https://withlim.kr" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>사내 CLI로 만든 Turborepo 모노레포에서 사용자 사이트와 관리자를 함께 개발하고, 콘텐츠·계정·신고·통계 전 도메인을 실 API에 연동했습니다.</li>
             <li>에디터(TipTap) 문서와 화면 블록을 오가는 변환 계층, PWA 설치, 휴대폰 번호 로그인을 구현했습니다.</li>
           </ul>
         </article>
 
-        <article>
-          <h4>브랜드 리서치 설문·리포트 서비스</h4>
-          <ul>
-            <li>드래그 앤 드롭 설문 작성, 모바일 응답, 수기 응답 업로드, 결과 차트를 거쳐 템플릿으로 PPT 보고서를 만드는 흐름을 구현했습니다.</li>
-            <li>PPT를 브라우저에서 바로 미리 보게 하고, 생성 중 편집 잠금, 사용 중인 템플릿 삭제 방지, 롤백으로 상태가 엇갈리는 문제를 막았습니다.</li>
-          </ul>
-        </article>
 
         <article>
-          <h4>서강교육그룹 성취도 평가 · 배치고사</h4>
+          <h4><a class="go" href="/projects/sogang/">서강교육그룹 성취도 평가 · 배치고사</a><a class="ext" href="https://eduslp.ac.kr" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>본사, 학당, 학습자 세 권한의 성취도 평가 대시보드를 만들고 반·개인 성적 리포트를 차트와 인쇄용 화면으로 제공했습니다.</li>
           </ul>
         </article>
 
         <article>
-          <h4>수자원기술 홈페이지</h4>
+          <h4><a class="go" href="/projects/wareco/">수자원기술 홈페이지</a><a class="ext" href="https://www.warecoglobal.com" rel="noopener">영문 사이트 ↗</a></h4>
           <ul>
             <li>PHP 레거시 사이트의 영문판을 출시하고, 머지하면 문법 검사, 배포, 무중단 reload가 이어지고 실패하면 복구되게 했습니다.</li>
             <li>운영 중인 PHP 7.4에 PHP2Shell 취약점 패치를 백포트해 빌드하고 요청 크기·메모리 상한으로 피해 범위를 줄였습니다.</li>
@@ -129,7 +123,7 @@
         </article>
 
         <article>
-          <h4><a href="https://jejuyouthdream.com">제주이어드림</a></h4>
+          <h4><a class="go" href="/projects/jeju/">제주이어드림</a><a class="ext" href="https://jejuyouthdream.com" rel="noopener">사이트 ↗</a></h4>
           <ul>
             <li>CloudFormation과 Auto Scaling으로 신청 기간 트래픽 피크에 대응하고, 메인 조회 API에 5분 주기 ISR을 적용했습니다.</li>
             <li>IP 차단 로직이 Next 서버 자체를 막아 생긴 장애를 x-forwarded-for 전달로 해결했습니다.</li>
@@ -146,7 +140,7 @@
         <article>
           <h4>그 외</h4>
           <ul>
-            <li>벽촌·Ingensrota 회사 사이트, FuturePlatform 사용자 서비스 5종, DREAM BLOOM 상세페이지(S3·CloudFront 정적 배포) 등 10여 개 서비스의 프론트엔드에 참여했습니다.</li>
+            <li><a href="https://www.byuckchon.com" rel="noopener">벽촌</a>·Ingensrota 회사 사이트, FuturePlatform 사용자 서비스 5종 등 10여 개 서비스의 프론트엔드에 참여했습니다.</li>
           </ul>
         </article>
       </div>
@@ -156,12 +150,12 @@
       <h2 id="side">개인 프로젝트</h2>
       <div class="body rows">
         <div class="row">
-          <div><h3><a href="https://mlnl.site">mlnl 개인 플랫폼</a> <span>설계, 개발, 운영</span></h3>
+          <div><h3><a class="go" href="/projects/mlnl/">mlnl 개인 플랫폼</a> <span>설계, 개발, 운영</span></h3>
           <p>이력, 블로그, 채용 레이더, 사진 보관함, API 5개 앱을 pnpm 모노레포로 운영합니다. 바뀐 앱만 테스트하고 이미지를 만들어 명령이 제한된 배포 키로 올리며, 헬스체크에 실패하면 이전 이미지로 되돌립니다. 채용 레이더는 매일 공고를 모아 내 프로필 기준으로 점수를 매기고 Claude로 공고 분석과 맞춤 이력서 초안을 만듭니다.</p></div>
           <p class="date">2026.10 – 운영 중</p>
         </div>
         <div class="row">
-          <div><h3>주식 스윙 리서치 시스템 <span>설계, 개발, 운영</span></h3>
+          <div><h3><a class="go" href="/projects/stock-research/">주식 스윙 리서치 시스템</a> <span>설계, 개발, 운영</span></h3>
           <p>미국·국내 일봉 데이터(국내 1,000종목, 4년치 115만 행)로 매매 규칙을 백테스트하고, 미래 정보를 쓰지 않는 과거 재생과 기록을 고칠 수 없는 실전 모의투자로 전략을 검증합니다. 뉴스와 공시는 Claude로 분류해 학습 데이터로 쓰고, Slack 봇과 대시보드로 매일 결과를 받습니다. (Python, SQLite, scikit-learn)</p></div>
           <p class="date">2026.11 – 운영 중</p>
         </div>
@@ -172,7 +166,7 @@
       <h2 id="activity">활동</h2>
       <div class="body rows">
         <div class="row">
-          <div><h3>외부 스터디 <span>스터디장</span></h3>
+          <div><h3><a class="go" href="/projects/aws-study/">외부 스터디</a> <span>스터디장</span></h3>
           <p>AWS SAA-C03 스터디를 운영하며 모의고사별 오답 노트, 분류별 성적, 29일 학습 교재, 관리자용 문항별 오답 분포를 담은 학습 PWA를 직접 만들어 함께 쓰고 있습니다.</p></div>
           <p class="date">운영 중</p>
         </div>

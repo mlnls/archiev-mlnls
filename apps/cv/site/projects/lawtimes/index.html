@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>법률신문 한국법조인대관 | 오승민</title>
+  <meta name="description" content="법조인 3만여 명을 검색하는 서비스의 렌더링 성능과 분석 데이터를 바로잡고, VPN 뒤에 있는 서버의 다섯 단계 손작업 배포를 머지 한 번으로 바꿨습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/lawtimes/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/lawtimes/">
+  <meta property="og:title" content="법률신문 한국법조인대관 | 오승민">
+  <meta property="og:description" content="법조인 3만여 명을 검색하는 서비스의 렌더링 성능과 분석 데이터를 바로잡고, VPN 뒤에 있는 서버의 다섯 단계 손작업 배포를 머지 한 번으로 바꿨습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://mlnl.site/projects/lawtimes/#work",
+    "url": "https://mlnl.site/projects/lawtimes/",
+    "name": "법률신문 한국법조인대관",
+    "inLanguage": "ko",
+    "author": { "@id": "https://mlnl.site/#person" }
+  }
+  </script>
+</head>
+<body>
+  <main class="page project">
+    <nav class="crumb" aria-label="이동"><a href="/">← 이력으로</a></nav>
+    <header class="p-head">
+      <p class="eyebrow">벽촌</p>
+      <h1>법률신문 한국법조인대관</h1>
+      <p class="lead">법조인 3만여 명을 검색하는 서비스의 렌더링 성능과 분석 데이터를 바로잡고, VPN 뒤에 있는 서버의 다섯 단계 손작업 배포를 머지 한 번으로 바꿨습니다.</p>
+    </header>
+    <dl class="p-meta"><dt>기간</dt><dd>2025.09 – 현재</dd><dt>역할</dt><dd>렌더링 성능 · GA4 · 배포 파이프라인 · 보안</dd><dt>기술</dt><dd>Next.js, GA4, GitHub Actions self-hosted runner, Docker</dd><dt>링크</dt><dd><span class="ext"><a href="https://lawpeople.lawtimes.co.kr" rel="noopener">lawpeople.lawtimes.co.kr ↗</a></span></dd></dl>
+<div class="shot"><figure><img src="/projects/lawtimes/lawtimes-site.webp" alt="한국법조인대관 메인 화면" width="1440" height="900" fetchpriority="high" decoding="async"></figure></div>
+<section aria-labelledby="s-num"><h2 id="s-num">숫자로 보면</h2><dl class="body stats"><div><dt>Lighthouse 성능</dt><dd><b>99점</b><span>80점에서</span></dd></div><div><dt>FCP · LCP</dt><dd><b>−77% · −73%</b></dd></div><div><dt>GA4로 확보한 행동 데이터</dt><dd><b>월 103만 건</b><span>SPA 라우팅 누락 수정</span></dd></div><div><dt>배포에 사람이 하는 일</dt><dd><b>머지 1번</b><span>5단계 손작업에서</span></dd></div></dl></section>
+<section aria-labelledby="s-prob"><h2 id="s-prob">문제</h2><div class="body"><ul><li>클라이언트 렌더링 범위가 넓어 SSR의 이점이 사라져 있었고, SPA 라우팅에서 GA4 페이지뷰가 빠지고 있었습니다.</li><li>배포는 맥에서 크로스 빌드 → VPN 접속 → 베스천 SSH → 컨테이너 하나씩 교체 → git 싱크의 다섯 단계 손작업이었습니다.</li><li>EC2는 VPN IP만 받는데 GitHub 러너 IP는 매번 바뀌어서, “빌드 자동화”가 아니라 “못 들어오는 서버에 어떻게 배포하나”가 진짜 질문이었습니다.</li></ul></div></section>
+<section aria-labelledby="s-work"><h2 id="s-work">한 일</h2><div class="body"><dl class="steps"><dt>렌더링</dt><dd>SSR을 무력화하던 클라이언트 렌더링 범위를 좁히고 폰트를 dynamic subset으로 바꿨습니다.</dd><dt>베스천 runner</dt><dd>베스천에 self-hosted runner를 두고 GitHub으로 나가는 443 롱 폴링만 쓰게 해 VPN 규칙을 그대로 뒀습니다.</dd><dt>빌드는 GitHub에서</dt><dd>amd64 네이티브로 빌드하고, 버전은 최신 태그와 PR 라벨로 정했습니다.</dd><dt>롤링 교체</dt><dd>포트를 하나씩 교체하고, 60초 안에 응답이 없으면 그 포트만 이전 컨테이너로 되돌립니다.</dd><dt>권한 최소화</dt><dd>sudo 없는 전용 계정, main · dev workflow만 허용, 러너 키에는 command=로 배포 스크립트만 실행하게 하고 인자는 정규식으로 검사합니다. 베스천 job에는 Secret을 넘기지 않습니다.</dd></dl></div></section>
+<section aria-labelledby="s-res"><h2 id="s-res">결과</h2><div class="body"><ul><li>머지 한 번이면 배포되고, 테스트 서버 교체는 정지부터 새 컨테이너 응답까지 약 8초입니다.</li><li>pem · VPN · 비밀번호를 사람끼리 주고받지 않고, 레포 권한만으로 배포됩니다.</li></ul></div></section>
+<section aria-labelledby="s-learn"><h2 id="s-learn">배운 것</h2><div class="body"><ul><li>set -e는 복구 단계까지 건너뜁니다. 실패하면 기존 컨테이너가 멈춘 채 끝나서 if ! …; then restore로 바꿨습니다.</li><li>새 브랜치를 push하면 paths 필터가 비교할 커밋이 없어 아무 기록 없이 건너뜁니다.</li><li>버전은 push한 순간 “쓴 것”입니다. 같은 번호로 다시 빌드하면 롤백을 보장할 수 없습니다.</li><li>자동화는 실패 경로가 코드에 없으면 그냥 멈춥니다. 사람이 하던 판단까지 스크립트로 옮겼습니다.</li></ul></div></section>
+<section aria-labelledby="s-deck"><h2 id="s-deck">발표 자료</h2><div class="body"><p class="note">스터디와 회고에서 발표한 자료 일부입니다.</p><div class="deck"><figure><img src="/projects/lawtimes/lawtimes-1.webp" alt="이전과 이후: 5단계 손작업에서 머지 1번, 테스트 서버 교체 약 8초" width="1600" height="900" loading="lazy" decoding="async"></figure><figure><img src="/projects/lawtimes/lawtimes-2.webp" alt="구조: 베스천 runner, GitHub 빌드, 롤링 교체" width="1600" height="900" loading="lazy" decoding="async"></figure></div></div></section>
+<nav class="p-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/lawvax/"><small>이전</small>법무법인 로백스 홈페이지</a><a class="next" href="/projects/marketd/"><small>다음</small>마켓:D</a></nav>
+  </main>
+</body>
+</html>
