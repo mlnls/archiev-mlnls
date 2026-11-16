@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>데스크톱 프로젝트도 명령 하나로 · 벽촌 FE 공통 모듈 · 사내 CLI | 오승민</title>
+  <meta name="description" content="bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/frontend-tools/electron/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/frontend-tools/electron/">
+  <meta property="og:title" content="데스크톱 프로젝트도 명령 하나로 · 벽촌 FE 공통 모듈 · 사내 CLI | 오승민">
+  <meta property="og:description" content="bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/frontend-tools/electron/#note",
+    "url": "https://mlnl.site/projects/frontend-tools/electron/",
+    "headline": "데스크톱 프로젝트도 명령 하나로",
+    "description": "bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/frontend-tools/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">벽촌 FE 공통 모듈 · 사내 CLI · 노트 01 / 06</p>
+      <h1>데스크톱 프로젝트도 명령 하나로</h1>
+      <p class="lead">bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.</p>
+      <p class="nt-metric"><b>+ Electron</b><span>bc init 선택지</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/frontend-tools/electron/" aria-current="page"><span>01</span><span class="t">데스크톱 프로젝트도 명령 하나로</span></a></li><li><a href="/projects/frontend-tools/expo/"><span>02</span><span class="t">앱 프로젝트도 같은 규칙으로</span></a></li><li><a href="/projects/frontend-tools/deploy/"><span>03</span><span class="t">배포가 성공했을 때만 릴리즈가 남게</span></a></li><li><a href="/projects/frontend-tools/release-notes/"><span>04</span><span class="t">릴리즈 노트는 커밋에서</span></a></li><li><a href="/projects/frontend-tools/v3/"><span>05</span><span class="t">쓰지 않는 기능은 걷어내기</span></a></li><li><a href="/projects/frontend-tools/qa/"><span>06</span><span class="t">공통 패키지 결함 12건</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>데스크톱 요청이 들어와도 CLI는 웹(React · Next)만 만들어, Electron은 매번 손으로 세팅했다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>electron-vite로 main · preload · renderer를 나눴다.</li><li><code>contextIsolation</code>과 <code>sandbox</code>를 켜고, preload에서 <code>window.api</code>만 노출한다.</li><li>renderer는 웹과 같은 폴더 구조 · 토큰 · API 레이어를 쓴다.</li><li>electron-builder로 macOS · Windows 설치 파일을 만든다.</li></ul></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</li></ul><figure class="nt-fig"><a href="/projects/frontend-tools/cli-init.webp" target="_blank" rel="noopener"><img src="/projects/frontend-tools/cli-init.webp" alt="bc init에서 Desktop(Electron)을 고르는 화면" width="1750" height="772" loading="lazy" decoding="async"></a><figcaption>bc init 실행 화면</figcaption></figure></section>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/frontend-tools/"><small>← 목차</small><b>벽촌 FE 공통 모듈 · 사내 CLI</b></a><a class="next" href="/projects/frontend-tools/expo/"><small>다음 노트 →</small><b>앱 프로젝트도 같은 규칙으로</b></a></nav>
+  </main>
+</body>
+</html>

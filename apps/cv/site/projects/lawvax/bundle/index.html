@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>사용자가 관리자 코드까지 받고 있었다 · 법무법인 로백스 홈페이지 | 오승민</title>
+  <meta name="description" content="관리자 라우트를 떼어 내 첫 진입 JS에서 쓰지 않는 코드를 걷어냈습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/lawvax/bundle/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/lawvax/bundle/">
+  <meta property="og:title" content="사용자가 관리자 코드까지 받고 있었다 · 법무법인 로백스 홈페이지 | 오승민">
+  <meta property="og:description" content="관리자 라우트를 떼어 내 첫 진입 JS에서 쓰지 않는 코드를 걷어냈습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/lawvax/bundle/#note",
+    "url": "https://mlnl.site/projects/lawvax/bundle/",
+    "headline": "사용자가 관리자 코드까지 받고 있었다",
+    "description": "관리자 라우트를 떼어 내 첫 진입 JS에서 쓰지 않는 코드를 걷어냈습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/lawvax/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/lawvax/">← 법무법인 로백스 홈페이지</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">법무법인 로백스 홈페이지 · 노트 05 / 05</p>
+      <h1>사용자가 관리자 코드까지 받고 있었다</h1>
+      <p class="lead">관리자 라우트를 떼어 내 첫 진입 JS에서 쓰지 않는 코드를 걷어냈습니다.</p>
+      <p class="nt-metric"><b>7.2MB → 171KB</b><span>첫 진입 JS</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/lawvax/ssr/"><span>01</span><span class="t">크롤러가 빈 페이지를 보고 있었다</span></a></li><li><a href="/projects/lawvax/urls/"><span>02</span><span class="t">옛 주소와 옛 도메인을 한 주소로</span></a></li><li><a href="/projects/lawvax/cache/"><span>03</span><span class="t">관리자가 저장하면 바로 반영</span></a></li><li><a href="/projects/lawvax/geo/"><span>04</span><span class="t">AI가 사실을 그대로 가져가게</span></a></li><li><a href="/projects/lawvax/bundle/" aria-current="page"><span>05</span><span class="t">사용자가 관리자 코드까지 받고 있었다</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>관리자와 사용자 코드가 한 번들에 묶여, 첫 진입 JS 대부분이 쓰이지 않는 코드였다 (Coverage로 측정).</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>관리자 라우트를 <code>React.lazy</code> + <code>Suspense</code>로 나눴다.</li><li>루트 배럴 export와 import 경로를 정리해 사용자 번들에 관리자 코드가 섞이지 않게 했다.</li></ul><figure class="nt-fig"><a href="/projects/lawvax/bundle-treemap.webp" target="_blank" rel="noopener"><img src="/projects/lawvax/bundle-treemap.webp" alt="분리 전후 사용자 메인 번들 트리맵" width="2400" height="957" loading="lazy" decoding="async"></a><figcaption>분리 커밋 전후를 다시 빌드해 본 사용자 번들 구성</figcaption></figure></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>첫 진입 JS <b>7.2MB → 171KB</b></li></ul></section>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/lawvax/geo/"><small>← 이전 노트</small><b>AI가 사실을 그대로 가져가게</b></a><a class="next" href="/projects/lawvax/"><small>목차로 →</small><b>법무법인 로백스 홈페이지</b></a></nav>
+  </main>
+</body>
+</html>

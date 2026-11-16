@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>법무법인 로백스 홈페이지 | 오승민</title>
-  <meta name="description" content="법무법인 홈페이지에 날아온 SEO · GEO 지적서를 계기로, CRA SPA를 Next.js App Router로 옮겨 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.">
+  <meta name="description" content="CRA SPA를 Next.js App Router로 옮겨, 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.">
   <link rel="canonical" href="https://mlnl.site/projects/lawvax/">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://mlnl.site/projects/lawvax/">
   <meta property="og:title" content="법무법인 로백스 홈페이지 | 오승민">
-  <meta property="og:description" content="법무법인 홈페이지에 날아온 SEO · GEO 지적서를 계기로, CRA SPA를 Next.js App Router로 옮겨 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.">
+  <meta property="og:description" content="CRA SPA를 Next.js App Router로 옮겨, 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.">
   <meta property="og:locale" content="ko_KR">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
@@ -24,7 +24,26 @@
     "url": "https://mlnl.site/projects/lawvax/",
     "name": "법무법인 로백스 홈페이지",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" }
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/lawvax/ssr/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawvax/urls/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawvax/cache/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawvax/geo/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/lawvax/bundle/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -35,17 +54,23 @@
       <div class="pj-title">
         <p class="eyebrow">벽촌 · 2026.01 – 현재</p>
         <h1>법무법인 로백스 홈페이지</h1>
-        <p class="lead">법무법인 홈페이지에 날아온 SEO · GEO 지적서를 계기로, CRA SPA를 Next.js App Router로 옮겨 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.</p>
+        <p class="lead">CRA SPA를 Next.js App Router로 옮겨, 크롤러와 AI가 사람과 같은 페이지를 보게 만들었습니다.</p>
         <p class="links"><a class="btn" href="https://lawvax.co.kr" rel="noopener">lawvax.co.kr <span aria-hidden="true">↗</span></a></p>
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>SSR 마이그레이션 · 메타데이터 · 구조화 데이터 · 배포</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>Next.js App Router</li><li>React 19</li><li>JSON-LD</li><li>Caddy</li></ul></dd></div></dl>
     </header>
-    <figure class="pj-cover"><img src="/projects/lawvax/lawvax-site.webp" alt="로백스 홈페이지 메인 화면" width="1440" height="900" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>크롤러가 받는 첫 HTML 본문</dt><dd><b>680자</b><span>0자에서</span></dd></div><div><dt>JS 전송량</dt><dd><b>251KB</b><span>2,512KB에서</span></dd></div><div><dt>첫 진입 JS (관리자 분리)</dt><dd><b>171KB</b><span>7.2MB에서</span></dd></div><div><dt>구조화 데이터 타입</dt><dd><b>7개</b><span>0개에서</span></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>모든 주소가 같은 2,090바이트 HTML을 돌려줘 제목과 설명이 전부 같았습니다.</li><li>GPTBot, ClaudeBot 같은 AI 크롤러는 JS를 실행하지 않아 사실상 빈 페이지를 보고 있었습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>같은 머신 · 같은 크롬에서 직접 잰 결과, JS 전송량 −90%, 페이지 총 전송량 −86%, Total Blocking Time −61%, 이미지 에셋 −92%.</li><li>기존 도메인(lvx.co.kr)은 새 도메인으로 301 이전하고, 유튜브 링크만 넣으면 제목과 게시일이 채워지게 했습니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>페이지 구조</h3><p>page는 메타데이터, Container는 데이터와 JSON-LD, View는 화면만 맡도록 나눠 리뉴얼 화면을 App Router로 통째로 옮겼습니다.</p></li><li><span class="n">02</span><h3>공식 주소 하나</h3><p>레거시 주소 21개 패턴을 308로 보내고, canonical과 sitemap이 같은 함수에서 주소를 만들게 했습니다.</p></li><li><span class="n">03</span><h3>캐시는 태그로</h3><p>관리자가 저장하면 revalidateTag로 해당 캐시만 비워 정적 성능과 최신성을 같이 지켰습니다.</p></li><li><span class="n">04</span><h3>같은 @id로 연결</h3><p>법인 · 구성원 · 글을 JSON-LD 그래프로 묶고, 화면에 없는 정보는 채우지 않았습니다.</p></li><li><span class="n">05</span><h3>인용하기 좋은 문장</h3><p>업무분야 맨 앞에 두 문장 요약과 &lt;time dateTime&gt;을 두어 AI가 사실을 그대로 가져가게 했습니다.</p></li><li><span class="n">06</span><h3>번들 분리</h3><p>관리자까지 한 번에 받던 첫 진입 JS를 라우트 단위로 나눠 7.2MB에서 171KB로 줄였습니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>Lighthouse 100점은 JS를 다 실행한 뒤 검사해 크롤러 시점을 못 봅니다. 그래서 원본 HTML을 직접 셌습니다.</li><li>&#x27;use client&#x27;도 서버에서 그려지지만, 마운트 후에 그리는 것은 서버 HTML에 없습니다.</li><li>크롤러는 상태 코드부터 읽습니다. soft 404, 308, noindex 헤더 하나가 검색 결과를 바꿉니다.</li><li>GEO는 SEO 위에 “그 페이지가 말하는 사실이 정확한가”가 더해진 일이었습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/lawvax/lawvax-1.webp" target="_blank" rel="noopener"><figure><img src="/projects/lawvax/lawvax-1.webp" alt="크롤러가 받는 첫 HTML 비교: 본문 0자에서 680자, JS 2,512KB에서 251KB" width="1600" height="900" loading="lazy" decoding="async"><figcaption>크롤러가 받는 첫 HTML 비교: 본문 0자에서 680자, JS 2,512KB에서 251KB</figcaption></figure></a><a href="/projects/lawvax/lawvax-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/lawvax/lawvax-2.webp" alt="결과: JS 전송량 −90%, 총 전송량 −86%, TBT −61%, 이미지 −92%" width="1600" height="900" loading="lazy" decoding="async"><figcaption>결과: JS 전송량 −90%, 총 전송량 −86%, TBT −61%, 이미지 −92%</figcaption></figure></a></div></section>
+    <figure class="pj-cover"><img src="/projects/lawvax/cover.webp" alt="로백스 홈페이지 메인 화면" width="2400" height="1500" fetchpriority="high" decoding="async"></figure>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">5</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/lawvax/ssr/"><span class="n">01</span><span class="toc-body"><b>크롤러가 빈 페이지를 보고 있었다</b><span>모든 주소가 같은 빈 HTML을 돌려주던 SPA를 서버에서 본문을 그리는 구조로 옮겼습니다.</span></span><span class="toc-metric"><b>0 → 680자</b><small>첫 HTML 본문</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawvax/urls/"><span class="n">02</span><span class="toc-body"><b>옛 주소와 옛 도메인을 한 주소로</b><span>레거시 주소 21개 패턴은 308, 옛 도메인은 301로 보내고 canonical과 sitemap을 한 함수에서 만들었습니다.</span></span><span class="toc-metric"><b>21개 패턴</b><small>레거시 주소 정리</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawvax/cache/"><span class="n">03</span><span class="toc-body"><b>관리자가 저장하면 바로 반영</b><span>정적 페이지의 캐시를 태그로 묶어, 관리자가 저장한 내용만 골라 비웠습니다.</span></span><span class="toc-metric"><b>revalidateTag</b><small>저장한 글만 갱신</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawvax/geo/"><span class="n">04</span><span class="toc-body"><b>AI가 사실을 그대로 가져가게</b><span>법인 · 구성원 · 글을 JSON-LD 그래프로 묶고, 인용하기 좋은 요약과 날짜를 맨 앞에 두었습니다.</span></span><span class="toc-metric"><b>0 → 7종</b><small>구조화 데이터 타입</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/lawvax/bundle/"><span class="n">05</span><span class="toc-body"><b>사용자가 관리자 코드까지 받고 있었다</b><span>관리자 라우트를 떼어 내 첫 진입 JS에서 쓰지 않는 코드를 걷어냈습니다.</span></span><span class="toc-metric"><b>7.2MB → 171KB</b><small>첫 진입 JS</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="next" href="/projects/lawtimes/"><small>다음 프로젝트 →</small><b>법률신문 한국법조인대관</b></a></nav>
   </main>
 </body>

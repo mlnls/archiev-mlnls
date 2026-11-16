@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>페이지뷰가 빠지고 있었다 · 법률신문 한국법조인대관 | 오승민</title>
+  <meta name="description" content="SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/lawtimes/ga4/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/lawtimes/ga4/">
+  <meta property="og:title" content="페이지뷰가 빠지고 있었다 · 법률신문 한국법조인대관 | 오승민">
+  <meta property="og:description" content="SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/lawtimes/ga4/#note",
+    "url": "https://mlnl.site/projects/lawtimes/ga4/",
+    "headline": "페이지뷰가 빠지고 있었다",
+    "description": "SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/lawtimes/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">법률신문 한국법조인대관 · 노트 02 / 06</p>
+      <h1>페이지뷰가 빠지고 있었다</h1>
+      <p class="lead">SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.</p>
+      <p class="nt-metric"><b>월 103만 건</b><span>GA4 이벤트</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/lawtimes/render/"><span>01</span><span class="t">SSR이 꺼져 있던 렌더링</span></a></li><li><a href="/projects/lawtimes/ga4/" aria-current="page"><span>02</span><span class="t">페이지뷰가 빠지고 있었다</span></a></li><li><a href="/projects/lawtimes/runner/"><span>03</span><span class="t">들어갈 수 없는 서버에 배포하기</span></a></li><li><a href="/projects/lawtimes/rolling/"><span>04</span><span class="t">실패해도 서비스는 살아 있게</span></a></li><li><a href="/projects/lawtimes/security/"><span>05</span><span class="t">배포 권한은 레포 권한만큼만</span></a></li><li><a href="/projects/lawtimes/release/"><span>06</span><span class="t">버전과 릴리스 노트도 자동으로</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>SPA 라우팅이라 첫 진입 뒤로는 GA4 page_view가 기록되지 않았다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>라우트가 바뀔 때 page_view를 보내도록 추적을 다시 설계했다.</li><li>주요 CTA에 커스텀 이벤트를 연결했다.</li></ul></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>월 이벤트 <b>1,039,503건</b> · 사용자 <b>88,231명</b>의 행동 데이터 확보</li></ul></section>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/lawtimes/render/"><small>← 이전 노트</small><b>SSR이 꺼져 있던 렌더링</b></a><a class="next" href="/projects/lawtimes/runner/"><small>다음 노트 →</small><b>들어갈 수 없는 서버에 배포하기</b></a></nav>
+  </main>
+</body>
+</html>

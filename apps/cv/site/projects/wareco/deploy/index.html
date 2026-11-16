@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>머지하면 출시까지 · 수자원기술 홈페이지 | 오승민</title>
+  <meta name="description" content="바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/wareco/deploy/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/wareco/deploy/">
+  <meta property="og:title" content="머지하면 출시까지 · 수자원기술 홈페이지 | 오승민">
+  <meta property="og:description" content="바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/wareco/deploy/#note",
+    "url": "https://mlnl.site/projects/wareco/deploy/",
+    "headline": "머지하면 출시까지",
+    "description": "바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/wareco/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">수자원기술 홈페이지 · 노트 01 / 05</p>
+      <h1>머지하면 출시까지</h1>
+      <p class="lead">바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.</p>
+      <p class="nt-metric"><b>무중단</b><span>reload</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/wareco/deploy/" aria-current="page"><span>01</span><span class="t">머지하면 출시까지</span></a></li><li><a href="/projects/wareco/cms/"><span>02</span><span class="t">해외사업을 지도에서</span></a></li><li><a href="/projects/wareco/load/"><span>03</span><span class="t">서버 한 대가 얼마까지 버티나</span></a></li><li><a href="/projects/wareco/php2shell/"><span>04</span><span class="t">패치가 나오지 않는 PHP 7.4</span></a></li><li><a href="/projects/wareco/forensics/"><span>05</span><span class="t">흔적 없음이 안전하다는 뜻은 아니다</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>CMS · 문의 · 검색 때문에 정적 사이트로 바꿀 수 없는 PHP 레거시였다.</li><li>그 위에 영문판을 새로 열어야 했다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>main에 머지하면 바뀐 PHP 파일 문법 검사 → 배포 → Caddy 설정 검사 → 무중단 reload, 실패하면 복구된다.</li><li><code>/kor/</code> 주소는 <code>/eng/</code>로 301 처리했다.</li></ul></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>영문판을 출시했고, 이후 수정도 머지 한 번으로 나간다.</li></ul><figure class="nt-fig"><a href="/projects/wareco/deploy-redirect.webp" target="_blank" rel="noopener"><img src="/projects/wareco/deploy-redirect.webp" alt="curl로 확인한 /kor/에서 /eng/로의 301 응답" width="1728" height="292" loading="lazy" decoding="async"></a><figcaption>운영 서버 응답: /kor/ → /eng/</figcaption></figure></section>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/wareco/"><small>← 목차</small><b>수자원기술 홈페이지</b></a><a class="next" href="/projects/wareco/cms/"><small>다음 노트 →</small><b>해외사업을 지도에서</b></a></nav>
+  </main>
+</body>
+</html>

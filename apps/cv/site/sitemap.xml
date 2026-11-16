@@ -2,11 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mlnl.site/</loc></url>
   <url><loc>https://mlnl.site/projects/lawvax/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/ssr/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/urls/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/cache/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/geo/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawvax/bundle/</loc></url>
   <url><loc>https://mlnl.site/projects/lawtimes/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/render/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/ga4/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/runner/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/rolling/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/security/</loc></url>
+  <url><loc>https://mlnl.site/projects/lawtimes/release/</loc></url>
   <url><loc>https://mlnl.site/projects/marketd/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/monorepo/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/ota/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/admin-test/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/e2e/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/signed-url/</loc></url>
+  <url><loc>https://mlnl.site/projects/marketd/expiry/</loc></url>
   <url><loc>https://mlnl.site/projects/frontend-tools/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/electron/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/expo/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/deploy/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/release-notes/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/v3/</loc></url>
+  <url><loc>https://mlnl.site/projects/frontend-tools/qa/</loc></url>
   <url><loc>https://mlnl.site/projects/eoullim/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/tokens/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/figma/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/api/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/editor/</loc></url>
+  <url><loc>https://mlnl.site/projects/eoullim/login/</loc></url>
   <url><loc>https://mlnl.site/projects/sogang/</loc></url>
+  <url><loc>https://mlnl.site/projects/sogang/roles/</loc></url>
+  <url><loc>https://mlnl.site/projects/sogang/report/</loc></url>
+  <url><loc>https://mlnl.site/projects/sogang/placement/</loc></url>
   <url><loc>https://mlnl.site/projects/wareco/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/deploy/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/cms/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/load/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/php2shell/</loc></url>
+  <url><loc>https://mlnl.site/projects/wareco/forensics/</loc></url>
   <url><loc>https://mlnl.site/projects/jeju/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/scaling/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/golden-image/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/cutover/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/isr/</loc></url>
+  <url><loc>https://mlnl.site/projects/jeju/ip-block/</loc></url>
 </urlset>

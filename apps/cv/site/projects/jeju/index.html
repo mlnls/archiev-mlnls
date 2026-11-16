@@ -24,7 +24,26 @@
     "url": "https://mlnl.site/projects/jeju/",
     "name": "제주이어드림",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" }
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/jeju/scaling/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/jeju/golden-image/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/jeju/cutover/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/jeju/isr/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/jeju/ip-block/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -40,12 +59,18 @@
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>사용자 · 관리자 프론트엔드, 프론트 배포 IaC</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>Next.js SSR</li><li>CloudFormation</li><li>EC2 Image Builder</li><li>ALB</li><li>Auto Scaling</li></ul></dd></div></dl>
     </header>
-    <figure class="pj-cover"><img src="/projects/jeju/jeju-site.webp" alt="제주이어드림 메인 화면" width="1440" height="900" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>평소 서버</dt><dd><b>1대</b><span>최소 1 · 최대 5</span></dd></div><div><dt>요청 6,000건 이상</dt><dd><b>3대</b><span>타깃당 요청 기준</span></dd></div><div><dt>인프라 설정</dt><dd><b>yaml</b><span>콘솔 수작업 대신</span></dd></div><div><dt>메인 조회 API</dt><dd><b>ISR 5분</b></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>S3 + CloudFront 정적 호스팅에는 사양을 바꿀 옵션이 없었고, 공고 날에는 프론트와 백엔드 서버가 함께 멈췄습니다.</li><li>필요한 건 한 달에 하루 몰릴 때만 자동으로 늘어나는 구조였습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>한 달에 하루 몰리는 트래픽을 위해, 필요할 때만 늘어나는 프론트 서버를 만들었습니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>Golden Image</h3><p>Git 브랜치를 빌드해 AMI로 굳히고, 환경 스택에서는 AMI ID만 바꿔 Launch Template과 ASG를 만듭니다.</p></li><li><span class="n">02</span><h3>한 번에, 실패하면 롤백</h3><p>VPC · 보안 그룹 · ASG · ALB를 템플릿 하나로 만들고, 하나라도 잘못되면 스택 전체가 되돌아갑니다.</p></li><li><span class="n">03</span><h3>안전한 전환</h3><p>새 리스너 규칙을 우선순위 509 · 510 뒤에 두고 확인한 다음 수동으로 전환해, 언제든 바로 되돌릴 수 있게 했습니다.</p></li><li><span class="n">04</span><h3>Step Scaling</h3><p>타깃당 요청 3,000 / 6,000을 기준으로 1 → 2 → 3대로 늘어납니다.</p></li><li><span class="n">05</span><h3>장애 해결</h3><p>IP 차단 로직이 Next 서버 자체를 막아 생긴 장애를 x-forwarded-for 전달로 해결했습니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>결국 클라이언트가 원하는 것은 비용과 안정성을 같이 설계하는 능력이었습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/jeju/jeju-1.webp" target="_blank" rel="noopener"><figure><img src="/projects/jeju/jeju-1.webp" alt="S3 + CloudFront에서 EC2 + Auto Scaling으로" width="1600" height="900" loading="lazy" decoding="async"><figcaption>S3 + CloudFront에서 EC2 + Auto Scaling으로</figcaption></figure></a><a href="/projects/jeju/jeju-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/jeju/jeju-2.webp" alt="Golden Image, 환경 스택, 안전한 전환" width="1600" height="900" loading="lazy" decoding="async"><figcaption>Golden Image, 환경 스택, 안전한 전환</figcaption></figure></a></div></section>
+    <figure class="pj-cover"><img src="/projects/jeju/cover.webp" alt="청년이어드림 메인 화면" width="2400" height="1500" fetchpriority="high" decoding="async"></figure>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">5</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/jeju/scaling/"><span class="n">01</span><span class="toc-body"><b>한 달에 하루 몰리는 트래픽</b><span>필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.</span></span><span class="toc-metric"><b>1 → 3대</b><small>요청 기준 Step Scaling</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/jeju/golden-image/"><span class="n">02</span><span class="toc-body"><b>콘솔 수작업 대신 yaml</b><span>코드를 AMI로 굳히고, 인프라 전체를 템플릿 하나로 만들어 실패하면 통째로 되돌립니다.</span></span><span class="toc-metric"><b>yaml</b><small>콘솔 수작업 대신</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/jeju/cutover/"><span class="n">03</span><span class="toc-body"><b>언제든 되돌릴 수 있는 전환</b><span>새 경로를 기존 규칙 뒤에 두고 확인한 다음 수동으로 전환했습니다.</span></span><span class="toc-metric"><b>509 · 510</b><small>리스너 규칙 우선순위</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/jeju/isr/"><span class="n">04</span><span class="toc-body"><b>메인 조회 API에 ISR</b><span>메인 화면의 조회 API 응답을 5분마다 다시 만들어 피크와 비용을 같이 잡았습니다.</span></span><span class="toc-metric"><b>5분</b><small>ISR 재검증</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/jeju/ip-block/"><span class="n">05</span><span class="toc-body"><b>IP 차단이 서버 자신을 막았다</b><span>IP 차단 도입 뒤 생긴 장애를 x-forwarded-for 전달로 풀었습니다.</span></span><span class="toc-metric"><b>x-forwarded-for</b><small>실제 사용자 IP</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/wareco/"><small>← 이전 프로젝트</small><b>수자원기술 홈페이지</b></a></nav>
   </main>
 </body>

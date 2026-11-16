@@ -24,7 +24,26 @@
     "url": "https://mlnl.site/projects/wareco/",
     "name": "수자원기술 홈페이지",
     "inLanguage": "ko",
-    "author": { "@id": "https://mlnl.site/#person" }
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "hasPart": [
+      {
+        "@id": "https://mlnl.site/projects/wareco/deploy/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/wareco/cms/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/wareco/load/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/wareco/php2shell/#note"
+      },
+      {
+        "@id": "https://mlnl.site/projects/wareco/forensics/#note"
+      }
+    ]
   }
   </script>
 </head>
@@ -40,12 +59,18 @@
       </div>
       <dl class="pj-meta"><div><dt>역할</dt><dd>배포 구성 · 부하 테스트 · 취약점 분석과 패치 빌드</dd></div><div><dt>기술</dt><dd><ul class="chips"><li>PHP 7.4</li><li>Apache mod_php</li><li>Docker</li><li>Caddy</li><li>AWS Lightsail</li><li>GitHub Actions</li></ul></dd></div></dl>
     </header>
-    <figure class="pj-cover"><img src="/projects/wareco/wareco-1.webp" alt="서버 한 대의 천장을 숫자로 찾기: 초당 50, 분당 1,500" width="1600" height="900" fetchpriority="high" decoding="async"></figure>
-    <dl class="pj-stats" aria-label="숫자로 보면"><div><dt>편하게 버티는 속도</dt><dd><b>분당 1,500</b><span>실패 0 · p95 164ms</span></dd></div><div><dt>처리량 천장</dt><dd><b>초당 약 50</b><span>PHP 페이지 기준</span></dd></div><div><dt>요청 최대 크기</dt><dd><b>8MB</b><span>210MB에서</span></dd></div><div><dt>월 서버 비용</dt><dd><b>$12</b><span>2GB · 전송 3TB</span></dd></div></dl>
-    <section class="pj-sec"><h2><span class="idx">01</span>문제와 결과</h2><div class="pair"><div class="panel"><h3>문제</h3><ul><li>CMS · 문의 · 검색 때문에 정적 사이트로 바꿀 수 없었고, 자동 확장이 없는 버스트형 CPU 서버 한 대로 운영해야 했습니다.</li><li>인증 없이 원격 코드 실행이 가능한 PHP2Shell(CVE-2026-109618 · 109619, CVSS 9.2)이 공개됐는데, 공식 이미지는 7.4.33에서 멈춰 기다려도 패치가 없었습니다.</li></ul></div><div class="panel accent"><h3>결과</h3><ul><li>200명까지 실패 0, 처리량은 초당 약 50에서 평평했습니다. 실제 트래픽은 그 수백 분의 1이라 2GB 플랜 그대로 운영에 들어갔습니다.</li><li>완화 4겹과 수정 1겹으로 막고, 방문자는 모르게 CMS 업로드 상한만 200MB에서 30MB로 줄였습니다. 침입 흔적은 없었습니다.</li></ul></div></div></section>
-    <section class="pj-sec"><h2><span class="idx">02</span>한 일</h2><ol class="work"><li><span class="n">01</span><h3>출시와 배포</h3><p>main에 머지하면 바뀐 PHP 파일 문법 검사 → 배포 → Caddy 설정 검사 후 무중단 reload, 실패하면 복구됩니다. /kor/ 주소는 /eng/로 301 처리했습니다.</p></li><li><span class="n">02</span><h3>CMS</h3><p>해외사업 관리 메뉴를 추가하고, 세계지도에서 국가를 누르면 해당 사업으로 이동하게 했습니다.</p></li><li><span class="n">03</span><h3>부하 테스트</h3><p>10명부터 200명까지 단계별 30초씩 부하를 걸며 초당 처리량과 p50 / 95 / 99, 서버 load · 메모리 · 컨테이너별 CPU를 함께 기록했습니다.</p></li><li><span class="n">04</span><h3>설정은 “언제”</h3><p>ini_set은 본문 파싱 뒤라 늦어서 php_admin_value로 파싱 전에 적용하고, memory_limit 대신 컨테이너 메모리를 1g로 제한했습니다.</p></li><li><span class="n">05</span><h3>직접 재빌드</h3><p>php-config의 원래 빌드 옵션 그대로 백포트 패치를 넣어 빌드했습니다. 패치 파일은 sha256부터 검사하고, 마커가 없으면 빌드가 실패합니다.</p></li><li><span class="n">06</span><h3>침해 점검</h3><p>공격 흔적, 웹쉘, 최근 바뀐 PHP, 업로드 경로 스크립트 등 8개 항목을 점검하고 패치 후 다시 점검했습니다.</p></li></ol></section>
-    <section class="pj-sec"><h2><span class="idx">03</span>배운 것</h2><ul class="learn"><li>리틀의 법칙(L = λ × W)으로 계산한 0.9초가 실측 p50 864ms와 맞았습니다.</li><li>실패 0%가 괜찮다는 뜻은 아닙니다. Apache는 줄을 세우고, p99 12초는 사용자에게 실패입니다.</li><li>측정 타이밍이 숫자를 속입니다. 끝난 뒤 찍은 CPU 0.5%는 거짓이었고, 부하 중에 찍자 70%였습니다.</li><li>백포트는 버전을 올리지 않습니다. 버전 문자열 대신 패치가 추가한 설정을 마커로 확인했습니다.</li><li>흔적 없음이 안전하다는 뜻은 아닙니다. 점검 → 패치 → 재점검을 한 세트로 했습니다.</li></ul></section>
-    <section class="pj-sec"><h2><span class="idx">04</span>발표 자료</h2><p class="note">스터디와 회고에서 발표한 자료 일부입니다. 누르면 크게 볼 수 있습니다.</p><div class="gallery"><a href="/projects/wareco/wareco-2.webp" target="_blank" rel="noopener"><figure><img src="/projects/wareco/wareco-2.webp" alt="부하 단계별 처리량과 지연" width="1600" height="900" loading="lazy" decoding="async"><figcaption>부하 단계별 처리량과 지연</figcaption></figure></a><a href="/projects/wareco/wareco-3.webp" target="_blank" rel="noopener"><figure><img src="/projects/wareco/wareco-3.webp" alt="EOL PHP 7.4를 직접 패치해 다시 빌드하기: 방어 5겹" width="1600" height="900" loading="lazy" decoding="async"><figcaption>EOL PHP 7.4를 직접 패치해 다시 빌드하기: 방어 5겹</figcaption></figure></a><a href="/projects/wareco/wareco-4.webp" target="_blank" rel="noopener"><figure><img src="/projects/wareco/wareco-4.webp" alt="설정 적용 시점과 재빌드 방법" width="1600" height="900" loading="lazy" decoding="async"><figcaption>설정 적용 시점과 재빌드 방법</figcaption></figure></a></div></section>
+    <figure class="pj-cover"><img src="/projects/wareco/cover.webp" alt="수자원기술 영문 홈페이지 메인 화면" width="2400" height="1500" fetchpriority="high" decoding="async"></figure>
+    <section class="pj-sec" aria-labelledby="notes">
+      <h2 id="notes"><span class="idx">5</span>문제 노트</h2>
+      <p class="note">문제 하나씩 정리했습니다. 누르면 그 문제만 볼 수 있습니다.</p>
+      <ol class="toc">
+        <li><a class="toc-item" href="/projects/wareco/deploy/"><span class="n">01</span><span class="toc-body"><b>머지하면 출시까지</b><span>바꿀 수 없는 PHP 레거시에 문법 검사 · 배포 · 무중단 reload · 복구를 붙였습니다.</span></span><span class="toc-metric"><b>무중단</b><small>reload</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/wareco/cms/"><span class="n">02</span><span class="toc-body"><b>해외사업을 지도에서</b><span>CMS에 해외사업 관리 메뉴를 더하고, 세계지도에서 사업으로 이동하게 했습니다.</span></span><span class="toc-metric"><b>CMS</b><small>해외사업 메뉴</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/wareco/load/"><span class="n">03</span><span class="toc-body"><b>서버 한 대가 얼마까지 버티나</b><span>자동 확장 없는 서버 한 대에 단계별 부하를 걸어 처리량 천장과 편한 구간을 확인했습니다.</span></span><span class="toc-metric"><b>분당 1,500</b><small>실패 0 · p95 164ms</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/wareco/php2shell/"><span class="n">04</span><span class="toc-body"><b>패치가 나오지 않는 PHP 7.4</b><span>공개 다음 날 나온 원격 코드 실행 취약점을 완화 4겹과 직접 빌드한 패치로 막았습니다.</span></span><span class="toc-metric"><b>5겹</b><small>완화 4 + 수정 1</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+        <li><a class="toc-item" href="/projects/wareco/forensics/"><span class="n">05</span><span class="toc-body"><b>흔적 없음이 안전하다는 뜻은 아니다</b><span>패치 전후로 침해 여부를 8개 항목으로 점검했습니다.</span></span><span class="toc-metric"><b>8개 항목</b><small>침해 점검</small></span><span class="toc-go" aria-hidden="true">→</span></a></li>
+      </ol>
+    </section>
     <nav class="pj-nav" aria-label="다른 프로젝트"><a class="prev" href="/projects/sogang/"><small>← 이전 프로젝트</small><b>서강교육그룹 성취도 평가 · 배치고사</b></a><a class="next" href="/projects/jeju/"><small>다음 프로젝트 →</small><b>제주이어드림</b></a></nav>
   </main>
 </body>

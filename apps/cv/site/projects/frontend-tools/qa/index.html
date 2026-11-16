@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>공통 패키지 결함 12건 · 벽촌 FE 공통 모듈 · 사내 CLI | 오승민</title>
+  <meta name="description" content="사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/frontend-tools/qa/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/frontend-tools/qa/">
+  <meta property="og:title" content="공통 패키지 결함 12건 · 벽촌 FE 공통 모듈 · 사내 CLI | 오승민">
+  <meta property="og:description" content="사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/frontend-tools/qa/#note",
+    "url": "https://mlnl.site/projects/frontend-tools/qa/",
+    "headline": "공통 패키지 결함 12건",
+    "description": "사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/frontend-tools/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">벽촌 FE 공통 모듈 · 사내 CLI · 노트 06 / 06</p>
+      <h1>공통 패키지 결함 12건</h1>
+      <p class="lead">사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.</p>
+      <p class="nt-metric"><b>12건</b><span>결함 수정 (MOD-21~35)</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/frontend-tools/electron/"><span>01</span><span class="t">데스크톱 프로젝트도 명령 하나로</span></a></li><li><a href="/projects/frontend-tools/expo/"><span>02</span><span class="t">앱 프로젝트도 같은 규칙으로</span></a></li><li><a href="/projects/frontend-tools/deploy/"><span>03</span><span class="t">배포가 성공했을 때만 릴리즈가 남게</span></a></li><li><a href="/projects/frontend-tools/release-notes/"><span>04</span><span class="t">릴리즈 노트는 커밋에서</span></a></li><li><a href="/projects/frontend-tools/v3/"><span>05</span><span class="t">쓰지 않는 기능은 걷어내기</span></a></li><li><a href="/projects/frontend-tools/qa/" aria-current="page"><span>06</span><span class="t">공통 패키지 결함 12건</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>사내 서비스가 함께 쓰는 core · basic-ui · utils · hooks에서 버그가 하나씩 보고되고 있었다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>1월 31일에서 다음 달로 가면 3월이 되던 달력, KST에서 달이 밀리던 문제를 고쳤다.</li><li>SSR에서 <code>SanitizeHtml</code>이 터지던 문제, 이메일 · 생년월일 · 주민번호 정규식 오류를 고쳤다.</li></ul></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>결함 12건을 고쳐 changeset으로 배포했다.</li></ul></section>
+      <aside class="nt-memo"><h2>메모</h2><ul><li>Release CI에서 npm 11로 만든 lockfile이 Node 20의 <code>npm ci</code>에서 실패했다. npm 10으로 다시 만들어 두 버전 모두 통과시켰다.</li></ul></aside>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/frontend-tools/v3/"><small>← 이전 노트</small><b>쓰지 않는 기능은 걷어내기</b></a><a class="next" href="/projects/frontend-tools/"><small>목차로 →</small><b>벽촌 FE 공통 모듈 · 사내 CLI</b></a></nav>
+  </main>
+</body>
+</html>

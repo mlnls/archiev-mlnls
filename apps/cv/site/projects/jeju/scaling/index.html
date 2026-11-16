@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>한 달에 하루 몰리는 트래픽 · 제주이어드림 | 오승민</title>
+  <meta name="description" content="필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/jeju/scaling/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/jeju/scaling/">
+  <meta property="og:title" content="한 달에 하루 몰리는 트래픽 · 제주이어드림 | 오승민">
+  <meta property="og:description" content="필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/jeju/scaling/#note",
+    "url": "https://mlnl.site/projects/jeju/scaling/",
+    "headline": "한 달에 하루 몰리는 트래픽",
+    "description": "필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/jeju/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">제주이어드림 · 노트 01 / 05</p>
+      <h1>한 달에 하루 몰리는 트래픽</h1>
+      <p class="lead">필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.</p>
+      <p class="nt-metric"><b>1 → 3대</b><span>요청 기준 Step Scaling</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/jeju/scaling/" aria-current="page"><span>01</span><span class="t">한 달에 하루 몰리는 트래픽</span></a></li><li><a href="/projects/jeju/golden-image/"><span>02</span><span class="t">콘솔 수작업 대신 yaml</span></a></li><li><a href="/projects/jeju/cutover/"><span>03</span><span class="t">언제든 되돌릴 수 있는 전환</span></a></li><li><a href="/projects/jeju/isr/"><span>04</span><span class="t">메인 조회 API에 ISR</span></a></li><li><a href="/projects/jeju/ip-block/"><span>05</span><span class="t">IP 차단이 서버 자신을 막았다</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>S3 + CloudFront 정적 호스팅에는 사양을 바꿀 옵션이 없었다.</li><li>공고 날에는 프론트와 백엔드 서버가 함께 멈췄다.</li></ul></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>Next SSR을 EC2 + ALB + Auto Scaling으로 옮겼다.</li><li>타깃당 요청 3,000 / 6,000을 기준으로 1 → 2 → 3대로 늘어나는 Step Scaling을 걸었다.</li></ul><figure class="nt-fig"><a href="/projects/jeju/stack-diagram.webp" target="_blank" rel="noopener"><img src="/projects/jeju/stack-diagram.webp" alt="이미지 스택과 환경 스택으로 나눈 배포 구조" width="939" height="578" loading="lazy" decoding="async"></a><figcaption>스택 두 개로 나눈 배포</figcaption></figure></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>평소에는 1대(최대 5대), 몰릴 때만 늘어난다.</li></ul></section>
+      <aside class="nt-memo"><h2>메모</h2><ul><li>결국 클라이언트가 원한 것은 비용과 안정성을 같이 설계하는 능력이었다.</li></ul></aside>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/jeju/"><small>← 목차</small><b>제주이어드림</b></a><a class="next" href="/projects/jeju/golden-image/"><small>다음 노트 →</small><b>콘솔 수작업 대신 yaml</b></a></nav>
+  </main>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>크롤러가 빈 페이지를 보고 있었다 · 법무법인 로백스 홈페이지 | 오승민</title>
+  <meta name="description" content="모든 주소가 같은 빈 HTML을 돌려주던 SPA를 서버에서 본문을 그리는 구조로 옮겼습니다.">
+  <link rel="canonical" href="https://mlnl.site/projects/lawvax/ssr/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mlnl.site/projects/lawvax/ssr/">
+  <meta property="og:title" content="크롤러가 빈 페이지를 보고 있었다 · 법무법인 로백스 홈페이지 | 오승민">
+  <meta property="og:description" content="모든 주소가 같은 빈 HTML을 돌려주던 SPA를 서버에서 본문을 그리는 구조로 옮겼습니다.">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://mlnl.site/projects/lawvax/ssr/#note",
+    "url": "https://mlnl.site/projects/lawvax/ssr/",
+    "headline": "크롤러가 빈 페이지를 보고 있었다",
+    "description": "모든 주소가 같은 빈 HTML을 돌려주던 SPA를 서버에서 본문을 그리는 구조로 옮겼습니다.",
+    "inLanguage": "ko",
+    "author": {
+      "@id": "https://mlnl.site/#person"
+    },
+    "isPartOf": {
+      "@id": "https://mlnl.site/projects/lawvax/#work"
+    }
+  }
+  </script>
+</head>
+<body class="pj-body">
+  <main class="pj nt">
+    <nav class="crumb" aria-label="이동"><a href="/projects/lawvax/">← 법무법인 로백스 홈페이지</a></nav>
+    <header class="nt-head">
+      <p class="eyebrow">법무법인 로백스 홈페이지 · 노트 01 / 05</p>
+      <h1>크롤러가 빈 페이지를 보고 있었다</h1>
+      <p class="lead">모든 주소가 같은 빈 HTML을 돌려주던 SPA를 서버에서 본문을 그리는 구조로 옮겼습니다.</p>
+      <p class="nt-metric"><b>0 → 680자</b><span>첫 HTML 본문</span></p>
+    </header>
+    <nav class="nt-toc" aria-label="이 프로젝트의 노트"><ol><li><a href="/projects/lawvax/ssr/" aria-current="page"><span>01</span><span class="t">크롤러가 빈 페이지를 보고 있었다</span></a></li><li><a href="/projects/lawvax/urls/"><span>02</span><span class="t">옛 주소와 옛 도메인을 한 주소로</span></a></li><li><a href="/projects/lawvax/cache/"><span>03</span><span class="t">관리자가 저장하면 바로 반영</span></a></li><li><a href="/projects/lawvax/geo/"><span>04</span><span class="t">AI가 사실을 그대로 가져가게</span></a></li><li><a href="/projects/lawvax/bundle/"><span>05</span><span class="t">사용자가 관리자 코드까지 받고 있었다</span></a></li></ol></nav>
+    <article class="nt-body">
+      <section class="nt-blk problem"><h2><span class="nt-tag">문제</span></h2><ul><li>모든 주소가 같은 2,090바이트 HTML을 돌려줘 제목과 설명이 전부 같았다.</li><li>GPTBot · ClaudeBot 같은 AI 크롤러는 JS를 실행하지 않아 빈 페이지를 보고 있었다.</li><li>Lighthouse SEO는 100점이라 SEO · GEO 지적서를 받기 전까지 드러나지 않았다.</li></ul><figure class="nt-fig"><a href="/projects/lawvax/ssr-nojs.webp" target="_blank" rel="noopener"><img src="/projects/lawvax/ssr-nojs.webp" alt="JS를 끈 상태에서 연 업무분야 페이지: SPA는 빈 화면, Next.js는 본문이 보임" width="2400" height="957" loading="lazy" decoding="async"></a><figcaption>같은 업무분야 페이지를 JS를 끄고 연 화면</figcaption></figure></section>
+      <section class="nt-blk solution"><h2><span class="nt-tag">해결</span></h2><ul><li>CRA SPA를 Next.js App Router로 옮겼다.</li><li><code>page</code>는 메타데이터, <code>Container</code>는 데이터와 JSON-LD, <code>View</code>는 화면만 맡게 나눠 리뉴얼 화면을 그대로 이식했다.</li><li>페이지마다 ISR · SSG · SSR · CSR 중 맞는 방식을 골랐다.</li></ul><figure class="nt-fig"><a href="/projects/lawvax/ssr-layers.webp" target="_blank" rel="noopener"><img src="/projects/lawvax/ssr-layers.webp" alt="page, Container, View 세 층 구조" width="2400" height="527" loading="lazy" decoding="async"></a><figcaption>한 화면을 세 층으로 나눈 구조</figcaption></figure></section>
+      <section class="nt-blk result"><h2><span class="nt-tag">결과</span></h2><ul><li>업무분야 페이지의 첫 HTML 본문 <b>0 → 680자</b></li><li>JS 전송량 <b>2,512KB → 251KB (−90%)</b>, 페이지 총 전송량 −86%, Total Blocking Time −61%</li><li>같은 머신 · 같은 크롬에서 직접 잰 값이다.</li></ul><figure class="nt-fig"><a href="/projects/lawvax/ssr-chart.webp" target="_blank" rel="noopener"><img src="/projects/lawvax/ssr-chart.webp" alt="Lighthouse 항목별 비교와 JS −90%, 총 전송량 −86%, TBT −61%, 이미지 −92%" width="1466" height="607" loading="lazy" decoding="async"></a><figcaption>이전과 이후 측정 결과</figcaption></figure></section>
+      <aside class="nt-memo"><h2>메모</h2><ul><li>Lighthouse는 JS를 다 실행한 뒤 검사해서 크롤러 시점을 못 본다. 그래서 원본 HTML을 직접 셌다.</li><li><code>'use client'</code>도 서버에서 그려지지만, 마운트 뒤에 그리는 것은 서버 HTML에 없다.</li></ul></aside>
+    </article>
+    <nav class="pj-nav" aria-label="다른 노트"><a class="prev" href="/projects/lawvax/"><small>← 목차</small><b>법무법인 로백스 홈페이지</b></a><a class="next" href="/projects/lawvax/urls/"><small>다음 노트 →</small><b>옛 주소와 옛 도메인을 한 주소로</b></a></nav>
+  </main>
+</body>
+</html>
