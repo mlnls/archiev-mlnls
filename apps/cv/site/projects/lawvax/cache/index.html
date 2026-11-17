@@ -39,29 +39,37 @@
     <nav class="back" aria-label="이동"><a href="/projects/lawvax/">← 법무법인 로백스 홈페이지</a></nav>
     <header>
       <h1>관리자가 저장하면 바로 반영</h1>
-      <p class="meta">법무법인 로백스 홈페이지 · 3/5 · revalidateTag (저장한 글만 갱신)</p>
-      <p class="lead">정적 페이지의 캐시를 태그로 묶어, 관리자가 저장한 내용만 골라 비웠습니다.</p>
+      <p class="meta">법무법인 로백스 홈페이지 · 3/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>정적으로 만들면 빠르지만, 관리자가 글을 고쳐도 캐시가 남아 반영이 늦는다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>데이터 요청에 태그를 달고, 관리자가 저장하면 <code>revalidateTag</code>로 해당 캐시만 비웠다.</li>
-        <li>유튜브 링크만 넣으면 제목과 게시일이 채워지게 했다.</li>
-      </ul>
+    <article class="post">
+      <h2>정적으로 만들면 생기는 일</h2>
+      <p>정적으로 만든 페이지는 빠르다.<br>대신 관리자가 글을 고쳐도 캐시가 남아 있어서 바로 반영되지 않는다.</p>
+      <p>법인 소식이나 언론보도는 관리자가 올리고 나서 언제 보이는지를 바로 확인하는 글이라, 이 지연이 그대로 불편이 됐다.</p>
+      <h2>저장한 글의 캐시만 비우기</h2>
+      <p>서버에서 데이터를 가져올 때 요청마다 태그를 달았다.<br>그리고 관리자 화면에서 저장이나 삭제가 성공하면 <code>/api/revalidate</code>를 불러, 그 태그의 캐시만 <code>revalidateTag</code>로 비운다.</p>
+      <pre><code>/**
+ * 공개 페이지 캐시 즉시 무효화. 관리자 화면에서 저장·삭제가 성공한 뒤 호출한다.
+ *   POST /api/revalidate  { tags: ['news', 'search'] }  (헤더: Access-Token)
+ */
+export async function POST(request: NextRequest) {
+  // 관리자 토큰 확인 ...
+  const tags = Array.isArray(body?.tags) ? body.tags.filter(isCacheTag) : [];
+  const uniqueTags = [...new Set(tags)];
+  uniqueTags.forEach((tag) =&gt; revalidateTag(tag));
+  return NextResponse.json({ revalidated: uniqueTags });
+}</code></pre>
+      <p>관리자 토큰은 브라우저에만 있어서 따로 비밀키를 둘 수가 없었다.<br>그래서 백엔드 관리자 API를 한 번 불러 보고, 토큰이 유효할 때만 캐시를 비운다.</p>
+      <p>이 호출이 실패해도 캐시 주기가 지나면 반영된다. 소식 · 언론보도는 5분, 구성원 · 업무분야는 1시간이다.</p>
+      <p>관리자 쪽 편의도 하나 더했다. 유튜브 링크만 넣으면 제목과 게시일이 채워진다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>정적 성능과 최신성을 같이 지킨다.</li>
-      </ul>
+      <figure><img src="/projects/lawvax/cache-header.webp" width="1600" height="404" alt="운영 응답 헤더의 x-nextjs-cache와 cache-control" loading="lazy" decoding="async"><figcaption>운영 응답 헤더: Next.js 캐시에서 나간 응답</figcaption></figure>
+      <p>정적 페이지의 속도는 그대로 두고, 관리자가 저장한 글은 바로 보인다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법무법인 로백스 홈페이지</h2>
       <ol><li><a href="/projects/lawvax/ssr/">1. 크롤러가 빈 페이지를 보고 있었다</a></li><li><a href="/projects/lawvax/urls/">2. 옛 주소와 옛 도메인을 한 주소로</a></li><li><b>3. 관리자가 저장하면 바로 반영</b></li><li><a href="/projects/lawvax/geo/">4. AI가 사실을 그대로 가져가게</a></li><li><a href="/projects/lawvax/bundle/">5. 사용자가 관리자 코드까지 받고 있었다</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawvax/urls/">← 옛 주소와 옛 도메인을 한 주소로</a><a href="/projects/lawvax/geo/">AI가 사실을 그대로 가져가게 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawvax/urls/">← 옛 주소와 옛 도메인을 한 주소로</a><a href="/projects/lawvax/geo/">AI가 사실을 그대로 가져가게 →</a></nav>
   </main>
 </body>
 </html>

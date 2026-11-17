@@ -39,28 +39,22 @@
     <nav class="back" aria-label="이동"><a href="/projects/marketd/">← 마켓:D</a></nav>
     <header>
       <h1>긴급 수정이 스토어 심사를 기다렸다</h1>
-      <p class="meta">마켓:D · 2/6 · 3갈래 (배포 경로)</p>
-      <p class="lead">바뀐 것이 화면인지, 연결 로직인지, 바이너리인지에 따라 배포 길을 나눴습니다.</p>
+      <p class="meta">마켓:D · 2/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>RN Bridge 긴급 버그도 스토어 재심사를 거쳐야 고칠 수 있었다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>Expo EAS Update(OTA)를 도입하고, 화면(웹뷰) · 연결 로직(OTA) · 바이너리(스토어)로 배포 경로를 나눴다.</li>
-      </ul>
+    <article class="post">
+      <h2>긴급 버그도 심사를 기다렸다</h2>
+      <p>앱과 웹뷰를 잇는 RN Bridge 코드에 긴급 버그가 생겨도, 고치려면 스토어 재심사를 거쳐야 했다.<br>고친 코드는 있는데 사용자에게 닿기까지 심사를 기다려야 했다.</p>
+      <h2>바뀐 것에 따라 길을 나누기</h2>
+      <p>Expo EAS Update(OTA)를 도입했다.<br>그리고 무엇이 바뀌었는지에 따라 배포 경로를 셋으로 나눴다.</p>
+      <div class="table"><table><thead><tr><th>바뀐 것</th><th>배포 경로</th></tr></thead><tbody><tr><td>화면 (웹뷰)</td><td>웹 배포. 스토어와 상관없이 바로 반영</td></tr><tr><td>연결 로직 (RN Bridge 등 JS)</td><td>EAS Update (OTA)</td></tr><tr><td>네이티브 바이너리</td><td>스토어 배포</td></tr></tbody></table></div>
       <h2>결과</h2>
-      <ul>
-        <li>연결 로직 수정은 스토어 심사 없이 내보낸다.</li>
-      </ul>
+      <p>연결 로직 수정은 스토어 심사 없이 내보낸다.<br>스토어 심사는 네이티브 바이너리가 바뀔 때만 거친다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>마켓:D</h2>
       <ol><li><a href="/projects/marketd/monorepo/">1. 한쪽만 바꾸면 상대편이 깨졌다</a></li><li><b>2. 긴급 수정이 스토어 심사를 기다렸다</b></li><li><a href="/projects/marketd/admin-test/">3. 하나 고치면 어디가 깨졌는지 몰랐다</a></li><li><a href="/projects/marketd/e2e/">4. jsdom이 못 보는 곳만 브라우저로</a></li><li><a href="/projects/marketd/signed-url/">5. 주소만 알면 누구나 보던 채팅 사진</a></li><li><a href="/projects/marketd/expiry/">6. 60초가 지나면 깨지는 이미지</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/marketd/monorepo/">← 한쪽만 바꾸면 상대편이 깨졌다</a><a href="/projects/marketd/admin-test/">하나 고치면 어디가 깨졌는지 몰랐다 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/monorepo/">← 한쪽만 바꾸면 상대편이 깨졌다</a><a href="/projects/marketd/admin-test/">하나 고치면 어디가 깨졌는지 몰랐다 →</a></nav>
   </main>
 </body>
 </html>

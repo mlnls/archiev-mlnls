@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 // @ts-expect-error 빌드 스크립트는 타입 없는 ESM 입니다
-import { render } from "../scripts/build-projects.mjs";
+import { readNotes, render } from "../scripts/build-projects.mjs";
 // @ts-expect-error 콘텐츠는 타입 없는 ESM 입니다
 import { projects } from "../content/projects.mjs";
 
@@ -34,13 +34,21 @@ describe("project pages", () => {
     expect(pages.map((p) => `${p.rel}index.html`).sort()).toEqual(Object.keys(out).filter((k) => k.endsWith("index.html")).sort());
   });
 
-  it("keeps every note short: one problem, solution and result", () => {
+  it("has a written post for every note, and no post without a note", () => {
     for (const p of projects) {
-      for (const n of p.notes) {
-        for (const key of ["problem", "solution", "result"]) {
-          expect(n[key].length, `${p.slug}/${n.id} ${key}`).toBeGreaterThan(0);
-          expect(n[key].length, `${p.slug}/${n.id} ${key}`).toBeLessThanOrEqual(4);
-        }
+      const bodies = readNotes(p.slug) as Record<string, string>;
+      expect(Object.keys(bodies).sort(), p.slug).toEqual(p.notes.map((n: { id: string }) => n.id).sort());
+      for (const [id, body] of Object.entries(bodies)) {
+        expect(body.match(/^## /gm)?.length ?? 0, `${p.slug}/${id} 소제목`).toBeGreaterThanOrEqual(2);
+      }
+    }
+  });
+
+  it("uses every image it ships", () => {
+    const out = Object.values(render() as Record<string, string>).join("\n");
+    for (const slug of slugs) {
+      for (const f of readdirSync(new URL(`projects/${slug}/`, site)).filter((n) => n.endsWith(".webp"))) {
+        expect(out, `projects/${slug}/${f}`).toContain(`src="/projects/${slug}/${f}"`);
       }
     }
   });

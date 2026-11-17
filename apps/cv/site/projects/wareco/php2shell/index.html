@@ -39,37 +39,47 @@
     <nav class="back" aria-label="이동"><a href="/projects/wareco/">← 수자원기술 홈페이지</a></nav>
     <header>
       <h1>패치가 나오지 않는 PHP 7.4</h1>
-      <p class="meta">수자원기술 홈페이지 · 4/5 · 5겹 (완화 4 + 수정 1)</p>
-      <p class="lead">공개 다음 날 나온 원격 코드 실행 취약점을 완화 4겹과 직접 빌드한 패치로 막았습니다.</p>
+      <p class="meta">수자원기술 홈페이지 · 4/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>인증 없이 원격 코드 실행이 가능한 PHP2Shell(CVE-2026-109618 · 109619, CVSS 9.2)이 공개됐다.</li>
-        <li>공식 이미지는 7.4.33에서 멈춰 기다려도 패치가 없었다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>완화 4겹: Caddy 본문 상한, Apache <code>LimitRequestBody</code>, 파싱 전에 적용되는 <code>php_admin_value</code>, 컨테이너 메모리 1g</li>
-        <li>수정 1겹: <code>php-config</code>의 원래 빌드 옵션 그대로 백포트 패치를 넣어 다시 빌드했다.</li>
-        <li>패치 파일은 sha256부터 검사하고, 마커가 없으면 빌드가 실패한다.</li>
-      </ul>
+    <article class="post">
+      <h2>공개 다음 날</h2>
+      <p>인증 없이 원격 코드 실행이 가능한 PHP 취약점 PHP2Shell(CVE-2026-109618 · 109619, CVSS 9.2)이 공개됐다.</p>
+      <p>문제는 버전이었다.<br>사이트는 PHP 7.4였고, 공식 이미지는 7.4.33에서 멈춰 있었다. 지원이 끝난 버전이라 기다려도 패치된 이미지는 나오지 않는다.</p>
+      <h2>완화 네 겹</h2>
+      <p>먼저 요청이 PHP에 닿기 전에 막을 수 있는 것부터 막았다.</p>
+      <ol><li>Caddy: 요청 본문 상한</li><li>Apache: <code>LimitRequestBody</code></li><li>PHP: 본문 파싱 전에 적용되는 <code>php_admin_value</code></li><li>컨테이너: 메모리 상한 1g</li></ol>
+      <pre><code>php_admin_value memory_limit -1
+# 요청 본문 크기. Caddy 와 같은 값이며 크기를 밝히지 않은(chunked) 요청에도 적용된다.
+LimitRequestBody 8388608
+
+# CMS 업로드만 32M 까지
+&lt;Directory /var/www/html/cms&gt;
+    LimitRequestBody 33554432
+    php_admin_value post_max_size 32M
+    php_admin_value upload_max_filesize 30M
+&lt;/Directory&gt;</code></pre>
+      <p>같은 값을 코드의 <code>ini_set</code>으로 걸면 소용이 없다.<br><code>ini_set</code>은 본문을 파싱한 뒤에 실행돼서 이미 늦다. 설정은 무엇보다 &quot;언제&quot; 적용되는지가 중요했다.</p>
+      <h2>수정 한 겹: 직접 빌드</h2>
+      <p>완화만으로 끝내지 않고 PHP 자체를 고쳤다.<br>PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(<code>php-config --configure-options</code>) 그대로 다시 빌드했다.</p>
+      <pre><code>[ &quot;$(php -r 'echo PHP_VERSION;')&quot; = &quot;7.4.33&quot; ] || { echo &quot;PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다&quot;; exit 1; }
+echo &quot;$PATCH_SHA256  $PATCH&quot; | sha256sum -c -
+
+opts=&quot;$(php-config --configure-options | sed 's/--with-pear\b/--without-pear/')&quot;
+docker-php-source extract
+cd /usr/src/php
+patch -p1 --forward &lt; &quot;$PATCH&quot;
+eval &quot;./configure $opts&quot;
+make -j&quot;$(nproc)&quot;</code></pre>
+      <p>패치 파일은 sha256부터 검사한다.</p>
+      <p>패치가 들어갔는지 확인하는 방법도 따로 필요했다.<br>백포트는 버전을 올리지 않아서, 패치 전후 모두 버전 문자열이 7.4.33이다.<br>그래서 패치가 새로 추가한 설정 <code>max_multipart_body_parts</code>를 마커로 삼았다. 이 값이 없으면 빌드가 실패한다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>요청 최대 크기 <b>210MB → 8MB</b></li>
-        <li>방문자는 모르게 CMS 업로드 상한만 200MB → 30MB로 줄였다.</li>
-      </ul>
-      <h2>메모</h2>
-      <ul>
-        <li><code>ini_set</code>은 본문 파싱 뒤라 늦다. 설정은 무엇보다 “언제” 적용되는지가 중요했다.</li>
-        <li>백포트는 버전을 올리지 않는다. 버전 문자열 대신 패치가 추가한 설정을 마커로 확인했다.</li>
-      </ul>
+      <ul><li>요청 최대 크기 <b>210MB → 8MB</b></li><li>CMS 업로드 상한만 200MB → 30MB로 줄였다. 방문자는 차이를 모른다.</li></ul>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>수자원기술 홈페이지</h2>
       <ol><li><a href="/projects/wareco/deploy/">1. 머지하면 출시까지</a></li><li><a href="/projects/wareco/cms/">2. 해외사업을 지도에서</a></li><li><a href="/projects/wareco/load/">3. 서버 한 대가 얼마까지 버티나</a></li><li><b>4. 패치가 나오지 않는 PHP 7.4</b></li><li><a href="/projects/wareco/forensics/">5. 흔적 없음이 안전하다는 뜻은 아니다</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/wareco/load/">← 서버 한 대가 얼마까지 버티나</a><a href="/projects/wareco/forensics/">흔적 없음이 안전하다는 뜻은 아니다 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/wareco/load/">← 서버 한 대가 얼마까지 버티나</a><a href="/projects/wareco/forensics/">흔적 없음이 안전하다는 뜻은 아니다 →</a></nav>
   </main>
 </body>
 </html>

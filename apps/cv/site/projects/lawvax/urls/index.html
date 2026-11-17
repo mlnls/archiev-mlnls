@@ -39,35 +39,42 @@
     <nav class="back" aria-label="이동"><a href="/projects/lawvax/">← 법무법인 로백스 홈페이지</a></nav>
     <header>
       <h1>옛 주소와 옛 도메인을 한 주소로</h1>
-      <p class="meta">법무법인 로백스 홈페이지 · 2/5 · 21개 패턴 (레거시 주소 정리)</p>
-      <p class="lead">레거시 주소 21개 패턴은 308, 옛 도메인은 301로 보내고 canonical과 sitemap을 한 함수에서 만들었습니다.</p>
+      <p class="meta">법무법인 로백스 홈페이지 · 2/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>이전 사이트 주소(<code>/intro</code>, <code>/workfield/...</code>)가 외부 링크와 검색 결과에 남아 있었다.</li>
-        <li>도메인도 lvx.co.kr에서 lawvax.co.kr로 옮겨야 했다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>레거시 주소 21개 패턴을 새 주소로 <b>308</b> 리디렉트했다.</li>
-        <li>lvx.co.kr은 <b>301</b>로 새 도메인에 넘겼다.</li>
-        <li>canonical과 sitemap이 같은 함수에서 주소를 만들게 해 둘이 어긋나지 않게 했다.</li>
-      </ul>
+    <article class="post">
+      <h2>옛 주소가 아직 살아 있었다</h2>
+      <p>새 사이트는 주소 체계가 달랐다.<br>그런데 이전 사이트의 <code>/intro</code>, <code>/workfield/...</code> 같은 주소가 외부 링크와 검색 결과에 그대로 남아 있었다.<br>도메인도 lvx.co.kr에서 lawvax.co.kr로 옮겨야 했다.</p>
+      <h2>주소는 308로</h2>
+      <p>레거시 주소를 21개 패턴으로 정리해서 새 주소로 <b>308</b> 리디렉트했다.<br><code>next.config.ts</code>에 옛 주소와 새 주소를 표처럼 적어 두고, 전부 영구 이동으로 돌린다.</p>
+      <pre><code>const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
+  { source: '/intro', destination: '/' },
+  { source: '/workfield', destination: '/practice' },
+  { source: '/workfield/detail/:workField', destination: '/practice-detail?workField=:workField' },
+  { source: '/members/profile/:id', destination: '/members/detail?id=:id' },
+  { source: '/news/post/:id', destination: '/news/detail?id=:id' },
+  // ...
+];
+
+async redirects() {
+  return LEGACY_REDIRECTS.map((redirect) =&gt; ({ ...redirect, permanent: true }));
+},</code></pre>
+      <p>한글이 들어간 주소는 한 번 더 신경 써야 했다.<br>Next가 destination의 쿼리를 한 번 디코딩한 뒤 Location 헤더에 넣기 때문에, 한글은 두 번 인코딩해 두었다.</p>
+      <h2>도메인은 301로</h2>
+      <p>옛 도메인은 앱까지 오기 전에 Caddy에서 <b>301</b>로 넘겼다. 경로와 쿼리는 그대로 붙여 보낸다.</p>
+      <pre><code>{$REDIRECT_DOMAINS::8081} {
+	redir https://{$DOMAIN:localhost}{uri} permanent
+}</code></pre>
+      <p>마지막으로 canonical과 sitemap이 같은 함수에서 주소를 만들게 했다.<br>둘이 따로 주소를 만들면 언젠가는 어긋난다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>어느 옛 주소로 들어와도 공식 주소 하나로 모인다.</li>
-      </ul>
-      <h2>메모</h2>
-      <ul>
-        <li>크롤러는 상태 코드부터 읽는다. soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다.</li>
-      </ul>
+      <figure><img src="/projects/lawvax/urls-curl.webp" width="1600" height="626" alt="curl로 확인한 옛 도메인 301과 레거시 주소 308 응답" loading="lazy" decoding="async"><figcaption>운영 서버 응답: 옛 도메인은 301, 레거시 주소는 308</figcaption></figure>
+      <p>이제 어느 옛 주소로 들어와도 공식 주소 하나로 모인다.</p>
+      <p>작업하면서 크롤러는 본문보다 상태 코드를 먼저 읽는다는 걸 알게 됐다.<br>soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법무법인 로백스 홈페이지</h2>
       <ol><li><a href="/projects/lawvax/ssr/">1. 크롤러가 빈 페이지를 보고 있었다</a></li><li><b>2. 옛 주소와 옛 도메인을 한 주소로</b></li><li><a href="/projects/lawvax/cache/">3. 관리자가 저장하면 바로 반영</a></li><li><a href="/projects/lawvax/geo/">4. AI가 사실을 그대로 가져가게</a></li><li><a href="/projects/lawvax/bundle/">5. 사용자가 관리자 코드까지 받고 있었다</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawvax/ssr/">← 크롤러가 빈 페이지를 보고 있었다</a><a href="/projects/lawvax/cache/">관리자가 저장하면 바로 반영 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawvax/ssr/">← 크롤러가 빈 페이지를 보고 있었다</a><a href="/projects/lawvax/cache/">관리자가 저장하면 바로 반영 →</a></nav>
   </main>
 </body>
 </html>

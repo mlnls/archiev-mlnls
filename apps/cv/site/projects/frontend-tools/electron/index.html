@@ -39,31 +39,33 @@
     <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
     <header>
       <h1>데스크톱 프로젝트도 명령 하나로</h1>
-      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 1/6 · + Electron (bc init 선택지)</p>
-      <p class="lead">bc init에 Desktop(Electron)을 더해, 보안 기본값과 설치 파일 설정까지 갖춰 시작합니다.</p>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 1/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>데스크톱 요청이 들어와도 CLI는 웹(React · Next)만 만들어, Electron은 매번 손으로 세팅했다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>electron-vite로 main · preload · renderer를 나눴다.</li>
-        <li><code>contextIsolation</code>과 <code>sandbox</code>를 켜고, preload에서 <code>window.api</code>만 노출한다.</li>
-        <li>renderer는 웹과 같은 폴더 구조 · 토큰 · API 레이어를 쓴다.</li>
-        <li>electron-builder로 macOS · Windows 설치 파일을 만든다.</li>
-      </ul>
+    <article class="post">
+      <h2>데스크톱은 매번 손으로</h2>
+      <p>사내 CLI의 <code>bc init</code>은 웹 프로젝트(React · Next)만 만들 수 있었다.<br>데스크톱 앱 요청이 들어오면 Electron 프로젝트는 매번 손으로 세팅했다.</p>
+      <h2>Desktop 선택지 추가</h2>
+      <p><code>bc init</code>에 Desktop(Electron)을 더했다.</p>
+      <figure><img src="/projects/frontend-tools/cli-init.webp" width="1600" height="706" alt="bc init에서 React, Next.js, Mobile(Expo), Desktop(Electron) 중 하나를 고르는 화면" loading="lazy" decoding="async"><figcaption>bc init 실행 화면</figcaption></figure>
+      <p>Desktop을 고르면 이런 프로젝트가 만들어진다.</p>
+      <ul><li>electron-vite로 main · preload · renderer를 나눈다</li><li>renderer는 웹 프로젝트와 같은 폴더 구조, 디자인 토큰, API 레이어를 쓴다</li><li>electron-builder로 macOS · Windows 설치 파일을 만든다</li></ul>
+      <p>보안 설정은 처음부터 켜 둔다.<br>renderer는 OS에 직접 닿지 못하고, preload가 <code>window.api</code>로 열어 준 기능만 쓴다.</p>
+      <pre><code>webPreferences: {
+  preload: join(import.meta.dirname, '../preload/index.cjs'),
+  // 보안 기본값 — renderer 는 OS 에 직접 접근하지 못하고 window.api 만 쓴다.
+  // 끄지 마세요. 필요한 기능은 preload + ipcMain.handle 로 추가합니다.
+  contextIsolation: true,
+  sandbox: true,
+  nodeIntegration: false,
+},</code></pre>
       <h2>결과</h2>
-      <ul>
-        <li>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</li>
-      </ul>
+      <p>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
       <ol><li><b>1. 데스크톱 프로젝트도 명령 하나로</b></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><a href="/projects/frontend-tools/deploy/">3. 배포가 성공했을 때만 릴리즈가 남게</a></li><li><a href="/projects/frontend-tools/release-notes/">4. 릴리즈 노트는 커밋에서</a></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/">← 목차</a><a href="/projects/frontend-tools/expo/">앱 프로젝트도 같은 규칙으로 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/">← 목차</a><a href="/projects/frontend-tools/expo/">앱 프로젝트도 같은 규칙으로 →</a></nav>
   </main>
 </body>
 </html>

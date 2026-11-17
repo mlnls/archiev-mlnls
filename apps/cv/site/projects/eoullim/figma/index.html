@@ -39,28 +39,22 @@
     <nav class="back" aria-label="이동"><a href="/projects/eoullim/">← 어울림</a></nav>
     <header>
       <h1>어느 시안을 반영했는지 커밋으로</h1>
-      <p class="meta">어울림 · 2/5 · 17번 (2주 동안 시안 반영)</p>
-      <p class="lead">커밋에 Figma 노드 ID를 남겨 시안 반영 이력을 커밋만 보고 알 수 있게 했습니다.</p>
+      <p class="meta">어울림 · 2/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>2주 사이 시안이 여러 번 바뀌어, 어느 화면이 어느 시안까지 반영됐는지 헷갈렸다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>커밋 메시지에 Figma 노드 ID를 남겼다.</li>
-      </ul>
+    <article class="post">
+      <h2>어느 화면이 어느 시안까지?</h2>
+      <p>2주 사이에 시안이 여러 번 바뀌었다.<br>어느 화면이 어느 시안까지 반영됐는지 헷갈리기 시작했다.</p>
+      <h2>커밋에 노드 ID 남기기</h2>
+      <p>방법은 단순했다.<br>시안을 반영한 커밋 메시지 끝에 Figma 노드 ID를 남겼다.</p>
+      <figure><img src="/projects/eoullim/figma-log.webp" width="1600" height="822" alt="Figma 노드 ID가 남은 커밋 목록" loading="lazy" decoding="async"><figcaption>git log: 커밋마다 반영한 Figma 노드</figcaption></figure>
       <h2>결과</h2>
-      <ul>
-        <li>10/22 ~ 11/06 사이 17번 바뀐 시안을 커밋만 보고 따라간다.</li>
-      </ul>
+      <p>10/22 ~ 11/06 사이 17번 바뀐 시안을 커밋만 보고 따라간다.<br><code>git log --grep=Figma</code> 한 줄이면 된다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>어울림</h2>
-      <ol><li><a href="/projects/eoullim/tokens/">1. 시안이 바뀌는 동안 같이 개발하기</a></li><li><b>2. 어느 시안을 반영했는지 커밋으로</b></li><li><a href="/projects/eoullim/api/">3. 사용자 · 관리자 실 API 연동</a></li><li><a href="/projects/eoullim/editor/">4. 에디터 문서와 화면 블록</a></li><li><a href="/projects/eoullim/login/">5. 설치와 로그인</a></li></ol>
+      <ol><li><a href="/projects/eoullim/tokens/">1. 시안이 바뀌는 동안 같이 개발하기</a></li><li><b>2. 어느 시안을 반영했는지 커밋으로</b></li><li><a href="/projects/eoullim/api/">3. 사용자 · 관리자 실 API 연동</a></li><li><a href="/projects/eoullim/editor/">4. 서버는 JSON, 에디터는 HTML</a></li><li><a href="/projects/eoullim/login/">5. 설치와 로그인</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/eoullim/tokens/">← 시안이 바뀌는 동안 같이 개발하기</a><a href="/projects/eoullim/api/">사용자 · 관리자 실 API 연동 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/tokens/">← 시안이 바뀌는 동안 같이 개발하기</a><a href="/projects/eoullim/api/">사용자 · 관리자 실 API 연동 →</a></nav>
   </main>
 </body>
 </html>

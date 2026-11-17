@@ -39,36 +39,37 @@
     <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
     <header>
       <h1>배포가 성공했을 때만 릴리즈가 남게</h1>
-      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 3/6 · 질문 4개 (bc deploy)</p>
-      <p class="lead">질문 4개로 배포 workflow를 만들고, 배포가 성공해야만 태그 · Release · Slack 알림이 남습니다.</p>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 3/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>배포 방식이 프로젝트마다 제각각이었다.</li>
-        <li>릴리즈 노트는 손으로 쓰거나 아예 남지 않아, 지금 운영에 어떤 버전이 떠 있는지 물어봐야 알았다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li><code>bc deploy</code>가 질문 4개(Enter면 기본값)로 <code>.github/workflows/deploy.yml</code>을 만든다.</li>
-        <li>릴리즈 단계는 배포가 성공해야만 이어져, 실패한 배포는 기록되지 않는다.</li>
-        <li>Slack 웹훅은 Secret 이름만 저장한다.</li>
-        <li><a href="/projects/lawtimes/release/">법조인대관</a>에서 먼저 운영한 흐름을 모든 프로젝트로 옮겼다.</li>
-      </ul>
+    <article class="post">
+      <h2>지금 운영에 뭐가 떠 있지?</h2>
+      <p>SI 회사라 프로젝트가 계속 새로 생긴다.<br>배포 방식은 프로젝트마다 제각각이었고, 릴리즈 노트는 손으로 쓰거나 아예 남지 않았다.</p>
+      <p>그래서 지금 운영에 어떤 버전이 떠 있는지는 물어봐야 알 수 있었다.</p>
+      <h2>법조인대관에서 먼저 해 본 것</h2>
+      <p><a href="/projects/lawtimes/release/">법조인대관</a>에서는 배포가 끝나면 태그와 Release가 남는 흐름을 먼저 운영하고 있었다.<br>이걸 모든 프로젝트로 옮기기로 했다.</p>
+      <h2>bc deploy</h2>
+      <p><code>bc deploy</code>는 질문 4개에 답하면 <code>.github/workflows/deploy.yml</code>을 만든다. Enter만 누르면 기본값으로 간다.</p>
+      <figure><img src="/projects/frontend-tools/cli-deploy.webp" width="1600" height="926" alt="bc deploy: 질문 4개에 답하면 bc.config.json과 배포 workflow가 생성되는 화면" loading="lazy" decoding="async"><figcaption>bc deploy 실행 화면</figcaption></figure>
+      <p>핵심은 순서다.<br>만들어지는 workflow에서 release job은 deploy job 뒤에 묶여 있다. 배포가 성공해야만 태그 · Release · Slack 알림이 이어진다.</p>
+      <pre><code># 배포(deploy)가 성공했을 때만 release job 이 돌아 태그와 GitHub Release 를 남깁니다.
+jobs:
+  deploy:
+    # ...
+  release:
+    needs: deploy # 성공했을 때만
+    steps:
+      # ...
+      - run: gh release create &quot;${{ steps.notes.outputs.tag }}&quot; --target &quot;${{ github.sha }}&quot; --notes-file notes.md</code></pre>
+      <p>CHANGELOG.md 선택지는 일부러 막았다. 머지할 때 쓰는 CHANGELOG는 실패한 배포까지 기록하기 때문이다.<br>Slack 웹훅은 URL 대신 GitHub Secret 이름만 저장한다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>최신 Release가 곧 지금 운영 버전이다.</li>
-      </ul>
-      <h2>메모</h2>
-      <ul>
-        <li>배포 기록은 ‘배포 성공’에 묶어야 믿을 수 있다.</li>
-      </ul>
+      <p>최신 Release가 곧 지금 운영 버전이다.</p>
+      <p>배포 기록은 &quot;배포 성공&quot;에 묶어야 믿을 수 있다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
       <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><b>3. 배포가 성공했을 때만 릴리즈가 남게</b></li><li><a href="/projects/frontend-tools/release-notes/">4. 릴리즈 노트는 커밋에서</a></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/expo/">← 앱 프로젝트도 같은 규칙으로</a><a href="/projects/frontend-tools/release-notes/">릴리즈 노트는 커밋에서 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/expo/">← 앱 프로젝트도 같은 규칙으로</a><a href="/projects/frontend-tools/release-notes/">릴리즈 노트는 커밋에서 →</a></nav>
   </main>
 </body>
 </html>

@@ -39,31 +39,34 @@
     <nav class="back" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
     <header>
       <h1>배포 권한은 레포 권한만큼만</h1>
-      <p class="meta">법률신문 한국법조인대관 · 5/6 · Secret 0개 (베스천 job에 넘기는 값)</p>
-      <p class="lead">운영 서버로 이어지는 베스천 runner의 권한을 배포 스크립트 하나로 좁혔습니다.</p>
+      <p class="meta">법률신문 한국법조인대관 · 5/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>베스천 runner는 운영 서버로 이어지는 자리라 권한을 최소로 둬야 했다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>sudo 없는 전용 계정으로 runner를 돌린다.</li>
-        <li>main · dev workflow만 runner를 쓸 수 있다.</li>
-        <li>runner 키는 <code>authorized_keys</code>의 <code>command=</code>로 배포 스크립트만 실행하고, 인자는 정규식으로 검사한다.</li>
-        <li>베스천 job에는 Secret을 넘기지 않는다.</li>
-      </ul>
+    <article class="post">
+      <h2>베스천은 운영 서버로 가는 문이다</h2>
+      <p>self-hosted runner를 둔 베스천은 운영 서버로 이어지는 자리다.<br>여기가 뚫리면 운영 서버까지 열린다.</p>
+      <p>그래서 runner의 권한을 배포에 필요한 만큼만 남기기로 했다.</p>
+      <h2>하나씩 좁히기</h2>
+      <ul><li>sudo 없는 전용 계정으로 runner를 돌린다</li><li>runner는 main · dev workflow만 쓸 수 있다</li><li>베스천에서 도는 job에는 Secret을 하나도 넘기지 않는다</li><li>runner의 SSH 키는 <code>authorized_keys</code>의 <code>command=</code>로 묶어, 서버에서 배포 스크립트 하나만 실행된다</li></ul>
+      <p>마지막 항목은 이렇게 동작한다.<br><code>command=</code>로 묶인 키로 들어오면 보낸 명령은 실행되지 않고 <code>SSH_ORIGINAL_COMMAND</code>로만 넘어온다.<br>배포 스크립트는 그 값을 꺼내서 이미지 이름과 포트를 정규식으로 검사한다.</p>
+      <pre><code># authorized_keys 의 command= 로 실행되면 인자가 SSH_ORIGINAL_COMMAND 로 들어옴 (첫 단어는 스크립트 경로)
+if [ &quot;$#&quot; -eq 0 ] &amp;&amp; [ -n &quot;${SSH_ORIGINAL_COMMAND:-}&quot; ]; then
+  read -r -a _args &lt;&lt;&lt;&quot;$SSH_ORIGINAL_COMMAND&quot;
+  set -- &quot;${_args[@]:1}&quot;
+fi
+
+IMAGE=&quot;${1:-}&quot;
+if ! [[ &quot;$IMAGE&quot; =~ ^lawtimes/lawtimes-lawman-front:v[0-9]+\.[0-9]+\.[0-9]+(-test(\.[0-9]+)?)?$ ]]; then
+  echo &quot;이미지 형식이 아닙니다: '${IMAGE}'&quot; &gt;&amp;2
+  exit 2
+fi</code></pre>
       <h2>결과</h2>
-      <ul>
-        <li>사람이 서버에 들어가지 않고 레포 권한만으로 배포된다.</li>
-      </ul>
+      <p>사람이 서버에 들어가지 않고, 레포 권한만으로 배포된다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법률신문 한국법조인대관</h2>
       <ol><li><a href="/projects/lawtimes/render/">1. SSR이 꺼져 있던 렌더링</a></li><li><a href="/projects/lawtimes/ga4/">2. 페이지뷰가 빠지고 있었다</a></li><li><a href="/projects/lawtimes/runner/">3. 들어갈 수 없는 서버에 배포하기</a></li><li><a href="/projects/lawtimes/rolling/">4. 실패해도 서비스는 살아 있게</a></li><li><b>5. 배포 권한은 레포 권한만큼만</b></li><li><a href="/projects/lawtimes/release/">6. 버전과 릴리스 노트도 자동으로</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawtimes/rolling/">← 실패해도 서비스는 살아 있게</a><a href="/projects/lawtimes/release/">버전과 릴리스 노트도 자동으로 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/rolling/">← 실패해도 서비스는 살아 있게</a><a href="/projects/lawtimes/release/">버전과 릴리스 노트도 자동으로 →</a></nav>
   </main>
 </body>
 </html>
