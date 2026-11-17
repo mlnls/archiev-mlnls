@@ -39,31 +39,22 @@
     <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
     <header>
       <h1>앱 프로젝트도 같은 규칙으로</h1>
-      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 2/6 · + Expo (bc init 선택지)</p>
-      <p class="lead">create-expo-app 위에 사내 설정을 덮고, 앱 정보와 EAS 연결까지 bc init에서 끝냅니다.</p>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 2/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>앱 프로젝트는 create-expo-app으로 만든 뒤 사내 설정을 매번 손으로 맞췄다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>create-expo-app 위에 사내 설정을 덮어씌운다.</li>
-        <li>앱 이름 · 번들 ID · 딥링크 scheme을 물어 <code>app.config.ts</code>에 적는다.</li>
-        <li>EAS에 로그인돼 있으면 <code>eas init</code>으로 projectId까지 연결한다.</li>
-        <li>NativeWind · TanStack Query · axios를 기본으로 갖춘다.</li>
-      </ul>
+    <article class="post">
+      <h2>앱도 매번 손으로</h2>
+      <p>앱 프로젝트는 create-expo-app으로 만든 다음, 사내 설정을 매번 손으로 맞췄다.</p>
+      <h2>create-expo-app 위에 덮어쓰기</h2>
+      <p><code>bc init</code>에서 Mobile(Expo)을 고르면, create-expo-app으로 프로젝트를 만든 뒤 그 위에 사내 설정을 덮어씌운다.</p>
+      <ul><li>앱 이름, 번들 ID, 딥링크 scheme을 물어 <code>app.config.ts</code>에 적는다</li><li>EAS에 로그인돼 있으면 <code>eas init</code>으로 projectId까지 연결한다</li><li>NativeWind, TanStack Query, axios를 기본으로 갖춘다</li></ul>
       <h2>결과</h2>
-      <ul>
-        <li>웹과 같은 API 레이어와 린트 설정으로 앱 프로젝트가 시작된다.</li>
-      </ul>
+      <p>웹과 같은 API 레이어와 린트 설정으로 앱 프로젝트가 시작된다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
       <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><b>2. 앱 프로젝트도 같은 규칙으로</b></li><li><a href="/projects/frontend-tools/deploy/">3. 배포가 성공했을 때만 릴리즈가 남게</a></li><li><a href="/projects/frontend-tools/release-notes/">4. 릴리즈 노트는 커밋에서</a></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/electron/">← 데스크톱 프로젝트도 명령 하나로</a><a href="/projects/frontend-tools/deploy/">배포가 성공했을 때만 릴리즈가 남게 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/electron/">← 데스크톱 프로젝트도 명령 하나로</a><a href="/projects/frontend-tools/deploy/">배포가 성공했을 때만 릴리즈가 남게 →</a></nav>
   </main>
 </body>
 </html>

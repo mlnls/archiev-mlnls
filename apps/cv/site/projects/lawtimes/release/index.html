@@ -39,29 +39,29 @@
     <nav class="back" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
     <header>
       <h1>버전과 릴리스 노트도 자동으로</h1>
-      <p class="meta">법률신문 한국법조인대관 · 6/6 · PR 라벨 (버전 결정)</p>
-      <p class="lead">PR 라벨로 버전을 정하고, 배포가 끝나면 GitHub Release에 변경 내역을 남깁니다.</p>
+      <p class="meta">법률신문 한국법조인대관 · 6/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>버전 번호와 변경 내역을 사람이 정하고 적어야 했다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>PR 라벨(<code>release:major</code> · <code>release:minor</code>, 없으면 patch)로 다음 버전을 정한다.</li>
-        <li>배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.</li>
-      </ul>
+    <article class="post">
+      <h2>버전을 사람이 정하고 있었다</h2>
+      <p>배포할 때마다 버전 번호를 사람이 정했다.<br>무엇이 바뀌었는지도 사람이 따로 적어야 했다.</p>
+      <h2>PR 라벨로 버전 정하기</h2>
+      <p>PR에 <code>release:major</code>나 <code>release:minor</code> 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.<br>PR 없이 바로 push한 커밋은 항상 patch다.</p>
+      <pre><code>bump=patch
+labels=&quot; $(echo $LABELS) &quot;
+if [[ &quot;$labels&quot; == *&quot; release:major &quot;* ]]; then bump=major
+elif [[ &quot;$labels&quot; == *&quot; release:minor &quot;* ]]; then bump=minor
+fi</code></pre>
+      <p>배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.<br>release job은 운영 서버에 새 버전이 배포됐을 때만 돈다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>운영 버전과 변경 내역이 Release 목록에 쌓인다. 이 흐름은 이후 <a href="/projects/frontend-tools/deploy/">사내 CLI의 bc deploy</a>로 옮겼다.</li>
-      </ul>
+      <figure><img src="/projects/lawtimes/release-list.webp" width="1600" height="311" alt="lawpeople GitHub Release 목록" loading="lazy" decoding="async"><figcaption>운영 저장소의 Release 목록</figcaption></figure>
+      <p>운영 버전과 변경 내역이 Release 목록에 쌓인다.</p>
+      <p>이 흐름은 나중에 <a href="/projects/frontend-tools/deploy/">사내 CLI의 bc deploy</a>로 옮겨 다른 프로젝트에서도 쓰게 했다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법률신문 한국법조인대관</h2>
       <ol><li><a href="/projects/lawtimes/render/">1. SSR이 꺼져 있던 렌더링</a></li><li><a href="/projects/lawtimes/ga4/">2. 페이지뷰가 빠지고 있었다</a></li><li><a href="/projects/lawtimes/runner/">3. 들어갈 수 없는 서버에 배포하기</a></li><li><a href="/projects/lawtimes/rolling/">4. 실패해도 서비스는 살아 있게</a></li><li><a href="/projects/lawtimes/security/">5. 배포 권한은 레포 권한만큼만</a></li><li><b>6. 버전과 릴리스 노트도 자동으로</b></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawtimes/security/">← 배포 권한은 레포 권한만큼만</a><a href="/projects/lawtimes/">목차 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/security/">← 배포 권한은 레포 권한만큼만</a><a href="/projects/lawtimes/">목차 →</a></nav>
   </main>
 </body>
 </html>

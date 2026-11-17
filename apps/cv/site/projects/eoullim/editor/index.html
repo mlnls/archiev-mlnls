@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>에디터 문서와 화면 블록 · 어울림 | 오승민</title>
-  <meta name="description" content="TipTap 문서와 화면에 그리는 블록을 서로 바꾸는 변환 계층을 만들었습니다.">
+  <title>서버는 JSON, 에디터는 HTML · 어울림 | 오승민</title>
+  <meta name="description" content="서버의 TipTap(ProseMirror) JSON 문서와 관리자 에디터의 HTML을 API 경계에서 서로 바꿨습니다.">
   <link rel="canonical" href="https://mlnl.site/projects/eoullim/editor/">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://mlnl.site/projects/eoullim/editor/">
-  <meta property="og:title" content="에디터 문서와 화면 블록 · 어울림 | 오승민">
-  <meta property="og:description" content="TipTap 문서와 화면에 그리는 블록을 서로 바꾸는 변환 계층을 만들었습니다.">
+  <meta property="og:title" content="서버는 JSON, 에디터는 HTML · 어울림 | 오승민">
+  <meta property="og:description" content="서버의 TipTap(ProseMirror) JSON 문서와 관리자 에디터의 HTML을 API 경계에서 서로 바꿨습니다.">
   <meta property="og:locale" content="ko_KR">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
@@ -22,8 +22,8 @@
     "@type": "Article",
     "@id": "https://mlnl.site/projects/eoullim/editor/#note",
     "url": "https://mlnl.site/projects/eoullim/editor/",
-    "headline": "에디터 문서와 화면 블록",
-    "description": "TipTap 문서와 화면에 그리는 블록을 서로 바꾸는 변환 계층을 만들었습니다.",
+    "headline": "서버는 JSON, 에디터는 HTML",
+    "description": "서버의 TipTap(ProseMirror) JSON 문서와 관리자 에디터의 HTML을 API 경계에서 서로 바꿨습니다.",
     "inLanguage": "ko",
     "author": {
       "@id": "https://mlnl.site/#person"
@@ -38,29 +38,30 @@
   <main class="doc">
     <nav class="back" aria-label="이동"><a href="/projects/eoullim/">← 어울림</a></nav>
     <header>
-      <h1>에디터 문서와 화면 블록</h1>
-      <p class="meta">어울림 · 4/5 · TipTap (변환 계층)</p>
-      <p class="lead">TipTap 문서와 화면에 그리는 블록을 서로 바꾸는 변환 계층을 만들었습니다.</p>
+      <h1>서버는 JSON, 에디터는 HTML</h1>
+      <p class="meta">어울림 · 4/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>TipTap 에디터의 문서 형식과 화면에 그리는 블록 형식이 달랐다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>둘을 서로 바꾸는 변환 계층을 만들었다.</li>
-      </ul>
+    <article class="post">
+      <h2>서버와 에디터가 다른 형식을 썼다</h2>
+      <p>서버는 본문을 TipTap(ProseMirror) JSON 문서로 주고받는다.<br>그런데 관리자 에디터는 contentEditable이라 HTML을 다룬다.</p>
+      <p>같은 글이 서버에서는 JSON, 에디터에서는 HTML이었다.</p>
+      <h2>경계에서만 바꾸기</h2>
+      <p>둘을 서로 바꾸는 변환 계층을 만들었다.<br>변환은 API 경계(mapper와 api 함수)에서만 한다. 화면 코드는 변환을 신경 쓰지 않는다.</p>
+      <p>명세에 서버가 쓰는 노드 목록이 없어서, 노드와 마크 이름은 TipTap StarterKit 기본값을 따랐다.<br>서버가 다른 이름을 쓰면 이 파일 하나만 고치면 된다.</p>
+      <pre><code>/**
+ * 본문 변환 — 서버 본문(RT1 · TipTap/ProseMirror JSON doc) ↔ 관리자 에디터 HTML
+ *
+ * 관리자 에디터(components/editor/RichEditor)는 contentEditable 이라 HTML 을 다룬다.
+ * 서버는 TipTap doc 을 주고받으므로 api 경계(mapper · api 함수)에서만 이 변환을 쓴다.
+ */</code></pre>
       <h2>결과</h2>
-      <ul>
-        <li>에디터로 쓴 글과 화면 블록을 오갈 수 있다.</li>
-      </ul>
+      <p>관리자가 에디터로 쓴 글이 서버 형식으로 저장되고, 다시 열면 에디터로 돌아온다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>어울림</h2>
-      <ol><li><a href="/projects/eoullim/tokens/">1. 시안이 바뀌는 동안 같이 개발하기</a></li><li><a href="/projects/eoullim/figma/">2. 어느 시안을 반영했는지 커밋으로</a></li><li><a href="/projects/eoullim/api/">3. 사용자 · 관리자 실 API 연동</a></li><li><b>4. 에디터 문서와 화면 블록</b></li><li><a href="/projects/eoullim/login/">5. 설치와 로그인</a></li></ol>
+      <ol><li><a href="/projects/eoullim/tokens/">1. 시안이 바뀌는 동안 같이 개발하기</a></li><li><a href="/projects/eoullim/figma/">2. 어느 시안을 반영했는지 커밋으로</a></li><li><a href="/projects/eoullim/api/">3. 사용자 · 관리자 실 API 연동</a></li><li><b>4. 서버는 JSON, 에디터는 HTML</b></li><li><a href="/projects/eoullim/login/">5. 설치와 로그인</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/eoullim/api/">← 사용자 · 관리자 실 API 연동</a><a href="/projects/eoullim/login/">설치와 로그인 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/api/">← 사용자 · 관리자 실 API 연동</a><a href="/projects/eoullim/login/">설치와 로그인 →</a></nav>
   </main>
 </body>
 </html>

@@ -5,6 +5,9 @@
   --muted: #6d6a62;
   --rule: #dfdcd3;
   --accent: #1f5d4c;
+  --soft: #3d3b36;
+  --strong: #000;
+  --code-bg: #efede7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,6 +17,9 @@
     --muted: #9b978d;
     --rule: #2e2c28;
     --accent: #7fc4ae;
+    --soft: #c9c5bc;
+    --strong: #fff;
+    --code-bg: #1e1d1a;
   }
 }
 
@@ -45,7 +51,7 @@ a {
 }
 
 @media (hover: hover) {
-  a:hover { color: var(--accent); text-decoration-color: currentColor; }
+  a:hover { color: var(--strong); text-decoration-color: currentColor; }
 }
 
 a:focus-visible {
@@ -155,7 +161,7 @@ dt { color: var(--muted); }
 h4 .ext, h3 .ext { margin-left: 8px; font-size: 13px; font-weight: 400; color: var(--muted); }
 h4 a.go, h3 a.go { text-decoration: none; }
 h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transition: color 160ms ease-out; }
-@media (hover: hover) { h4 a.go:hover::after, h3 a.go:hover::after { color: var(--accent); } }
+@media (hover: hover) { h4 a.go:hover::after, h3 a.go:hover::after { color: var(--strong); } }
 
 /* ---------- 프로젝트 · 노트 (/projects/...) : 글 위주의 단순한 목록 ---------- */
 .doc {
@@ -164,7 +170,7 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
   padding: clamp(32px, 7vw, 64px) 20px 96px;
 }
 .doc .back { font-size: 13px; color: var(--muted); }
-.doc .back a { text-decoration: none; }
+.doc .back a, .doc .others a, .doc .pager a { color: var(--soft); text-decoration: none; }
 .doc header { margin-top: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
 .doc h1 { font-size: 24px; font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; }
 .doc .meta { margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.7; }
@@ -178,16 +184,36 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
 .doc .list li + li { margin-top: 0; }
 .doc .list li::before { content: none; }
 .doc .list .no { flex: none; width: 1.6em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.doc .list .ti { font-size: 15px; font-weight: 600; text-decoration: none; }
-.doc .list .ti:visited { color: var(--muted); }
+.doc .list .ti { font-size: 15px; font-weight: 600; color: var(--soft); text-decoration: none; }
+@media (hover: hover) {
+  .doc .list .ti:hover, .doc .back a:hover, .doc .others a:hover, .doc .pager a:hover { color: var(--strong); }
+}
 .doc .list .mt { color: var(--muted); font-size: 12px; white-space: nowrap; }
-.doc .list p { margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-/* 노트 */
-.doc .body h2 { margin-top: 28px; font-size: 15px; font-weight: 700; color: var(--ink); }
-.doc .body ul { margin-top: 6px; }
-.doc .body li { line-height: 1.75; }
-.doc .body li + li { margin-top: 4px; }
+/* 글 */
+.doc .post { margin-top: 8px; font-size: 16px; line-height: 1.85; }
+.doc .post > * + * { margin-top: 18px; }
+.doc .post h2 { margin-top: 44px; font-size: 19px; font-weight: 700; line-height: 1.45; color: var(--ink); letter-spacing: -0.01em; }
+.doc .post h3 { margin-top: 32px; font-size: 16px; font-weight: 700; color: var(--ink); }
+.doc .post h2 + *, .doc .post h3 + * { margin-top: 12px; }
+.doc .post ul, .doc .post ol { padding-left: 1.4em; list-style: revert; }
+.doc .post li { padding-left: 2px; line-height: 1.8; }
+.doc .post li::before { content: none; }
+.doc .post li + li { margin-top: 4px; }
+.doc .post b { font-weight: 700; color: var(--strong); }
+.doc .post a { text-decoration-color: var(--muted); }
+.doc .post code { padding: 1px 5px; border-radius: 4px; background: var(--code-bg); font-size: 0.86em; }
+.doc .post pre { padding: 14px 16px; border-radius: 6px; background: var(--code-bg); overflow-x: auto; font-size: 13px; line-height: 1.65; }
+.doc .post pre code { padding: 0; background: none; font-size: inherit; white-space: pre; }
+.doc .post blockquote { padding-left: 14px; border-left: 3px solid var(--rule); color: var(--muted); }
+.doc .post figure { margin: 28px 0; }
+.doc .post figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--rule); border-radius: 6px; }
+.doc .post figure.narrow img { max-width: min(360px, 100%); }
+.doc .post figcaption { margin-top: 8px; color: var(--muted); font-size: 13px; text-align: center; }
+.doc .post .table { overflow-x: auto; }
+.doc .post table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; }
+.doc .post th, .doc .post td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.doc .post th { font-weight: 600; color: var(--muted); }
 .doc .others { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 13px; }
 .doc .others h2 { font-size: 13px; font-weight: 600; color: var(--muted); }
 .doc .others ol { margin: 6px 0 0; padding: 0; list-style: none; }
@@ -205,6 +231,7 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
 
 @media print {
   .doc { padding: 0; max-width: none; }
+  .doc .post pre { white-space: pre-wrap; }
   .doc .back, .doc .others, .doc .pager { display: none; }
 }
 

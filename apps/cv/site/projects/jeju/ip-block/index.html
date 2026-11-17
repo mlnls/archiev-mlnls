@@ -39,28 +39,23 @@
     <nav class="back" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
     <header>
       <h1>IP 차단이 서버 자신을 막았다</h1>
-      <p class="meta">제주이어드림 · 5/5 · x-forwarded-for (실제 사용자 IP)</p>
-      <p class="lead">IP 차단 도입 뒤 생긴 장애를 x-forwarded-for 전달로 풀었습니다.</p>
+      <p class="meta">제주이어드림 · 5/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>IP 차단을 도입하자 Next 서버의 IP가 차단돼 서비스가 다운됐다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>원인을 추적해, Next 서버가 실제 사용자 IP를 <code>x-forwarded-for</code>로 넘기게 했다.</li>
-      </ul>
+    <article class="post">
+      <h2>IP 차단을 켰더니 서비스가 내려갔다</h2>
+      <p>IP 차단을 도입했다.<br>그런데 도입한 뒤 서비스가 다운됐다. 차단된 IP가 Next 서버 자신이었다.</p>
+      <h2>원인</h2>
+      <p>백엔드가 보기에는 모든 요청이 Next 서버에서 왔다.<br>SSR에서는 사용자의 브라우저가 아니라 Next 서버가 API를 부르기 때문이다.<br>그래서 차단 규칙에 걸린 것도 사용자가 아니라 Next 서버의 IP였다.</p>
+      <h2>실제 사용자 IP 넘기기</h2>
+      <p>Next 서버가 API를 부를 때 실제 사용자 IP를 <code>x-forwarded-for</code>로 넘기게 했다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>실제 사용자 IP 기준으로 차단된다.</li>
-      </ul>
+      <p>이제 실제 사용자 IP 기준으로 차단된다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>제주이어드림</h2>
       <ol><li><a href="/projects/jeju/scaling/">1. 한 달에 하루 몰리는 트래픽</a></li><li><a href="/projects/jeju/golden-image/">2. 콘솔 수작업 대신 yaml</a></li><li><a href="/projects/jeju/cutover/">3. 언제든 되돌릴 수 있는 전환</a></li><li><a href="/projects/jeju/isr/">4. 메인 조회 API에 ISR</a></li><li><b>5. IP 차단이 서버 자신을 막았다</b></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/jeju/isr/">← 메인 조회 API에 ISR</a><a href="/projects/jeju/">목차 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/jeju/isr/">← 메인 조회 API에 ISR</a><a href="/projects/jeju/">목차 →</a></nav>
   </main>
 </body>
 </html>

@@ -39,33 +39,24 @@
     <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
     <header>
       <h1>공통 패키지 결함 12건</h1>
-      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 6/6 · 12건 (결함 수정 (MOD-21~35))</p>
-      <p class="lead">사용처에서 하나씩 보고되던 공통 패키지 버그를 모아 고치고 changeset으로 배포했습니다.</p>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 6/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>사내 서비스가 함께 쓰는 core · basic-ui · utils · hooks에서 버그가 하나씩 보고되고 있었다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>1월 31일에서 다음 달로 가면 3월이 되던 달력, KST에서 달이 밀리던 문제를 고쳤다.</li>
-        <li>SSR에서 <code>SanitizeHtml</code>이 터지던 문제, 이메일 · 생년월일 · 주민번호 정규식 오류를 고쳤다.</li>
-      </ul>
+    <article class="post">
+      <h2>하나씩 보고되던 버그</h2>
+      <p>사내 서비스들이 함께 쓰는 core · basic-ui · utils · hooks 패키지에서 버그가 하나씩 보고되고 있었다.<br>모아서 한 번에 고쳤다. (MOD-21 ~ 35)</p>
+      <h2>고친 것들</h2>
+      <ul><li>1월 31일에서 다음 달로 넘기면 3월이 되던 달력</li><li>KST에서 달이 하나 밀리던 문제</li><li>SSR에서 <code>SanitizeHtml</code>이 터지던 문제</li><li>이메일 · 생년월일 · 주민번호 정규식 오류</li></ul>
       <h2>결과</h2>
-      <ul>
-        <li>결함 12건을 고쳐 changeset으로 배포했다.</li>
-      </ul>
-      <h2>메모</h2>
-      <ul>
-        <li>Release CI에서 npm 11로 만든 lockfile이 Node 20의 <code>npm ci</code>에서 실패했다. npm 10으로 다시 만들어 두 버전 모두 통과시켰다.</li>
-      </ul>
+      <p>결함 12건을 고쳐 changeset으로 배포했다.</p>
+      <h2>배포하려는데 CI가 깨졌다</h2>
+      <p>Release CI가 실패했다.<br>npm 11로 만든 lockfile이 Node 20의 <code>npm ci</code>에서 깨진 것이었다.</p>
+      <p>npm 10으로 lockfile을 다시 만들어 두 버전 모두에서 통과시켰다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
       <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><a href="/projects/frontend-tools/deploy/">3. 배포가 성공했을 때만 릴리즈가 남게</a></li><li><a href="/projects/frontend-tools/release-notes/">4. 릴리즈 노트는 커밋에서</a></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><b>6. 공통 패키지 결함 12건</b></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/v3/">← 쓰지 않는 기능은 걷어내기</a><a href="/projects/frontend-tools/">목차 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/v3/">← 쓰지 않는 기능은 걷어내기</a><a href="/projects/frontend-tools/">목차 →</a></nav>
   </main>
 </body>
 </html>

@@ -39,34 +39,24 @@
     <nav class="back" aria-label="이동"><a href="/projects/jeju/">← 제주이어드림</a></nav>
     <header>
       <h1>한 달에 하루 몰리는 트래픽</h1>
-      <p class="meta">제주이어드림 · 1/5 · 1 → 3대 (요청 기준 Step Scaling)</p>
-      <p class="lead">필요할 때만 늘어나는 프론트 서버를 ALB와 Auto Scaling으로 만들었습니다.</p>
+      <p class="meta">제주이어드림 · 1/5</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>S3 + CloudFront 정적 호스팅에는 사양을 바꿀 옵션이 없었다.</li>
-        <li>공고 날에는 프론트와 백엔드 서버가 함께 멈췄다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>Next SSR을 EC2 + ALB + Auto Scaling으로 옮겼다.</li>
-        <li>타깃당 요청 3,000 / 6,000을 기준으로 1 → 2 → 3대로 늘어나는 Step Scaling을 걸었다.</li>
-      </ul>
+    <article class="post">
+      <h2>공고 날마다 멈췄다</h2>
+      <p>제주이어드림은 청년 지원 공고가 올라오는 날 사람이 몰린다.<br>그날이면 프론트 서버와 백엔드 서버가 같이 멈췄다.</p>
+      <p>프론트는 S3 + CloudFront 정적 호스팅이었다.<br>여기에는 사양을 바꿀 옵션이 없다. 몰리는 날을 대비할 방법이 없었다.</p>
+      <h2>필요할 때만 늘어나는 서버</h2>
+      <p>Next.js를 SSR로 돌리고, EC2 + ALB + Auto Scaling 위로 옮겼다.</p>
+      <p>늘어나는 기준은 요청 수다.<br>타깃 하나당 요청이 3,000을 넘으면 2대, 6,000을 넘으면 3대로 늘어나는 Step Scaling을 걸었다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>평소에는 1대(최대 5대), 몰릴 때만 늘어난다.</li>
-      </ul>
-      <h2>메모</h2>
-      <ul>
-        <li>결국 클라이언트가 원한 것은 비용과 안정성을 같이 설계하는 능력이었다.</li>
-      </ul>
+      <p>평소에는 1대로 돌고(최대 5대), 몰릴 때만 늘어난다.</p>
+      <p>해 보니 클라이언트가 원한 건 서버를 늘리는 기술보다, 비용과 안정성을 같이 설계하는 일이었다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>제주이어드림</h2>
       <ol><li><b>1. 한 달에 하루 몰리는 트래픽</b></li><li><a href="/projects/jeju/golden-image/">2. 콘솔 수작업 대신 yaml</a></li><li><a href="/projects/jeju/cutover/">3. 언제든 되돌릴 수 있는 전환</a></li><li><a href="/projects/jeju/isr/">4. 메인 조회 API에 ISR</a></li><li><a href="/projects/jeju/ip-block/">5. IP 차단이 서버 자신을 막았다</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/jeju/">← 목차</a><a href="/projects/jeju/golden-image/">콘솔 수작업 대신 yaml →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/jeju/">← 목차</a><a href="/projects/jeju/golden-image/">콘솔 수작업 대신 yaml →</a></nav>
   </main>
 </body>
 </html>

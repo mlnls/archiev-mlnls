@@ -39,29 +39,22 @@
     <nav class="back" aria-label="이동"><a href="/projects/lawtimes/">← 법률신문 한국법조인대관</a></nav>
     <header>
       <h1>페이지뷰가 빠지고 있었다</h1>
-      <p class="meta">법률신문 한국법조인대관 · 2/6 · 월 103만 건 (GA4 이벤트)</p>
-      <p class="lead">SPA 라우팅에서 누락되던 GA4 page_view를 라우트 이벤트 기준으로 다시 잡았습니다.</p>
+      <p class="meta">법률신문 한국법조인대관 · 2/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>SPA 라우팅이라 첫 진입 뒤로는 GA4 page_view가 기록되지 않았다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>라우트가 바뀔 때 page_view를 보내도록 추적을 다시 설계했다.</li>
-        <li>주요 CTA에 커스텀 이벤트를 연결했다.</li>
-      </ul>
+    <article class="post">
+      <h2>첫 페이지만 기록되고 있었다</h2>
+      <p>법조인대관은 화면 안에서 주소가 바뀌는 SPA 라우팅을 쓴다.<br>그런데 GA4 page_view는 첫 진입 때만 기록되고, 그 뒤로 화면을 옮겨 다닌 기록은 빠지고 있었다.</p>
+      <p>사용자가 들어온 뒤 어디로 이동하는지 알 수 없는 데이터였다.</p>
+      <h2>라우트가 바뀔 때마다</h2>
+      <p>라우트가 바뀌는 시점에 page_view를 보내도록 추적을 다시 설계했다.<br>그리고 주요 CTA에는 커스텀 이벤트를 연결해, 페이지뷰만이 아니라 무엇을 눌렀는지도 남게 했다.</p>
       <h2>결과</h2>
-      <ul>
-        <li>월 이벤트 <b>1,039,503건</b> · 사용자 <b>88,231명</b>의 행동 데이터 확보</li>
-      </ul>
+      <p>한 달에 이벤트 <b>1,039,503건</b>, 사용자 <b>88,231명</b>의 행동 데이터를 모으고 있다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법률신문 한국법조인대관</h2>
       <ol><li><a href="/projects/lawtimes/render/">1. SSR이 꺼져 있던 렌더링</a></li><li><b>2. 페이지뷰가 빠지고 있었다</b></li><li><a href="/projects/lawtimes/runner/">3. 들어갈 수 없는 서버에 배포하기</a></li><li><a href="/projects/lawtimes/rolling/">4. 실패해도 서비스는 살아 있게</a></li><li><a href="/projects/lawtimes/security/">5. 배포 권한은 레포 권한만큼만</a></li><li><a href="/projects/lawtimes/release/">6. 버전과 릴리스 노트도 자동으로</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/lawtimes/render/">← SSR이 꺼져 있던 렌더링</a><a href="/projects/lawtimes/runner/">들어갈 수 없는 서버에 배포하기 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/render/">← SSR이 꺼져 있던 렌더링</a><a href="/projects/lawtimes/runner/">들어갈 수 없는 서버에 배포하기 →</a></nav>
   </main>
 </body>
 </html>

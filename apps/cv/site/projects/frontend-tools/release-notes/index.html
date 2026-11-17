@@ -39,31 +39,30 @@
     <nav class="back" aria-label="이동"><a href="/projects/frontend-tools/">← 벽촌 FE 공통 모듈 · 사내 CLI</a></nav>
     <header>
       <h1>릴리즈 노트는 커밋에서</h1>
-      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 4/6 · 날짜 버전 (web@2026.11.05)</p>
-      <p class="lead">공통 settings 패키지에 커밋을 기능 · 수정으로 묶어 노트를 쓰는 명령을 더했습니다.</p>
+      <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 4/6</p>
     </header>
-    <article class="body">
-      <h2>문제</h2>
-      <ul>
-        <li>릴리즈 노트를 쓰는 방식도 프로젝트마다 달랐다.</li>
-      </ul>
-      <h2>해결</h2>
-      <ul>
-        <li>settings 패키지에 <code>byuckchon-release-notes</code>를 더했다.</li>
-        <li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다.</li>
-        <li>날짜 버전(<code>web@2026.11.05</code>, 같은 날 재배포는 <code>.2</code>)으로 태그한다.</li>
-        <li>커밋 분류는 PR 본문 자동 작성과 같은 코드를 쓴다.</li>
-      </ul>
+    <article class="post">
+      <h2>노트 쓰는 방식도 제각각</h2>
+      <p>릴리즈 노트를 남기는 프로젝트도 쓰는 방식이 서로 달랐다.</p>
+      <h2>커밋에서 노트 만들기</h2>
+      <p>공통 settings 패키지에 <code>byuckchon-release-notes</code> 명령을 더했다.</p>
+      <ul><li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다</li><li>태그는 날짜 버전으로 붙인다. <code>web@2026.11.05</code>, 같은 날 다시 배포하면 <code>.2</code></li><li>커밋을 나누는 코드는 PR 본문을 자동으로 쓰는 명령과 같은 것을 쓴다</li></ul>
+      <p>PR 본문 쪽에서 이미 쓰고 있던 형식은 이렇다. 릴리즈 노트도 같은 분류로 나온다.</p>
+      <pre><code>### ✨ 기능
+
+- **settings** — tsconfig 프리셋 추가 (a1b2c3d)
+
+### 🐛 수정
+
+- letterSpacing % → em 변환 (b2c3d4e)</code></pre>
       <h2>결과</h2>
-      <ul>
-        <li>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</li>
-      </ul>
+      <p>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</p>
     </article>
-    <nav class="others" aria-label="이 프로젝트의 다른 노트">
+    <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>
       <ol><li><a href="/projects/frontend-tools/electron/">1. 데스크톱 프로젝트도 명령 하나로</a></li><li><a href="/projects/frontend-tools/expo/">2. 앱 프로젝트도 같은 규칙으로</a></li><li><a href="/projects/frontend-tools/deploy/">3. 배포가 성공했을 때만 릴리즈가 남게</a></li><li><b>4. 릴리즈 노트는 커밋에서</b></li><li><a href="/projects/frontend-tools/v3/">5. 쓰지 않는 기능은 걷어내기</a></li><li><a href="/projects/frontend-tools/qa/">6. 공통 패키지 결함 12건</a></li></ol>
     </nav>
-    <nav class="pager" aria-label="이전 · 다음 노트"><a href="/projects/frontend-tools/deploy/">← 배포가 성공했을 때만 릴리즈가 남게</a><a href="/projects/frontend-tools/v3/">쓰지 않는 기능은 걷어내기 →</a></nav>
+    <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/deploy/">← 배포가 성공했을 때만 릴리즈가 남게</a><a href="/projects/frontend-tools/v3/">쓰지 않는 기능은 걷어내기 →</a></nav>
   </main>
 </body>
 </html>
