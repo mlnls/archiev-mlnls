@@ -20,7 +20,7 @@ main에 머지하면 이 순서로 돈다.
 영문판은 국문판과 같은 소스를 쓴다. 주소창에는 `/eng/`로 보이고, 서버 안에서는 `/kor/`로 바꿔 PHP에 넘긴다.
 그래서 `/kor/`로 들어온 요청은 `/eng/`로 301 처리했다.
 
-```
+```caddyfile Caddyfile
 # 주소창에는 /eng/ 로 보이게 한다. 실제 파일은 www/kor/ 그대로 (국문 사이트와 같은 소스)
 #   /kor/... 로 들어온 GET·HEAD → /eng/... 로 이동 (POST 는 폼 전송이 깨지지 않게 그대로 둠)
 #   /eng/... → 서버 안에서 /kor/... 로 바꿔 web 에 넘김
@@ -59,7 +59,7 @@ CMS에 해외사업 관리 메뉴를 추가했다.
 
 실제 결과 파일에서 메인 페이지 부분만 옮기면 이렇다.
 
-```
+```text test-results/loadtest-20261007-1800.txt
 == /kor/main/
   동시   10명 | 초당   49.73건 | 실패 0 (0.0%) | 응답 50%   178ms 95%   362ms 99%   597ms
   동시   25명 | 초당   55.88건 | 실패 0 (0.0%) | 응답 50%   433ms 95%   518ms 99%   661ms
@@ -105,7 +105,7 @@ Apache는 넘치는 요청을 버리지 않고 줄을 세운다. 그래서 실�
 3. PHP: 본문 파싱 전에 적용되는 `php_admin_value`
 4. 컨테이너: 메모리 상한 1g
 
-```apache
+```apache web/apache.conf
 php_admin_value memory_limit -1
 # 요청 본문 크기. Caddy 와 같은 값이며 크기를 밝히지 않은(chunked) 요청에도 적용된다.
 LimitRequestBody 8388608
@@ -126,7 +126,7 @@ LimitRequestBody 8388608
 완화만으로 끝내지 않고 PHP 자체를 고쳤다.
 PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(`php-config --configure-options`) 그대로 다시 빌드했다.
 
-```bash
+```bash web/php-cve/rebuild-php.sh
 [ "$(php -r 'echo PHP_VERSION;')" = "7.4.33" ] || { echo "PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다"; exit 1; }
 echo "$PATCH_SHA256  $PATCH" | sha256sum -c -
 

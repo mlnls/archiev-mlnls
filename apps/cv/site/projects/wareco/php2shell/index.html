@@ -48,28 +48,28 @@
       <h2>완화 네 겹</h2>
       <p>먼저 요청이 PHP에 닿기 전에 막을 수 있는 것부터 막았다.</p>
       <ol><li>Caddy: 요청 본문 상한</li><li>Apache: <code>LimitRequestBody</code></li><li>PHP: 본문 파싱 전에 적용되는 <code>php_admin_value</code></li><li>컨테이너: 메모리 상한 1g</li></ol>
-      <pre><code>php_admin_value memory_limit -1
-# 요청 본문 크기. Caddy 와 같은 값이며 크기를 밝히지 않은(chunked) 요청에도 적용된다.
-LimitRequestBody 8388608
+      <div class="code"><div class="code-head"><span class="file">web/apache.conf</span><span class="lang">Apache</span></div><pre><code><span class="hljs-attribute">php_admin_value</span> memory_limit -<span class="hljs-number">1</span>
+<span class="hljs-comment"># 요청 본문 크기. Caddy 와 같은 값이며 크기를 밝히지 않은(chunked) 요청에도 적용된다.</span>
+<span class="hljs-attribute">LimitRequestBody</span> <span class="hljs-number">8388608</span>
 
-# CMS 업로드만 32M 까지
-&lt;Directory /var/www/html/cms&gt;
-    LimitRequestBody 33554432
-    php_admin_value post_max_size 32M
-    php_admin_value upload_max_filesize 30M
-&lt;/Directory&gt;</code></pre>
+<span class="hljs-comment"># CMS 업로드만 32M 까지</span>
+<span class="hljs-section">&lt;Directory /var/www/html/cms&gt;</span>
+    <span class="hljs-attribute">LimitRequestBody</span> <span class="hljs-number">33554432</span>
+    <span class="hljs-attribute">php_admin_value</span> post_max_size <span class="hljs-number">32</span>M
+    <span class="hljs-attribute">php_admin_value</span> upload_max_filesize <span class="hljs-number">30</span>M
+<span class="hljs-section">&lt;/Directory&gt;</span></code></pre></div>
       <p>같은 값을 코드의 <code>ini_set</code>으로 걸면 소용이 없다.<br><code>ini_set</code>은 본문을 파싱한 뒤에 실행돼서 이미 늦다. 설정은 무엇보다 &quot;언제&quot; 적용되는지가 중요했다.</p>
       <h2>수정 한 겹: 직접 빌드</h2>
       <p>완화만으로 끝내지 않고 PHP 자체를 고쳤다.<br>PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(<code>php-config --configure-options</code>) 그대로 다시 빌드했다.</p>
-      <pre><code>[ &quot;$(php -r 'echo PHP_VERSION;')&quot; = &quot;7.4.33&quot; ] || { echo &quot;PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다&quot;; exit 1; }
-echo &quot;$PATCH_SHA256  $PATCH&quot; | sha256sum -c -
+      <div class="code"><div class="code-head"><span class="file">web/php-cve/rebuild-php.sh</span><span class="lang">Bash</span></div><pre><code>[ <span class="hljs-string">&quot;<span class="hljs-subst">$(php -r &#x27;echo PHP_VERSION;&#x27;)</span>&quot;</span> = <span class="hljs-string">&quot;7.4.33&quot;</span> ] || { <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다&quot;</span>; <span class="hljs-built_in">exit</span> 1; }
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PATCH_SHA256</span>  <span class="hljs-variable">$PATCH</span>&quot;</span> | <span class="hljs-built_in">sha256sum</span> -c -
 
-opts=&quot;$(php-config --configure-options | sed 's/--with-pear\b/--without-pear/')&quot;
+opts=<span class="hljs-string">&quot;<span class="hljs-subst">$(php-config --configure-options | sed &#x27;s/--with-pear\b/--without-pear/&#x27;)</span>&quot;</span>
 docker-php-source extract
-cd /usr/src/php
-patch -p1 --forward &lt; &quot;$PATCH&quot;
-eval &quot;./configure $opts&quot;
-make -j&quot;$(nproc)&quot;</code></pre>
+<span class="hljs-built_in">cd</span> /usr/src/php
+patch -p1 --forward &lt; <span class="hljs-string">&quot;<span class="hljs-variable">$PATCH</span>&quot;</span>
+<span class="hljs-built_in">eval</span> <span class="hljs-string">&quot;./configure <span class="hljs-variable">$opts</span>&quot;</span>
+make -j<span class="hljs-string">&quot;<span class="hljs-subst">$(nproc)</span>&quot;</span></code></pre></div>
       <p>패치 파일은 sha256부터 검사한다.</p>
       <p>패치가 들어갔는지 확인하는 방법도 따로 필요했다.<br>백포트는 버전을 올리지 않아서, 패치 전후 모두 버전 문자열이 7.4.33이다.<br>그래서 패치가 새로 추가한 설정 <code>max_multipart_body_parts</code>를 마커로 삼았다. 이 값이 없으면 빌드가 실패한다.</p>
       <h2>결과</h2>

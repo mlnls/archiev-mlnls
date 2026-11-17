@@ -47,17 +47,17 @@
       <p>법인 소식이나 언론보도는 관리자가 올리고 나서 언제 보이는지를 바로 확인하는 글이라, 이 지연이 그대로 불편이 됐다.</p>
       <h2>저장한 글의 캐시만 비우기</h2>
       <p>서버에서 데이터를 가져올 때 요청마다 태그를 달았다.<br>그리고 관리자 화면에서 저장이나 삭제가 성공하면 <code>/api/revalidate</code>를 불러, 그 태그의 캐시만 <code>revalidateTag</code>로 비운다.</p>
-      <pre><code>/**
+      <div class="code"><div class="code-head"><span class="file">src/app/api/revalidate/route.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">/**
  * 공개 페이지 캐시 즉시 무효화. 관리자 화면에서 저장·삭제가 성공한 뒤 호출한다.
- *   POST /api/revalidate  { tags: ['news', 'search'] }  (헤더: Access-Token)
- */
-export async function POST(request: NextRequest) {
-  // 관리자 토큰 확인 ...
-  const tags = Array.isArray(body?.tags) ? body.tags.filter(isCacheTag) : [];
-  const uniqueTags = [...new Set(tags)];
-  uniqueTags.forEach((tag) =&gt; revalidateTag(tag));
-  return NextResponse.json({ revalidated: uniqueTags });
-}</code></pre>
+ *   POST /api/revalidate  { tags: [&#x27;news&#x27;, &#x27;search&#x27;] }  (헤더: Access-Token)
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">POST</span>(<span class="hljs-params"><span class="hljs-attr">request</span>: <span class="hljs-title class_">NextRequest</span></span>) {
+  <span class="hljs-comment">// 관리자 토큰 확인 ...</span>
+  <span class="hljs-keyword">const</span> tags = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(body?.<span class="hljs-property">tags</span>) ? body.<span class="hljs-property">tags</span>.<span class="hljs-title function_">filter</span>(isCacheTag) : [];
+  <span class="hljs-keyword">const</span> uniqueTags = [...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(tags)];
+  uniqueTags.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">tag</span>) =&gt;</span> <span class="hljs-title function_">revalidateTag</span>(tag));
+  <span class="hljs-keyword">return</span> <span class="hljs-title class_">NextResponse</span>.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">revalidated</span>: uniqueTags });
+}</code></pre></div>
       <p>관리자 토큰은 브라우저에만 있어서 따로 비밀키를 둘 수가 없었다.<br>그래서 백엔드 관리자 API를 한 번 불러 보고, 토큰이 유효할 때만 캐시를 비운다.</p>
       <p>이 호출이 실패해도 캐시 주기가 지나면 반영된다. 소식 · 언론보도는 5분, 구성원 · 업무분야는 1시간이다.</p>
       <p>관리자 쪽 편의도 하나 더했다. 유튜브 링크만 넣으면 제목과 게시일이 채워진다.</p>

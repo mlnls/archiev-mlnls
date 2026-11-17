@@ -46,11 +46,11 @@
       <p>배포할 때마다 버전 번호를 사람이 정했다.<br>무엇이 바뀌었는지도 사람이 따로 적어야 했다.</p>
       <h2>PR 라벨로 버전 정하기</h2>
       <p>PR에 <code>release:major</code>나 <code>release:minor</code> 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.<br>PR 없이 바로 push한 커밋은 항상 patch다.</p>
-      <pre><code>bump=patch
-labels=&quot; $(echo $LABELS) &quot;
-if [[ &quot;$labels&quot; == *&quot; release:major &quot;* ]]; then bump=major
-elif [[ &quot;$labels&quot; == *&quot; release:minor &quot;* ]]; then bump=minor
-fi</code></pre>
+      <div class="code"><div class="code-head"><span class="file">scripts/lawpeople-version.sh</span><span class="lang">Bash</span></div><pre><code>bump=patch
+labels=<span class="hljs-string">&quot; <span class="hljs-subst">$(echo $LABELS)</span> &quot;</span>
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$labels</span>&quot;</span> == *<span class="hljs-string">&quot; release:major &quot;</span>* ]]; <span class="hljs-keyword">then</span> bump=major
+<span class="hljs-keyword">elif</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$labels</span>&quot;</span> == *<span class="hljs-string">&quot; release:minor &quot;</span>* ]]; <span class="hljs-keyword">then</span> bump=minor
+<span class="hljs-keyword">fi</span></code></pre></div>
       <p>배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.<br>release job은 운영 서버에 새 버전이 배포됐을 때만 돈다.</p>
       <h2>결과</h2>
       <figure><img src="/projects/lawtimes/release-list.webp" width="1600" height="311" alt="lawpeople GitHub Release 목록" loading="lazy" decoding="async"><figcaption>운영 저장소의 Release 목록</figcaption></figure>

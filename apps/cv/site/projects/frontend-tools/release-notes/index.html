@@ -48,13 +48,13 @@
       <p>공통 settings 패키지에 <code>byuckchon-release-notes</code> 명령을 더했다.</p>
       <ul><li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다</li><li>태그는 날짜 버전으로 붙인다. <code>web@2026.11.05</code>, 같은 날 다시 배포하면 <code>.2</code></li><li>커밋을 나누는 코드는 PR 본문을 자동으로 쓰는 명령과 같은 것을 쓴다</li></ul>
       <p>PR 본문 쪽에서 이미 쓰고 있던 형식은 이렇다. 릴리즈 노트도 같은 분류로 나온다.</p>
-      <pre><code>### ✨ 기능
+      <div class="code"><div class="code-head"><span class="file">PR 본문 예시</span><span class="lang">Markdown</span></div><pre><code><span class="hljs-section">### ✨ 기능</span>
 
-- **settings** — tsconfig 프리셋 추가 (a1b2c3d)
+<span class="hljs-bullet">-</span> <span class="hljs-strong">**settings**</span> — tsconfig 프리셋 추가 (a1b2c3d)
 
-### 🐛 수정
+<span class="hljs-section">### 🐛 수정</span>
 
-- letterSpacing % → em 변환 (b2c3d4e)</code></pre>
+<span class="hljs-bullet">-</span> letterSpacing % → em 변환 (b2c3d4e)</code></pre></div>
       <h2>결과</h2>
       <p>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</p>
     </article>

@@ -49,9 +49,9 @@
       <p>main에 머지하면 이 순서로 돈다.</p>
       <ol><li>바뀐 PHP 파일만 문법 검사</li><li>배포</li><li>Caddy 설정 검사</li><li>무중단 reload</li><li>중간에 실패하면 복구</li></ol>
       <p>영문판 주소도 정리했다.<br>영문판은 국문판과 같은 소스를 쓴다. 주소창에는 <code>/eng/</code>로 보이고, 서버 안에서는 <code>/kor/</code>로 바꿔 PHP에 넘긴다.<br>그래서 <code>/kor/</code>로 들어온 요청은 <code>/eng/</code>로 301 처리했다.</p>
-      <pre><code># 주소창에는 /eng/ 로 보이게 한다. 실제 파일은 www/kor/ 그대로 (국문 사이트와 같은 소스)
+      <div class="code"><div class="code-head"><span class="file">Caddyfile</span><span class="lang">Caddyfile</span></div><pre><code># 주소창에는 /eng/ 로 보이게 한다. 실제 파일은 www/kor/ 그대로 (국문 사이트와 같은 소스)
 #   /kor/... 로 들어온 GET·HEAD → /eng/... 로 이동 (POST 는 폼 전송이 깨지지 않게 그대로 둠)
-#   /eng/... → 서버 안에서 /kor/... 로 바꿔 web 에 넘김</code></pre>
+#   /eng/... → 서버 안에서 /kor/... 로 바꿔 web 에 넘김</code></pre></div>
       <h2>결과</h2>
       <figure><img src="/projects/wareco/deploy-redirect.webp" width="1600" height="271" alt="curl로 확인한 /kor/에서 /eng/로의 301 응답" loading="lazy" decoding="async"><figcaption>운영 서버 응답: /kor/ → /eng/</figcaption></figure>
       <p>영문판을 출시했고, 이후 수정도 머지 한 번으로 나간다.</p>

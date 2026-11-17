@@ -50,14 +50,14 @@
       <p>Desktop을 고르면 이런 프로젝트가 만들어진다.</p>
       <ul><li>electron-vite로 main · preload · renderer를 나눈다</li><li>renderer는 웹 프로젝트와 같은 폴더 구조, 디자인 토큰, API 레이어를 쓴다</li><li>electron-builder로 macOS · Windows 설치 파일을 만든다</li></ul>
       <p>보안 설정은 처음부터 켜 둔다.<br>renderer는 OS에 직접 닿지 못하고, preload가 <code>window.api</code>로 열어 준 기능만 쓴다.</p>
-      <pre><code>webPreferences: {
-  preload: join(import.meta.dirname, '../preload/index.cjs'),
-  // 보안 기본값 — renderer 는 OS 에 직접 접근하지 못하고 window.api 만 쓴다.
-  // 끄지 마세요. 필요한 기능은 preload + ipcMain.handle 로 추가합니다.
-  contextIsolation: true,
-  sandbox: true,
-  nodeIntegration: false,
-},</code></pre>
+      <div class="code"><div class="code-head"><span class="file">src/generators/createElectronProject.js</span><span class="lang">JavaScript</span></div><pre><code><span class="hljs-attr">webPreferences</span>: {
+  <span class="hljs-attr">preload</span>: <span class="hljs-title function_">join</span>(<span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">dirname</span>, <span class="hljs-string">&#x27;../preload/index.cjs&#x27;</span>),
+  <span class="hljs-comment">// 보안 기본값 — renderer 는 OS 에 직접 접근하지 못하고 window.api 만 쓴다.</span>
+  <span class="hljs-comment">// 끄지 마세요. 필요한 기능은 preload + ipcMain.handle 로 추가합니다.</span>
+  <span class="hljs-attr">contextIsolation</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">sandbox</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">nodeIntegration</span>: <span class="hljs-literal">false</span>,
+},</code></pre></div>
       <h2>결과</h2>
       <p>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</p>
     </article>

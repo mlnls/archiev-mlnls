@@ -31,7 +31,7 @@ CRA SPA를 Next.js App Router로 옮겼다.
 
 업무분야 상세 페이지의 `page.tsx`는 이 정도만 한다.
 
-```tsx
+```tsx src/app/(client)/practice-detail/page.tsx
 export async function generateMetadata(props: Props): Promise<Metadata> {
   // ...
   return buildPageMetadata({
@@ -80,7 +80,7 @@ export default async function PracticeDetailPage(props: Props) {
 레거시 주소를 21개 패턴으로 정리해서 새 주소로 **308** 리디렉트했다.
 `next.config.ts`에 옛 주소와 새 주소를 표처럼 적어 두고, 전부 영구 이동으로 돌린다.
 
-```ts
+```ts next.config.ts
 const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
   { source: '/intro', destination: '/' },
   { source: '/workfield', destination: '/practice' },
@@ -102,7 +102,7 @@ Next가 destination의 쿼리를 한 번 디코딩한 뒤 Location 헤더에 넣
 
 옛 도메인은 앱까지 오기 전에 Caddy에서 **301**로 넘겼다. 경로와 쿼리는 그대로 붙여 보낸다.
 
-```
+```caddyfile Caddyfile
 {$REDIRECT_DOMAINS::8081} {
 	redir https://{$DOMAIN:localhost}{uri} permanent
 }
@@ -133,7 +133,7 @@ soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다.
 서버에서 데이터를 가져올 때 요청마다 태그를 달았다.
 그리고 관리자 화면에서 저장이나 삭제가 성공하면 `/api/revalidate`를 불러, 그 태그의 캐시만 `revalidateTag`로 비운다.
 
-```ts
+```ts src/app/api/revalidate/route.ts
 /**
  * 공개 페이지 캐시 즉시 무효화. 관리자 화면에서 저장·삭제가 성공한 뒤 호출한다.
  *   POST /api/revalidate  { tags: ['news', 'search'] }  (헤더: Access-Token)

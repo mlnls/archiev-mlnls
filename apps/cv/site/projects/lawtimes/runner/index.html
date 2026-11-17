@@ -51,14 +51,14 @@
       <p>그래서 질문이 바뀌었다.<br>&quot;어떻게 자동화하나&quot;가 아니라 &quot;들어갈 수 없는 서버에 어떻게 배포하나&quot;.</p>
       <h2>안에서 밖으로 나가는 연결만</h2>
       <p>방향을 뒤집었다.<br>베스천에 self-hosted runner를 두면, runner가 GitHub으로 나가는 443 롱 폴링으로 작업을 받아 온다.<br>서버로 들어오는 연결이 필요 없으니 VPN 규칙은 그대로 둘 수 있었다.</p>
-      <pre><code>deploy:
-  needs: [meta, build]
-  runs-on: [self-hosted, bastion]          # 베스천의 러너 — VPN 불필요
-  # 베스천은 메모리가 작아서(454MB) checkout 같은 Node 액션은 쓰지 않고 ssh 한 줄만 실행합니다.
-  steps:
-    - name: 베스천 → 서버 SSH 후 롤링 교체
-      run: |
-        ssh -o BatchMode=yes -o ConnectTimeout=15 &quot;$SSH_HOST&quot; &quot;bin/deploy-lawpeople.sh $IMAGE_REF $PORTS&quot;</code></pre>
+      <div class="code"><div class="code-head"><span class="file">.github/workflows/lawpeople-deploy.yml</span><span class="lang">YAML</span></div><pre><code><span class="hljs-attr">deploy:</span>
+  <span class="hljs-attr">needs:</span> [<span class="hljs-string">meta</span>, <span class="hljs-string">build</span>]
+  <span class="hljs-attr">runs-on:</span> [<span class="hljs-string">self-hosted</span>, <span class="hljs-string">bastion</span>]          <span class="hljs-comment"># 베스천의 러너 — VPN 불필요</span>
+  <span class="hljs-comment"># 베스천은 메모리가 작아서(454MB) checkout 같은 Node 액션은 쓰지 않고 ssh 한 줄만 실행합니다.</span>
+  <span class="hljs-attr">steps:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">베스천</span> <span class="hljs-string">→</span> <span class="hljs-string">서버</span> <span class="hljs-string">SSH</span> <span class="hljs-string">후</span> <span class="hljs-string">롤링</span> <span class="hljs-string">교체</span>
+      <span class="hljs-attr">run:</span> <span class="hljs-string">|</span>
+        <span class="hljs-string">ssh</span> <span class="hljs-string">-o</span> <span class="hljs-string">BatchMode=yes</span> <span class="hljs-string">-o</span> <span class="hljs-string">ConnectTimeout=15</span> <span class="hljs-string">&quot;$SSH_HOST&quot;</span> <span class="hljs-string">&quot;bin/deploy-lawpeople.sh $IMAGE_REF $PORTS&quot;</span></code></pre></div>
       <p>빌드는 맥 대신 GitHub 서버에서 amd64로 바로 한다.<br>버전은 최신 태그와 PR 라벨로 정한다. 이건 <a href="/projects/lawtimes/release/">따로 정리했다</a>.</p>
       <h2>결과</h2>
       <figure><img src="/projects/lawtimes/runner-runs.webp" width="1600" height="538" alt="lawpeople deploy workflow 실행 목록" loading="lazy" decoding="async"><figcaption>머지할 때마다 돈 배포 workflow</figcaption></figure>
@@ -66,8 +66,8 @@
       <h2>하나 걸렸던 것</h2>
       <p>새 브랜치를 push했는데 workflow가 아무 기록 없이 건너뛰었다.<br>paths 필터가 비교할 이전 커밋이 없어서 바뀐 파일이 없다고 판단한 것이다.</p>
       <p>다음 사람이 같은 데서 헤매지 않게 workflow 맨 위에 적어 두었다.</p>
-      <pre><code># 주의: 이미 다른 브랜치로 올라간 커밋으로 브랜치를 '새로 만드는' push 는 바뀐 파일이 없다고 판단돼 돌지 않습니다.
-#       그럴 땐 그 브랜치에 새 커밋을 하나 더 올리세요.</code></pre>
+      <div class="code"><div class="code-head"><span class="file">.github/workflows/lawpeople-deploy.yml</span><span class="lang">YAML</span></div><pre><code><span class="hljs-comment"># 주의: 이미 다른 브랜치로 올라간 커밋으로 브랜치를 &#x27;새로 만드는&#x27; push 는 바뀐 파일이 없다고 판단돼 돌지 않습니다.</span>
+<span class="hljs-comment">#       그럴 땐 그 브랜치에 새 커밋을 하나 더 올리세요.</span></code></pre></div>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법률신문 한국법조인대관</h2>

@@ -46,24 +46,24 @@
       <p>새 사이트는 주소 체계가 달랐다.<br>그런데 이전 사이트의 <code>/intro</code>, <code>/workfield/...</code> 같은 주소가 외부 링크와 검색 결과에 그대로 남아 있었다.<br>도메인도 lvx.co.kr에서 lawvax.co.kr로 옮겨야 했다.</p>
       <h2>주소는 308로</h2>
       <p>레거시 주소를 21개 패턴으로 정리해서 새 주소로 <b>308</b> 리디렉트했다.<br><code>next.config.ts</code>에 옛 주소와 새 주소를 표처럼 적어 두고, 전부 영구 이동으로 돌린다.</p>
-      <pre><code>const LEGACY_REDIRECTS: { source: string; destination: string }[] = [
-  { source: '/intro', destination: '/' },
-  { source: '/workfield', destination: '/practice' },
-  { source: '/workfield/detail/:workField', destination: '/practice-detail?workField=:workField' },
-  { source: '/members/profile/:id', destination: '/members/detail?id=:id' },
-  { source: '/news/post/:id', destination: '/news/detail?id=:id' },
-  // ...
+      <div class="code"><div class="code-head"><span class="file">next.config.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-keyword">const</span> <span class="hljs-attr">LEGACY_REDIRECTS</span>: { <span class="hljs-attr">source</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">destination</span>: <span class="hljs-built_in">string</span> }[] = [
+  { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/intro&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/&#x27;</span> },
+  { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/workfield&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/practice&#x27;</span> },
+  { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/workfield/detail/:workField&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/practice-detail?workField=:workField&#x27;</span> },
+  { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/members/profile/:id&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/members/detail?id=:id&#x27;</span> },
+  { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/news/post/:id&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/news/detail?id=:id&#x27;</span> },
+  <span class="hljs-comment">// ...</span>
 ];
 
-async redirects() {
-  return LEGACY_REDIRECTS.map((redirect) =&gt; ({ ...redirect, permanent: true }));
-},</code></pre>
+<span class="hljs-keyword">async</span> <span class="hljs-title function_">redirects</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable constant_">LEGACY_REDIRECTS</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">redirect</span>) =&gt;</span> ({ ...redirect, <span class="hljs-attr">permanent</span>: <span class="hljs-literal">true</span> }));
+},</code></pre></div>
       <p>한글이 들어간 주소는 한 번 더 신경 써야 했다.<br>Next가 destination의 쿼리를 한 번 디코딩한 뒤 Location 헤더에 넣기 때문에, 한글은 두 번 인코딩해 두었다.</p>
       <h2>도메인은 301로</h2>
       <p>옛 도메인은 앱까지 오기 전에 Caddy에서 <b>301</b>로 넘겼다. 경로와 쿼리는 그대로 붙여 보낸다.</p>
-      <pre><code>{$REDIRECT_DOMAINS::8081} {
+      <div class="code"><div class="code-head"><span class="file">Caddyfile</span><span class="lang">Caddyfile</span></div><pre><code>{$REDIRECT_DOMAINS::8081} {
 	redir https://{$DOMAIN:localhost}{uri} permanent
-}</code></pre>
+}</code></pre></div>
       <p>마지막으로 canonical과 sitemap이 같은 함수에서 주소를 만들게 했다.<br>둘이 따로 주소를 만들면 언젠가는 어긋난다.</p>
       <h2>결과</h2>
       <figure><img src="/projects/lawvax/urls-curl.webp" width="1600" height="626" alt="curl로 확인한 옛 도메인 301과 레거시 주소 308 응답" loading="lazy" decoding="async"><figcaption>운영 서버 응답: 옛 도메인은 301, 레거시 주소는 308</figcaption></figure>

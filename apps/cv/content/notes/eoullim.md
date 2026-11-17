@@ -70,7 +70,7 @@ HTTP는 사용자 쪽은 fetch, 관리자 쪽은 axios를 쓴다.
 명세에 서버가 쓰는 노드 목록이 없어서, 노드와 마크 이름은 TipTap StarterKit 기본값을 따랐다.
 서버가 다른 이름을 쓰면 이 파일 하나만 고치면 된다.
 
-```ts
+```ts apps/admin/src/lib/richText.ts
 /**
  * 본문 변환 — 서버 본문(RT1 · TipTap/ProseMirror JSON doc) ↔ 관리자 에디터 HTML
  *
