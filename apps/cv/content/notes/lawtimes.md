@@ -65,7 +65,7 @@ GitHub에서 서버로 SSH를 걸 수가 없었다.
 베스천에 self-hosted runner를 두면, runner가 GitHub으로 나가는 443 롱 폴링으로 작업을 받아 온다.
 서버로 들어오는 연결이 필요 없으니 VPN 규칙은 그대로 둘 수 있었다.
 
-```yaml
+```yaml .github/workflows/lawpeople-deploy.yml
 deploy:
   needs: [meta, build]
   runs-on: [self-hosted, bastion]          # 베스천의 러너 — VPN 불필요
@@ -93,7 +93,7 @@ paths 필터가 비교할 이전 커밋이 없어서 바뀐 파일이 없다고 
 
 다음 사람이 같은 데서 헤매지 않게 workflow 맨 위에 적어 두었다.
 
-```yaml
+```yaml .github/workflows/lawpeople-deploy.yml
 # 주의: 이미 다른 브랜치로 올라간 커밋으로 브랜치를 '새로 만드는' push 는 바뀐 파일이 없다고 판단돼 돌지 않습니다.
 #       그럴 땐 그 브랜치에 새 커밋을 하나 더 올리세요.
 ```
@@ -124,7 +124,7 @@ paths 필터가 비교할 이전 커밋이 없어서 바뀐 파일이 없다고 
 
 그래서 실패할 수 있는 단계는 `if ! ...; then restore`로 감쌌다.
 
-```bash
+```bash scripts/deploy-lawpeople.sh
 if ! $DOCKER run -d --name "$NAME" --restart unless-stopped -p "${PORT}:${APP_PORT}" "$IMAGE" >/dev/null; then
   log "!!! :${PORT} 컨테이너 실행 실패 — 이 포트는 이전 컨테이너로 복구하고, 다음 포트는 건드리지 않음"
   restore "$NAME" "$OLD"
@@ -165,7 +165,7 @@ self-hosted runner를 둔 베스천은 운영 서버로 이어지는 자리다.
 `command=`로 묶인 키로 들어오면 보낸 명령은 실행되지 않고 `SSH_ORIGINAL_COMMAND`로만 넘어온다.
 배포 스크립트는 그 값을 꺼내서 이미지 이름과 포트를 정규식으로 검사한다.
 
-```bash
+```bash scripts/deploy-lawpeople.sh
 # authorized_keys 의 command= 로 실행되면 인자가 SSH_ORIGINAL_COMMAND 로 들어옴 (첫 단어는 스크립트 경로)
 if [ "$#" -eq 0 ] && [ -n "${SSH_ORIGINAL_COMMAND:-}" ]; then
   read -r -a _args <<<"$SSH_ORIGINAL_COMMAND"
@@ -194,7 +194,7 @@ fi
 PR에 `release:major`나 `release:minor` 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.
 PR 없이 바로 push한 커밋은 항상 patch다.
 
-```bash
+```bash scripts/lawpeople-version.sh
 bump=patch
 labels=" $(echo $LABELS) "
 if [[ "$labels" == *" release:major "* ]]; then bump=major

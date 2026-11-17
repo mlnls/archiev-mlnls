@@ -19,7 +19,7 @@ Desktop을 고르면 이런 프로젝트가 만들어진다.
 보안 설정은 처음부터 켜 둔다.
 renderer는 OS에 직접 닿지 못하고, preload가 `window.api`로 열어 준 기능만 쓴다.
 
-```js
+```js src/generators/createElectronProject.js
 webPreferences: {
   preload: join(import.meta.dirname, '../preload/index.cjs'),
   // 보안 기본값 — renderer 는 OS 에 직접 접근하지 못하고 window.api 만 쓴다.
@@ -73,7 +73,7 @@ SI 회사라 프로젝트가 계속 새로 생긴다.
 핵심은 순서다.
 만들어지는 workflow에서 release job은 deploy job 뒤에 묶여 있다. 배포가 성공해야만 태그 · Release · Slack 알림이 이어진다.
 
-```yaml
+```yaml templates/deploy/github/workflows/deploy.yml
 # 배포(deploy)가 성공했을 때만 release job 이 돌아 태그와 GitHub Release 를 남깁니다.
 jobs:
   deploy:
@@ -109,7 +109,7 @@ Slack 웹훅은 URL 대신 GitHub Secret 이름만 저장한다.
 
 PR 본문 쪽에서 이미 쓰고 있던 형식은 이렇다. 릴리즈 노트도 같은 분류로 나온다.
 
-```markdown
+```markdown PR 본문 예시
 ### ✨ 기능
 
 - **settings** — tsconfig 프리셋 추가 (a1b2c3d)

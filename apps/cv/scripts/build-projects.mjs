@@ -7,7 +7,40 @@ import { writeFileSync, mkdirSync, readdirSync, readFileSync, rmSync, existsSync
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import hljs from "highlight.js/lib/core";
+import apache from "highlight.js/lib/languages/apache";
+import bash from "highlight.js/lib/languages/bash";
+import javascript from "highlight.js/lib/languages/javascript";
+import markdownLang from "highlight.js/lib/languages/markdown";
+import typescript from "highlight.js/lib/languages/typescript";
+import yaml from "highlight.js/lib/languages/yaml";
+
 import { projects } from "../content/projects.mjs";
+
+for (const [name, lang] of Object.entries({ apache, bash, javascript, markdown: markdownLang, typescript, yaml })) hljs.registerLanguage(name, lang);
+
+/** 코드 블록 언어: ```<키> <파일 이름> → [화면에 보일 이름, highlight.js 언어 (없으면 색 없이)] */
+const LANGS = {
+  ts: ["TypeScript", "typescript"],
+  tsx: ["TSX", "typescript"],
+  js: ["JavaScript", "javascript"],
+  yaml: ["YAML", "yaml"],
+  bash: ["Bash", "bash"],
+  markdown: ["Markdown", "markdown"],
+  apache: ["Apache", "apache"],
+  caddyfile: ["Caddyfile", null],
+  text: ["Text", null],
+};
+
+function codeBlock(info, code) {
+  const [key = "", ...rest] = info.trim().split(/\s+/);
+  const lang = LANGS[key];
+  if (!lang) throw new Error(`코드 블록 언어를 적어 주세요: \`\`\`${info} (${Object.keys(LANGS).join(", ")})`);
+  const [label, hl] = lang;
+  const body = hl ? hljs.highlight(code, { language: hl }).value : esc(code);
+  const file = rest.join(" ");
+  return `<div class="code"><div class="code-head">${file ? `<span class="file">${esc(file)}</span>` : "<span></span>"}<span class="lang">${label}</span></div><pre><code>${body}</code></pre></div>`;
+}
 
 const SITE = "https://mlnl.site";
 const here = dirname(fileURLToPath(import.meta.url));
@@ -51,7 +84,7 @@ function webpSize(file) {
 }
 
 /**
- * 글 본문용 작은 마크다운: ## · ###, 문단(줄바꿈 유지), - · 1. 목록, > 인용, ``` 코드, | 표,
+ * 글 본문용 작은 마크다운: ## · ###, 문단(줄바꿈 유지), - · 1. 목록, > 인용, ```언어 파일이름 코드, | 표,
  * 그리고 한 줄에 홀로 있는 ![설명](파일.webp "캡션") 그림.
  */
 export function markdown(src, slug) {
@@ -72,7 +105,7 @@ export function markdown(src, slug) {
       i++;
       while (i < lines.length && !lines[i].startsWith("```")) body.push(lines[i++]);
       i++;
-      html.push(`<pre><code>${esc(body.join("\n"))}</code></pre>`);
+      html.push(codeBlock(line.slice(3), body.join("\n")));
       continue;
     }
     const h = /^(#{2,3}) (.+)$/.exec(line);
