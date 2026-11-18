@@ -44,16 +44,32 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#종이로도-나눠-준다">종이로도 나눠 준다</a></li><li class="l2"><a href="#인쇄용-화면-맞추기">인쇄용 화면 맞추기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#종이로도-나눠-준다">종이로도 나눠 준다</a></li><li class="l2"><a href="#인쇄는-화면과-다른-매체다">인쇄는 화면과 다른 매체다</a></li><li class="l2"><a href="#인쇄용-규칙을-따로">인쇄용 규칙을 따로</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="종이로도-나눠-준다">종이로도 나눠 준다</h2>
       <p>성적 리포트는 화면으로만 보는 게 아니라 종이로 뽑아서 나눠 주기도 했다.<br>화면에서 멀쩡한 차트가 인쇄하면 배율이 틀어지거나 잘렸다.</p>
-      <h2 id="인쇄용-화면-맞추기">인쇄용 화면 맞추기</h2>
-      <p>반 · 개인 성적을 차트로 그리고, 인쇄용 화면에서 배율과 차트 잘림을 맞췄다.</p>
+      <h2 id="인쇄는-화면과-다른-매체다">인쇄는 화면과 다른 매체다</h2>
+      <p>브라우저는 인쇄할 때 페이지를 새로 배치한다. 화면을 그대로 찍는 게 아니다.</p>
+      <ul><li>폭이 바뀐다. A4에서 여백 10mm를 빼면 인쇄 폭은 190mm, 약 718px이다. 화면보다 좁다</li><li>쪽이 나뉜다. 긴 화면은 아무 데서나 잘려 다음 쪽으로 넘어간다</li><li>배경색이 빠진다. 브라우저는 잉크를 아끼려고 배경을 기본으로 인쇄하지 않는다</li></ul>
+      <p>차트가 잘린 건 첫 번째 때문이었다.<br>차트는 들어 있는 상자의 폭을 재서 그 크기로 그린다. 인쇄 폭이 좁아지면 넘치는 부분이 잘린다.</p>
+      <h2 id="인쇄용-규칙을-따로">인쇄용 규칙을 따로</h2>
+      <p><code>@media print</code>에 인쇄용 규칙을 따로 두었다.</p>
+      <figure class="diagram" data-diagram="sogang/print"><div class="dg"><svg viewBox="0 0 680 266" role="img" aria-label="화면의 리포트가 window.print로 A4 쪽마다 나뉘고, 분량이 많은 쪽은 더 줄여 담는 모습"><g class="grp"><rect class="g" x="0" y="0" width="250" height="180" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">화면 · 이어진 한 장</text></g><g class="node"><rect class="b" x="16" y="34" width="218" height="60" rx="6"/><text x="125" y="55" class="mono" text-anchor="middle" dominant-baseline="middle">.print-page</text><text x="125" y="73" class="m" text-anchor="middle" dominant-baseline="middle">리포트 앞부분</text></g><g class="node"><rect class="b" x="16" y="104" width="218" height="60" rx="6"/><text x="125" y="125" class="mono" text-anchor="middle" dominant-baseline="middle">.print-page.more-scope</text><text x="125" y="143" class="m" text-anchor="middle" dominant-baseline="middle">분량이 많은 부분</text></g><path class="l hl" d="M250 90 L300 90"/><polygon class="ah hl" points="300.0,90.0 292.0,94.0 292.0,86.0"/><text x="275" y="76" class="m" text-anchor="middle" dominant-baseline="middle">window.print()</text><g class="grp"><rect class="g solid" x="300" y="0" width="180" height="180" rx="8"/><text x="312" y="16" class="hl" text-anchor="start" dominant-baseline="middle">A4 1쪽</text></g><g class="node"><rect class="b" x="316" y="34" width="148" height="130" rx="6"/><text x="390" y="90" class="mono" text-anchor="middle" dominant-baseline="middle">.print-page</text><text x="390" y="108" class="m" text-anchor="middle" dominant-baseline="middle">전체 zoom 0.95</text></g><g class="grp"><rect class="g solid" x="500" y="0" width="180" height="180" rx="8"/><text x="512" y="16" class="hl" text-anchor="start" dominant-baseline="middle">A4 2쪽</text></g><g class="node"><rect class="b" x="516" y="34" width="148" height="130" rx="6"/><text x="590" y="81" class="mono" text-anchor="middle" dominant-baseline="middle">.more-scope</text><text x="590" y="99" class="m" text-anchor="middle" dominant-baseline="middle">zoom 0.75 로</text><text x="590" y="117" class="m" text-anchor="middle" dominant-baseline="middle">한 번 더 줄임</text></g><text x="0" y="206" class="m mono" text-anchor="start" dominant-baseline="middle">@page { size: A4; margin: 10mm }  ·  .print-page { break-after: page }</text><text x="0" y="232" class="m" text-anchor="start" dominant-baseline="middle">A4에서 여백을 빼면 인쇄 폭은 190mm, 약 718px. 화면보다 좁다.</text><text x="0" y="254" class="m" text-anchor="start" dominant-baseline="middle">버튼 · 머리말은 .hide-on-print 로 숨기고, 배경색은 print-color-adjust: exact 로 살린다.</text></svg></div><figcaption>화면 한 장이 A4 여러 쪽으로</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">src/index.css (줄여서 옮김)</span><span class="lang">Text</span></div><pre><code>@media print {
+  * { print-color-adjust: exact; }          /* 배경색 · 차트 색을 그대로 */
+  @page { size: A4; margin: 10mm; }
+
+  html, body { zoom: 0.95; }               /* 전체를 살짝 줄여 폭에 맞춘다 */
+  .print-page { break-after: page; }       /* 덩어리마다 새 쪽에서 시작 */
+  .print-page.more-scope { zoom: 0.75; }   /* 분량이 많은 덩어리는 더 줄인다 */
+  .hide-on-print { display: none; }        /* 출력 버튼 같은 건 숨긴다 */
+}</code></pre></div>
+      <p>쪽이 아무 데서나 잘리지 않게, 한 쪽에 들어갈 덩어리를 <code>.print-page</code>로 묶었다.<br>그리고 덩어리마다 다음 쪽에서 시작하게 했다.<br>덩어리에 따라 분량이 달라서, 많은 쪽은 <code>zoom</code>을 한 번 더 줄였다.</p>
+      <p>차트도 잘리던 부분을 하나씩 손봤다.</p>
       <h2 id="결과">결과</h2>
-      <p>화면과 종이에서 같은 리포트를 쓴다.</p>
+      <p>&quot;레포트 출력&quot; 버튼 하나로, 화면과 같은 리포트가 A4에 맞게 나온다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>서강교육그룹 성취도 평가 · 배치고사</h2>

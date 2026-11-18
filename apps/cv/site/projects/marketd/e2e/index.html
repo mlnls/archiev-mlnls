@@ -44,16 +44,17 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#jsdom이-못-보는-곳">jsdom이 못 보는 곳</a></li><li class="l2"><a href="#전부-옮기지-않기">전부 옮기지 않기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#jsdom은-브라우저가-아니다">jsdom은 브라우저가 아니다</a></li><li class="l2"><a href="#전부-옮기지-않기">전부 옮기지 않기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="jsdom이-못-보는-곳">jsdom이 못 보는 곳</h2>
-      <p>통합 테스트는 jsdom에서 돈다.<br>그런데 jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃는다.</p>
-      <p>업로드가 제대로 되는지는 통합 테스트로 확인할 수 없었다.</p>
+      <h2 id="jsdom은-브라우저가-아니다">jsdom은 브라우저가 아니다</h2>
+      <p>통합 테스트는 jsdom에서 돈다.<br>jsdom은 브라우저의 DOM을 JS로 흉내 낸 것이다. 빠르지만, 브라우저가 하는 일을 전부 하지는 않는다.</p>
+      <p>걸린 곳은 업로드였다.<br>jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃는다.<br>업로드가 제대로 되는지는 통합 테스트로 확인할 수 없었다.</p>
       <h2 id="전부-옮기지-않기">전부 옮기지 않기</h2>
-      <p>그렇다고 테스트를 전부 브라우저로 옮기지는 않았다.<br>통합 테스트가 못 보는 지점만 골라 Playwright로 옮겼다.</p>
-      <ul><li>배너 이미지 업로드</li><li>엑셀 업로드</li><li>실제 달력</li><li>체크박스</li></ul>
+      <p>그렇다고 테스트를 전부 브라우저로 옮기지는 않았다.<br>브라우저 테스트는 느리고, 느린 테스트는 덜 돌린다.</p>
+      <p>그래서 기준을 세웠다. <b>jsdom이 흉내 내지 못하는 곳만 브라우저로.</b></p>
+      <div class="table"><table><thead><tr><th>확인할 것</th><th>어디서</th><th>이유</th></tr></thead><tbody><tr><td>목록 · 필터 · 저장 · 알림</td><td>통합 테스트 (jsdom)</td><td>DOM과 요청만 보면 된다</td></tr><tr><td>배너 이미지 업로드</td><td>E2E (Playwright)</td><td>실제 파일 전송이 필요하다</td></tr><tr><td>엑셀 업로드</td><td>E2E (Playwright)</td><td>실제 파일 전송이 필요하다</td></tr><tr><td>실제 달력</td><td>E2E (Playwright)</td><td>실제 브라우저에서 봐야 한다</td></tr><tr><td>체크박스</td><td>E2E (Playwright)</td><td>실제 브라우저에서 봐야 한다</td></tr></tbody></table></div>
       <h2 id="결과">결과</h2>
       <p>E2E는 브라우저로만 확인할 수 있는 곳 5개만 남겼다.<br>나머지는 빠른 통합 테스트가 맡는다.</p>
       <p>&quot;Playwright를 썼다&quot;보다 &quot;어디까지 통합 테스트로 보고, 어디부터 브라우저로 보나&quot;를 정한 일이었다.</p>

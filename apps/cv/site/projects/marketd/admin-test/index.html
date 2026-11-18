@@ -44,21 +44,27 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#고칠-때마다-손으로-눌러-봤다">고칠 때마다 손으로 눌러 봤다</a></li><li class="l2"><a href="#요구사항처럼-읽히는-통합-테스트">요구사항처럼 읽히는 통합 테스트</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#zod가-조용히-지운-필드">zod가 조용히 지운 필드</a></li></ol>
+        <ol><li class="l2"><a href="#고칠-때마다-손으로-눌러-봤다">고칠 때마다 손으로 눌러 봤다</a></li><li class="l2"><a href="#무엇을-테스트할까">무엇을 테스트할까</a></li><li class="l2"><a href="#서버-대신-MSW">서버 대신 MSW</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#zod가-조용히-지운-필드">zod가 조용히 지운 필드</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="고칠-때마다-손으로-눌러-봤다">고칠 때마다 손으로 눌러 봤다</h2>
       <p>관리자 화면은 넓었다. 회원, 상품, 결제, 정산, 통계, 배달, 고객센터까지.<br>수정도 잦았다.</p>
       <p>하나 고치면 어디가 깨졌는지 알 수 없어서, 매번 손으로 눌러 봐야 했다.</p>
-      <h2 id="요구사항처럼-읽히는-통합-테스트">요구사항처럼 읽히는 통합 테스트</h2>
-      <ul><li>MSW로 서버 대신 목업 API를 띄웠다</li><li>도메인별 fixture를 만들고, alert · table · download처럼 자주 하는 확인은 공통 유틸로 뺐다</li><li>테스트 이름은 &quot;~하면 ~한다&quot; 문장으로 썼다</li></ul>
+      <h2 id="무엇을-테스트할까">무엇을 테스트할까</h2>
+      <p>테스트를 짜기 전에 정한 게 있다.<br>&quot;이 함수가 무엇을 리턴하나&quot;가 아니라 &quot;관리자가 무엇을 하면 화면이 어떻게 되나&quot;를 테스트한다.</p>
+      <p>관리자에게 중요한 건 버튼을 누르면 목록이 바뀌고, 저장하면 알림이 뜨는 것이다.<br>그래서 화면 단위로, 실제 사용 흐름대로 통합 테스트를 짰다.</p>
+      <h2 id="서버-대신-MSW">서버 대신 MSW</h2>
+      <p>화면 테스트에는 서버 응답이 필요하다.<br>그렇다고 화면 코드 안에 &quot;테스트면 가짜 데이터&quot; 같은 분기를 넣고 싶지는 않았다.</p>
+      <p>MSW는 요청이 나가는 길목에서 가로채서 대신 응답한다.<br>화면 코드는 실제로 <code>fetch</code>를 부르고, 실제 응답처럼 받는다. 테스트인 줄 모른다.</p>
+      <figure class="diagram" data-diagram="marketd/msw"><div class="dg"><svg viewBox="0 0 680 150" role="img" aria-label="테스트가 실제 관리자 화면을 그리고, 화면의 실제 fetch 요청을 MSW가 가로채 fixture로 응답하는 흐름"><g class="node"><rect class="b" x="0" y="44" width="130" height="60" rx="6"/><text x="65" y="65" text-anchor="middle" dominant-baseline="middle">테스트</text><text x="65" y="83" class="m" text-anchor="middle" dominant-baseline="middle">&quot;~하면 ~한다&quot;</text></g><path class="l" d="M130 74 L170 74"/><polygon class="ah" points="170.0,74.0 162.0,78.0 162.0,70.0"/><g class="node"><rect class="b" x="170" y="44" width="150" height="60" rx="6"/><text x="245" y="65" text-anchor="middle" dominant-baseline="middle">관리자 화면</text><text x="245" y="83" class="m" text-anchor="middle" dominant-baseline="middle">실제 코드 그대로</text></g><path class="l" d="M320 74 L360 74"/><polygon class="ah" points="360.0,74.0 352.0,78.0 352.0,70.0"/><g class="node"><rect class="b" x="360" y="44" width="130" height="60" rx="6"/><text x="425" y="65" class="mono" text-anchor="middle" dominant-baseline="middle">fetch</text><text x="425" y="83" class="m" text-anchor="middle" dominant-baseline="middle">실제 요청</text></g><path class="l hl" d="M490 74 L530 74"/><polygon class="ah hl" points="530.0,74.0 522.0,78.0 522.0,70.0"/><g class="node"><rect class="b hl" x="530" y="44" width="150" height="60" rx="6"/><text x="605" y="65" text-anchor="middle" dominant-baseline="middle">MSW</text><text x="605" y="83" class="m" text-anchor="middle" dominant-baseline="middle">도메인별 fixture</text></g><text x="605" y="18" class="hl" text-anchor="middle" dominant-baseline="middle">서버 대신 응답</text><text x="0" y="136" class="m" text-anchor="start" dominant-baseline="middle">화면 코드에는 테스트용 분기가 하나도 없다. 요청이 나가는 길목에서만 가로챈다.</text></svg></div><figcaption>MSW가 끼어드는 자리</figcaption></figure>
+      <ul><li>도메인별로 fixture를 만들었다</li><li>alert · table · download처럼 자주 하는 확인은 공통 유틸로 뺐다</li><li>테스트 이름은 &quot;~하면 ~한다&quot; 문장으로 썼다</li></ul>
       <p>마지막 규칙 덕분에 테스트 목록을 위에서부터 읽으면 그대로 요구사항 목록이 된다.</p>
       <h2 id="결과">결과</h2>
       <p>테스트 파일 <b>84개</b>, 케이스 <b>935개</b>.<br>로컬에서 다시 돌린 175개는 약 10초에 모두 통과했다.</p>
       <h2 id="zod가-조용히-지운-필드">zod가 조용히 지운 필드</h2>
-      <p>하나 배운 게 있다.<br>zod는 스키마에 없는 필드를 에러 없이 지운다.</p>
-      <p>관리자 스키마에 새 필드를 넣지 않으면, 서버가 그 값을 보내도 화면까지 오지 못하고 조용히 사라진다.</p>
+      <p>하나 배운 게 있다.<br>zod는 스키마에 없는 필드를 에러 없이 지운다. <code>parse</code>의 기본 동작이 그렇다.</p>
+      <p>관리자 스키마에 새 필드를 넣지 않으면, 서버가 그 값을 보내도 화면까지 오지 못하고 조용히 사라진다.<br>에러가 없으니 테스트로 잡으려면 &quot;그 값이 화면에 보이는가&quot;를 확인해야 한다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>마켓:D</h2>

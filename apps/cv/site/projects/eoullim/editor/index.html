@@ -44,15 +44,29 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#서버와-에디터가-다른-형식을-썼다">서버와 에디터가 다른 형식을 썼다</a></li><li class="l2"><a href="#경계에서만-바꾸기">경계에서만 바꾸기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#같은-글-다른-형식">같은 글, 다른 형식</a></li><li class="l2"><a href="#둘은-같은-나무를-다르게-적은-것">둘은 같은 나무를 다르게 적은 것</a></li><li class="l2"><a href="#경계에서만-바꾸기">경계에서만 바꾸기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="서버와-에디터가-다른-형식을-썼다">서버와 에디터가 다른 형식을 썼다</h2>
+      <h2 id="같은-글-다른-형식">같은 글, 다른 형식</h2>
       <p>서버는 본문을 TipTap(ProseMirror) JSON 문서로 주고받는다.<br>그런데 관리자 에디터는 contentEditable이라 HTML을 다룬다.</p>
       <p>같은 글이 서버에서는 JSON, 에디터에서는 HTML이었다.</p>
+      <h2 id="둘은-같은-나무를-다르게-적은-것">둘은 같은 나무를 다르게 적은 것</h2>
+      <p>처음 보면 완전히 다른 데이터 같지만, 둘 다 문서를 나무(트리)로 적은 것이다.</p>
+      <p>&quot;안녕 <b>굵게</b>&quot;라는 한 문단을 TipTap JSON으로 쓰면 이렇다.</p>
+      <div class="code"><div class="code-head"><span class="file">TipTap JSON</span><span class="lang">Text</span></div><pre><code>{ &quot;type&quot;: &quot;doc&quot;, &quot;content&quot;: [
+  { &quot;type&quot;: &quot;paragraph&quot;, &quot;content&quot;: [
+    { &quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;안녕 &quot; },
+    { &quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;굵게&quot;, &quot;marks&quot;: [{ &quot;type&quot;: &quot;bold&quot; }] }
+  ] }
+] }</code></pre></div>
+      <p>HTML로 쓰면 이렇다.</p>
+      <div class="code"><div class="code-head"><span class="file">HTML</span><span class="lang">Text</span></div><pre><code>&lt;p&gt;안녕 &lt;strong&gt;굵게&lt;/strong&gt;&lt;/p&gt;</code></pre></div>
+      <p><code>paragraph</code>는 <code>&lt;p&gt;</code>, <code>bold</code> 마크는 <code>&lt;strong&gt;</code>이다.<br>노드와 마크 이름만 짝지어 주면 서로 바꿀 수 있다.</p>
       <h2 id="경계에서만-바꾸기">경계에서만 바꾸기</h2>
-      <p>둘을 서로 바꾸는 변환 계층을 만들었다.<br>변환은 API 경계(mapper와 api 함수)에서만 한다. 화면 코드는 변환을 신경 쓰지 않는다.</p>
+      <p>둘을 서로 바꾸는 변환 계층을 만들었다.<br>중요한 건 <b>어디서</b> 바꾸냐였다.</p>
+      <p>변환은 API 경계(mapper와 api 함수)에서만 한다.<br>받을 때 JSON을 HTML로, 보낼 때 HTML을 JSON으로.<br>화면 코드는 처음부터 끝까지 HTML만 본다. JSON이 있다는 것도 모른다.</p>
+      <figure class="diagram" data-diagram="eoullim/editor"><div class="dg"><svg viewBox="0 0 680 150" role="img" aria-label="서버의 TipTap JSON과 관리자 에디터의 HTML 사이에서 변환 계층이 받을 때와 보낼 때 형식을 바꾸는 구조"><g class="node"><rect class="b" x="0" y="40" width="170" height="70" rx="6"/><text x="85" y="66" text-anchor="middle" dominant-baseline="middle">서버</text><text x="85" y="84" class="m" text-anchor="middle" dominant-baseline="middle">TipTap JSON 문서</text></g><path class="l hl" d="M170 64 L255 64"/><polygon class="ah hl" points="255.0,64.0 247.0,68.0 247.0,60.0"/><path class="l hl" d="M255 86 L170 86"/><polygon class="ah hl" points="170.0,86.0 178.0,82.0 178.0,90.0"/><g class="node"><rect class="b hl" x="255" y="30" width="170" height="90" rx="6"/><text x="340" y="57" text-anchor="middle" dominant-baseline="middle">변환 계층</text><text x="340" y="75" class="m" text-anchor="middle" dominant-baseline="middle">richText.ts</text><text x="340" y="93" class="m" text-anchor="middle" dominant-baseline="middle">mapper · api 함수에서만</text></g><path class="l hl" d="M425 64 L510 64"/><polygon class="ah hl" points="510.0,64.0 502.0,68.0 502.0,60.0"/><path class="l hl" d="M510 86 L425 86"/><polygon class="ah hl" points="425.0,86.0 433.0,82.0 433.0,90.0"/><g class="node"><rect class="b" x="510" y="40" width="170" height="70" rx="6"/><text x="595" y="66" text-anchor="middle" dominant-baseline="middle">관리자 에디터</text><text x="595" y="84" class="m" text-anchor="middle" dominant-baseline="middle">contentEditable · HTML</text></g><text x="212" y="52" class="m" text-anchor="middle" dominant-baseline="middle">받을 때</text><text x="212" y="100" class="m" text-anchor="middle" dominant-baseline="middle">보낼 때</text><text x="467" y="52" class="m mono" text-anchor="middle" dominant-baseline="middle">HTML</text><text x="467" y="100" class="m mono" text-anchor="middle" dominant-baseline="middle">HTML</text><text x="340" y="142" class="m" text-anchor="middle" dominant-baseline="middle">화면 코드는 JSON을 모른다</text></svg></div><figcaption>변환은 경계에서만</figcaption></figure>
       <p>명세에 서버가 쓰는 노드 목록이 없어서, 노드와 마크 이름은 TipTap StarterKit 기본값을 따랐다.<br>서버가 다른 이름을 쓰면 이 파일 하나만 고치면 된다.</p>
       <div class="code"><div class="code-head"><span class="file">apps/admin/src/lib/richText.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">/**
  * 본문 변환 — 서버 본문(RT1 · TipTap/ProseMirror JSON doc) ↔ 관리자 에디터 HTML

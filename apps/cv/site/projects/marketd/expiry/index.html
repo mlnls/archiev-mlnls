@@ -44,15 +44,32 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#60초가-지나면-깨진다">60초가 지나면 깨진다</a></li><li class="l2"><a href="#깨진-것만-다시">깨진 것만 다시</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#60초가-지나면-깨진다">60초가 지나면 깨진다</a></li><li class="l2"><a href="#미리-갱신할까-깨지면-고칠까">미리 갱신할까, 깨지면 고칠까</a></li><li class="l2"><a href="#깨진-것만-key당-한-번">깨진 것만, key당 한 번</a></li><li class="l2"><a href="#확대-보기는-예외">확대 보기는 예외</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="60초가-지나면-깨진다">60초가 지나면 깨진다</h2>
-      <p>서명 URL은 60초 뒤에 만료된다.<br>채팅을 오래 띄워 두면 그 사이에 사진이 깨진다.</p>
-      <h2 id="깨진-것만-다시">깨진 것만 다시</h2>
-      <p>이미 그려진 이미지는 만료 전에 미리 갱신하지 않았다.<br>대신 이미지가 깨지면(<code>onError</code>) 그때 key당 한 번만 다시 발급받는다.</p>
-      <p>여러 장이 동시에 깨져도 요청은 한 번만 나가게 <code>cancelRefetch: false</code>를 썼다.</p>
+      <p>서명 URL은 60초 뒤에 만료된다.<br>채팅방을 오래 띄워 두면 그 사이에 사진이 깨진다.</p>
+      <h2 id="미리-갱신할까-깨지면-고칠까">미리 갱신할까, 깨지면 고칠까</h2>
+      <p>방법은 두 가지다.</p>
+      <ul><li>만료되기 전에 미리 새 URL을 받아 둔다</li><li>깨지면 그때 새로 받는다</li></ul>
+      <p>미리 받으면 화면에 보이지도 않는 사진까지 계속 재발급한다.<br>이미 화면에 그려진 이미지는 URL이 만료돼도 그대로 보인다. 다시 불러올 때만 문제가 된다.<br>그래서 깨졌을 때만 고치기로 했다.</p>
+      <h2 id="깨진-것만-key당-한-번">깨진 것만, key당 한 번</h2>
+      <p>이미지가 깨지면(<code>onError</code>) 그때 다시 발급받는다.<br>같은 key는 한 번만 재발급하고, 그래도 실패하면 깨진 이미지로 둔다. 무한히 다시 시도하지 않게.</p>
+      <p>여러 장이 동시에 깨질 수도 있다. 같은 시점에 받은 URL은 같은 시점에 만료되니까.<br>이때 요청이 장 수만큼 나가지 않게 <code>refetch({ cancelRefetch: false })</code>를 썼다.<br>이미 나가 있는 요청이 있으면 새로 보내지 않고 그걸 기다린다.</p>
+      <figure class="diagram" data-diagram="marketd/expiry"><div class="dg"><svg viewBox="0 0 680 226" role="img" aria-label="사진 세 장이 동시에 깨져도 cancelRefetch false로 발급 요청은 한 번만 나가고, 그래도 실패하면 깨진 이미지로 두는 흐름"><g class="node"><rect class="b bad" x="0" y="0" width="150" height="44" rx="6"/><text x="75" y="13" text-anchor="middle" dominant-baseline="middle">사진 1</text><text x="75" y="31" class="m" text-anchor="middle" dominant-baseline="middle">onError</text></g><g class="node"><rect class="b bad" x="0" y="60" width="150" height="44" rx="6"/><text x="75" y="73" text-anchor="middle" dominant-baseline="middle">사진 2</text><text x="75" y="91" class="m" text-anchor="middle" dominant-baseline="middle">onError</text></g><g class="node"><rect class="b bad" x="0" y="120" width="150" height="44" rx="6"/><text x="75" y="133" text-anchor="middle" dominant-baseline="middle">사진 3</text><text x="75" y="151" class="m" text-anchor="middle" dominant-baseline="middle">onError</text></g><path class="l m" d="M150 22 L210 22 L210 82 L250 82"/><polygon class="ah m" points="250.0,82.0 242.0,86.0 242.0,78.0"/><path class="l m" d="M150 82 L210 82 L210 82 L250 82"/><polygon class="ah m" points="250.0,82.0 242.0,86.0 242.0,78.0"/><path class="l m" d="M150 142 L210 142 L210 82 L250 82"/><polygon class="ah m" points="250.0,82.0 242.0,86.0 242.0,78.0"/><g class="node"><rect class="b hl" x="250" y="52" width="190" height="60" rx="6"/><text x="345" y="73" class="mono" text-anchor="middle" dominant-baseline="middle">refetch</text><text x="345" y="91" class="m" text-anchor="middle" dominant-baseline="middle">cancelRefetch: false</text></g><path class="l hl" d="M440 82 L490 82"/><polygon class="ah hl" points="490.0,82.0 482.0,86.0 482.0,78.0"/><g class="node"><rect class="b hl" x="490" y="52" width="190" height="60" rx="6"/><text x="585" y="82" text-anchor="middle" dominant-baseline="middle">발급 요청 1번</text></g><path class="l m" d="M585 112 L585 160"/><polygon class="ah m" points="585.0,160.0 581.0,152.0 589.0,152.0"/><g class="node"><rect class="b dim" x="490" y="160" width="190" height="60" rx="6"/><text x="585" y="181" text-anchor="middle" dominant-baseline="middle">그래도 실패</text><text x="585" y="199" class="m" text-anchor="middle" dominant-baseline="middle">그 key는 깨진 이미지로</text></g><text x="250" y="140" class="m" text-anchor="start" dominant-baseline="middle">이미 나가 있는 요청이 있으면</text><text x="250" y="158" class="m" text-anchor="start" dominant-baseline="middle">새로 보내지 않고 그걸 기다린다</text></svg></div><figcaption>동시에 깨져도 요청은 한 번</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">apps/mobile/hooks/useChatImageUrls.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">// 로드 실패 시 같은 key는 1번만 재발급하고, 그래도 실패하면 깨진 이미지로 둠</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">onErrorImage</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"><span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-keyword">if</span> (retriedKeysRef.<span class="hljs-property">current</span>.<span class="hljs-title function_">has</span>(key)) {
+    <span class="hljs-title function_">markAsBroken</span>(key);
+    <span class="hljs-keyword">return</span>;
+  }
+  retriedKeysRef.<span class="hljs-property">current</span>.<span class="hljs-title function_">add</span>(key);
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">isError</span>: isRefetchError } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">refetch</span>({ <span class="hljs-attr">cancelRefetch</span>: <span class="hljs-literal">false</span> });
+  <span class="hljs-keyword">if</span> (isRefetchError) <span class="hljs-title function_">markAsBroken</span>(key);
+};</code></pre></div>
+      <h2 id="확대-보기는-예외">확대 보기는 예외</h2>
+      <p>사진을 눌러 크게 볼 때는 새로 불러온다. 이때 만료된 URL이면 깨진 화면부터 보인다.<br>그래서 확대 보기 전에만 URL의 <code>X-Amz-Date</code>와 <code>X-Amz-Expires</code>로 만료를 계산해서, 지났으면 먼저 재발급한다.</p>
       <h2 id="결과">결과</h2>
       <p>쓸데없는 재발급 없이, 깨진 사진만 다시 보인다.</p>
     </article>

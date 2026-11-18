@@ -44,7 +44,7 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#다섯-단계-손작업">다섯 단계 손작업</a></li><li class="l2"><a href="#들어갈-수-없는-서버">들어갈 수 없는 서버</a></li><li class="l2"><a href="#안에서-밖으로-나가는-연결만">안에서 밖으로 나가는 연결만</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#하나-걸렸던-것">하나 걸렸던 것</a></li></ol>
+        <ol><li class="l2"><a href="#다섯-단계-손작업">다섯 단계 손작업</a></li><li class="l2"><a href="#들어갈-수-없는-서버">들어갈 수 없는 서버</a></li><li class="l2"><a href="#안에서-밖으로-묻기">안에서 밖으로 묻기</a></li><li class="l2"><a href="#하나-걸렸던-것">하나 걸렸던 것</a></li></ol>
       </nav>
     </aside>
     <article class="post">
@@ -53,10 +53,13 @@
       <ol><li>맥에서 크로스 빌드</li><li>VPN 접속</li><li>베스천에 SSH</li><li>컨테이너 하나씩 교체</li><li>git 싱크</li></ol>
       <p>자동화하려고 보니 막히는 곳이 있었다.</p>
       <h2 id="들어갈-수-없는-서버">들어갈 수 없는 서버</h2>
-      <p>EC2는 VPN IP에서 오는 연결만 받는다. GitHub 러너의 IP는 실행할 때마다 바뀐다.<br>GitHub에서 서버로 SSH를 걸 수가 없었다.</p>
-      <p>그래서 질문이 바뀌었다.<br>&quot;어떻게 자동화하나&quot;가 아니라 &quot;들어갈 수 없는 서버에 어떻게 배포하나&quot;.</p>
-      <h2 id="안에서-밖으로-나가는-연결만">안에서 밖으로 나가는 연결만</h2>
-      <p>방향을 뒤집었다.<br>베스천에 self-hosted runner를 두면, runner가 GitHub으로 나가는 443 롱 폴링으로 작업을 받아 온다.<br>서버로 들어오는 연결이 필요 없으니 VPN 규칙은 그대로 둘 수 있었다.</p>
+      <p>EC2는 VPN IP에서 오는 연결만 받는다.<br>GitHub Actions가 기본으로 쓰는 러너는 실행할 때마다 새로 뜨는 가상 머신이라, IP가 매번 바뀐다.<br>GitHub에서 서버로 SSH를 걸 수가 없었다.</p>
+      <p>여기서 방화벽이 연결을 어떻게 보는지가 중요했다.<br>방화벽이 막는 건 <b>밖에서 안으로 새로 들어오는 연결</b>이다.<br>안에서 밖으로 나간 연결의 응답은 그대로 돌아온다.</p>
+      <p>그래서 질문을 바꿨다.<br>&quot;밖에서 어떻게 들어가나&quot;가 아니라 &quot;안에서 어떻게 일을 받아 오나&quot;.</p>
+      <h2 id="안에서-밖으로-묻기">안에서 밖으로 묻기</h2>
+      <p>베스천에 self-hosted runner를 두었다.<br>self-hosted runner는 GitHub에 443(HTTPS)으로 계속 &quot;할 일 있어?&quot; 하고 물어보는 프로그램이다.<br>GitHub이 러너를 부르는 게 아니라, 러너가 GitHub에게 일을 받아 온다.</p>
+      <figure class="diagram" data-diagram="lawtimes/runner"><div class="dg"><svg viewBox="0 0 680 316" role="img" aria-label="이전에는 GitHub에서 EC2로 SSH가 막혔고, 이후에는 베스천의 러너가 GitHub에 443으로 일을 받아 와 EC2에 SSH로 배포하는 구조"><g class="grp"><rect class="g" x="0" y="0" width="680" height="120" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">이전 · 밖에서 서버로 들어가려 했다</text></g><g class="node"><rect class="b" x="16" y="40" width="190" height="60" rx="6"/><text x="111" y="61" text-anchor="middle" dominant-baseline="middle">GitHub Actions</text><text x="111" y="79" class="m" text-anchor="middle" dominant-baseline="middle">러너 IP가 실행마다 바뀜</text></g><g class="node"><rect class="b bad" x="474" y="40" width="190" height="60" rx="6"/><text x="569" y="61" text-anchor="middle" dominant-baseline="middle">운영 EC2</text><text x="569" y="79" class="m" text-anchor="middle" dominant-baseline="middle">VPN IP에서만 접속 허용</text></g><path class="l bad dash" d="M206 70 L474 70"/><polygon class="ah bad" points="474.0,70.0 466.0,74.0 466.0,66.0"/><text x="340" y="58" class="m" text-anchor="middle" dominant-baseline="middle">SSH 들어가기 → 막힘</text><g class="grp"><rect class="g" x="0" y="140" width="680" height="176" rx="8"/><text x="12" y="156" class="hl" text-anchor="start" dominant-baseline="middle">이후 · 안에서 밖으로 나가는 연결만</text></g><g class="node"><rect class="b" x="16" y="190" width="190" height="60" rx="6"/><text x="111" y="211" text-anchor="middle" dominant-baseline="middle">GitHub</text><text x="111" y="229" class="m" text-anchor="middle" dominant-baseline="middle">할 일을 쌓아 둠</text></g><g class="node"><rect class="b hl" x="245" y="190" width="190" height="60" rx="6"/><text x="340" y="211" text-anchor="middle" dominant-baseline="middle">베스천</text><text x="340" y="229" class="m" text-anchor="middle" dominant-baseline="middle">self-hosted runner</text></g><g class="node"><rect class="b" x="474" y="190" width="190" height="60" rx="6"/><text x="569" y="211" text-anchor="middle" dominant-baseline="middle">운영 EC2</text><text x="569" y="229" class="m" text-anchor="middle" dominant-baseline="middle">규칙은 그대로</text></g><path class="l hl" d="M245 220 L206 220"/><polygon class="ah hl" points="206.0,220.0 214.0,216.0 214.0,224.0"/><text x="225" y="268" class="hl" text-anchor="middle" dominant-baseline="middle">443 · 할 일 있어?</text><text x="225" y="286" class="m" text-anchor="middle" dominant-baseline="middle">(밖으로 나가는 요청)</text><path class="l hl" d="M435 220 L474 220"/><polygon class="ah hl" points="474.0,220.0 466.0,224.0 466.0,216.0"/><text x="455" y="268" class="hl" text-anchor="middle" dominant-baseline="middle">SSH</text><text x="455" y="286" class="m" text-anchor="middle" dominant-baseline="middle">(원래 허용된 경로)</text></svg></div><figcaption>연결의 방향을 뒤집었다</figcaption></figure>
+      <p>서버로 새로 들어오는 연결이 없으니 VPN 규칙은 하나도 바꾸지 않았다.<br>베스천에서 운영 서버로 가는 SSH는 원래 사람이 쓰던 길이다.</p>
       <div class="code"><div class="code-head"><span class="file">.github/workflows/lawpeople-deploy.yml</span><span class="lang">YAML</span></div><pre><code><span class="hljs-attr">deploy:</span>
   <span class="hljs-attr">needs:</span> [<span class="hljs-string">meta</span>, <span class="hljs-string">build</span>]
   <span class="hljs-attr">runs-on:</span> [<span class="hljs-string">self-hosted</span>, <span class="hljs-string">bastion</span>]          <span class="hljs-comment"># 베스천의 러너 — VPN 불필요</span>
@@ -65,12 +68,13 @@
     <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">베스천</span> <span class="hljs-string">→</span> <span class="hljs-string">서버</span> <span class="hljs-string">SSH</span> <span class="hljs-string">후</span> <span class="hljs-string">롤링</span> <span class="hljs-string">교체</span>
       <span class="hljs-attr">run:</span> <span class="hljs-string">|</span>
         <span class="hljs-string">ssh</span> <span class="hljs-string">-o</span> <span class="hljs-string">BatchMode=yes</span> <span class="hljs-string">-o</span> <span class="hljs-string">ConnectTimeout=15</span> <span class="hljs-string">&quot;$SSH_HOST&quot;</span> <span class="hljs-string">&quot;bin/deploy-lawpeople.sh $IMAGE_REF $PORTS&quot;</span></code></pre></div>
-      <p>빌드는 맥 대신 GitHub 서버에서 amd64로 바로 한다.<br>버전은 최신 태그와 PR 라벨로 정한다. 이건 <a href="/projects/lawtimes/release/">따로 정리했다</a>.</p>
-      <h2 id="결과">결과</h2>
+      <p>빌드는 맥 대신 GitHub 서버에서 한다.<br>Apple Silicon 맥은 arm64라서 amd64 서버용 이미지를 만들려면 에뮬레이션을 거쳐야 했다.<br>GitHub의 리눅스 러너는 처음부터 amd64다.</p>
+      <p>버전은 최신 태그와 PR 라벨로 정한다. 이건 <a href="/projects/lawtimes/release/">따로 정리했다</a>.</p>
       <figure><img src="/projects/lawtimes/runner-runs.webp" width="1600" height="538" alt="lawpeople deploy workflow 실행 목록" loading="lazy" decoding="async"><figcaption>머지할 때마다 돈 배포 workflow</figcaption></figure>
       <p>이제 main이나 dev에 머지하면 배포된다.<br>pem 파일, VPN 계정, 비밀번호를 사람끼리 주고받을 일도 없어졌다.</p>
       <h2 id="하나-걸렸던-것">하나 걸렸던 것</h2>
-      <p>새 브랜치를 push했는데 workflow가 아무 기록 없이 건너뛰었다.<br>paths 필터가 비교할 이전 커밋이 없어서 바뀐 파일이 없다고 판단한 것이다.</p>
+      <p>새 브랜치를 push했는데 workflow가 아무 기록 없이 건너뛰었다.</p>
+      <p><code>paths</code> 필터는 &quot;이번 push에서 바뀐 파일&quot;을 보고 돌지 말지 정한다.<br>그런데 이미 다른 브랜치에 있는 커밋으로 브랜치만 새로 만들면, 비교할 이전 커밋이 없어서 바뀐 파일이 없다고 판단한다.</p>
       <p>다음 사람이 같은 데서 헤매지 않게 workflow 맨 위에 적어 두었다.</p>
       <div class="code"><div class="code-head"><span class="file">.github/workflows/lawpeople-deploy.yml</span><span class="lang">YAML</span></div><pre><code><span class="hljs-comment"># 주의: 이미 다른 브랜치로 올라간 커밋으로 브랜치를 &#x27;새로 만드는&#x27; push 는 바뀐 파일이 없다고 판단돼 돌지 않습니다.</span>
 <span class="hljs-comment">#       그럴 땐 그 브랜치에 새 커밋을 하나 더 올리세요.</span></code></pre></div>

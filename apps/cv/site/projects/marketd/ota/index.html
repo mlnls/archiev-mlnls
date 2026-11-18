@@ -44,15 +44,23 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#긴급-버그도-심사를-기다렸다">긴급 버그도 심사를 기다렸다</a></li><li class="l2"><a href="#바뀐-것에-따라-길을-나누기">바뀐 것에 따라 길을 나누기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#긴급-버그도-심사를-기다렸다">긴급 버그도 심사를 기다렸다</a></li><li class="l2"><a href="#앱은-세-겹으로-되어-있다">앱은 세 겹으로 되어 있다</a></li><li class="l2"><a href="#바뀐-것에-따라-길을-나누기">바뀐 것에 따라 길을 나누기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="긴급-버그도-심사를-기다렸다">긴급 버그도 심사를 기다렸다</h2>
-      <p>앱과 웹뷰를 잇는 RN Bridge 코드에 긴급 버그가 생겨도, 고치려면 스토어 재심사를 거쳐야 했다.<br>고친 코드는 있는데 사용자에게 닿기까지 심사를 기다려야 했다.</p>
+      <p>앱과 웹뷰를 잇는 RN Bridge 코드에 긴급 버그가 생겨도, 고치려면 스토어 재심사를 거쳐야 했다.<br>고친 코드는 있는데, 사용자에게 닿기까지 심사를 기다려야 했다.</p>
+      <h2 id="앱은-세-겹으로-되어-있다">앱은 세 겹으로 되어 있다</h2>
+      <p>마켓:D 앱을 뜯어 보면 세 겹이다.</p>
+      <ul><li><b>네이티브 바이너리</b>: 스토어에서 받는 앱 그 자체. 카메라 같은 기기 기능이 여기 있다</li><li><b>JS 번들</b>: React Native 코드. 앱과 웹뷰를 잇는 로직이 여기 있다</li><li><b>웹뷰</b>: 화면은 웹 주소를 불러와서 그린다</li></ul>
+      <p>세 겹은 바뀌는 방법이 다르다.</p>
+      <p>웹뷰 화면은 웹 서버에 있으니 웹만 배포하면 된다.<br>네이티브 바이너리는 스토어를 거쳐야만 바뀐다.</p>
+      <p>가운데 JS 번들이 애매했다. 지금까지는 바이너리와 같이 묶여서 스토어로 나갔다.<br>그런데 JS 번들은 앱이 실행될 때 읽는 파일일 뿐이다. 이 파일만 새로 받게 할 수 있다.<br>그게 Expo EAS Update(OTA)다.</p>
+      <figure class="diagram" data-diagram="marketd/ota"><div class="dg"><svg viewBox="0 0 680 264" role="img" aria-label="네이티브 바이너리 안에 JS 번들, 그 안에 웹뷰가 있고, 웹 배포 · EAS Update · 스토어 배포가 각각 다른 겹을 바꾸는 모습"><g class="grp"><rect class="g solid" x="0" y="0" width="400" height="264" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">휴대폰에 깔린 마켓:D 앱</text></g><g class="grp"><rect class="g solid" x="16" y="30" width="368" height="218" rx="8"/><text x="28" y="46" class="m" text-anchor="start" dominant-baseline="middle">네이티브 바이너리 · 스토어에서 받은 것</text></g><g class="grp"><rect class="g solid" x="32" y="60" width="336" height="172" rx="8"/><text x="44" y="76" class="hl" text-anchor="start" dominant-baseline="middle">JS 번들 · RN Bridge 같은 연결 로직</text></g><g class="node"><rect class="b" x="48" y="92" width="304" height="60" rx="6"/><text x="200" y="113" text-anchor="middle" dominant-baseline="middle">웹뷰</text><text x="200" y="131" class="m" text-anchor="middle" dominant-baseline="middle">화면은 웹 주소를 불러와 그린다</text></g><text x="200" y="192" class="m" text-anchor="middle" dominant-baseline="middle">웹 ↔ 앱 메시지는 여기서 오간다</text><g class="node"><rect class="b" x="470" y="10" width="210" height="60" rx="6"/><text x="575" y="31" text-anchor="middle" dominant-baseline="middle">웹 배포</text><text x="575" y="49" class="m" text-anchor="middle" dominant-baseline="middle">바로 반영</text></g><g class="node"><rect class="b hl" x="470" y="100" width="210" height="60" rx="6"/><text x="575" y="121" text-anchor="middle" dominant-baseline="middle">EAS Update (OTA)</text><text x="575" y="139" class="m" text-anchor="middle" dominant-baseline="middle">심사 없이 JS 번들 교체</text></g><g class="node"><rect class="b dim" x="470" y="190" width="210" height="60" rx="6"/><text x="575" y="211" text-anchor="middle" dominant-baseline="middle">스토어 배포</text><text x="575" y="229" class="m" text-anchor="middle" dominant-baseline="middle">심사를 거쳐 바이너리 교체</text></g><path class="l m" d="M470 40 L420 40 L420 122 L352 122"/><polygon class="ah m" points="352.0,122.0 360.0,118.0 360.0,126.0"/><path class="l hl" d="M470 130 L368 130"/><polygon class="ah hl" points="368.0,130.0 376.0,126.0 376.0,134.0"/><path class="l m" d="M470 220 L384 220"/><polygon class="ah m" points="384.0,220.0 392.0,216.0 392.0,224.0"/></svg></div><figcaption>앱의 세 겹과 각각을 바꾸는 길</figcaption></figure>
       <h2 id="바뀐-것에-따라-길을-나누기">바뀐 것에 따라 길을 나누기</h2>
-      <p>Expo EAS Update(OTA)를 도입했다.<br>그리고 무엇이 바뀌었는지에 따라 배포 경로를 셋으로 나눴다.</p>
+      <p>그래서 무엇이 바뀌었는지에 따라 배포 경로를 셋으로 나눴다.</p>
       <div class="table"><table><thead><tr><th>바뀐 것</th><th>배포 경로</th></tr></thead><tbody><tr><td>화면 (웹뷰)</td><td>웹 배포. 스토어와 상관없이 바로 반영</td></tr><tr><td>연결 로직 (RN Bridge 등 JS)</td><td>EAS Update (OTA)</td></tr><tr><td>네이티브 바이너리</td><td>스토어 배포</td></tr></tbody></table></div>
+      <p>하나 조심할 게 있다.<br>새 JS가 옛 바이너리에 없는 네이티브 기능을 부르면 앱이 죽는다.<br>EAS Update는 <code>runtimeVersion</code>이 같은 바이너리에만 업데이트를 내려서 이걸 막는다.<br>네이티브가 바뀌면 runtimeVersion이 바뀌고, 그때는 스토어로 가야 한다.</p>
       <h2 id="결과">결과</h2>
       <p>연결 로직 수정은 스토어 심사 없이 내보낸다.<br>스토어 심사는 네이티브 바이너리가 바뀔 때만 거친다.</p>
     </article>

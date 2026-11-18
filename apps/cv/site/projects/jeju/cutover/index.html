@@ -44,14 +44,20 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#옮기다-문제가-생기면">옮기다 문제가 생기면</a></li><li class="l2"><a href="#기존-규칙-뒤에-두기">기존 규칙 뒤에 두기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#옮기다-문제가-생기면">옮기다 문제가 생기면</a></li><li class="l2"><a href="#ALB는-규칙을-위에서부터-본다">ALB는 규칙을 위에서부터 본다</a></li><li class="l2"><a href="#기존-규칙-뒤에-두기">기존 규칙 뒤에 두기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="옮기다-문제가-생기면">옮기다 문제가 생기면</h2>
       <p>운영 중인 서비스를 새 서버로 옮기는 작업이었다.<br>중간에 문제가 생기면 바로 돌아갈 길이 있어야 했다.</p>
+      <h2 id="ALB는-규칙을-위에서부터-본다">ALB는 규칙을 위에서부터 본다</h2>
+      <p>ALB의 리스너에는 &quot;이런 요청은 저 서버로&quot; 같은 규칙이 여러 개 있다.<br>규칙마다 우선순위 숫자가 있고, ALB는 숫자가 작은 것부터 검사한다.<br>처음 맞는 규칙으로 보내고, 그 아래는 보지 않는다.</p>
+      <p>그러니까 규칙을 어디에 두느냐가 곧 &quot;어떤 요청을 먼저 가져가느냐&quot;다.</p>
       <h2 id="기존-규칙-뒤에-두기">기존 규칙 뒤에 두기</h2>
-      <p>새 리스너 규칙을 바로 앞에 두지 않고, 우선순위 509 · 510으로 기존 규칙 뒤에 두었다.<br>그 상태로 새 경로를 확인한 다음, 직접 전환했다.</p>
+      <p>새 리스너 규칙을 바로 앞에 두지 않고, 우선순위 509 · 510으로 기존 규칙 뒤에 두었다.</p>
+      <figure class="diagram" data-diagram="jeju/rules"><div class="dg"><svg viewBox="0 0 680 250" role="img" aria-label="ALB 리스너 규칙이 숫자가 작은 기존 규칙부터 검사되고, 새 규칙 509와 510은 그 뒤에 있어 기존 규칙에 걸리는 요청은 새 규칙까지 오지 않는 구조"><text x="0" y="12" class="m" text-anchor="start" dominant-baseline="middle">ALB 리스너 규칙 · 숫자가 작은 것부터 검사</text><text x="30" y="50" class="m mono" text-anchor="middle" dominant-baseline="middle">1 ~</text><g class="node"><rect class="b" x="64" y="28" width="300" height="42" rx="6"/><text x="214" y="40" text-anchor="middle" dominant-baseline="middle">기존 규칙들</text><text x="214" y="58" class="m" text-anchor="middle" dominant-baseline="middle">운영 중인 경로</text></g><text x="30" y="102" class="m mono" text-anchor="middle" dominant-baseline="middle">509</text><g class="node"><rect class="b hl" x="64" y="80" width="300" height="42" rx="6"/><text x="214" y="92" text-anchor="middle" dominant-baseline="middle">새 규칙</text><text x="214" y="110" class="m" text-anchor="middle" dominant-baseline="middle">새 서버로</text></g><text x="30" y="154" class="m mono" text-anchor="middle" dominant-baseline="middle">510</text><g class="node"><rect class="b hl" x="64" y="132" width="300" height="42" rx="6"/><text x="214" y="144" text-anchor="middle" dominant-baseline="middle">새 규칙</text><text x="214" y="162" class="m" text-anchor="middle" dominant-baseline="middle">새 서버로</text></g><text x="30" y="206" class="m mono" text-anchor="middle" dominant-baseline="middle">기본</text><g class="node"><rect class="b dim" x="64" y="184" width="300" height="42" rx="6"/><text x="214" y="196" text-anchor="middle" dominant-baseline="middle">기본 규칙</text><text x="214" y="214" class="m" text-anchor="middle" dominant-baseline="middle">아무 규칙에도 안 맞으면</text></g><path class="l m" d="M400 40 L400 230"/><polygon class="ah m" points="400.0,230.0 396.0,222.0 404.0,222.0"/><text x="414" y="60" class="m" text-anchor="start" dominant-baseline="middle">요청은 위에서부터 내려오다</text><text x="414" y="80" class="m" text-anchor="start" dominant-baseline="middle">처음 맞는 규칙으로 간다</text><text x="414" y="130" class="hl" text-anchor="start" dominant-baseline="middle">기존 규칙에 걸리는 요청은</text><text x="414" y="150" class="hl" text-anchor="start" dominant-baseline="middle">새 규칙까지 오지 않는다</text></svg></div><figcaption>새 규칙은 기존 규칙 뒤에</figcaption></figure>
+      <p>이렇게 두면 기존 규칙에 걸리는 요청은 지금처럼 기존 경로로 간다.<br>새 규칙을 추가해도 운영 중인 흐름이 바뀌지 않는다.</p>
+      <p>그 상태로 새 경로를 확인한 다음, 직접 전환했다.</p>
       <h2 id="결과">결과</h2>
       <p>확인이 끝날 때까지 기존 경로가 그대로 살아 있었다.<br>전환한 뒤에도 언제든 바로 되돌릴 수 있다.</p>
     </article>

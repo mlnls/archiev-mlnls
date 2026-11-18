@@ -1,0 +1,113 @@
+import { svg, box, group, arrow, text } from "../../scripts/diagram.mjs";
+
+const flow = (y, title, server, html, browser, crawler, after) => [
+  group(0, y, 680, 150, title, { titleTone: after ? "hl" : "m" }),
+  box(16, y + 44, 150, 60, "서버", { sub: server }),
+  arrow([[166, y + 74], [206, y + 74]]),
+  box(206, y + 44, 170, 60, html[0], { sub: html[1], mono: true }),
+  arrow([[376, y + 74], [404, y + 74], [404, y + 54], [440, y + 54]], { tone: after ? "hl" : undefined }),
+  arrow([[376, y + 74], [404, y + 74], [404, y + 112], [440, y + 112]], { tone: after ? "hl" : "bad" }),
+  box(440, y + 30, 224, 48, "브라우저", { sub: browser, tone: after ? "hl" : undefined }),
+  box(440, y + 88, 224, 48, "AI 크롤러", { sub: crawler, tone: after ? "hl" : "bad" }),
+];
+
+export default {
+  "ssr-flow": svg(
+    320,
+    "",
+    flow(0, "이전 · CRA SPA", "어느 주소든 같은 파일", ["index.html", "2,090바이트 · 본문 0자"], "JS를 받아 실행한 뒤에야 화면", "JS를 실행하지 않음 → 빈 페이지"),
+    flow(170, "이후 · Next.js App Router", "데이터를 받아 HTML 생성", ["HTML", "업무분야 본문이 들어 있음"], "받자마자 화면, JS는 연결만", "받은 HTML에서 바로 본문을 읽음", true),
+  ),
+
+  layers: svg(
+    140,
+    "",
+    box(0, 30, 190, 64, "page.tsx", { mono: true, sub: "메타데이터만 만든다" }),
+    arrow([[190, 62], [245, 62]]),
+    box(245, 30, 190, 64, "Container", { mono: true, sub: "서버에서 데이터 · JSON-LD" }),
+    arrow([[435, 62], [490, 62]]),
+    box(490, 30, 190, 64, "View", { mono: true, sub: "화면만 그린다", tone: "hl" }),
+    text(95, 116, "generateMetadata()", { anchor: "middle", tone: "m", mono: true }),
+    text(340, 116, "fetch → props", { anchor: "middle", tone: "m", mono: true }),
+    text(585, 116, "리뉴얼 화면을 그대로 옮김", { anchor: "middle", tone: "m" }),
+    text(217, 10, "서버에서만 돈다", { anchor: "middle", tone: "m" }),
+  ),
+
+  redirect: svg(
+    226,
+    "",
+    box(0, 0, 420, 44, "lvx.co.kr/workfield/detail/형사", { mono: true, tone: "dim" }),
+    text(450, 22, "옛 도메인 · 옛 주소", { tone: "m" }),
+    arrow([[210, 44], [210, 90]]),
+    text(226, 67, "301 · Caddy가 도메인만 바꿔 넘긴다 (앱까지 안 옴)", { tone: "m" }),
+    box(0, 90, 420, 44, "lawvax.co.kr/workfield/detail/형사", { mono: true, tone: "dim" }),
+    text(450, 112, "새 도메인 · 옛 주소", { tone: "m" }),
+    arrow([[210, 134], [210, 180]], { tone: "hl" }),
+    text(226, 157, "308 · next.config.ts 의 LEGACY_REDIRECTS", { tone: "m" }),
+    box(0, 180, 420, 44, "lawvax.co.kr/practice-detail?workField=형사", { mono: true, tone: "hl" }),
+    text(450, 202, "200 · canonical도 이 주소", { tone: "hl" }),
+  ),
+
+  revalidate: svg(
+    392,
+    "",
+    ...[
+      [70, "관리자 화면"],
+      [240, "백엔드"],
+      [420, "Next 서버"],
+      [600, "방문자"],
+    ].flatMap(([x, name]) => [box(x - 65, 0, 130, 36, name), arrow([[x, 36], [x, 384]], { dash: true, tone: "m", none: true })]),
+    arrow([[70, 70], [240, 70]], { label: ["글 저장", 155, 60] }),
+    arrow([[240, 104], [70, 104]], { dash: true, label: ["성공", 155, 94] }),
+    arrow([[70, 146], [420, 146]], { tone: "hl", label: ["POST /api/revalidate  { tags: ['news'] }", 245, 136] }),
+    arrow([[420, 182], [240, 182]], { label: ["이 토큰, 관리자 맞아?", 330, 172] }),
+    arrow([[240, 212], [420, 212]], { dash: true, label: ["맞음", 330, 202] }),
+    box(345, 226, 150, 36, "news 캐시만 비움", { tone: "hl" }),
+    arrow([[600, 292], [420, 292]], { label: ["소식 페이지", 510, 282] }),
+    arrow([[420, 324], [240, 324]], { label: ["새로 조회 (이때 한 번)", 330, 314] }),
+    arrow([[420, 362], [600, 362]], { tone: "hl", label: ["새 글이 들어간 페이지", 510, 352] }),
+  ),
+
+  graph: svg(
+    322,
+    "",
+    box(250, 116, 180, 64, "로백스", { sub: "LegalService · #organization", tone: "hl" }),
+    box(0, 16, 170, 52, "Person", { mono: true, sub: "구성원" }),
+    box(0, 196, 170, 52, "Service", { mono: true, sub: "업무분야" }),
+    box(510, 16, 170, 52, "NewsArticle", { mono: true, sub: "법인 소식 · 언론보도" }),
+    box(510, 196, 170, 52, "VideoObject", { mono: true, sub: "영상" }),
+    box(255, 262, 170, 52, "WebSite", { mono: true, sub: "사이트 전체" }),
+    box(0, 270, 170, 44, "BreadcrumbList", { mono: true, sub: "페이지마다 따로", tone: "dim" }),
+    arrow([[170, 42], [250, 130]], { tone: "hl", label: ["worksFor", 204, 96, "end"] }),
+    arrow([[170, 222], [250, 166]], { tone: "hl", label: ["provider", 206, 192, "end"] }),
+    arrow([[510, 42], [430, 130]], { tone: "hl", label: ["publisher · about", 488, 92, "start"] }),
+    arrow([[510, 222], [430, 166]], { tone: "hl", label: ["publisher", 470, 186, "start"] }),
+    arrow([[340, 262], [340, 180]], { tone: "hl", label: ["publisher", 350, 221, "start"] }),
+  ),
+
+  barrel: svg(
+    156,
+    "",
+    box(0, 52, 150, 52, "사용자 화면", { sub: "하나만 import" }),
+    arrow([[150, 78], [210, 78]]),
+    box(210, 52, 170, 52, "index.ts", { mono: true, sub: "루트 배럴 · 전부 export" }),
+    arrow([[380, 78], [416, 78], [416, 20], [450, 20]], { tone: "hl" }),
+    arrow([[380, 78], [450, 78]], { tone: "bad" }),
+    arrow([[380, 78], [416, 78], [416, 136], [450, 136]], { tone: "bad" }),
+    box(450, 0, 230, 40, "쓰려던 모듈", { tone: "hl" }),
+    box(450, 58, 230, 40, "관리자 모듈", { sub: "같이 번들에 들어감", tone: "bad" }),
+    box(450, 116, 230, 40, "관리자 모듈", { sub: "같이 번들에 들어감", tone: "bad" }),
+  ),
+
+  chunks: svg(
+    214,
+    "",
+    group(0, 0, 320, 214, "이전 · 방문자 누구나 받는 한 덩어리"),
+    box(16, 34, 288, 50, "사용자 화면", { tone: "hl" }),
+    box(16, 94, 288, 50, "관리자 화면", { tone: "bad" }),
+    box(16, 154, 288, 50, "배럴로 딸려 온 관리자 코드", { tone: "bad" }),
+    group(360, 0, 320, 214, "이후", { titleTone: "hl" }),
+    box(376, 34, 288, 50, "사용자 화면", { sub: "처음에 받는 것", tone: "hl" }),
+    box(376, 124, 288, 80, "관리자 화면 청크", { sub: "React.lazy 로 분리\n관리자 화면에 들어갈 때만 받음", tone: "dim" }),
+  ),
+};

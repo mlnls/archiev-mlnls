@@ -44,16 +44,21 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#출시-전-남은-QA">출시 전 남은 QA</a></li><li class="l2"><a href="#남은-항목-고치기">남은 항목 고치기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#출시-전-남은-QA">출시 전 남은 QA</a></li><li class="l2"><a href="#번호마다-커밋-하나">번호마다 커밋 하나</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="출시-전-남은-QA">출시 전 남은 QA</h2>
-      <p>배치고사 서비스는 출시를 앞두고 QA 항목이 남아 있었다.</p>
-      <h2 id="남은-항목-고치기">남은 항목 고치기</h2>
-      <p>남은 QA 항목을 하나씩 고쳤다.</p>
+      <p>배치고사 서비스는 출시를 앞두고 QA 항목이 남아 있었다.<br>QA 항목에는 번호가 붙어 있었다.</p>
+      <h2 id="번호마다-커밋-하나">번호마다 커밋 하나</h2>
+      <p>남은 항목을 번호 순서대로 하나씩 고쳤다.<br>커밋 메시지에 QA 번호를 남겨서, 어느 항목을 어떤 수정으로 닫았는지 바로 찾을 수 있게 했다.</p>
+      <div class="code"><div class="code-head"><span class="file">git log</span><span class="lang">Text</span></div><pre><code>QA: 205 QA 수정
+QA: 206 QA 수정
+QA: 207 QA 수정
+QA: 208 QA 수정</code></pre></div>
+      <p>다시 열린 항목은 &quot;재수정&quot;으로 같은 번호에 커밋을 이어 붙였다.<br>하드코딩된 연도처럼 매년 다시 깨질 곳은 동적으로 바꿨다.</p>
       <h2 id="결과">결과</h2>
-      <p>배치고사 서비스를 함께 출시했다.</p>
+      <p>커밋에 남은 QA 번호 기준으로 44건을 고쳤고, 배치고사 서비스를 함께 출시했다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>서강교육그룹 성취도 평가 · 배치고사</h2>

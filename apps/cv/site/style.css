@@ -15,6 +15,8 @@
   --hl-number: #94620a;
   --hl-title: #2a5f9e;
   --hl-attr: #7a46ad;
+  --s1: #2a5f9e;
+  --s2: #b5651d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,6 +36,8 @@
     --hl-number: #e0b062;
     --hl-title: #82bde6;
     --hl-attr: #c9a6ec;
+    --s1: #4a8ad0;
+    --s2: #c97a3a;
   }
 }
 
@@ -242,6 +246,41 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
 .doc .post figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--rule); border-radius: 6px; }
 .doc .post figure.narrow img { max-width: min(360px, 100%); }
 .doc .post figcaption { margin-top: 8px; color: var(--muted); font-size: 13px; text-align: center; }
+
+/* 구조도: content/diagrams 에서 그린 SVG. 색은 전부 여기 변수를 따릅니다. 좁은 화면에서는 옆으로 밀어서 봅니다. */
+.doc .post figure.diagram .dg { overflow-x: auto; padding: 18px 14px; border: 1px solid var(--rule); border-radius: 6px; }
+.dg svg { display: block; width: 100%; min-width: 600px; height: auto; overflow: visible; }
+.dg text { fill: var(--ink); font-size: 13px; paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+.dg .node text { stroke: none; }
+.dg text.m { fill: var(--muted); font-size: 12px; }
+.dg text.hl { fill: var(--accent); }
+.dg text.bad { fill: var(--hl-keyword); }
+.dg text.b { font-weight: 600; }
+.dg text.mono { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+.dg rect.b { fill: var(--paper); stroke: var(--muted); stroke-width: 1; }
+.dg rect.b.hl { stroke: var(--accent); stroke-width: 1.5; }
+.dg rect.b.bad { stroke: var(--hl-keyword); }
+.dg rect.b.dim { stroke-dasharray: 4 3; }
+.dg rect.b.fill { fill: var(--code-bg); stroke: var(--rule); }
+.dg rect.g { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 4 3; }
+.dg rect.g.solid { stroke-dasharray: none; }
+.dg path.l { fill: none; stroke: var(--muted); stroke-width: 1.2; }
+.dg path.l.hl { stroke: var(--accent); stroke-width: 1.5; }
+.dg path.l.bad { stroke: var(--hl-keyword); }
+.dg path.l.dash { stroke-dasharray: 4 3; }
+.dg path.r { stroke: var(--rule); stroke-width: 1; }
+.dg polygon.ah { fill: var(--muted); }
+.dg polygon.ah.hl { fill: var(--accent); }
+.dg polygon.ah.bad { fill: var(--hl-keyword); }
+/* 구조도 안의 작은 차트: 계열 색은 선과 점에만, 글자는 글자색 그대로 */
+.dg path.grid { stroke: var(--rule); stroke-width: 1; }
+.dg path.line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.dg path.line.s1, .dg rect.key.s1 { stroke: var(--s1); fill: var(--s1); }
+.dg path.line.s2, .dg rect.key.s2 { stroke: var(--s2); fill: var(--s2); }
+.dg path.line.s1, .dg path.line.s2 { fill: none; }
+.dg circle.pt { stroke: var(--paper); stroke-width: 2; }
+.dg circle.pt.s1 { fill: var(--s1); }
+.dg circle.pt.s2 { fill: var(--s2); }
 .doc .post .table { overflow-x: auto; }
 .doc .post table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; }
 .doc .post th, .doc .post td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }

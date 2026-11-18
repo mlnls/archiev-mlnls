@@ -44,16 +44,26 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#IP-차단을-켰더니-서비스가-내려갔다">IP 차단을 켰더니 서비스가 내려갔다</a></li><li class="l2"><a href="#원인">원인</a></li><li class="l2"><a href="#실제-사용자-IP-넘기기">실제 사용자 IP 넘기기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#IP-차단을-켰더니-서비스가-내려갔다">IP 차단을 켰더니 서비스가 내려갔다</a></li><li class="l2"><a href="#SSR에서는-서버가-손님이다">SSR에서는 서버가 손님이다</a></li><li class="l2"><a href="#실제-사용자-IP-넘기기">실제 사용자 IP 넘기기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="IP-차단을-켰더니-서비스가-내려갔다">IP 차단을 켰더니 서비스가 내려갔다</h2>
       <p>IP 차단을 도입했다.<br>그런데 도입한 뒤 서비스가 다운됐다. 차단된 IP가 Next 서버 자신이었다.</p>
-      <h2 id="원인">원인</h2>
-      <p>백엔드가 보기에는 모든 요청이 Next 서버에서 왔다.<br>SSR에서는 사용자의 브라우저가 아니라 Next 서버가 API를 부르기 때문이다.<br>그래서 차단 규칙에 걸린 것도 사용자가 아니라 Next 서버의 IP였다.</p>
+      <h2 id="SSR에서는-서버가-손님이다">SSR에서는 서버가 손님이다</h2>
+      <p>원인은 SSR의 구조에 있었다.</p>
+      <p>브라우저에서 API를 부르면 백엔드는 사용자의 IP를 본다.<br>그런데 SSR에서는 사용자의 브라우저가 아니라 Next 서버가 API를 부른다.<br>백엔드가 보기에는 모든 요청이 Next 서버 한 곳에서 오는 것이다.</p>
+      <p>그래서 차단 규칙에 걸린 것도 사용자가 아니라 Next 서버의 IP였다.<br>Next 서버가 막히면 그 뒤의 모든 사용자가 같이 막힌다.</p>
       <h2 id="실제-사용자-IP-넘기기">실제 사용자 IP 넘기기</h2>
-      <p>Next 서버가 API를 부를 때 실제 사용자 IP를 <code>x-forwarded-for</code>로 넘기게 했다.</p>
+      <p>프록시나 서버가 요청을 대신 전달할 때는 원래 IP를 <code>X-Forwarded-For</code> 헤더에 적어 넘기는 게 관례다.</p>
+      <p>Next 서버가 받은 요청에서 사용자 IP를 꺼내, API를 부를 때 그대로 넘기게 했다.</p>
+      <figure class="diagram" data-diagram="jeju/xff"><div class="dg"><svg viewBox="0 0 680 250" role="img" aria-label="이전에는 백엔드가 Next 서버 IP만 보고 차단했고, 이후에는 Next 서버가 사용자 IP를 X-Forwarded-For로 넘겨 백엔드가 사용자 IP로 판단하는 구조"><g class="grp"><rect class="g" x="0" y="0" width="680" height="110" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">이전</text></g><g class="node"><rect class="b" x="16" y="36" width="150" height="54" rx="6"/><text x="91" y="54" text-anchor="middle" dominant-baseline="middle">사용자 브라우저</text><text x="91" y="72" class="m" text-anchor="middle" dominant-baseline="middle">IP A</text></g><path class="l" d="M166 63 L256 63"/><polygon class="ah" points="256.0,63.0 248.0,67.0 248.0,59.0"/><g class="node"><rect class="b" x="256" y="36" width="170" height="54" rx="6"/><text x="341" y="54" text-anchor="middle" dominant-baseline="middle">Next 서버</text><text x="341" y="72" class="m" text-anchor="middle" dominant-baseline="middle">IP N · 대신 API 호출</text></g><path class="l bad" d="M426 63 L516 63"/><polygon class="ah bad" points="516.0,63.0 508.0,67.0 508.0,59.0"/><g class="node"><rect class="b bad" x="516" y="36" width="150" height="54" rx="6"/><text x="591" y="54" text-anchor="middle" dominant-baseline="middle">백엔드</text><text x="591" y="72" class="m" text-anchor="middle" dominant-baseline="middle">N만 보인다 → 차단</text></g><g class="grp"><rect class="g" x="0" y="130" width="680" height="120" rx="8"/><text x="12" y="146" class="hl" text-anchor="start" dominant-baseline="middle">이후</text></g><g class="node"><rect class="b" x="16" y="166" width="150" height="54" rx="6"/><text x="91" y="184" text-anchor="middle" dominant-baseline="middle">사용자 브라우저</text><text x="91" y="202" class="m" text-anchor="middle" dominant-baseline="middle">IP A</text></g><path class="l hl" d="M166 193 L256 193"/><polygon class="ah hl" points="256.0,193.0 248.0,197.0 248.0,189.0"/><g class="node"><rect class="b hl" x="256" y="166" width="170" height="54" rx="6"/><text x="341" y="184" text-anchor="middle" dominant-baseline="middle">Next 서버</text><text x="341" y="202" class="m" text-anchor="middle" dominant-baseline="middle">받은 IP를 헤더로 전달</text></g><path class="l hl" d="M426 193 L516 193"/><polygon class="ah hl" points="516.0,193.0 508.0,197.0 508.0,189.0"/><text x="471" y="238" class="hl mono" text-anchor="middle" dominant-baseline="middle">X-Forwarded-For: A</text><g class="node"><rect class="b hl" x="516" y="166" width="150" height="54" rx="6"/><text x="591" y="184" text-anchor="middle" dominant-baseline="middle">백엔드</text><text x="591" y="202" class="m" text-anchor="middle" dominant-baseline="middle">A 기준으로 판단</text></g></svg></div><figcaption>백엔드가 보는 IP</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">src/lib/api/http/serverAuthHttp.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getForwardedIp</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;&gt; {
+  <span class="hljs-keyword">const</span> headerList = <span class="hljs-keyword">await</span> <span class="hljs-title function_">headers</span>();
+  <span class="hljs-keyword">const</span> ip = headerList.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;x-forwarded-for&quot;</span>) || headerList.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;x-real-ip&quot;</span>) || <span class="hljs-string">&quot;&quot;</span>;
+  <span class="hljs-keyword">return</span> ip ? { <span class="hljs-string">&quot;x-forwarded-for&quot;</span>: ip } : {};
+}</code></pre></div>
+      <p>하나 주의할 점이 있다.<br><code>X-Forwarded-For</code>는 그냥 헤더라서 누구나 적어 보낼 수 있다.<br>그래서 이 값은 믿을 수 있는 곳(여기서는 Next 서버와 ALB)을 거쳐 온 것일 때만 의미가 있다.</p>
       <h2 id="결과">결과</h2>
       <p>이제 실제 사용자 IP 기준으로 차단된다.</p>
     </article>

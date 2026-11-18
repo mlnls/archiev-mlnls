@@ -44,15 +44,18 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#앱도-매번-손으로">앱도 매번 손으로</a></li><li class="l2"><a href="#create-expo-app-위에-덮어쓰기">create-expo-app 위에 덮어쓰기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#앱도-매번-손으로">앱도 매번 손으로</a></li><li class="l2"><a href="#처음부터-만들지-않고-덮어쓰기">처음부터 만들지 않고 덮어쓰기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="앱도-매번-손으로">앱도 매번 손으로</h2>
-      <p>앱 프로젝트는 create-expo-app으로 만든 다음, 사내 설정을 매번 손으로 맞췄다.</p>
-      <h2 id="create-expo-app-위에-덮어쓰기">create-expo-app 위에 덮어쓰기</h2>
-      <p><code>bc init</code>에서 Mobile(Expo)을 고르면, create-expo-app으로 프로젝트를 만든 뒤 그 위에 사내 설정을 덮어씌운다.</p>
+      <p>앱 프로젝트는 create-expo-app으로 만든 다음, 사내 설정을 매번 손으로 맞췄다.<br>린트, API 레이어, 앱 이름과 번들 ID까지.</p>
+      <h2 id="처음부터-만들지-않고-덮어쓰기">처음부터 만들지 않고 덮어쓰기</h2>
+      <p>Expo 기본 프로젝트를 직접 흉내 내서 만들지는 않았다.<br>Expo 쪽 구조는 Expo가 버전마다 바꾼다. 따라 만들면 그때마다 CLI도 고쳐야 한다.</p>
+      <p>그래서 create-expo-app으로 먼저 만들고, 그 위에 사내 설정만 덮어씌우게 했다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/expo"><div class="dg"><svg viewBox="0 0 680 124" role="img" aria-label="create-expo-app으로 만든 뒤 사내 설정을 덮고, app.config.ts를 채우고, 로그인돼 있으면 eas init까지 하는 순서"><g class="node"><rect class="b" x="0" y="30" width="150" height="64" rx="6"/><text x="75" y="53" class="mono" text-anchor="middle" dominant-baseline="middle">create-expo-app</text><text x="75" y="71" class="m" text-anchor="middle" dominant-baseline="middle">Expo 기본 프로젝트</text></g><path class="l" d="M150 62 L180 62"/><polygon class="ah" points="180.0,62.0 172.0,66.0 172.0,58.0"/><g class="node"><rect class="b" x="180" y="30" width="150" height="64" rx="6"/><text x="255" y="53" text-anchor="middle" dominant-baseline="middle">사내 설정 덮어쓰기</text><text x="255" y="71" class="m" text-anchor="middle" dominant-baseline="middle">린트 · API 레이어</text></g><path class="l" d="M330 62 L360 62"/><polygon class="ah" points="360.0,62.0 352.0,66.0 352.0,58.0"/><g class="node"><rect class="b" x="360" y="30" width="150" height="64" rx="6"/><text x="435" y="53" class="mono" text-anchor="middle" dominant-baseline="middle">app.config.ts</text><text x="435" y="71" class="m" text-anchor="middle" dominant-baseline="middle">이름 · 번들 ID · scheme</text></g><path class="l dash" d="M510 62 L540 62"/><polygon class="ah" points="540.0,62.0 532.0,66.0 532.0,58.0"/><g class="node"><rect class="b dim" x="540" y="30" width="140" height="64" rx="6"/><text x="610" y="53" class="mono" text-anchor="middle" dominant-baseline="middle">eas init</text><text x="610" y="71" class="m" text-anchor="middle" dominant-baseline="middle">로그인돼 있으면</text></g><text x="610" y="112" class="m" text-anchor="middle" dominant-baseline="middle">projectId 연결</text></svg></div><figcaption>bc init → Mobile(Expo)</figcaption></figure>
       <ul><li>앱 이름, 번들 ID, 딥링크 scheme을 물어 <code>app.config.ts</code>에 적는다</li><li>EAS에 로그인돼 있으면 <code>eas init</code>으로 projectId까지 연결한다</li><li>NativeWind, TanStack Query, axios를 기본으로 갖춘다</li></ul>
+      <p><code>app.config.ts</code>는 JSON이 아니라 코드라서, 환경마다 값을 바꿔 끼우기 쉽다.</p>
       <h2 id="결과">결과</h2>
       <p>웹과 같은 API 레이어와 린트 설정으로 앱 프로젝트가 시작된다.</p>
     </article>

@@ -44,19 +44,33 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#하나씩-보고되던-버그">하나씩 보고되던 버그</a></li><li class="l2"><a href="#고친-것들">고친 것들</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#배포하려는데-CI가-깨졌다">배포하려는데 CI가 깨졌다</a></li></ol>
+        <ol><li class="l2"><a href="#하나씩-보고되던-버그">하나씩 보고되던 버그</a></li><li class="l2"><a href="#1월-31일에서-다음-달로-가면-3월">1월 31일에서 다음 달로 가면 3월</a></li><li class="l2"><a href="#한국-시간에서-달이-밀린다">한국 시간에서 달이 밀린다</a></li><li class="l2"><a href="#서버에서-터지는-SanitizeHtml">서버에서 터지는 SanitizeHtml</a></li><li class="l2"><a href="#그-밖에">그 밖에</a></li><li class="l2"><a href="#배포하려는데-CI가-깨졌다">배포하려는데 CI가 깨졌다</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="하나씩-보고되던-버그">하나씩 보고되던 버그</h2>
       <p>사내 서비스들이 함께 쓰는 core · basic-ui · utils · hooks 패키지에서 버그가 하나씩 보고되고 있었다.<br>모아서 한 번에 고쳤다. (MOD-21 ~ 35)</p>
-      <h2 id="고친-것들">고친 것들</h2>
-      <ul><li>1월 31일에서 다음 달로 넘기면 3월이 되던 달력</li><li>KST에서 달이 하나 밀리던 문제</li><li>SSR에서 <code>SanitizeHtml</code>이 터지던 문제</li><li>이메일 · 생년월일 · 주민번호 정규식 오류</li></ul>
-      <h2 id="결과">결과</h2>
+      <p>공통 패키지의 버그는 한 번 고치면 그걸 쓰는 모든 프로젝트가 같이 고쳐진다.<br>대신 원인을 정확히 모르고 고치면 모든 프로젝트가 같이 깨진다.<br>그래서 하나씩 &quot;왜 이렇게 됐나&quot;부터 적었다.</p>
+      <h2 id="1월-31일에서-다음-달로-가면-3월">1월 31일에서 다음 달로 가면 3월</h2>
+      <p><code>useMonthCalendar</code>에서 1월 31일에 다음 달 버튼을 누르면 3월이 나왔다.</p>
+      <p>JS의 <code>Date</code>는 없는 날짜를 만나면 에러를 내지 않고 넘친 만큼 다음 달로 넘긴다.<br>1월 31일에서 월만 +1 하면 &quot;2월 31일&quot;이 되고, 2월은 28일까지라 3월 3일이 된다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/date-overflow"><div class="dg"><svg viewBox="0 0 680 196" role="img" aria-label="이전에는 1월 31일에 월을 더하면 3월 3일이 됐고, 이후에는 1일로 옮긴 뒤 월을 바꾸고 그 달의 마지막 날로 맞춰 2월 28일이 되는 모습"><text x="0" y="14" class="b" text-anchor="start" dominant-baseline="middle">이전</text><g class="node"><rect class="b" x="0" y="30" width="140" height="50" rx="6"/><text x="70" y="55" text-anchor="middle" dominant-baseline="middle">1월 31일</text></g><path class="l" d="M140 55 L180 55"/><polygon class="ah" points="180.0,55.0 172.0,59.0 172.0,51.0"/><text x="160" y="44" class="m" text-anchor="middle" dominant-baseline="middle">월 +1</text><g class="node"><rect class="b dim" x="180" y="30" width="150" height="50" rx="6"/><text x="255" y="55" text-anchor="middle" dominant-baseline="middle">2월 31일 ?</text></g><path class="l bad" d="M330 55 L370 55"/><polygon class="ah bad" points="370.0,55.0 362.0,59.0 362.0,51.0"/><text x="470" y="18" class="m" text-anchor="middle" dominant-baseline="middle">Date 가 넘침을 다음 달로</text><g class="node"><rect class="b bad" x="370" y="30" width="140" height="50" rx="6"/><text x="440" y="55" text-anchor="middle" dominant-baseline="middle">3월 3일</text></g><text x="0" y="112" class="hl b" text-anchor="start" dominant-baseline="middle">이후</text><g class="node"><rect class="b" x="0" y="128" width="140" height="50" rx="6"/><text x="70" y="153" text-anchor="middle" dominant-baseline="middle">1월 31일</text></g><path class="l" d="M140 153 L180 153"/><polygon class="ah" points="180.0,153.0 172.0,157.0 172.0,149.0"/><g class="node"><rect class="b" x="180" y="128" width="150" height="50" rx="6"/><text x="255" y="144" text-anchor="middle" dominant-baseline="middle">2월 1일</text><text x="255" y="162" class="m" text-anchor="middle" dominant-baseline="middle">1일로 옮긴 뒤 월 +1</text></g><path class="l hl" d="M330 153 L370 153"/><polygon class="ah hl" points="370.0,153.0 362.0,157.0 362.0,149.0"/><g class="node"><rect class="b hl" x="370" y="128" width="180" height="50" rx="6"/><text x="460" y="144" text-anchor="middle" dominant-baseline="middle">2월 28일</text><text x="460" y="162" class="m" text-anchor="middle" dominant-baseline="middle">그 달 마지막 날로 맞춤</text></g></svg></div><figcaption>월을 옮기는 순서를 바꿨다</figcaption></figure>
+      <p>그래서 순서를 바꿨다.<br>먼저 1일로 옮긴 다음 월을 바꾸고, 원래 날짜를 그 달의 마지막 날까지로 맞춘다. 시각은 그대로 둔다.</p>
+      <h2 id="한국-시간에서-달이-밀린다">한국 시간에서 달이 밀린다</h2>
+      <p>같은 훅에서 처음 날짜의 달이 하나 밀리는 문제도 있었다.</p>
+      <p>코드가 <code>getUTCMonth()</code>로 달을 읽고 있었다.<br>한국은 UTC보다 9시간 빠르다. 한국 시간 11월 1일 0시는 UTC로 10월 31일 15시다.<br>그래서 매달 1일 새벽의 날짜를 UTC로 읽으면 전 달이 나온다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/kst"><div class="dg"><svg viewBox="0 0 680 150" role="img" aria-label="한국 시간 11월 1일 0시가 UTC로는 10월 31일 15시라 getUTCMonth가 10월을 돌려주는 모습"><text x="0" y="24" class="m" text-anchor="start" dominant-baseline="middle">한국 시간</text><g class="node"><rect class="b hl" x="110" y="6" width="300" height="36" rx="6"/><text x="260" y="24" class="mono" text-anchor="middle" dominant-baseline="middle">2026-11-01 00:00 (KST)</text></g><text x="430" y="24" class="hl mono" text-anchor="start" dominant-baseline="middle">getMonth() → 11월</text><path class="l m dash" d="M260 42 L260 84"/><polygon class="ah m" points="260.0,84.0 256.0,76.0 264.0,76.0"/><polygon class="ah m" points="260.0,42.0 264.0,50.0 256.0,50.0"/><text x="272" y="63" class="m" text-anchor="start" dominant-baseline="middle">같은 순간, 9시간 차이</text><text x="0" y="102" class="m" text-anchor="start" dominant-baseline="middle">UTC</text><g class="node"><rect class="b bad" x="110" y="84" width="300" height="36" rx="6"/><text x="260" y="102" class="mono" text-anchor="middle" dominant-baseline="middle">2026-10-31 15:00 (UTC)</text></g><text x="430" y="102" class="bad mono" text-anchor="start" dominant-baseline="middle">getUTCMonth() → 10월</text><text x="0" y="142" class="m" text-anchor="start" dominant-baseline="middle">한국에서 각 달 1일 0시~9시 사이의 날짜를 UTC 기준으로 읽으면 전 달이 된다.</text></svg></div><figcaption>같은 순간, 다른 달</figcaption></figure>
+      <p>달력은 사용자가 보는 날짜를 다룬다. <code>getFullYear</code> · <code>getMonth</code> 같은 로컬 기준으로 맞추고, 월을 옮길 때도 <code>setUTCMonth</code> 대신 <code>setMonth</code>를 써서 섞이지 않게 했다.</p>
+      <h2 id="서버에서-터지는-SanitizeHtml">서버에서 터지는 SanitizeHtml</h2>
+      <p><code>SanitizeHtml</code>은 DOMPurify로 HTML에서 위험한 태그를 걸러 낸다.<br>DOMPurify는 브라우저의 DOM으로 HTML을 해석한다. 그래서 <code>window</code>가 필요하다.</p>
+      <p>그런데 모듈을 불러오는 시점에 <code>window</code>로 DOMPurify를 만들고 있었다.<br>SSR에서는 서버가 이 모듈을 불러오는 순간 <code>window</code>가 없어서 터졌다.</p>
+      <ul><li>DOMPurify는 호출하는 시점의 <code>window</code>로 만들게 바꿨다</li><li>DOM이 없으면 빈 문자열을 돌려준다. 걸러 내지 못한 원본 HTML을 그대로 내보내지 않는다</li><li>화면용 컴포넌트는 서버와 hydration 첫 렌더에서는 빈 태그를 그리고, 브라우저에서 걸러 낸 결과를 채운다</li></ul>
+      <h2 id="그-밖에">그 밖에</h2>
+      <ul><li>이메일 · 생년월일 · 주민번호 정규식 오류</li><li>페이지 이동 한 번에 <code>onPageChange</code>가 두 번 불리던 문제</li><li>타이머 간격이 1초가 아니면 시간이 빨리 흐르던 문제</li></ul>
       <p>결함 12건을 고쳐 changeset으로 배포했다.</p>
       <h2 id="배포하려는데-CI가-깨졌다">배포하려는데 CI가 깨졌다</h2>
       <p>Release CI가 실패했다.<br>npm 11로 만든 lockfile이 Node 20의 <code>npm ci</code>에서 깨진 것이었다.</p>
-      <p>npm 10으로 lockfile을 다시 만들어 두 버전 모두에서 통과시켰다.</p>
+      <p>Node 20에는 npm 10이 같이 들어 있다. lockfile을 만든 npm과 읽는 npm이 달랐다.<br>npm 10으로 lockfile을 다시 만들어 두 버전 모두에서 통과시켰다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>

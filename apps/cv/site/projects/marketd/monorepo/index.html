@@ -44,20 +44,40 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#한쪽만-바꾸면-상대편이-깨졌다">한쪽만 바꾸면 상대편이 깨졌다</a></li><li class="l2"><a href="#한-레포로-합치기">한 레포로 합치기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#한쪽만-바꾸면-상대편이-깨졌다">한쪽만 바꾸면 상대편이 깨졌다</a></li><li class="l2"><a href="#앱과-웹뷰는-문자열로-대화한다">앱과 웹뷰는 문자열로 대화한다</a></li><li class="l2"><a href="#약속을-한-곳에만-두기">약속을 한 곳에만 두기</a></li><li class="l2"><a href="#이제는-빌드가-먼저-깨진다">이제는 빌드가 먼저 깨진다</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="한쪽만-바꾸면-상대편이-깨졌다">한쪽만 바꾸면 상대편이 깨졌다</h2>
       <p>마켓:D는 관리자, 사용자 앱, 웹뷰가 각자 다른 레포에 있었다.</p>
-      <p>사용자 앱은 웹뷰를 띄우고, 둘은 메시지를 주고받는다.<br>문제는 그 메시지 타입이 양쪽 레포에 따로 정의돼 있었다는 것이다.</p>
-      <p>앱에서 메시지 타입을 바꾸면 웹뷰가 예고 없이 깨졌다. 반대도 마찬가지였다.</p>
-      <h2 id="한-레포로-합치기">한 레포로 합치기</h2>
-      <p>pnpm workspace와 Turborepo로 세 레포를 합쳤다.<br>그리고 양쪽이 같이 쓰는 것들을 공통 패키지로 뺐다.</p>
-      <ul><li>앱 ↔ 웹뷰 메시지 타입 <code>APP_MSG</code> / <code>WEB_MSG</code>와 그 스키마</li><li>공통 설정</li><li>env schema</li></ul>
-      <p>이제 메시지 타입은 한 곳에만 있고, 앱과 웹뷰가 같은 정의를 import한다.</p>
-      <h2 id="결과">결과</h2>
-      <p>메시지 타입이 어긋나서 생기던 장애를 구조적으로 없앴다.<br>모든 앱을 한 워크스페이스에서 실행한다.</p>
+      <p>사용자 앱은 웹뷰를 띄운다.<br>그리고 둘은 메시지를 주고받는다. 웹뷰가 &quot;로그인 화면으로 보내 줘&quot;라고 하면 앱이 화면을 바꾸는 식이다.</p>
+      <h2 id="앱과-웹뷰는-문자열로-대화한다">앱과 웹뷰는 문자열로 대화한다</h2>
+      <p>웹뷰와 앱 사이에는 함수 호출이 없다.<br>웹뷰는 <code>window.ReactNativeWebView.postMessage</code>로 문자열을 보내고, 앱은 <code>onMessage</code>로 받는다.<br>반대 방향도 마찬가지다.</p>
+      <p>그래서 둘 사이의 약속은 결국 &quot;어떤 type 문자열을 보낼 것인가&quot;다.<br><code>WEB_LOGOUT</code>을 보내기로 했으면 양쪽이 정확히 같은 글자를 써야 한다.</p>
+      <p>문제는 이 약속이 양쪽 레포에 따로 적혀 있었다는 것이다.<br>앱에서 메시지 이름을 바꾸면 웹뷰는 그걸 모른다. 타입 검사도 레포를 넘어가지 못한다.<br>결과는 예고 없이 깨진 기능이었다. 반대도 마찬가지였다.</p>
+      <h2 id="약속을-한-곳에만-두기">약속을 한 곳에만 두기</h2>
+      <p>pnpm workspace와 Turborepo로 세 레포를 하나로 합쳤다.<br>그리고 양쪽이 같이 쓰는 것들을 공통 패키지로 뺐다.</p>
+      <figure class="diagram" data-diagram="marketd/monorepo"><div class="dg"><svg viewBox="0 0 680 356" role="img" aria-label="이전에는 세 레포에 메시지 정의 사본이 따로 있었고, 이후에는 한 워크스페이스에서 앱과 웹뷰가 같은 constants 패키지를 import하는 구조"><g class="grp"><rect class="g" x="0" y="0" width="680" height="130" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">이전 · 레포 세 개</text></g><g class="node"><rect class="b" x="16" y="40" width="200" height="70" rx="6"/><text x="116" y="75" text-anchor="middle" dominant-baseline="middle">관리자 레포</text></g><g class="node"><rect class="b" x="240" y="40" width="200" height="70" rx="6"/><text x="340" y="66" text-anchor="middle" dominant-baseline="middle">앱 레포</text><text x="340" y="84" class="m" text-anchor="middle" dominant-baseline="middle">WEB_MSG · APP_MSG 사본</text></g><g class="node"><rect class="b" x="464" y="40" width="200" height="70" rx="6"/><text x="564" y="66" text-anchor="middle" dominant-baseline="middle">웹뷰 레포</text><text x="564" y="84" class="m" text-anchor="middle" dominant-baseline="middle">WEB_MSG · APP_MSG 사본</text></g><text x="452" y="75" class="bad b" text-anchor="middle" dominant-baseline="middle">≠</text><g class="grp"><rect class="g" x="0" y="150" width="680" height="206" rx="8"/><text x="12" y="166" class="hl" text-anchor="start" dominant-baseline="middle">이후 · 워크스페이스 하나</text></g><g class="node"><rect class="b" x="16" y="186" width="200" height="50" rx="6"/><text x="116" y="211" class="mono" text-anchor="middle" dominant-baseline="middle">apps/admin</text></g><g class="node"><rect class="b" x="240" y="186" width="200" height="50" rx="6"/><text x="340" y="211" class="mono" text-anchor="middle" dominant-baseline="middle">apps/mobile</text></g><g class="node"><rect class="b" x="464" y="186" width="200" height="50" rx="6"/><text x="564" y="211" class="mono" text-anchor="middle" dominant-baseline="middle">apps/webview</text></g><g class="node"><rect class="b hl" x="240" y="286" width="424" height="54" rx="6"/><text x="452" y="304" class="mono" text-anchor="middle" dominant-baseline="middle">packages/constants</text><text x="452" y="322" class="m" text-anchor="middle" dominant-baseline="middle">WEB_MSG · APP_MSG 단 하나</text></g><g class="node"><rect class="b dim" x="16" y="286" width="200" height="54" rx="6"/><text x="116" y="313" text-anchor="middle" dominant-baseline="middle">공통 설정 · env schema</text></g><path class="l hl" d="M340 236 L340 286"/><polygon class="ah hl" points="340.0,286.0 336.0,278.0 344.0,278.0"/><path class="l hl" d="M564 236 L564 286"/><polygon class="ah hl" points="564.0,286.0 560.0,278.0 568.0,278.0"/><text x="350" y="261" class="m mono" text-anchor="start" dominant-baseline="middle">import</text><text x="574" y="261" class="m mono" text-anchor="start" dominant-baseline="middle">import</text></svg></div><figcaption>레포 세 개에서 워크스페이스 하나로</figcaption></figure>
+      <p>두 앱에 흩어져 있던 메시지 이름은 합집합으로 모아 하나로 만들었다.</p>
+      <div class="code"><div class="code-head"><span class="file">packages/constants/src/webview-message.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">/**
+ * Webview &lt;-&gt; React Native 앱 사이의 postMessage 계약(contract).
+ *
+ * - WEB_MSG: webview 가 RN 으로 보내는 메시지의 type
+ * - APP_MSG: RN 이 webview 로 보내는 메시지의 type
+ *
+ * webview / mobile 양쪽이 반드시 동일한 키 셋을 공유해야 하므로
+ * 두 앱에 흩어져 있던 정의를 합집합으로 통합한 단일 소스입니다.
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">WEB_MSG</span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">freeze</span>({
+  <span class="hljs-attr">READY</span>: <span class="hljs-string">&#x27;READY&#x27;</span>,
+  <span class="hljs-attr">LOGOUT</span>: <span class="hljs-string">&#x27;WEB_LOGOUT&#x27;</span>,
+  <span class="hljs-attr">GO_TO_LOGIN</span>: <span class="hljs-string">&#x27;WEB_GO_TO_LOGIN&#x27;</span>,
+  <span class="hljs-comment">// ...</span>
+});</code></pre></div>
+      <p>공통 설정과 env schema도 같은 식으로 뺐다.</p>
+      <h2 id="이제는-빌드가-먼저-깨진다">이제는 빌드가 먼저 깨진다</h2>
+      <p>이제 메시지 이름을 바꾸면 그걸 쓰는 앱과 웹뷰 코드가 같은 워크스페이스에서 바로 타입 에러를 낸다.<br>운영에서 깨지기 전에 빌드에서 깨진다.</p>
+      <p>모든 앱도 한 워크스페이스에서 같이 실행한다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>마켓:D</h2>

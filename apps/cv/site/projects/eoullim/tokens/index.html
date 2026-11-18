@@ -44,18 +44,22 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#시안과-개발이-동시에">시안과 개발이 동시에</a></li><li class="l2"><a href="#화면은-토큰만-본다">화면은 토큰만 본다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#시안과-개발이-동시에">시안과 개발이 동시에</a></li><li class="l2"><a href="#값-대신-이름으로">값 대신 이름으로</a></li><li class="l2"><a href="#토큰이-화면까지-가는-길">토큰이 화면까지 가는 길</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="시안과-개발이-동시에">시안과 개발이 동시에</h2>
       <p>어울림은 디자인과 개발이 동시에 진행됐다.<br>그 사이 디자인 토큰은 v0.2 → v0.3 → v0.5로, 시안은 1차 → 2차 → 수정 시안으로 바뀌었다.</p>
-      <p>시안이 바뀔 때마다 화면을 하나씩 찾아 고치면 끝이 없다.</p>
-      <h2 id="화면은-토큰만-본다">화면은 토큰만 본다</h2>
-      <p>색, 글꼴, 그림자는 토큰으로만 쓰게 했다. 화면 코드에 색상값을 직접 적지 않는다.</p>
-      <p>디자이너가 넘긴 <code>tokens.json</code>은 style-dictionary를 거쳐 <code>tokens.css</code>가 된다.<br>변환 규칙은 사내 settings 패키지가 맡는다.</p>
+      <p>시안이 바뀔 때마다 화면을 하나씩 찾아 고치면 끝이 없다.<br>파란색 하나가 바뀌었는데 그 색을 쓴 화면이 서른 개면, 서른 군데를 고쳐야 한다.</p>
+      <h2 id="값-대신-이름으로">값 대신 이름으로</h2>
+      <p>디자인 토큰은 &quot;값&quot;에 이름을 붙인 것이다.<br><code>#1A73E8</code> 대신 <code>primary</code>라고 부르고, 화면은 이름만 쓴다.<br>값이 바뀌어도 이름은 그대로라서 화면 코드는 건드릴 필요가 없다.</p>
+      <p>그래서 색, 글꼴, 그림자는 토큰으로만 쓰게 했다. 화면 코드에 색상값을 직접 적지 않는다.</p>
+      <h2 id="토큰이-화면까지-가는-길">토큰이 화면까지 가는 길</h2>
+      <p>디자이너가 넘긴 <code>tokens.json</code>은 style-dictionary를 거쳐 <code>tokens.css</code>가 된다.<br><code>tokens.css</code>에는 토큰이 CSS 변수로 들어 있고, 화면은 <code>var(--…)</code>로 그 변수만 가져다 쓴다.</p>
+      <figure class="diagram" data-diagram="eoullim/tokens"><div class="dg"><svg viewBox="0 0 680 170" role="img" aria-label="디자이너의 tokens.json이 style-dictionary를 거쳐 tokens.css의 CSS 변수가 되고, 화면은 그 변수만 쓰는 흐름"><g class="node"><rect class="b" x="0" y="40" width="120" height="64" rx="6"/><text x="60" y="63" text-anchor="middle" dominant-baseline="middle">디자이너</text><text x="60" y="81" class="m" text-anchor="middle" dominant-baseline="middle">토큰 export</text></g><path class="l" d="M120 72 L150 72"/><polygon class="ah" points="150.0,72.0 142.0,76.0 142.0,68.0"/><g class="node"><rect class="b hl" x="150" y="40" width="120" height="64" rx="6"/><text x="210" y="63" class="mono" text-anchor="middle" dominant-baseline="middle">tokens.json</text><text x="210" y="81" class="m" text-anchor="middle" dominant-baseline="middle">v0.2 → v0.5</text></g><path class="l" d="M270 72 L300 72"/><polygon class="ah" points="300.0,72.0 292.0,76.0 292.0,68.0"/><g class="node"><rect class="b" x="300" y="40" width="130" height="64" rx="6"/><text x="365" y="63" class="mono" text-anchor="middle" dominant-baseline="middle">style-dictionary</text><text x="365" y="81" class="m" text-anchor="middle" dominant-baseline="middle">settings 패키지 규칙</text></g><path class="l" d="M430 72 L460 72"/><polygon class="ah" points="460.0,72.0 452.0,76.0 452.0,68.0"/><g class="node"><rect class="b" x="460" y="40" width="100" height="64" rx="6"/><text x="510" y="63" class="mono" text-anchor="middle" dominant-baseline="middle">tokens.css</text><text x="510" y="81" class="m" text-anchor="middle" dominant-baseline="middle">CSS 변수</text></g><path class="l" d="M560 72 L580 72"/><polygon class="ah" points="580.0,72.0 572.0,76.0 572.0,68.0"/><g class="node"><rect class="b" x="580" y="40" width="100" height="64" rx="6"/><text x="630" y="63" text-anchor="middle" dominant-baseline="middle">화면</text><text x="630" y="81" class="m" text-anchor="middle" dominant-baseline="middle">var(--…) 만</text></g><text x="210" y="18" class="hl" text-anchor="middle" dominant-baseline="middle">시안이 바뀌면 여기만 바뀐다</text><text x="0" y="140" class="m" text-anchor="start" dominant-baseline="middle">화면 코드에는 #1A73E8 같은 값이 없다. 이름(토큰)만 있고, 값은 tokens.css 가 정한다.</text></svg></div><figcaption>토큰이 화면에 닿기까지</figcaption></figure>
+      <p>JSON을 CSS로 바꾸는 규칙은 사내 settings 패키지가 맡는다.<br>그래서 다른 프로젝트도 같은 규칙으로 같은 모양의 변수를 얻는다.</p>
       <h2 id="결과">결과</h2>
-      <p>토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다.</p>
+      <p>토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다.<br>시안이 바뀌는 동안에도 화면 개발을 멈추지 않았다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>어울림</h2>

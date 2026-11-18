@@ -16,6 +16,7 @@ import typescript from "highlight.js/lib/languages/typescript";
 import yaml from "highlight.js/lib/languages/yaml";
 
 import { projects } from "../content/projects.mjs";
+import { diagrams } from "../content/diagrams/index.mjs";
 
 for (const [name, lang] of Object.entries({ apache, bash, javascript, markdown: markdownLang, typescript, yaml })) hljs.registerLanguage(name, lang);
 
@@ -85,7 +86,7 @@ function webpSize(file) {
 
 /**
  * 글 본문용 작은 마크다운: ## · ###, 문단(줄바꿈 유지), - · 1. 목록, > 인용, ```언어 파일이름 코드, | 표,
- * 그리고 한 줄에 홀로 있는 ![설명](파일.webp "캡션") 그림.
+ * 그리고 한 줄에 홀로 있는 ![설명](파일.webp "캡션") 그림. 파일이 이름.svg 면 content/diagrams/<slug>.mjs 의 구조도를 그 자리에 넣습니다.
  * toc 배열을 넘기면 ## · ### 제목을 { level, id, text }로 채웁니다. 제목에는 같은 id가 붙습니다.
  */
 export function markdown(src, slug, toc = []) {
@@ -123,6 +124,17 @@ export function markdown(src, slug, toc = []) {
       continue;
     }
     const img = /^!\[([^\]]+)\]\(([\w.-]+)(?: "([^"]+)")?\)$/.exec(line);
+    if (img && img[2].endsWith(".svg")) {
+      const [, alt, name, caption] = img;
+      const key = name.slice(0, -4);
+      const d = diagrams[slug]?.[key];
+      if (!d) throw new Error(`content/diagrams/${slug}.mjs 에 "${key}" 구조도가 없습니다`);
+      html.push(
+        `<figure class="diagram" data-diagram="${slug}/${key}"><div class="dg">${d.replace(/aria-label="[^"]*"/, `aria-label="${esc(alt)}"`)}</div>${caption ? `<figcaption>${inline(caption)}</figcaption>` : ""}</figure>`,
+      );
+      i++;
+      continue;
+    }
     if (img) {
       const [, alt, name, caption] = img;
       const [w, h2] = webpSize(join(root, "projects", slug, name));
