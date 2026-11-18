@@ -41,13 +41,19 @@
       <h1>60초가 지나면 깨지는 이미지</h1>
       <p class="meta">마켓:D · 6/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#60초가-지나면-깨진다">60초가 지나면 깨진다</a></li><li class="l2"><a href="#깨진-것만-다시">깨진 것만 다시</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>60초가 지나면 깨진다</h2>
+      <h2 id="60초가-지나면-깨진다">60초가 지나면 깨진다</h2>
       <p>서명 URL은 60초 뒤에 만료된다.<br>채팅을 오래 띄워 두면 그 사이에 사진이 깨진다.</p>
-      <h2>깨진 것만 다시</h2>
+      <h2 id="깨진-것만-다시">깨진 것만 다시</h2>
       <p>이미 그려진 이미지는 만료 전에 미리 갱신하지 않았다.<br>대신 이미지가 깨지면(<code>onError</code>) 그때 key당 한 번만 다시 발급받는다.</p>
       <p>여러 장이 동시에 깨져도 요청은 한 번만 나가게 <code>cancelRefetch: false</code>를 썼다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>쓸데없는 재발급 없이, 깨진 사진만 다시 보인다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -56,5 +62,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/signed-url/">← 주소만 알면 누구나 보던 채팅 사진</a><a href="/projects/marketd/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

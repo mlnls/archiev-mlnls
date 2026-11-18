@@ -41,16 +41,22 @@
       <h1>주소만 알면 누구나 보던 채팅 사진</h1>
       <p class="meta">마켓:D · 5/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#주소만-알면-누구나">주소만 알면 누구나</a></li><li class="l2"><a href="#비공개-버킷과-60초짜리-주소">비공개 버킷과 60초짜리 주소</a></li><li class="l2"><a href="#배포-순서도-설계다">배포 순서도 설계다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>주소만 알면 누구나</h2>
+      <h2 id="주소만-알면-누구나">주소만 알면 누구나</h2>
       <p>이웃거래 채팅에는 집 앞 사진, 송장, 계좌 캡처 같은 사진이 오간다.<br>이 사진들이 공개 버킷에 있었다. 주소만 알면 누구나 볼 수 있었다.</p>
-      <h2>비공개 버킷과 60초짜리 주소</h2>
+      <h2 id="비공개-버킷과-60초짜리-주소">비공개 버킷과 60초짜리 주소</h2>
       <p>사진을 비공개 버킷으로 옮기고, 볼 때마다 60초짜리 서명 URL을 발급받게 했다.</p>
       <p>여기서 놓치기 쉬운 게 있다.<br>서명은 &quot;누가&quot; 보는지 모른다. URL을 가진 사람이면 누구든 60초 동안 볼 수 있다.<br>그래서 발급 API에서 요청한 사람이 그 채팅의 참여자인지 확인한다.</p>
       <p>받는 쪽에서는 사진이 두 경로로 들어온다.<br>채팅방을 열 때 받는 목록, 그리고 소켓으로 들어오는 새 메시지.<br>목록은 <code>initialData</code>로 넣고 소켓 메시지는 바로 발급받게 해서, 두 경로를 쿼리 하나로 처리했다.</p>
-      <h2>배포 순서도 설계다</h2>
+      <h2 id="배포-순서도-설계다">배포 순서도 설계다</h2>
       <p>서버와 앱이 같이 바뀌는 작업이었다.<br>서버를 배포한 직후에 이 PR을 머지하지 않으면 둘 다 깨진다. 그래서 배포 순서까지 정해 두고 내보냈다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>채팅 사진은 참여자만, 60초 동안 볼 수 있다.<br>보내는 쪽 코드는 한 줄도 바꾸지 않았다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -59,5 +65,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/e2e/">← jsdom이 못 보는 곳만 브라우저로</a><a href="/projects/marketd/expiry/">60초가 지나면 깨지는 이미지 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

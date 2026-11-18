@@ -53,6 +53,19 @@ describe("project pages", () => {
     }
   });
 
+  it("gives every post a table of contents that points at its own headings", () => {
+    const out = render() as Record<string, string>;
+    for (const [file, html] of Object.entries(out)) {
+      if (!/^projects\/[^/]+\/[^/]+\/index\.html$/.test(file)) continue;
+      const toc = html.match(/<aside class="toc"[\s\S]*?<\/aside>/)?.[0];
+      expect(toc, file).toBeTruthy();
+      const targets = [...toc!.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
+      const ids = [...html.matchAll(/<h[23] id="([^"]+)"/g)].map((m) => m[1]);
+      expect(targets, file).toEqual(ids);
+      expect(new Set(ids).size, file).toBe(ids.length);
+    }
+  });
+
   it("are all listed in the sitemap", () => {
     const sitemap = read("sitemap.xml");
     for (const { rel } of pages) expect(sitemap).toContain(`https://mlnl.site/${rel}`);

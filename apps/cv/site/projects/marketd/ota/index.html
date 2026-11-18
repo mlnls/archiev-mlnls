@@ -41,13 +41,19 @@
       <h1>긴급 수정이 스토어 심사를 기다렸다</h1>
       <p class="meta">마켓:D · 2/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#긴급-버그도-심사를-기다렸다">긴급 버그도 심사를 기다렸다</a></li><li class="l2"><a href="#바뀐-것에-따라-길을-나누기">바뀐 것에 따라 길을 나누기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>긴급 버그도 심사를 기다렸다</h2>
+      <h2 id="긴급-버그도-심사를-기다렸다">긴급 버그도 심사를 기다렸다</h2>
       <p>앱과 웹뷰를 잇는 RN Bridge 코드에 긴급 버그가 생겨도, 고치려면 스토어 재심사를 거쳐야 했다.<br>고친 코드는 있는데 사용자에게 닿기까지 심사를 기다려야 했다.</p>
-      <h2>바뀐 것에 따라 길을 나누기</h2>
+      <h2 id="바뀐-것에-따라-길을-나누기">바뀐 것에 따라 길을 나누기</h2>
       <p>Expo EAS Update(OTA)를 도입했다.<br>그리고 무엇이 바뀌었는지에 따라 배포 경로를 셋으로 나눴다.</p>
       <div class="table"><table><thead><tr><th>바뀐 것</th><th>배포 경로</th></tr></thead><tbody><tr><td>화면 (웹뷰)</td><td>웹 배포. 스토어와 상관없이 바로 반영</td></tr><tr><td>연결 로직 (RN Bridge 등 JS)</td><td>EAS Update (OTA)</td></tr><tr><td>네이티브 바이너리</td><td>스토어 배포</td></tr></tbody></table></div>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>연결 로직 수정은 스토어 심사 없이 내보낸다.<br>스토어 심사는 네이티브 바이너리가 바뀔 때만 거친다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -56,5 +62,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/monorepo/">← 한쪽만 바꾸면 상대편이 깨졌다</a><a href="/projects/marketd/admin-test/">하나 고치면 어디가 깨졌는지 몰랐다 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,15 +41,21 @@
       <h1>실패해도 서비스는 살아 있게</h1>
       <p class="meta">법률신문 한국법조인대관 · 4/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#자동화하면-실패도-자동으로-일어난다">자동화하면 실패도 자동으로 일어난다</a></li><li class="l2"><a href="#지우지-말고-멈춰-두기">지우지 말고 멈춰 두기</a></li><li class="l2"><a href="#set--e가-복구를-건너뛰었다">set -e가 복구를 건너뛰었다</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#버전은-한-번-쓰면-끝">버전은 한 번 쓰면 끝</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>자동화하면 실패도 자동으로 일어난다</h2>
+      <h2 id="자동화하면-실패도-자동으로-일어난다">자동화하면 실패도 자동으로 일어난다</h2>
       <p>배포를 자동으로 돌리게 되자 다른 걱정이 생겼다.<br>실패했을 때 무엇을 할지 코드에 적혀 있지 않으면, 기존 컨테이너는 멈춘 채로 배포가 끝난다.</p>
-      <h2>지우지 말고 멈춰 두기</h2>
+      <h2 id="지우지-말고-멈춰-두기">지우지 말고 멈춰 두기</h2>
       <p>운영 서버에는 3000, 3001 두 포트에 컨테이너가 하나씩 떠 있다. 이걸 하나씩 바꾼다.</p>
       <ol><li>기존 컨테이너는 지우지 않고 멈춘 뒤 <code>-old</code>로 이름을 바꿔 보관한다</li><li>새 컨테이너를 띄운다</li><li>60초 안에 응답이 오면 <code>-old</code>를 지우고 다음 포트로 넘어간다</li><li>응답이 없으면 그 포트만 이전 컨테이너로 되돌리고, 다음 포트는 건드리지 않는다</li></ol>
       <p>한 번에 하나만 내리니까 나머지 포트는 계속 요청을 받는다.</p>
       <figure><img src="/projects/lawtimes/rolling-code.webp" width="1600" height="1071" alt="헬스체크와 복구 함수가 있는 배포 스크립트" loading="lazy" decoding="async"><figcaption>헬스체크와 복구 함수</figcaption></figure>
-      <h2>set -e가 복구를 건너뛰었다</h2>
+      <h2 id="set--e가-복구를-건너뛰었다">set -e가 복구를 건너뛰었다</h2>
       <p><code>set -e</code>는 명령 하나가 실패하는 순간 스크립트를 끝낸다.<br>그런데 그 &quot;끝&quot;에는 복구 단계도 포함돼 있었다. 실패하면 복구 함수까지 가지 못하고, 기존 컨테이너가 멈춘 채로 남았다.</p>
       <p>그래서 실패할 수 있는 단계는 <code>if ! ...; then restore</code>로 감쌌다.</p>
       <div class="code"><div class="code-head"><span class="file">scripts/deploy-lawpeople.sh</span><span class="lang">Bash</span></div><pre><code><span class="hljs-keyword">if</span> ! <span class="hljs-variable">$DOCKER</span> run -d --name <span class="hljs-string">&quot;<span class="hljs-variable">$NAME</span>&quot;</span> --restart unless-stopped -p <span class="hljs-string">&quot;<span class="hljs-variable">${PORT}</span>:<span class="hljs-variable">${APP_PORT}</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$IMAGE</span>&quot;</span> &gt;/dev/null; <span class="hljs-keyword">then</span>
@@ -57,11 +63,11 @@
   restore <span class="hljs-string">&quot;<span class="hljs-variable">$NAME</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$OLD</span>&quot;</span>
   <span class="hljs-built_in">exit</span> 1
 <span class="hljs-keyword">fi</span></code></pre></div>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <figure><img src="/projects/lawtimes/rolling-log.webp" width="1600" height="360" alt="테스트 서버 배포 로그: 05:55:21 교체 시작, 05:55:29 응답 OK" loading="lazy" decoding="async"><figcaption>테스트 서버 배포 로그: 교체부터 응답까지 8초</figcaption></figure>
       <p>테스트 서버는 기존 컨테이너를 멈추고 새 컨테이너가 응답하기까지 <b>약 8초</b> 걸린다.<br>운영은 포트를 하나씩 바꾸니 무중단이다.</p>
       <p>롤백은 Actions에서 버전만 입력하면 된다. 다시 빌드하지 않고 기존 이미지로 바꾼다.</p>
-      <h2>버전은 한 번 쓰면 끝</h2>
+      <h2 id="버전은-한-번-쓰면-끝">버전은 한 번 쓰면 끝</h2>
       <p>롤백을 믿으려면 버전 번호가 가리키는 이미지가 바뀌면 안 된다.<br>버전은 push한 순간 &quot;쓴 것&quot;이다. 같은 번호로 다시 빌드하면, 그 버전으로 돌아간다는 보장이 깨진다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -70,5 +76,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/runner/">← 들어갈 수 없는 서버에 배포하기</a><a href="/projects/lawtimes/security/">배포 권한은 레포 권한만큼만 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,11 +41,17 @@
       <h1>배포 권한은 레포 권한만큼만</h1>
       <p class="meta">법률신문 한국법조인대관 · 5/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#베스천은-운영-서버로-가는-문이다">베스천은 운영 서버로 가는 문이다</a></li><li class="l2"><a href="#하나씩-좁히기">하나씩 좁히기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>베스천은 운영 서버로 가는 문이다</h2>
+      <h2 id="베스천은-운영-서버로-가는-문이다">베스천은 운영 서버로 가는 문이다</h2>
       <p>self-hosted runner를 둔 베스천은 운영 서버로 이어지는 자리다.<br>여기가 뚫리면 운영 서버까지 열린다.</p>
       <p>그래서 runner의 권한을 배포에 필요한 만큼만 남기기로 했다.</p>
-      <h2>하나씩 좁히기</h2>
+      <h2 id="하나씩-좁히기">하나씩 좁히기</h2>
       <ul><li>sudo 없는 전용 계정으로 runner를 돌린다</li><li>runner는 main · dev workflow만 쓸 수 있다</li><li>베스천에서 도는 job에는 Secret을 하나도 넘기지 않는다</li><li>runner의 SSH 키는 <code>authorized_keys</code>의 <code>command=</code>로 묶어, 서버에서 배포 스크립트 하나만 실행된다</li></ul>
       <p>마지막 항목은 이렇게 동작한다.<br><code>command=</code>로 묶인 키로 들어오면 보낸 명령은 실행되지 않고 <code>SSH_ORIGINAL_COMMAND</code>로만 넘어온다.<br>배포 스크립트는 그 값을 꺼내서 이미지 이름과 포트를 정규식으로 검사한다.</p>
       <div class="code"><div class="code-head"><span class="file">scripts/deploy-lawpeople.sh</span><span class="lang">Bash</span></div><pre><code><span class="hljs-comment"># authorized_keys 의 command= 로 실행되면 인자가 SSH_ORIGINAL_COMMAND 로 들어옴 (첫 단어는 스크립트 경로)</span>
@@ -59,7 +65,7 @@ IMAGE=<span class="hljs-string">&quot;<span class="hljs-variable">${1:-}</span>&
   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;이미지 형식이 아닙니다: &#x27;<span class="hljs-variable">${IMAGE}</span>&#x27;&quot;</span> &gt;&amp;2
   <span class="hljs-built_in">exit</span> 2
 <span class="hljs-keyword">fi</span></code></pre></div>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>사람이 서버에 들어가지 않고, 레포 권한만으로 배포된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -68,5 +74,18 @@ IMAGE=<span class="hljs-string">&quot;<span class="hljs-variable">${1:-}</span>&
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/rolling/">← 실패해도 서비스는 살아 있게</a><a href="/projects/lawtimes/release/">버전과 릴리스 노트도 자동으로 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

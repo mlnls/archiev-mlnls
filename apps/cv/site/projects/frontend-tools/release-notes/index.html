@@ -41,10 +41,16 @@
       <h1>릴리즈 노트는 커밋에서</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 4/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#노트-쓰는-방식도-제각각">노트 쓰는 방식도 제각각</a></li><li class="l2"><a href="#커밋에서-노트-만들기">커밋에서 노트 만들기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>노트 쓰는 방식도 제각각</h2>
+      <h2 id="노트-쓰는-방식도-제각각">노트 쓰는 방식도 제각각</h2>
       <p>릴리즈 노트를 남기는 프로젝트도 쓰는 방식이 서로 달랐다.</p>
-      <h2>커밋에서 노트 만들기</h2>
+      <h2 id="커밋에서-노트-만들기">커밋에서 노트 만들기</h2>
       <p>공통 settings 패키지에 <code>byuckchon-release-notes</code> 명령을 더했다.</p>
       <ul><li>이전 태그 이후 커밋을 ✨ 기능 · 🐛 수정으로 묶어 노트를 쓴다</li><li>태그는 날짜 버전으로 붙인다. <code>web@2026.11.05</code>, 같은 날 다시 배포하면 <code>.2</code></li><li>커밋을 나누는 코드는 PR 본문을 자동으로 쓰는 명령과 같은 것을 쓴다</li></ul>
       <p>PR 본문 쪽에서 이미 쓰고 있던 형식은 이렇다. 릴리즈 노트도 같은 분류로 나온다.</p>
@@ -55,7 +61,7 @@
 <span class="hljs-section">### 🐛 수정</span>
 
 <span class="hljs-bullet">-</span> letterSpacing % → em 변환 (b2c3d4e)</code></pre></div>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>어느 프로젝트든 같은 형식의 릴리즈 노트가 남는다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -64,5 +70,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/deploy/">← 배포가 성공했을 때만 릴리즈가 남게</a><a href="/projects/frontend-tools/v3/">쓰지 않는 기능은 걷어내기 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

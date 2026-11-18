@@ -41,13 +41,19 @@
       <h1>어느 시안을 반영했는지 커밋으로</h1>
       <p class="meta">어울림 · 2/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#어느-화면이-어느-시안까지">어느 화면이 어느 시안까지?</a></li><li class="l2"><a href="#커밋에-노드-ID-남기기">커밋에 노드 ID 남기기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>어느 화면이 어느 시안까지?</h2>
+      <h2 id="어느-화면이-어느-시안까지">어느 화면이 어느 시안까지?</h2>
       <p>2주 사이에 시안이 여러 번 바뀌었다.<br>어느 화면이 어느 시안까지 반영됐는지 헷갈리기 시작했다.</p>
-      <h2>커밋에 노드 ID 남기기</h2>
+      <h2 id="커밋에-노드-ID-남기기">커밋에 노드 ID 남기기</h2>
       <p>방법은 단순했다.<br>시안을 반영한 커밋 메시지 끝에 Figma 노드 ID를 남겼다.</p>
       <figure><img src="/projects/eoullim/figma-log.webp" width="1600" height="822" alt="Figma 노드 ID가 남은 커밋 목록" loading="lazy" decoding="async"><figcaption>git log: 커밋마다 반영한 Figma 노드</figcaption></figure>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>10/22 ~ 11/06 사이 17번 바뀐 시안을 커밋만 보고 따라간다.<br><code>git log --grep=Figma</code> 한 줄이면 된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -56,5 +62,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/tokens/">← 시안이 바뀌는 동안 같이 개발하기</a><a href="/projects/eoullim/api/">사용자 · 관리자 실 API 연동 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

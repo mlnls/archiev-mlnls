@@ -41,13 +41,19 @@
       <h1>사용자 · 관리자 실 API 연동</h1>
       <p class="meta">어울림 · 3/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#연동할-범위가-넓었다">연동할 범위가 넓었다</a></li><li class="l2"><a href="#한-모노레포에서-두-앱">한 모노레포에서 두 앱</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>연동할 범위가 넓었다</h2>
+      <h2 id="연동할-범위가-넓었다">연동할 범위가 넓었다</h2>
       <p>게시글 · 댓글부터 한마디, 검색, 알림, 신고, 관리자 통계까지.<br>사용자 사이트와 관리자 양쪽에서 붙여야 할 API가 많았다.</p>
-      <h2>한 모노레포에서 두 앱</h2>
+      <h2 id="한-모노레포에서-두-앱">한 모노레포에서 두 앱</h2>
       <p>사내 CLI로 만든 Turborepo 모노레포에서 사용자 사이트와 관리자를 함께 개발했다.</p>
       <p>HTTP는 사용자 쪽은 fetch, 관리자 쪽은 axios를 쓴다.<br>대신 그 위에 공통 HTTP 계층을 두어, 어느 쪽에서든 같은 방식으로 API를 부른다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>게시글, 댓글, 한마디, 검색, 알림, 신고와 관리자 통계까지 실 API에 연동했다.</p>
       <figure class="narrow"><img src="/projects/eoullim/api-mobile.webp" width="780" height="1688" alt="어울림 모바일 메인 화면" loading="lazy" decoding="async"><figcaption>운영 화면 (모바일)</figcaption></figure>
     </article>
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/figma/">← 어느 시안을 반영했는지 커밋으로</a><a href="/projects/eoullim/editor/">서버는 JSON, 에디터는 HTML →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

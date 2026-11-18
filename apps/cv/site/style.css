@@ -261,10 +261,29 @@ h4 a.go::after, h3 a.go::after { content: " →"; color: var(--muted); transitio
 }
 .doc .pager a:last-child { text-align: right; }
 
+/* 글 옆 목차: 본문 오른쪽 여백에 붙어 따라 내려옵니다. 여백이 모자란 화면에서는 숨깁니다. */
+.doc:has(.toc) { position: relative; }
+.doc .toc { display: none; }
+.doc .post :is(h2, h3) { scroll-margin-top: 24px; }
+@media (min-width: 1200px) {
+  .doc .toc { display: block; position: absolute; top: 0; bottom: 0; left: calc(100% + 8px); width: 200px; }
+  .doc .toc nav { position: sticky; top: 48px; margin-top: clamp(32px, 7vw, 64px); font-size: 13px; line-height: 1.5; }
+  .doc .toc p { color: var(--muted); font-weight: 600; }
+  .doc .toc ol { margin: 8px 0 0; padding: 0 0 0 12px; list-style: none; border-left: 1px solid var(--rule); }
+  .doc .toc li { padding: 0; }
+  .doc .toc li::before { content: none; }
+  .doc .toc li + li { margin-top: 6px; }
+  .doc .toc li.l3 { padding-left: 12px; }
+  .doc .toc a { color: var(--muted); text-decoration: none; }
+  .doc .toc a[aria-current] { color: var(--strong); }
+  @media (hover: hover) { .doc .toc a:hover { color: var(--strong); } }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
 @media print {
   .doc { padding: 0; max-width: none; }
   .doc .post pre { white-space: pre-wrap; }
-  .doc .back, .doc .others, .doc .pager { display: none; }
+  .doc .back, .doc .others, .doc .pager, .doc .toc { display: none; }
 }
 
 /* 경력: 프로젝트 아래에는 스택만 */

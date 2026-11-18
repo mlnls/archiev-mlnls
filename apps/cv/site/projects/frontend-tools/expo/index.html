@@ -41,13 +41,19 @@
       <h1>앱 프로젝트도 같은 규칙으로</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 2/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#앱도-매번-손으로">앱도 매번 손으로</a></li><li class="l2"><a href="#create-expo-app-위에-덮어쓰기">create-expo-app 위에 덮어쓰기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>앱도 매번 손으로</h2>
+      <h2 id="앱도-매번-손으로">앱도 매번 손으로</h2>
       <p>앱 프로젝트는 create-expo-app으로 만든 다음, 사내 설정을 매번 손으로 맞췄다.</p>
-      <h2>create-expo-app 위에 덮어쓰기</h2>
+      <h2 id="create-expo-app-위에-덮어쓰기">create-expo-app 위에 덮어쓰기</h2>
       <p><code>bc init</code>에서 Mobile(Expo)을 고르면, create-expo-app으로 프로젝트를 만든 뒤 그 위에 사내 설정을 덮어씌운다.</p>
       <ul><li>앱 이름, 번들 ID, 딥링크 scheme을 물어 <code>app.config.ts</code>에 적는다</li><li>EAS에 로그인돼 있으면 <code>eas init</code>으로 projectId까지 연결한다</li><li>NativeWind, TanStack Query, axios를 기본으로 갖춘다</li></ul>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>웹과 같은 API 레이어와 린트 설정으로 앱 프로젝트가 시작된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -56,5 +62,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/electron/">← 데스크톱 프로젝트도 명령 하나로</a><a href="/projects/frontend-tools/deploy/">배포가 성공했을 때만 릴리즈가 남게 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

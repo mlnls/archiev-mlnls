@@ -41,14 +41,20 @@
       <h1>쓰지 않는 기능은 걷어내기</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 5/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#아무도-쓰지-않는-기능">아무도 쓰지 않는 기능</a></li><li class="l2"><a href="#걷어내고-막기">걷어내고, 막기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>아무도 쓰지 않는 기능</h2>
+      <h2 id="아무도-쓰지-않는-기능">아무도 쓰지 않는 기능</h2>
       <p><code>bc init</code>을 할 때마다 묻는 질문들이 있었고, 채팅 기능도 있었다. 둘 다 쓰이지 않았다.</p>
       <p>그리고 오래된 설치본으로 만든 프로젝트는 템플릿이 어긋났다.<br>같은 CLI로 만들었는데 프로젝트마다 구조가 조금씩 달랐다.</p>
-      <h2>걷어내고, 막기</h2>
+      <h2 id="걷어내고-막기">걷어내고, 막기</h2>
       <p>채팅과 생성 질문을 걷어내고 v3.0.0으로 정리했다.</p>
       <p>그리고 실행할 때 npm 최신 버전과 비교하게 했다.<br>버전이 다르면 업데이트를 안내하고 실행을 멈춘다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p><b>5,923줄</b>과 의존성 <b>9개</b>를 지웠다.<br>이제 모든 프로젝트가 같은 버전의 CLI로 만들어진다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/release-notes/">← 릴리즈 노트는 커밋에서</a><a href="/projects/frontend-tools/qa/">공통 패키지 결함 12건 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

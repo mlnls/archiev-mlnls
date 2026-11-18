@@ -86,10 +86,12 @@ function webpSize(file) {
 /**
  * 글 본문용 작은 마크다운: ## · ###, 문단(줄바꿈 유지), - · 1. 목록, > 인용, ```언어 파일이름 코드, | 표,
  * 그리고 한 줄에 홀로 있는 ![설명](파일.webp "캡션") 그림.
+ * toc 배열을 넘기면 ## · ### 제목을 { level, id, text }로 채웁니다. 제목에는 같은 id가 붙습니다.
  */
-export function markdown(src, slug) {
+export function markdown(src, slug, toc = []) {
   const lines = src.split("\n");
   const html = [];
+  const ids = new Set();
   let i = 0;
   const take = (re) => {
     const got = [];
@@ -110,7 +112,13 @@ export function markdown(src, slug) {
     }
     const h = /^(#{2,3}) (.+)$/.exec(line);
     if (h) {
-      html.push(`<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`);
+      const level = h[1].length;
+      const text = inline(h[2]).replace(/<[^>]+>/g, "");
+      let id = text.trim().replace(/\s+/g, "-").replace(/[^\p{L}\p{N}-]/gu, "") || `s-${ids.size + 1}`;
+      for (let n = 2; ids.has(id); n++) id = `${id.replace(/-\d+$/, "")}-${n}`;
+      ids.add(id);
+      toc.push({ level, id, text });
+      html.push(`<h${level} id="${id}">${inline(h[2])}</h${level}>`);
       i++;
       continue;
     }
@@ -222,6 +230,15 @@ function notePage(p, n, k, body) {
   const url = `${SITE}/projects/${p.slug}/${n.id}/`;
   const prev = p.notes[k - 1];
   const next = p.notes[k + 1];
+  const toc = [];
+  const article = markdown(body, p.slug, toc);
+  const tocNav = toc.length < 2 ? "" : `
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol>${toc.map((t) => `<li class="l${t.level}"><a href="#${t.id}">${t.text}</a></li>`).join("")}</ol>
+      </nav>
+    </aside>`;
   const others = p.notes
     .map((m, j) => (m.id === n.id ? `<li><b>${j + 1}. ${esc(m.title)}</b></li>` : `<li><a href="/projects/${p.slug}/${m.id}/">${j + 1}. ${esc(m.title)}</a></li>`))
     .join("");
@@ -237,9 +254,9 @@ function notePage(p, n, k, body) {
     <header>
       <h1>${esc(n.title)}</h1>
       <p class="meta">${esc(p.title)} · ${k + 1}/${p.notes.length}</p>
-    </header>
+    </header>${tocNav}
     <article class="post">
-      ${markdown(body, p.slug)}
+      ${article}
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>${esc(p.title)}</h2>
@@ -248,11 +265,27 @@ function notePage(p, n, k, body) {
     <nav class="pager" aria-label="이전 · 다음 글">${prev ? `<a href="/projects/${p.slug}/${prev.id}/">← ${esc(prev.title)}</a>` : `<a href="/projects/${p.slug}/">← 목차</a>`}${
       next ? `<a href="/projects/${p.slug}/${next.id}/">${esc(next.title)} →</a>` : `<a href="/projects/${p.slug}/">목차 →</a>`
     }</nav>
-  </main>
+  </main>${tocNav ? `
+  <script>${TOC_SCRIPT}</script>` : ""}
 </body>
 </html>
 `;
 }
+
+// 목차에서 지금 읽는 제목을 표시합니다. 화면 위쪽 120px을 지난 마지막 제목이 "지금 읽는 곳"입니다.
+const TOC_SCRIPT = `(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();`;
 
 export function render() {
   const out = {};

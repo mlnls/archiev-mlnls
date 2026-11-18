@@ -41,14 +41,20 @@
       <h1>IP 차단이 서버 자신을 막았다</h1>
       <p class="meta">제주이어드림 · 5/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#IP-차단을-켰더니-서비스가-내려갔다">IP 차단을 켰더니 서비스가 내려갔다</a></li><li class="l2"><a href="#원인">원인</a></li><li class="l2"><a href="#실제-사용자-IP-넘기기">실제 사용자 IP 넘기기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>IP 차단을 켰더니 서비스가 내려갔다</h2>
+      <h2 id="IP-차단을-켰더니-서비스가-내려갔다">IP 차단을 켰더니 서비스가 내려갔다</h2>
       <p>IP 차단을 도입했다.<br>그런데 도입한 뒤 서비스가 다운됐다. 차단된 IP가 Next 서버 자신이었다.</p>
-      <h2>원인</h2>
+      <h2 id="원인">원인</h2>
       <p>백엔드가 보기에는 모든 요청이 Next 서버에서 왔다.<br>SSR에서는 사용자의 브라우저가 아니라 Next 서버가 API를 부르기 때문이다.<br>그래서 차단 규칙에 걸린 것도 사용자가 아니라 Next 서버의 IP였다.</p>
-      <h2>실제 사용자 IP 넘기기</h2>
+      <h2 id="실제-사용자-IP-넘기기">실제 사용자 IP 넘기기</h2>
       <p>Next 서버가 API를 부를 때 실제 사용자 IP를 <code>x-forwarded-for</code>로 넘기게 했다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>이제 실제 사용자 IP 기준으로 차단된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/jeju/isr/">← 메인 조회 API에 ISR</a><a href="/projects/jeju/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

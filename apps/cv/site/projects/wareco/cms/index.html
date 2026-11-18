@@ -41,12 +41,18 @@
       <h1>해외사업을 지도에서</h1>
       <p class="meta">수자원기술 홈페이지 · 2/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#해외사업을-보여-줄-곳이-없었다">해외사업을 보여 줄 곳이 없었다</a></li><li class="l2"><a href="#CMS-메뉴와-세계지도">CMS 메뉴와 세계지도</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>해외사업을 보여 줄 곳이 없었다</h2>
+      <h2 id="해외사업을-보여-줄-곳이-없었다">해외사업을 보여 줄 곳이 없었다</h2>
       <p>해외사업을 관리하는 메뉴도, 사이트에서 보여 줄 화면도 없었다.</p>
-      <h2>CMS 메뉴와 세계지도</h2>
+      <h2 id="CMS-메뉴와-세계지도">CMS 메뉴와 세계지도</h2>
       <p>CMS에 해외사업 관리 메뉴를 추가했다.<br>사이트에서는 세계지도에서 국가를 누르면 그 나라의 사업으로 이동한다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>해외사업을 CMS에서 관리하고, 사이트에서는 지도로 보여 준다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -55,5 +61,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/wareco/deploy/">← 머지하면 출시까지</a><a href="/projects/wareco/load/">서버 한 대가 얼마까지 버티나 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,14 +41,20 @@
       <h1>사용자가 관리자 코드까지 받고 있었다</h1>
       <p class="meta">법무법인 로백스 홈페이지 · 5/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#쓰지-않는-코드를-받고-있었다">쓰지 않는 코드를 받고 있었다</a></li><li class="l2"><a href="#관리자-라우트-떼어-내기">관리자 라우트 떼어 내기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>쓰지 않는 코드를 받고 있었다</h2>
+      <h2 id="쓰지-않는-코드를-받고-있었다">쓰지 않는 코드를 받고 있었다</h2>
       <p>Chrome Coverage로 첫 진입 JS를 재 봤다.<br>대부분이 그 화면에서 쓰이지 않는 코드였다.</p>
       <p>원인은 관리자 코드였다. 관리자와 사용자 코드가 한 번들에 묶여 있어서, 홈페이지에 들어온 방문자도 관리자 화면 코드를 같이 받고 있었다.</p>
-      <h2>관리자 라우트 떼어 내기</h2>
+      <h2 id="관리자-라우트-떼어-내기">관리자 라우트 떼어 내기</h2>
       <p>먼저 관리자 라우트를 <code>React.lazy</code> + <code>Suspense</code>로 나눴다.<br>관리자 화면에 들어갈 때만 그 코드를 받는다.</p>
       <p>그것만으로는 다 빠지지 않았다.<br>루트 배럴 파일 하나를 import하면, 그 파일이 export하는 관리자 코드까지 딸려 들어왔다.<br>그래서 루트 배럴 export와 import 경로를 정리해서 사용자 번들에 관리자 코드가 섞이지 않게 했다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>첫 진입 JS <b>7.2MB → 171KB</b></p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawvax/geo/">← AI가 사실을 그대로 가져가게</a><a href="/projects/lawvax/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,11 +41,17 @@
       <h1>패치가 나오지 않는 PHP 7.4</h1>
       <p class="meta">수자원기술 홈페이지 · 4/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#공개-다음-날">공개 다음 날</a></li><li class="l2"><a href="#완화-네-겹">완화 네 겹</a></li><li class="l2"><a href="#수정-한-겹-직접-빌드">수정 한 겹: 직접 빌드</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>공개 다음 날</h2>
+      <h2 id="공개-다음-날">공개 다음 날</h2>
       <p>인증 없이 원격 코드 실행이 가능한 PHP 취약점 PHP2Shell(CVE-2026-109618 · 109619, CVSS 9.2)이 공개됐다.</p>
       <p>문제는 버전이었다.<br>사이트는 PHP 7.4였고, 공식 이미지는 7.4.33에서 멈춰 있었다. 지원이 끝난 버전이라 기다려도 패치된 이미지는 나오지 않는다.</p>
-      <h2>완화 네 겹</h2>
+      <h2 id="완화-네-겹">완화 네 겹</h2>
       <p>먼저 요청이 PHP에 닿기 전에 막을 수 있는 것부터 막았다.</p>
       <ol><li>Caddy: 요청 본문 상한</li><li>Apache: <code>LimitRequestBody</code></li><li>PHP: 본문 파싱 전에 적용되는 <code>php_admin_value</code></li><li>컨테이너: 메모리 상한 1g</li></ol>
       <div class="code"><div class="code-head"><span class="file">web/apache.conf</span><span class="lang">Apache</span></div><pre><code><span class="hljs-attribute">php_admin_value</span> memory_limit -<span class="hljs-number">1</span>
@@ -59,7 +65,7 @@
     <span class="hljs-attribute">php_admin_value</span> upload_max_filesize <span class="hljs-number">30</span>M
 <span class="hljs-section">&lt;/Directory&gt;</span></code></pre></div>
       <p>같은 값을 코드의 <code>ini_set</code>으로 걸면 소용이 없다.<br><code>ini_set</code>은 본문을 파싱한 뒤에 실행돼서 이미 늦다. 설정은 무엇보다 &quot;언제&quot; 적용되는지가 중요했다.</p>
-      <h2>수정 한 겹: 직접 빌드</h2>
+      <h2 id="수정-한-겹-직접-빌드">수정 한 겹: 직접 빌드</h2>
       <p>완화만으로 끝내지 않고 PHP 자체를 고쳤다.<br>PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(<code>php-config --configure-options</code>) 그대로 다시 빌드했다.</p>
       <div class="code"><div class="code-head"><span class="file">web/php-cve/rebuild-php.sh</span><span class="lang">Bash</span></div><pre><code>[ <span class="hljs-string">&quot;<span class="hljs-subst">$(php -r &#x27;echo PHP_VERSION;&#x27;)</span>&quot;</span> = <span class="hljs-string">&quot;7.4.33&quot;</span> ] || { <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다&quot;</span>; <span class="hljs-built_in">exit</span> 1; }
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PATCH_SHA256</span>  <span class="hljs-variable">$PATCH</span>&quot;</span> | <span class="hljs-built_in">sha256sum</span> -c -
@@ -72,7 +78,7 @@ patch -p1 --forward &lt; <span class="hljs-string">&quot;<span class="hljs-varia
 make -j<span class="hljs-string">&quot;<span class="hljs-subst">$(nproc)</span>&quot;</span></code></pre></div>
       <p>패치 파일은 sha256부터 검사한다.</p>
       <p>패치가 들어갔는지 확인하는 방법도 따로 필요했다.<br>백포트는 버전을 올리지 않아서, 패치 전후 모두 버전 문자열이 7.4.33이다.<br>그래서 패치가 새로 추가한 설정 <code>max_multipart_body_parts</code>를 마커로 삼았다. 이 값이 없으면 빌드가 실패한다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <ul><li>요청 최대 크기 <b>210MB → 8MB</b></li><li>CMS 업로드 상한만 200MB → 30MB로 줄였다. 방문자는 차이를 모른다.</li></ul>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -81,5 +87,18 @@ make -j<span class="hljs-string">&quot;<span class="hljs-subst">$(nproc)</span>&
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/wareco/load/">← 서버 한 대가 얼마까지 버티나</a><a href="/projects/wareco/forensics/">흔적 없음이 안전하다는 뜻은 아니다 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>
