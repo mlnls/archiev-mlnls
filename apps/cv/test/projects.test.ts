@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import { readNotes, render } from "../scripts/build-projects.mjs";
 // @ts-expect-error 콘텐츠는 타입 없는 ESM 입니다
 import { projects } from "../content/projects.mjs";
+// @ts-expect-error 콘텐츠는 타입 없는 ESM 입니다
+import { diagrams } from "../content/diagrams/index.mjs";
 
 const site = new URL("../site/", import.meta.url);
 const index = readFileSync(new URL("index.html", site), "utf8");
@@ -50,6 +52,13 @@ describe("project pages", () => {
       for (const f of readdirSync(new URL(`projects/${slug}/`, site)).filter((n) => n.endsWith(".webp"))) {
         expect(out, `projects/${slug}/${f}`).toContain(`src="/projects/${slug}/${f}"`);
       }
+    }
+  });
+
+  it("uses every diagram it draws", () => {
+    const out = Object.values(render() as Record<string, string>).join("\n");
+    for (const [slug, set] of Object.entries(diagrams as Record<string, Record<string, string>>)) {
+      for (const key of Object.keys(set)) expect(out, `${slug}/${key}`).toContain(`data-diagram="${slug}/${key}"`);
     }
   });
 

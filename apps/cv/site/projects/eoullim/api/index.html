@@ -44,15 +44,32 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#연동할-범위가-넓었다">연동할 범위가 넓었다</a></li><li class="l2"><a href="#한-모노레포에서-두-앱">한 모노레포에서 두 앱</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#연동할-범위가-넓었다">연동할 범위가 넓었다</a></li><li class="l2"><a href="#두-앱-다른-HTTP-도구">두 앱, 다른 HTTP 도구</a></li><li class="l2"><a href="#실패는-한-모양으로">실패는 한 모양으로</a></li><li class="l2"><a href="#로컬에서만-쿠키가-안-실렸다">로컬에서만 쿠키가 안 실렸다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="연동할-범위가-넓었다">연동할 범위가 넓었다</h2>
       <p>게시글 · 댓글부터 한마디, 검색, 알림, 신고, 관리자 통계까지.<br>사용자 사이트와 관리자 양쪽에서 붙여야 할 API가 많았다.</p>
-      <h2 id="한-모노레포에서-두-앱">한 모노레포에서 두 앱</h2>
+      <h2 id="두-앱-다른-HTTP-도구">두 앱, 다른 HTTP 도구</h2>
       <p>사내 CLI로 만든 Turborepo 모노레포에서 사용자 사이트와 관리자를 함께 개발했다.</p>
-      <p>HTTP는 사용자 쪽은 fetch, 관리자 쪽은 axios를 쓴다.<br>대신 그 위에 공통 HTTP 계층을 두어, 어느 쪽에서든 같은 방식으로 API를 부른다.</p>
+      <p>사용자 사이트는 Next.js라 <code>fetch</code>를 쓰고, 관리자는 Vite 앱이라 axios를 쓴다.<br>도구가 다르면 실패를 다루는 방식도 달라지기 쉽다.<br>한쪽은 응답 본문을 읽어 에러를 만들고, 한쪽은 axios가 던지는 에러를 받는다.</p>
+      <h2 id="실패는-한-모양으로">실패는 한 모양으로</h2>
+      <p>그래서 두 HTTP 계층이 실패를 같은 모양으로 바꾸게 했다.<br>서버 오류 본문을 읽어서 <code>ApiError { code, status, details }</code> 하나로 만든다.</p>
+      <figure class="diagram" data-diagram="eoullim/http"><div class="dg"><svg viewBox="0 0 680 250" role="img" aria-label="사용자 사이트의 fetch 래퍼와 관리자의 axios 인스턴스가 모두 같은 ApiError로 실패를 바꾸는 구조"><g class="grp"><rect class="g" x="0" y="0" width="330" height="140" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">사용자 사이트 (Next.js)</text></g><g class="node"><rect class="b" x="16" y="34" width="298" height="44" rx="6"/><text x="165" y="56" class="mono" text-anchor="middle" dominant-baseline="middle">fetch 래퍼</text></g><text x="165" y="106" class="m mono" text-anchor="middle" dominant-baseline="middle">lib/api/http.ts</text><g class="grp"><rect class="g" x="350" y="0" width="330" height="140" rx="8"/><text x="362" y="16" class="m" text-anchor="start" dominant-baseline="middle">관리자 (Vite)</text></g><g class="node"><rect class="b" x="366" y="34" width="298" height="44" rx="6"/><text x="515" y="56" class="mono" text-anchor="middle" dominant-baseline="middle">axios 인스턴스 + 인터셉터</text></g><text x="515" y="106" class="m mono" text-anchor="middle" dominant-baseline="middle">api/instance.ts</text><path class="l hl" d="M165 140 L165 170 L300 170 L300 180"/><polygon class="ah hl" points="300.0,180.0 296.0,172.0 304.0,172.0"/><path class="l hl" d="M515 140 L515 170 L380 170 L380 180"/><polygon class="ah hl" points="380.0,180.0 376.0,172.0 384.0,172.0"/><g class="node"><rect class="b hl" x="160" y="180" width="360" height="64" rx="6"/><text x="340" y="203" class="mono" text-anchor="middle" dominant-baseline="middle">ApiError { code, status, details }</text><text x="340" y="221" class="m" text-anchor="middle" dominant-baseline="middle">화면은 code 로만 가른다</text></g></svg></div><figcaption>두 HTTP 계층, 한 가지 실패 모양</figcaption></figure>
+      <p>화면은 <code>code</code>로만 가른다. 서버가 보내는 <code>message</code>는 쓰지 않는다.<br>문구는 화면이 정하고, 서버는 &quot;무슨 일이 일어났는지&quot;만 알려 준다.<br>그래야 서버 문구가 바뀌어도 화면이 흔들리지 않는다.</p>
+      <h2 id="로컬에서만-쿠키가-안-실렸다">로컬에서만 쿠키가 안 실렸다</h2>
+      <p>연동하면서 하나 더 신경 쓴 게 있다. 로그인 쿠키다.</p>
+      <p>어울림의 세션 쿠키는 <code>SameSite=Lax</code>다.<br><code>SameSite</code>는 &quot;다른 사이트에서 보낸 요청에도 쿠키를 실을까&quot;를 정한다.<br><code>withlim.kr</code>과 <code>api.withlim.kr</code>은 같은 사이트로 친다. 그래서 배포 환경에서는 쿠키가 잘 실린다.</p>
+      <p>그런데 로컬에서 <code>localhost</code>가 <code>api.withlim.kr</code>을 부르면 다른 사이트다. 쿠키가 실리지 않는다.<br>그래서 로컬에서는 같은 출처의 <code>/api/*</code>로 부르고, 개발 서버가 실제 API로 넘기게 했다.<br>사용자 사이트는 Next.js의 rewrites, 관리자는 Vite의 proxy가 그 일을 한다.</p>
+      <figure class="diagram" data-diagram="eoullim/cookie"><div class="dg"><svg viewBox="0 0 680 232" role="img" aria-label="로컬에서는 localhost의 /api를 개발 서버가 API로 넘겨 쿠키가 실리고, 배포에서는 같은 사이트라 바로 실리는 모습"><g class="grp"><rect class="g" x="0" y="0" width="680" height="104" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">로컬 개발</text></g><g class="node"><rect class="b" x="16" y="36" width="170" height="52" rx="6"/><text x="101" y="62" class="mono" text-anchor="middle" dominant-baseline="middle">localhost:3000</text></g><path class="l hl" d="M186 62 L256 62"/><polygon class="ah hl" points="256.0,62.0 248.0,66.0 248.0,58.0"/><text x="221" y="50" class="m" text-anchor="middle" dominant-baseline="middle">/api/*</text><g class="node"><rect class="b" x="256" y="36" width="190" height="52" rx="6"/><text x="351" y="53" text-anchor="middle" dominant-baseline="middle">rewrites · proxy</text><text x="351" y="71" class="m" text-anchor="middle" dominant-baseline="middle">같은 출처라 쿠키가 실림</text></g><path class="l m" d="M446 62 L494 62"/><polygon class="ah m" points="494.0,62.0 486.0,66.0 486.0,58.0"/><g class="node"><rect class="b" x="494" y="36" width="170" height="52" rx="6"/><text x="579" y="62" class="mono" text-anchor="middle" dominant-baseline="middle">api.withlim.kr</text></g><g class="grp"><rect class="g" x="0" y="124" width="680" height="104" rx="8"/><text x="12" y="140" class="m" text-anchor="start" dominant-baseline="middle">배포</text></g><g class="node"><rect class="b" x="16" y="160" width="170" height="52" rx="6"/><text x="101" y="186" class="mono" text-anchor="middle" dominant-baseline="middle">withlim.kr</text></g><path class="l hl" d="M186 186 L494 186"/><polygon class="ah hl" points="494.0,186.0 486.0,190.0 486.0,182.0"/><text x="340" y="174" class="m" text-anchor="middle" dominant-baseline="middle">같은 사이트라 SameSite=Lax 쿠키가 실림</text><g class="node"><rect class="b" x="494" y="160" width="170" height="52" rx="6"/><text x="579" y="186" class="mono" text-anchor="middle" dominant-baseline="middle">api.withlim.kr</text></g></svg></div><figcaption>로컬과 배포에서 API를 부르는 길</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">apps/client/src/lib/api/http.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">/**
+ * 실제로 호출하는 주소
+ * - 로컬 개발: &#x27;&#x27; (같은 출처 /api/*) — next.config.ts 의 rewrites 가 API_ORIGIN 으로 넘긴다
+ *   세션 쿠키가 SameSite=Lax 라 localhost → api 호스트 직접 호출(cross-site)에는 쿠키가 실리지 않는다
+ * - 배포: API_ORIGIN 직접 호출 (withlim.kr ↔ api.withlim.kr 은 same-site)
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">API_BASE_URL</span> =
+  process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;development&#x27;</span> ? <span class="hljs-string">&#x27;&#x27;</span> : <span class="hljs-variable constant_">API_ORIGIN</span>;</code></pre></div>
       <h2 id="결과">결과</h2>
       <p>게시글, 댓글, 한마디, 검색, 알림, 신고와 관리자 통계까지 실 API에 연동했다.</p>
       <figure class="narrow"><img src="/projects/eoullim/api-mobile.webp" width="780" height="1688" alt="어울림 모바일 메인 화면" loading="lazy" decoding="async"><figcaption>운영 화면 (모바일)</figcaption></figure>

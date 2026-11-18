@@ -44,18 +44,28 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#쓰지-않는-코드를-받고-있었다">쓰지 않는 코드를 받고 있었다</a></li><li class="l2"><a href="#관리자-라우트-떼어-내기">관리자 라우트 떼어 내기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#받은-JS의-대부분을-쓰지-않았다">받은 JS의 대부분을 쓰지 않았다</a></li><li class="l2"><a href="#번들러는-import를-따라간다">번들러는 import를 따라간다</a></li><li class="l2"><a href="#lazy만으로는-다-빠지지-않았다">lazy만으로는 다 빠지지 않았다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="쓰지-않는-코드를-받고-있었다">쓰지 않는 코드를 받고 있었다</h2>
-      <p>Chrome Coverage로 첫 진입 JS를 재 봤다.<br>대부분이 그 화면에서 쓰이지 않는 코드였다.</p>
-      <p>원인은 관리자 코드였다. 관리자와 사용자 코드가 한 번들에 묶여 있어서, 홈페이지에 들어온 방문자도 관리자 화면 코드를 같이 받고 있었다.</p>
-      <h2 id="관리자-라우트-떼어-내기">관리자 라우트 떼어 내기</h2>
-      <p>먼저 관리자 라우트를 <code>React.lazy</code> + <code>Suspense</code>로 나눴다.<br>관리자 화면에 들어갈 때만 그 코드를 받는다.</p>
-      <p>그것만으로는 다 빠지지 않았다.<br>루트 배럴 파일 하나를 import하면, 그 파일이 export하는 관리자 코드까지 딸려 들어왔다.<br>그래서 루트 배럴 export와 import 경로를 정리해서 사용자 번들에 관리자 코드가 섞이지 않게 했다.</p>
+      <h2 id="받은-JS의-대부분을-쓰지-않았다">받은 JS의 대부분을 쓰지 않았다</h2>
+      <p>Chrome DevTools의 Coverage 탭은 받은 JS 중 실제로 실행된 부분을 보여 준다.<br>첫 진입에서 재 보니, 받은 JS의 대부분이 그 화면에서 쓰이지 않았다.</p>
+      <p>들여다보니 관리자 코드였다.<br>홈페이지에 들어온 방문자가 관리자 화면 코드까지 같이 받고 있었다.</p>
+      <h2 id="번들러는-import를-따라간다">번들러는 import를 따라간다</h2>
+      <p>왜 이렇게 되는지는 번들러가 일하는 방식을 보면 나온다.</p>
+      <p>번들러는 진입 파일에서 시작해서 <code>import</code>를 하나씩 따라간다.<br>그렇게 닿는 파일은 전부 같은 번들에 담는다.<br>라우터가 관리자 화면을 <code>import</code>하고 있으면, 관리자 화면도 방문자가 받는 번들에 들어간다.</p>
+      <p>이걸 끊는 게 동적 <code>import()</code>다.<br><code>import()</code>를 만난 번들러는 거기서 파일을 따로 떼어 낸다(청크). 그 청크는 실제로 필요할 때 받는다.</p>
+      <figure class="diagram" data-diagram="lawvax/chunks"><div class="dg"><svg viewBox="0 0 680 214" role="img" aria-label="이전에는 한 덩어리였던 번들이 이후 사용자 화면과 관리자 청크로 나뉜 모습"><g class="grp"><rect class="g" x="0" y="0" width="320" height="214" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">이전 · 방문자 누구나 받는 한 덩어리</text></g><g class="node"><rect class="b hl" x="16" y="34" width="288" height="50" rx="6"/><text x="160" y="59" text-anchor="middle" dominant-baseline="middle">사용자 화면</text></g><g class="node"><rect class="b bad" x="16" y="94" width="288" height="50" rx="6"/><text x="160" y="119" text-anchor="middle" dominant-baseline="middle">관리자 화면</text></g><g class="node"><rect class="b bad" x="16" y="154" width="288" height="50" rx="6"/><text x="160" y="179" text-anchor="middle" dominant-baseline="middle">배럴로 딸려 온 관리자 코드</text></g><g class="grp"><rect class="g" x="360" y="0" width="320" height="214" rx="8"/><text x="372" y="16" class="hl" text-anchor="start" dominant-baseline="middle">이후</text></g><g class="node"><rect class="b hl" x="376" y="34" width="288" height="50" rx="6"/><text x="520" y="50" text-anchor="middle" dominant-baseline="middle">사용자 화면</text><text x="520" y="68" class="m" text-anchor="middle" dominant-baseline="middle">처음에 받는 것</text></g><g class="node"><rect class="b dim" x="376" y="124" width="288" height="80" rx="6"/><text x="520" y="146" text-anchor="middle" dominant-baseline="middle">관리자 화면 청크</text><text x="520" y="164" class="m" text-anchor="middle" dominant-baseline="middle">React.lazy 로 분리</text><text x="520" y="182" class="m" text-anchor="middle" dominant-baseline="middle">관리자 화면에 들어갈 때만 받음</text></g></svg></div><figcaption>번들 나누기 전과 후</figcaption></figure>
+      <p>React에서는 <code>React.lazy(() =&gt; import('./...'))</code>로 컴포넌트를 감싸면 된다.<br>청크를 받는 동안 보여 줄 화면은 <code>Suspense</code>가 맡는다.<br>관리자 라우트를 이렇게 나눠서, 관리자 화면에 들어갈 때만 그 코드를 받게 했다.</p>
+      <h2 id="lazy만으로는-다-빠지지-않았다">lazy만으로는 다 빠지지 않았다</h2>
+      <p>나눴는데도 관리자 코드가 일부 남아 있었다.<br>원인은 루트 배럴 파일이었다.</p>
+      <p>배럴은 여러 모듈을 <code>index.ts</code> 하나에서 다시 export하는 파일이다.<br>쓰는 쪽에서는 <code>import { A } from '@/...'</code> 한 줄로 끝나서 편하다.</p>
+      <figure class="diagram" data-diagram="lawvax/barrel"><div class="dg"><svg viewBox="0 0 680 156" role="img" aria-label="사용자 화면이 루트 배럴에서 모듈 하나를 import하자 관리자 모듈까지 딸려 오는 모습"><g class="node"><rect class="b" x="0" y="52" width="150" height="52" rx="6"/><text x="75" y="69" text-anchor="middle" dominant-baseline="middle">사용자 화면</text><text x="75" y="87" class="m" text-anchor="middle" dominant-baseline="middle">하나만 import</text></g><path class="l" d="M150 78 L210 78"/><polygon class="ah" points="210.0,78.0 202.0,82.0 202.0,74.0"/><g class="node"><rect class="b" x="210" y="52" width="170" height="52" rx="6"/><text x="295" y="69" class="mono" text-anchor="middle" dominant-baseline="middle">index.ts</text><text x="295" y="87" class="m" text-anchor="middle" dominant-baseline="middle">루트 배럴 · 전부 export</text></g><path class="l hl" d="M380 78 L416 78 L416 20 L450 20"/><polygon class="ah hl" points="450.0,20.0 442.0,24.0 442.0,16.0"/><path class="l bad" d="M380 78 L450 78"/><polygon class="ah bad" points="450.0,78.0 442.0,82.0 442.0,74.0"/><path class="l bad" d="M380 78 L416 78 L416 136 L450 136"/><polygon class="ah bad" points="450.0,136.0 442.0,140.0 442.0,132.0"/><g class="node"><rect class="b hl" x="450" y="0" width="230" height="40" rx="6"/><text x="565" y="20" text-anchor="middle" dominant-baseline="middle">쓰려던 모듈</text></g><g class="node"><rect class="b bad" x="450" y="58" width="230" height="40" rx="6"/><text x="565" y="69" text-anchor="middle" dominant-baseline="middle">관리자 모듈</text><text x="565" y="87" class="m" text-anchor="middle" dominant-baseline="middle">같이 번들에 들어감</text></g><g class="node"><rect class="b bad" x="450" y="116" width="230" height="40" rx="6"/><text x="565" y="127" text-anchor="middle" dominant-baseline="middle">관리자 모듈</text><text x="565" y="145" class="m" text-anchor="middle" dominant-baseline="middle">같이 번들에 들어감</text></g></svg></div><figcaption>배럴 하나를 거치면 생기는 일</figcaption></figure>
+      <p>문제는 번들러 입장이다.<br><code>A</code> 하나만 가져와도, 번들러는 배럴이 export하는 다른 모듈을 안 써도 되는지 늘 확신하지는 못한다.<br>확신하지 못하면 일단 담는다. 그 안에 관리자 코드가 있었다.</p>
+      <p>그래서 루트 배럴의 export와 import 경로를 정리했다.<br>사용자 화면이 관리자 모듈로 가는 길 자체를 없앴다.</p>
       <h2 id="결과">결과</h2>
       <p>첫 진입 JS <b>7.2MB → 171KB</b></p>
+      <p>나누는 것보다 &quot;무엇이 무엇을 import하고 있나&quot;를 보는 게 먼저였다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법무법인 로백스 홈페이지</h2>

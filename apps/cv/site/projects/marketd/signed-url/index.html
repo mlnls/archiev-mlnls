@@ -44,16 +44,29 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#주소만-알면-누구나">주소만 알면 누구나</a></li><li class="l2"><a href="#비공개-버킷과-60초짜리-주소">비공개 버킷과 60초짜리 주소</a></li><li class="l2"><a href="#배포-순서도-설계다">배포 순서도 설계다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#주소만-알면-누구나">주소만 알면 누구나</a></li><li class="l2"><a href="#서명-URL은-어떻게-동작하나">서명 URL은 어떻게 동작하나</a></li><li class="l2"><a href="#서명은-quot누가quot를-모른다">서명은 &quot;누가&quot;를 모른다</a></li><li class="l2"><a href="#사진이-들어오는-길은-두-개">사진이 들어오는 길은 두 개</a></li><li class="l2"><a href="#배포-순서도-설계다">배포 순서도 설계다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="주소만-알면-누구나">주소만 알면 누구나</h2>
       <p>이웃거래 채팅에는 집 앞 사진, 송장, 계좌 캡처 같은 사진이 오간다.<br>이 사진들이 공개 버킷에 있었다. 주소만 알면 누구나 볼 수 있었다.</p>
-      <h2 id="비공개-버킷과-60초짜리-주소">비공개 버킷과 60초짜리 주소</h2>
-      <p>사진을 비공개 버킷으로 옮기고, 볼 때마다 60초짜리 서명 URL을 발급받게 했다.</p>
-      <p>여기서 놓치기 쉬운 게 있다.<br>서명은 &quot;누가&quot; 보는지 모른다. URL을 가진 사람이면 누구든 60초 동안 볼 수 있다.<br>그래서 발급 API에서 요청한 사람이 그 채팅의 참여자인지 확인한다.</p>
-      <p>받는 쪽에서는 사진이 두 경로로 들어온다.<br>채팅방을 열 때 받는 목록, 그리고 소켓으로 들어오는 새 메시지.<br>목록은 <code>initialData</code>로 넣고 소켓 메시지는 바로 발급받게 해서, 두 경로를 쿼리 하나로 처리했다.</p>
+      <h2 id="서명-URL은-어떻게-동작하나">서명 URL은 어떻게 동작하나</h2>
+      <p>해결책은 비공개 버킷과 서명 URL이다.</p>
+      <p>서명 URL은 주소에 &quot;언제까지 유효한지&quot;와 &quot;서명&quot;을 붙인 것이다.<br>S3 서명 URL을 열어 보면 <code>X-Amz-Date</code>(발급 시각), <code>X-Amz-Expires</code>(유효 시간), <code>X-Amz-Signature</code>(서명)가 붙어 있다.</p>
+      <p>서명은 비밀키로 만든다. 비밀키는 서버만 가지고 있다.<br>그래서 주소를 조금이라도 바꾸면 서명이 맞지 않고, 유효 시간이 지나면 S3가 거절한다.</p>
+      <h2 id="서명은-quot누가quot를-모른다">서명은 &quot;누가&quot;를 모른다</h2>
+      <p>여기서 놓치기 쉬운 게 있다.<br>S3는 서명과 시간만 본다. URL을 들고 온 사람이 누구인지는 모른다.<br>URL을 가진 사람이면 누구든 60초 동안 볼 수 있다.</p>
+      <p>그러니까 &quot;누가 볼 수 있나&quot;는 URL을 <b>발급할 때</b> 정해야 한다.<br>발급 API에서 요청한 사람이 그 채팅의 참여자인지 확인하고, 아니면 거절한다.</p>
+      <figure class="diagram" data-diagram="marketd/signed"><div class="dg"><svg viewBox="0 0 680 330" role="img" aria-label="앱이 발급 API에 사진 주소를 요청하면 참여자인지 확인한 뒤 60초짜리 서명 URL을 주고, 앱은 그 URL로 S3에서 사진을 받는 순서"><g class="node"><rect class="b" x="10" y="0" width="160" height="36" rx="6"/><text x="90" y="18" text-anchor="middle" dominant-baseline="middle">앱 (채팅방)</text></g><path class="l m dash" d="M90 36 L90 322"/><g class="node"><rect class="b" x="260" y="0" width="160" height="36" rx="6"/><text x="340" y="18" text-anchor="middle" dominant-baseline="middle">발급 API</text></g><path class="l m dash" d="M340 36 L340 322"/><g class="node"><rect class="b" x="510" y="0" width="160" height="36" rx="6"/><text x="590" y="18" text-anchor="middle" dominant-baseline="middle">스토리지 (S3)</text></g><path class="l m dash" d="M590 36 L590 322"/><path class="l" d="M90 72 L340 72"/><polygon class="ah" points="340.0,72.0 332.0,76.0 332.0,68.0"/><text x="215" y="62" class="m" text-anchor="middle" dominant-baseline="middle">이 메시지 사진 주소 줘</text><g class="node"><rect class="b hl" x="250" y="90" width="180" height="52" rx="6"/><text x="340" y="107" text-anchor="middle" dominant-baseline="middle">채팅 참여자인가?</text><text x="340" y="125" class="m" text-anchor="middle" dominant-baseline="middle">아니면 여기서 거절</text></g><path class="l hl dash" d="M340 176 L90 176"/><polygon class="ah hl" points="90.0,176.0 98.0,172.0 98.0,180.0"/><text x="215" y="166" class="m" text-anchor="middle" dominant-baseline="middle">서명 URL (60초)</text><path class="l" d="M90 224 L590 224"/><polygon class="ah" points="590.0,224.0 582.0,228.0 582.0,220.0"/><text x="340" y="214" class="m" text-anchor="middle" dominant-baseline="middle">그 URL로 사진 요청</text><g class="node"><rect class="b" x="500" y="240" width="180" height="52" rx="6"/><text x="590" y="257" text-anchor="middle" dominant-baseline="middle">서명 · 만료만 확인</text><text x="590" y="275" class="m" text-anchor="middle" dominant-baseline="middle">누가 보는지는 모른다</text></g><path class="l dash" d="M590 306 L90 306"/><polygon class="ah" points="90.0,306.0 98.0,302.0 98.0,310.0"/><text x="340" y="296" class="m" text-anchor="middle" dominant-baseline="middle">사진</text></svg></div><figcaption>권한은 발급할 때, 시간은 S3가 본다</figcaption></figure>
+      <h2 id="사진이-들어오는-길은-두-개">사진이 들어오는 길은 두 개</h2>
+      <p>받는 쪽에서는 사진이 두 경로로 들어온다.<br>채팅방을 열 때 받는 메시지 목록, 그리고 소켓으로 들어오는 새 메시지.</p>
+      <p>목록에는 서명 URL이 같이 온다. 소켓 메시지에는 없다.<br>그래서 목록의 URL은 <code>initialData</code>로 넣고, 없으면 바로 발급받게 해서 두 경로를 쿼리 하나로 처리했다.</p>
+      <figure class="diagram" data-diagram="marketd/two-paths"><div class="dg"><svg viewBox="0 0 680 170" role="img" aria-label="채팅방 목록으로 온 서명 URL은 initialData로, 소켓으로 온 새 메시지는 바로 발급 요청으로 같은 쿼리에 들어가는 모습"><g class="node"><rect class="b" x="0" y="0" width="230" height="60" rx="6"/><text x="115" y="21" text-anchor="middle" dominant-baseline="middle">채팅방을 열 때</text><text x="115" y="39" class="m" text-anchor="middle" dominant-baseline="middle">목록 응답에 서명 URL이 같이 옴</text></g><g class="node"><rect class="b" x="0" y="100" width="230" height="60" rx="6"/><text x="115" y="121" text-anchor="middle" dominant-baseline="middle">소켓으로 온 새 메시지</text><text x="115" y="139" class="m" text-anchor="middle" dominant-baseline="middle">URL 없이 옴</text></g><path class="l" d="M230 30 L380 30 L380 66 L420 66"/><polygon class="ah" points="420.0,66.0 412.0,70.0 412.0,62.0"/><text x="305" y="18" class="m" text-anchor="middle" dominant-baseline="middle">initialData</text><path class="l" d="M230 130 L380 130 L380 94 L420 94"/><polygon class="ah" points="420.0,94.0 412.0,98.0 412.0,90.0"/><text x="305" y="148" class="m" text-anchor="middle" dominant-baseline="middle">바로 발급 요청</text><g class="node"><rect class="b hl" x="420" y="50" width="260" height="60" rx="6"/><text x="550" y="71" class="mono" text-anchor="middle" dominant-baseline="middle">useGetChatMessageImages</text><text x="550" y="89" class="m" text-anchor="middle" dominant-baseline="middle">메시지 하나당 쿼리 하나</text></g></svg></div><figcaption>두 경로, 쿼리 하나</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">apps/mobile/hooks/useChatImageUrls.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">// <span class="hljs-doctag">NOTE:</span> 메시지 목록으로 받은 서명 URL이 있으면 그대로 쓰고, 없으면(실시간 수신) API로 발급</span>
+<span class="hljs-keyword">const</span> { <span class="hljs-attr">data</span>: signedUrls, isError, refetch } = <span class="hljs-title function_">useGetChatMessageImages</span>(
+  { chatRoomNo, messageNo },
+  { <span class="hljs-attr">initialData</span>: imageSignedUrls ?? <span class="hljs-literal">undefined</span> },
+);</code></pre></div>
       <h2 id="배포-순서도-설계다">배포 순서도 설계다</h2>
       <p>서버와 앱이 같이 바뀌는 작업이었다.<br>서버를 배포한 직후에 이 PR을 머지하지 않으면 둘 다 깨진다. 그래서 배포 순서까지 정해 두고 내보냈다.</p>
       <h2 id="결과">결과</h2>

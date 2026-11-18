@@ -44,21 +44,28 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#버전을-사람이-정하고-있었다">버전을 사람이 정하고 있었다</a></li><li class="l2"><a href="#PR-라벨로-버전-정하기">PR 라벨로 버전 정하기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#버전을-사람이-정하고-있었다">버전을 사람이 정하고 있었다</a></li><li class="l2"><a href="#버전-번호가-뜻하는-것">버전 번호가 뜻하는 것</a></li><li class="l2"><a href="#PR-라벨로-정하기">PR 라벨로 정하기</a></li><li class="l2"><a href="#배포가-성공해야-태그가-남는다">배포가 성공해야 태그가 남는다</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="버전을-사람이-정하고-있었다">버전을 사람이 정하고 있었다</h2>
       <p>배포할 때마다 버전 번호를 사람이 정했다.<br>무엇이 바뀌었는지도 사람이 따로 적어야 했다.</p>
-      <h2 id="PR-라벨로-버전-정하기">PR 라벨로 버전 정하기</h2>
-      <p>PR에 <code>release:major</code>나 <code>release:minor</code> 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.<br>PR 없이 바로 push한 커밋은 항상 patch다.</p>
+      <p>사람이 정하면 빠뜨린다. 그리고 같은 번호를 두 번 쓰기도 한다.</p>
+      <h2 id="버전-번호가-뜻하는-것">버전 번호가 뜻하는 것</h2>
+      <p>버전은 <code>주.부.수</code> 세 자리로 쓴다.</p>
+      <ul><li><b>major</b>: 크게 바뀌어서 이전과 다르게 써야 할 때</li><li><b>minor</b>: 기능이 늘었을 때</li><li><b>patch</b>: 고치기만 했을 때</li></ul>
+      <p>어느 자리를 올릴지는 &quot;무엇이 바뀌었나&quot;로 정해진다.<br>그리고 무엇이 바뀌었는지는 PR을 올린 사람이 제일 잘 안다.</p>
+      <h2 id="PR-라벨로-정하기">PR 라벨로 정하기</h2>
+      <p>그래서 PR 라벨로 정하게 했다.<br><code>release:major</code>나 <code>release:minor</code> 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.<br>PR 없이 바로 push한 커밋은 항상 patch다.</p>
+      <div class="table"><table><thead><tr><th>지금 버전</th><th>라벨</th><th>다음 버전</th></tr></thead><tbody><tr><td>v1.4.2</td><td><code>release:major</code></td><td>v2.0.0</td></tr><tr><td>v1.4.2</td><td><code>release:minor</code></td><td>v1.5.0</td></tr><tr><td>v1.4.2</td><td>없음</td><td>v1.4.3</td></tr></tbody></table></div>
       <div class="code"><div class="code-head"><span class="file">scripts/lawpeople-version.sh</span><span class="lang">Bash</span></div><pre><code>bump=patch
 labels=<span class="hljs-string">&quot; <span class="hljs-subst">$(echo $LABELS)</span> &quot;</span>
 <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$labels</span>&quot;</span> == *<span class="hljs-string">&quot; release:major &quot;</span>* ]]; <span class="hljs-keyword">then</span> bump=major
 <span class="hljs-keyword">elif</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$labels</span>&quot;</span> == *<span class="hljs-string">&quot; release:minor &quot;</span>* ]]; <span class="hljs-keyword">then</span> bump=minor
 <span class="hljs-keyword">fi</span></code></pre></div>
-      <p>배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.<br>release job은 운영 서버에 새 버전이 배포됐을 때만 돈다.</p>
-      <h2 id="결과">결과</h2>
+      <h2 id="배포가-성공해야-태그가-남는다">배포가 성공해야 태그가 남는다</h2>
+      <figure class="diagram" data-diagram="lawtimes/version"><div class="dg"><svg viewBox="0 0 680 120" role="img" aria-label="PR 라벨에서 버전 계산, 빌드와 배포를 거쳐 성공했을 때만 태그와 Release가 남는 흐름"><g class="node"><rect class="b" x="0" y="30" width="120" height="60" rx="6"/><text x="60" y="51" text-anchor="middle" dominant-baseline="middle">PR 라벨</text><text x="60" y="69" class="m" text-anchor="middle" dominant-baseline="middle">major · minor · 없음</text></g><path class="l" d="M120 60 L150 60"/><polygon class="ah" points="150.0,60.0 142.0,64.0 142.0,56.0"/><g class="node"><rect class="b" x="150" y="30" width="120" height="60" rx="6"/><text x="210" y="51" text-anchor="middle" dominant-baseline="middle">버전 계산</text><text x="210" y="69" class="m" text-anchor="middle" dominant-baseline="middle">최신 태그 + 라벨</text></g><path class="l" d="M270 60 L300 60"/><polygon class="ah" points="300.0,60.0 292.0,64.0 292.0,56.0"/><g class="node"><rect class="b" x="300" y="30" width="110" height="60" rx="6"/><text x="355" y="51" text-anchor="middle" dominant-baseline="middle">빌드 · 배포</text><text x="355" y="69" class="m" text-anchor="middle" dominant-baseline="middle">운영 서버</text></g><path class="l hl" d="M410 60 L440 60"/><polygon class="ah hl" points="440.0,60.0 432.0,64.0 432.0,56.0"/><text x="425" y="18" class="hl" text-anchor="middle" dominant-baseline="middle">성공했을 때만</text><g class="node"><rect class="b hl" x="440" y="30" width="110" height="60" rx="6"/><text x="495" y="51" text-anchor="middle" dominant-baseline="middle">태그</text><text x="495" y="69" class="m" text-anchor="middle" dominant-baseline="middle">v1.5.0</text></g><path class="l hl" d="M550 60 L580 60"/><polygon class="ah hl" points="580.0,60.0 572.0,64.0 572.0,56.0"/><g class="node"><rect class="b hl" x="580" y="30" width="100" height="60" rx="6"/><text x="630" y="51" text-anchor="middle" dominant-baseline="middle">Release</text><text x="630" y="69" class="m" text-anchor="middle" dominant-baseline="middle">변경 내역</text></g></svg></div><figcaption>버전이 정해지고 기록되기까지</figcaption></figure>
+      <p>태그와 GitHub Release는 운영 서버에 새 버전이 배포됐을 때만 남긴다.<br>그래야 &quot;최신 Release = 지금 운영 버전&quot;이 항상 맞다.</p>
       <figure><img src="/projects/lawtimes/release-list.webp" width="1600" height="311" alt="lawpeople GitHub Release 목록" loading="lazy" decoding="async"><figcaption>운영 저장소의 Release 목록</figcaption></figure>
       <p>운영 버전과 변경 내역이 Release 목록에 쌓인다.</p>
       <p>이 흐름은 나중에 <a href="/projects/frontend-tools/deploy/">사내 CLI의 bc deploy</a>로 옮겨 다른 프로젝트에서도 쓰게 했다.</p>

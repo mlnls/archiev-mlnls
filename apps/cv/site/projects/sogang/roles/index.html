@@ -44,7 +44,7 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#같은-결과-보는-사람은-셋">같은 결과, 보는 사람은 셋</a></li><li class="l2"><a href="#권한별로-화면-나누기">권한별로 화면 나누기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#같은-결과-보는-사람은-셋">같은 결과, 보는 사람은 셋</a></li><li class="l2"><a href="#데이터는-하나-화면은-권한별로">데이터는 하나, 화면은 권한별로</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
@@ -52,8 +52,11 @@
       <p>성취도 평가 결과 하나를 세 부류가 봤다.</p>
       <ul><li>본사는 전체 통계로</li><li>학당은 반 단위로</li><li>학습자는 자기 성적으로</li></ul>
       <p>데이터는 같은데 필요한 깊이가 달랐다.</p>
-      <h2 id="권한별로-화면-나누기">권한별로 화면 나누기</h2>
-      <p>본사에는 대시보드와 분석, 학당에는 반 관리, 학습자에게는 개인 리포트를 두고 권한별로 나눴다.</p>
+      <h2 id="데이터는-하나-화면은-권한별로">데이터는 하나, 화면은 권한별로</h2>
+      <p>본사가 보는 &quot;전체 평균&quot;과 학습자가 보는 &quot;내 점수&quot;는 같은 시험 결과에서 나온다.<br>다른 건 얼마나 넓게 묶어서 보느냐다.</p>
+      <p>그래서 데이터는 하나로 두고, 화면을 권한별로 나눴다.</p>
+      <figure class="diagram" data-diagram="sogang/roles"><div class="dg"><svg viewBox="0 0 680 210" role="img" aria-label="같은 성취도 평가 결과가 본사, 학당, 학습자 세 권한으로 나뉘어 각각 다른 화면이 되는 구조"><g class="node"><rect class="b hl" x="0" y="75" width="180" height="60" rx="6"/><text x="90" y="96" text-anchor="middle" dominant-baseline="middle">성취도 평가 결과</text><text x="90" y="114" class="m" text-anchor="middle" dominant-baseline="middle">같은 데이터</text></g><path class="l hl" d="M180 105 L230 105 L230 30 L280 30"/><polygon class="ah hl" points="280.0,30.0 272.0,34.0 272.0,26.0"/><g class="node"><rect class="b hl" x="280" y="0" width="110" height="60" rx="6"/><text x="335" y="30" text-anchor="middle" dominant-baseline="middle">본사</text></g><path class="l m" d="M390 30 L420 30"/><polygon class="ah m" points="420.0,30.0 412.0,34.0 412.0,26.0"/><text x="430" y="30" text-anchor="start" dominant-baseline="middle">전체 통계 · 대시보드 · 분석</text><path class="l hl" d="M180 105 L230 105 L230 105 L280 105"/><polygon class="ah hl" points="280.0,105.0 272.0,109.0 272.0,101.0"/><g class="node"><rect class="b hl" x="280" y="75" width="110" height="60" rx="6"/><text x="335" y="105" text-anchor="middle" dominant-baseline="middle">학당</text></g><path class="l m" d="M390 105 L420 105"/><polygon class="ah m" points="420.0,105.0 412.0,109.0 412.0,101.0"/><text x="430" y="105" text-anchor="start" dominant-baseline="middle">우리 반 · 반 관리</text><path class="l hl" d="M180 105 L230 105 L230 180 L280 180"/><polygon class="ah hl" points="280.0,180.0 272.0,184.0 272.0,176.0"/><g class="node"><rect class="b hl" x="280" y="150" width="110" height="60" rx="6"/><text x="335" y="180" text-anchor="middle" dominant-baseline="middle">학습자</text></g><path class="l m" d="M390 180 L420 180"/><polygon class="ah m" points="420.0,180.0 412.0,184.0 412.0,176.0"/><text x="430" y="180" text-anchor="start" dominant-baseline="middle">내 성적 · 개인 리포트</text></svg></div><figcaption>한 데이터, 세 화면</figcaption></figure>
+      <p>본사에는 대시보드와 분석, 학당에는 반 관리, 학습자에게는 개인 리포트를 두었다.</p>
       <h2 id="결과">결과</h2>
       <p>한 데이터로 세 권한이 각자 필요한 화면을 본다.</p>
     </article>

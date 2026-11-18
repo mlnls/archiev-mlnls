@@ -44,18 +44,25 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#데스크톱은-매번-손으로">데스크톱은 매번 손으로</a></li><li class="l2"><a href="#Desktop-선택지-추가">Desktop 선택지 추가</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#데스크톱은-매번-손으로">데스크톱은 매번 손으로</a></li><li class="l2"><a href="#Electron은-프로세스가-셋이다">Electron은 프로세스가 셋이다</a></li><li class="l2"><a href="#Desktop-선택지-추가">Desktop 선택지 추가</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="데스크톱은-매번-손으로">데스크톱은 매번 손으로</h2>
       <p>사내 CLI의 <code>bc init</code>은 웹 프로젝트(React · Next)만 만들 수 있었다.<br>데스크톱 앱 요청이 들어오면 Electron 프로젝트는 매번 손으로 세팅했다.</p>
+      <p>손으로 하면 프로젝트마다 구조가 달라지고, 무엇보다 보안 설정을 빠뜨리기 쉽다.</p>
+      <h2 id="Electron은-프로세스가-셋이다">Electron은 프로세스가 셋이다</h2>
+      <p>Electron 앱은 크게 세 부분으로 돈다.</p>
+      <ul><li><b>main</b>: Node.js 환경이다. 창을 만들고, 파일을 읽고, OS에 닿는다</li><li><b>renderer</b>: 창 안의 웹 화면이다. 크롬 탭과 거의 같다</li><li><b>preload</b>: 둘 사이에 끼는 작은 스크립트다</li></ul>
+      <p>위험한 건 renderer다.<br>renderer는 웹 화면이라 외부 콘텐츠나 의존성 코드가 돌 수 있다.<br>그런데 renderer가 Node.js에 바로 닿으면, 화면에 끼어든 스크립트 하나가 파일을 지우거나 프로그램을 실행할 수 있다.</p>
+      <p>그래서 renderer는 OS에 직접 닿지 못하게 막고, preload가 열어 준 기능만 쓰게 한다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/electron"><div class="dg"><svg viewBox="0 0 680 232" role="img" aria-label="renderer는 preload가 열어 준 window.api로만 main에 요청하고, OS로 직접 가는 길은 막힌 구조"><g class="node"><rect class="b" x="490" y="30" width="190" height="76" rx="6"/><text x="585" y="50" class="mono" text-anchor="middle" dominant-baseline="middle">renderer</text><text x="585" y="68" class="m" text-anchor="middle" dominant-baseline="middle">웹 화면 (React)</text><text x="585" y="86" class="m" text-anchor="middle" dominant-baseline="middle">웹 프로젝트와 같은 구조</text></g><path class="l hl" d="M490 68 L435 68"/><polygon class="ah hl" points="435.0,68.0 443.0,64.0 443.0,72.0"/><text x="462" y="18" class="hl mono" text-anchor="middle" dominant-baseline="middle">window.api.*</text><g class="node"><rect class="b hl" x="245" y="30" width="190" height="76" rx="6"/><text x="340" y="50" class="mono" text-anchor="middle" dominant-baseline="middle">preload</text><text x="340" y="68" class="m" text-anchor="middle" dominant-baseline="middle">contextBridge 로</text><text x="340" y="86" class="m" text-anchor="middle" dominant-baseline="middle">열어 줄 기능만 노출</text></g><path class="l hl" d="M245 68 L190 68"/><polygon class="ah hl" points="190.0,68.0 198.0,64.0 198.0,72.0"/><text x="217" y="18" class="hl mono" text-anchor="middle" dominant-baseline="middle">IPC</text><g class="node"><rect class="b" x="0" y="30" width="190" height="76" rx="6"/><text x="95" y="50" class="mono" text-anchor="middle" dominant-baseline="middle">main</text><text x="95" y="68" class="m" text-anchor="middle" dominant-baseline="middle">Node.js · 창 · 파일</text><text x="95" y="86" class="m" text-anchor="middle" dominant-baseline="middle">ipcMain.handle</text></g><path class="l" d="M95 106 L95 156"/><polygon class="ah" points="95.0,156.0 91.0,148.0 99.0,148.0"/><g class="node"><rect class="b dim" x="0" y="156" width="190" height="50" rx="6"/><text x="95" y="172" text-anchor="middle" dominant-baseline="middle">OS</text><text x="95" y="190" class="m" text-anchor="middle" dominant-baseline="middle">파일 · 프로세스 · 네트워크</text></g><path class="l bad dash" d="M585 106 L585 181 L190 181"/><polygon class="ah bad" points="190.0,181.0 198.0,177.0 198.0,185.0"/><text x="388" y="168" class="bad" text-anchor="middle" dominant-baseline="middle">renderer 가 직접 닿는 길 → 막음</text><text x="388" y="216" class="m mono" text-anchor="middle" dominant-baseline="middle">contextIsolation · sandbox 켬, nodeIntegration 끔</text></svg></div><figcaption>Electron의 세 프로세스와 막아 둔 길</figcaption></figure>
       <h2 id="Desktop-선택지-추가">Desktop 선택지 추가</h2>
       <p><code>bc init</code>에 Desktop(Electron)을 더했다.</p>
       <figure><img src="/projects/frontend-tools/cli-init.webp" width="1600" height="706" alt="bc init에서 React, Next.js, Mobile(Expo), Desktop(Electron) 중 하나를 고르는 화면" loading="lazy" decoding="async"><figcaption>bc init 실행 화면</figcaption></figure>
       <p>Desktop을 고르면 이런 프로젝트가 만들어진다.</p>
       <ul><li>electron-vite로 main · preload · renderer를 나눈다</li><li>renderer는 웹 프로젝트와 같은 폴더 구조, 디자인 토큰, API 레이어를 쓴다</li><li>electron-builder로 macOS · Windows 설치 파일을 만든다</li></ul>
-      <p>보안 설정은 처음부터 켜 둔다.<br>renderer는 OS에 직접 닿지 못하고, preload가 <code>window.api</code>로 열어 준 기능만 쓴다.</p>
+      <p>보안 설정은 처음부터 켜 둔다. 끄면 안 되는 이유도 코드에 같이 적었다.</p>
       <div class="code"><div class="code-head"><span class="file">src/generators/createElectronProject.js</span><span class="lang">JavaScript</span></div><pre><code><span class="hljs-attr">webPreferences</span>: {
   <span class="hljs-attr">preload</span>: <span class="hljs-title function_">join</span>(<span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">dirname</span>, <span class="hljs-string">&#x27;../preload/index.cjs&#x27;</span>),
   <span class="hljs-comment">// 보안 기본값 — renderer 는 OS 에 직접 접근하지 못하고 window.api 만 쓴다.</span>
@@ -64,8 +71,10 @@
   <span class="hljs-attr">sandbox</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">nodeIntegration</span>: <span class="hljs-literal">false</span>,
 },</code></pre></div>
+      <ul><li><code>contextIsolation</code>: preload와 웹 화면의 JS 공간을 나눈다. 화면 쪽 코드가 preload의 변수를 건드리지 못한다</li><li><code>sandbox</code>: renderer를 크롬의 샌드박스 안에서 돌린다</li><li><code>nodeIntegration: false</code>: renderer에서 <code>require</code> 같은 Node.js 기능을 못 쓰게 한다</li></ul>
+      <p>새 기능이 필요하면 preload에 하나 열고, main의 <code>ipcMain.handle</code>에서 처리한다.</p>
       <h2 id="결과">결과</h2>
-      <p>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</p>
+      <p>Desktop을 고르면 웹 프로젝트와 같은 규칙, 같은 보안 기본값으로 데스크톱 앱이 시작된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>벽촌 FE 공통 모듈 · 사내 CLI</h2>

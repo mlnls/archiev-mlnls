@@ -44,16 +44,42 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#공고-날마다-멈췄다">공고 날마다 멈췄다</a></li><li class="l2"><a href="#필요할-때만-늘어나는-서버">필요할 때만 늘어나는 서버</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#공고-날마다-멈췄다">공고 날마다 멈췄다</a></li><li class="l2"><a href="#서버를-늘리는-두-가지-방법">서버를 늘리는 두 가지 방법</a></li><li class="l2"><a href="#필요할-때만-늘어나는-서버">필요할 때만 늘어나는 서버</a></li><li class="l2"><a href="#언제-얼마나-늘릴까">언제, 얼마나 늘릴까</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="공고-날마다-멈췄다">공고 날마다 멈췄다</h2>
       <p>제주이어드림은 청년 지원 공고가 올라오는 날 사람이 몰린다.<br>그날이면 프론트 서버와 백엔드 서버가 같이 멈췄다.</p>
       <p>프론트는 S3 + CloudFront 정적 호스팅이었다.<br>여기에는 사양을 바꿀 옵션이 없다. 몰리는 날을 대비할 방법이 없었다.</p>
+      <h2 id="서버를-늘리는-두-가지-방법">서버를 늘리는 두 가지 방법</h2>
+      <p>몰리는 날을 버티는 방법은 크게 두 가지다.</p>
+      <ul><li><b>스케일 업</b>: 서버 한 대를 더 큰 사양으로 바꾼다</li><li><b>스케일 아웃</b>: 같은 서버를 여러 대로 늘린다</li></ul>
+      <p>스케일 업은 간단하지만, 몰리지 않는 날에도 큰 서버 값을 낸다.<br>제주이어드림은 평소에는 조용하고 공고 날만 붐볐다.<br>그래서 평소엔 작게, 몰릴 때만 대수를 늘리는 스케일 아웃을 골랐다.</p>
       <h2 id="필요할-때만-늘어나는-서버">필요할 때만 늘어나는 서버</h2>
       <p>Next.js를 SSR로 돌리고, EC2 + ALB + Auto Scaling 위로 옮겼다.</p>
-      <p>늘어나는 기준은 요청 수다.<br>타깃 하나당 요청이 3,000을 넘으면 2대, 6,000을 넘으면 3대로 늘어나는 Step Scaling을 걸었다.</p>
+      <p>ALB는 들어온 요청을 여러 서버에 나눠 준다.<br>Auto Scaling 그룹은 정해 둔 조건에 따라 서버 대수를 늘리고 줄인다.</p>
+      <figure class="diagram" data-diagram="jeju/arch"><div class="dg"><svg viewBox="0 0 680 300" role="img" aria-label="이전에는 CloudFront와 S3 정적 호스팅이었고, 이후에는 ALB 뒤의 Auto Scaling 그룹이 평소 1대에서 몰릴 때 최대 5대까지 늘어나는 구조"><g class="grp"><rect class="g" x="0" y="0" width="680" height="96" rx="8"/><text x="12" y="16" class="m" text-anchor="start" dominant-baseline="middle">이전</text></g><g class="node"><rect class="b" x="16" y="32" width="140" height="48" rx="6"/><text x="86" y="56" text-anchor="middle" dominant-baseline="middle">사용자</text></g><path class="l" d="M156 56 L216 56"/><polygon class="ah" points="216.0,56.0 208.0,60.0 208.0,52.0"/><g class="node"><rect class="b bad" x="216" y="32" width="220" height="48" rx="6"/><text x="326" y="47" text-anchor="middle" dominant-baseline="middle">CloudFront + S3</text><text x="326" y="65" class="m" text-anchor="middle" dominant-baseline="middle">정적 파일 · 사양 옵션 없음</text></g><g class="grp"><rect class="g" x="0" y="116" width="680" height="184" rx="8"/><text x="12" y="132" class="hl" text-anchor="start" dominant-baseline="middle">이후</text></g><g class="node"><rect class="b" x="16" y="180" width="110" height="48" rx="6"/><text x="71" y="204" text-anchor="middle" dominant-baseline="middle">사용자</text></g><path class="l hl" d="M126 204 L156 204"/><polygon class="ah hl" points="156.0,204.0 148.0,208.0 148.0,200.0"/><g class="node"><rect class="b hl" x="156" y="180" width="90" height="48" rx="6"/><text x="201" y="204" text-anchor="middle" dominant-baseline="middle">ALB</text></g><path class="l hl" d="M246 204 L276 204"/><polygon class="ah hl" points="276.0,204.0 268.0,208.0 268.0,200.0"/><g class="grp"><rect class="g solid" x="276" y="146" width="260" height="138" rx="8"/><text x="288" y="162" class="hl" text-anchor="start" dominant-baseline="middle">Auto Scaling 그룹 · 1~5대</text></g><g class="node"><rect class="b hl" x="292" y="176" width="110" height="44" rx="6"/><text x="347" y="189" text-anchor="middle" dominant-baseline="middle">EC2</text><text x="347" y="207" class="m" text-anchor="middle" dominant-baseline="middle">Next.js SSR</text></g><g class="node"><rect class="b dim" x="410" y="176" width="110" height="44" rx="6"/><text x="465" y="189" text-anchor="middle" dominant-baseline="middle">EC2</text><text x="465" y="207" class="m" text-anchor="middle" dominant-baseline="middle">몰릴 때만</text></g><g class="node"><rect class="b dim" x="292" y="228" width="110" height="44" rx="6"/><text x="347" y="241" text-anchor="middle" dominant-baseline="middle">EC2</text><text x="347" y="259" class="m" text-anchor="middle" dominant-baseline="middle">몰릴 때만</text></g><g class="node"><rect class="b dim" x="410" y="228" width="110" height="44" rx="6"/><text x="465" y="250" text-anchor="middle" dominant-baseline="middle">…</text></g><path class="l hl" d="M536 204 L566 204"/><polygon class="ah hl" points="566.0,204.0 558.0,208.0 558.0,200.0"/><g class="node"><rect class="b" x="566" y="180" width="114" height="48" rx="6"/><text x="623" y="204" text-anchor="middle" dominant-baseline="middle">백엔드</text></g></svg></div><figcaption>정적 호스팅에서 Auto Scaling으로</figcaption></figure>
+      <h2 id="언제-얼마나-늘릴까">언제, 얼마나 늘릴까</h2>
+      <p>늘어나는 기준은 요청 수다. 서버 1대가 1분 동안 받은 요청 수를 본다.</p>
+      <p>이 값이 3,000을 넘으면 알람이 울리고, Step Scaling이 서버를 늘린다.<br>Step Scaling은 기준을 <b>얼마나</b> 넘었는지에 따라 늘리는 폭을 다르게 정할 수 있다.</p>
+      <figure class="diagram" data-diagram="jeju/step"><div class="dg"><svg viewBox="0 0 680 170" role="img" aria-label="1분 요청 수가 알람 기준 3,000을 넘은 정도에 따라 1대, 2대, 3대를 더하는 구간"><text x="0" y="14" class="m" text-anchor="start" dominant-baseline="middle">타깃 1대당 1분 요청 수 (합계)</text><g class="node"><rect class="b dim" x="0" y="34" width="150" height="52" rx="6"/><text x="75" y="51" text-anchor="middle" dominant-baseline="middle">그대로</text><text x="75" y="69" class="m" text-anchor="middle" dominant-baseline="middle">~ 3,000</text></g><g class="node"><rect class="b hl" x="150" y="34" width="170" height="52" rx="6"/><text x="235" y="51" text-anchor="middle" dominant-baseline="middle">+1대</text><text x="235" y="69" class="m" text-anchor="middle" dominant-baseline="middle">3,000 ~ 6,000</text></g><g class="node"><rect class="b hl" x="320" y="34" width="170" height="52" rx="6"/><text x="405" y="51" text-anchor="middle" dominant-baseline="middle">+2대</text><text x="405" y="69" class="m" text-anchor="middle" dominant-baseline="middle">6,000 ~ 9,000</text></g><g class="node"><rect class="b hl" x="490" y="34" width="190" height="52" rx="6"/><text x="585" y="51" text-anchor="middle" dominant-baseline="middle">+3대</text><text x="585" y="69" class="m" text-anchor="middle" dominant-baseline="middle">9,000 ~</text></g><path class="l bad" d="M150 104 L150 90"/><polygon class="ah bad" points="150.0,90.0 154.0,98.0 146.0,98.0"/><text x="150" y="118" class="bad" text-anchor="middle" dominant-baseline="middle">알람 기준 3,000</text><text x="0" y="152" class="m" text-anchor="start" dominant-baseline="middle">알람 기준을 얼마나 넘었는지에 따라 늘리는 폭이 다르다. 평소 1대, 최대 5대.</text></svg></div><figcaption>넘은 만큼 더 늘린다</figcaption></figure>
+      <div class="code"><div class="code-head"><span class="file">deploy.yml</span><span class="lang">YAML</span></div><pre><code><span class="hljs-attr">HighRequestCountScalingPolicy:</span>
+  <span class="hljs-attr">Type:</span> <span class="hljs-string">AWS::AutoScaling::ScalingPolicy</span>
+  <span class="hljs-attr">Properties:</span>
+    <span class="hljs-attr">PolicyType:</span> <span class="hljs-string">StepScaling</span>
+    <span class="hljs-attr">AdjustmentType:</span> <span class="hljs-string">ChangeInCapacity</span>
+    <span class="hljs-attr">EstimatedInstanceWarmup:</span> <span class="hljs-number">90</span>
+    <span class="hljs-attr">StepAdjustments:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">MetricIntervalLowerBound:</span> <span class="hljs-number">0</span>       <span class="hljs-comment"># 3,000 ~ 6,000</span>
+        <span class="hljs-attr">MetricIntervalUpperBound:</span> <span class="hljs-number">3000</span>
+        <span class="hljs-attr">ScalingAdjustment:</span> <span class="hljs-number">1</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">MetricIntervalLowerBound:</span> <span class="hljs-number">3000</span>    <span class="hljs-comment"># 6,000 ~ 9,000</span>
+        <span class="hljs-attr">MetricIntervalUpperBound:</span> <span class="hljs-number">6000</span>
+        <span class="hljs-attr">ScalingAdjustment:</span> <span class="hljs-number">2</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">MetricIntervalLowerBound:</span> <span class="hljs-number">6000</span>    <span class="hljs-comment"># 9,000 ~</span>
+        <span class="hljs-attr">ScalingAdjustment:</span> <span class="hljs-number">3</span></code></pre></div>
+      <p>구간 값은 알람 기준(3,000)에서 얼마나 넘었는지로 적는다. 그래서 <code>0</code>이 3,000, <code>3000</code>이 6,000이다.</p>
+      <p>새 서버가 뜨고 요청을 받을 수 있을 때까지는 시간이 걸린다.<br><code>EstimatedInstanceWarmup: 90</code>은 &quot;새 서버는 90초 동안은 아직 준비 중&quot;이라고 알려 준다. 그 사이에 또 늘리지 않게.</p>
       <h2 id="결과">결과</h2>
       <p>평소에는 1대로 돌고(최대 5대), 몰릴 때만 늘어난다.</p>
       <p>해 보니 클라이언트가 원한 건 서버를 늘리는 기술보다, 비용과 안정성을 같이 설계하는 일이었다.</p>

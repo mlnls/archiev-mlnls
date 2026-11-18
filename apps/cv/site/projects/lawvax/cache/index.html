@@ -44,15 +44,19 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#정적으로-만들면-생기는-일">정적으로 만들면 생기는 일</a></li><li class="l2"><a href="#저장한-글의-캐시만-비우기">저장한 글의 캐시만 비우기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#미리-만든-페이지는-늦게-바뀐다">미리 만든 페이지는 늦게 바뀐다</a></li><li class="l2"><a href="#시간-말고-quot저장quot을-기준으로">시간 말고 &quot;저장&quot;을 기준으로</a></li><li class="l2"><a href="#아무나-부르면-안-된다">아무나 부르면 안 된다</a></li><li class="l2"><a href="#실패해도-결국은-반영된다">실패해도 결국은 반영된다</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="정적으로-만들면-생기는-일">정적으로 만들면 생기는 일</h2>
-      <p>정적으로 만든 페이지는 빠르다.<br>대신 관리자가 글을 고쳐도 캐시가 남아 있어서 바로 반영되지 않는다.</p>
-      <p>법인 소식이나 언론보도는 관리자가 올리고 나서 언제 보이는지를 바로 확인하는 글이라, 이 지연이 그대로 불편이 됐다.</p>
-      <h2 id="저장한-글의-캐시만-비우기">저장한 글의 캐시만 비우기</h2>
-      <p>서버에서 데이터를 가져올 때 요청마다 태그를 달았다.<br>그리고 관리자 화면에서 저장이나 삭제가 성공하면 <code>/api/revalidate</code>를 불러, 그 태그의 캐시만 <code>revalidateTag</code>로 비운다.</p>
+      <h2 id="미리-만든-페이지는-늦게-바뀐다">미리 만든 페이지는 늦게 바뀐다</h2>
+      <p>Next.js는 서버에서 받아 온 데이터를 캐시해 둔다.<br>방문자가 올 때마다 백엔드를 부르지 않고 만들어 둔 결과를 내주니까 빠르다.</p>
+      <p>대신 언제 다시 만들지는 보통 시간으로 정한다.<br>그 시간이 지나기 전에는 관리자가 글을 고쳐도 방문자는 예전 페이지를 본다.</p>
+      <p>법인 소식이나 언론보도는 관리자가 올리고 나서 바로 확인하는 글이었다.<br>이 지연이 그대로 불편이 됐다.</p>
+      <h2 id="시간-말고-quot저장quot을-기준으로">시간 말고 &quot;저장&quot;을 기준으로</h2>
+      <p>캐시를 비우는 기준을 시간에서 사건으로 바꿨다. 관리자가 저장한 순간이다.</p>
+      <p>Next.js는 데이터를 가져올 때 <code>fetch</code>에 <code>next: { tags: ['news'] }</code>처럼 태그를 붙일 수 있다.<br>그리고 <code>revalidateTag('news')</code>를 부르면 그 태그가 붙은 캐시만 비운다.<br>다른 페이지 캐시는 그대로 둔다.</p>
+      <p>관리자 화면에서 저장이나 삭제가 성공하면 <code>/api/revalidate</code>를 부르게 했다.</p>
+      <figure class="diagram" data-diagram="lawvax/revalidate"><div class="dg"><svg viewBox="0 0 680 392" role="img" aria-label="관리자 저장부터 방문자가 새 글을 받기까지의 순서"><g class="node"><rect class="b" x="5" y="0" width="130" height="36" rx="6"/><text x="70" y="18" text-anchor="middle" dominant-baseline="middle">관리자 화면</text></g><path class="l m dash" d="M70 36 L70 384"/><g class="node"><rect class="b" x="175" y="0" width="130" height="36" rx="6"/><text x="240" y="18" text-anchor="middle" dominant-baseline="middle">백엔드</text></g><path class="l m dash" d="M240 36 L240 384"/><g class="node"><rect class="b" x="355" y="0" width="130" height="36" rx="6"/><text x="420" y="18" text-anchor="middle" dominant-baseline="middle">Next 서버</text></g><path class="l m dash" d="M420 36 L420 384"/><g class="node"><rect class="b" x="535" y="0" width="130" height="36" rx="6"/><text x="600" y="18" text-anchor="middle" dominant-baseline="middle">방문자</text></g><path class="l m dash" d="M600 36 L600 384"/><path class="l" d="M70 70 L240 70"/><polygon class="ah" points="240.0,70.0 232.0,74.0 232.0,66.0"/><text x="155" y="60" class="m" text-anchor="middle" dominant-baseline="middle">글 저장</text><path class="l dash" d="M240 104 L70 104"/><polygon class="ah" points="70.0,104.0 78.0,100.0 78.0,108.0"/><text x="155" y="94" class="m" text-anchor="middle" dominant-baseline="middle">성공</text><path class="l hl" d="M70 146 L420 146"/><polygon class="ah hl" points="420.0,146.0 412.0,150.0 412.0,142.0"/><text x="245" y="136" class="m" text-anchor="middle" dominant-baseline="middle">POST /api/revalidate  { tags: ['news'] }</text><path class="l" d="M420 182 L240 182"/><polygon class="ah" points="240.0,182.0 248.0,178.0 248.0,186.0"/><text x="330" y="172" class="m" text-anchor="middle" dominant-baseline="middle">이 토큰, 관리자 맞아?</text><path class="l dash" d="M240 212 L420 212"/><polygon class="ah" points="420.0,212.0 412.0,216.0 412.0,208.0"/><text x="330" y="202" class="m" text-anchor="middle" dominant-baseline="middle">맞음</text><g class="node"><rect class="b hl" x="345" y="226" width="150" height="36" rx="6"/><text x="420" y="244" text-anchor="middle" dominant-baseline="middle">news 캐시만 비움</text></g><path class="l" d="M600 292 L420 292"/><polygon class="ah" points="420.0,292.0 428.0,288.0 428.0,296.0"/><text x="510" y="282" class="m" text-anchor="middle" dominant-baseline="middle">소식 페이지</text><path class="l" d="M420 324 L240 324"/><polygon class="ah" points="240.0,324.0 248.0,320.0 248.0,328.0"/><text x="330" y="314" class="m" text-anchor="middle" dominant-baseline="middle">새로 조회 (이때 한 번)</text><path class="l hl" d="M420 362 L600 362"/><polygon class="ah hl" points="600.0,362.0 592.0,366.0 592.0,358.0"/><text x="510" y="352" class="m" text-anchor="middle" dominant-baseline="middle">새 글이 들어간 페이지</text></svg></div><figcaption>저장 버튼부터 방문자 화면까지</figcaption></figure>
       <div class="code"><div class="code-head"><span class="file">src/app/api/revalidate/route.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">/**
  * 공개 페이지 캐시 즉시 무효화. 관리자 화면에서 저장·삭제가 성공한 뒤 호출한다.
  *   POST /api/revalidate  { tags: [&#x27;news&#x27;, &#x27;search&#x27;] }  (헤더: Access-Token)
@@ -64,12 +68,16 @@
   uniqueTags.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">tag</span>) =&gt;</span> <span class="hljs-title function_">revalidateTag</span>(tag));
   <span class="hljs-keyword">return</span> <span class="hljs-title class_">NextResponse</span>.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">revalidated</span>: uniqueTags });
 }</code></pre></div>
-      <p>관리자 토큰은 브라우저에만 있어서 따로 비밀키를 둘 수가 없었다.<br>그래서 백엔드 관리자 API를 한 번 불러 보고, 토큰이 유효할 때만 캐시를 비운다.</p>
-      <p>이 호출이 실패해도 캐시 주기가 지나면 반영된다. 소식 · 언론보도는 5분, 구성원 · 업무분야는 1시간이다.</p>
-      <p>관리자 쪽 편의도 하나 더했다. 유튜브 링크만 넣으면 제목과 게시일이 채워진다.</p>
-      <h2 id="결과">결과</h2>
+      <h2 id="아무나-부르면-안-된다">아무나 부르면 안 된다</h2>
+      <p><code>/api/revalidate</code>는 공개된 주소다.<br>아무나 부를 수 있으면 캐시를 계속 비워서 백엔드를 두드릴 수 있다.</p>
+      <p>보통은 Next 서버와 호출하는 쪽이 같은 비밀키를 나눠 가진다.<br>그런데 여기서 호출하는 쪽은 관리자의 브라우저다. 브라우저에 둔 비밀키는 비밀이 아니다.</p>
+      <p>그래서 관리자 토큰을 그대로 받아서, 백엔드 관리자 API를 한 번 불러 봤다.<br>토큰이 유효할 때만 캐시를 비운다. 관리자인지는 원래 그걸 아는 백엔드에게 묻는 셈이다.</p>
+      <h2 id="실패해도-결국은-반영된다">실패해도 결국은 반영된다</h2>
+      <p>이 호출이 실패할 수도 있다. 네트워크가 끊기거나, 관리자가 저장 직후 창을 닫거나.<br>그래서 시간 기준도 남겨 뒀다. 소식 · 언론보도는 5분, 구성원 · 업무분야는 1시간이 지나면 다시 만든다.</p>
+      <p>저장이 빠른 길이고, 시간이 안전망이다.</p>
       <figure><img src="/projects/lawvax/cache-header.webp" width="1600" height="404" alt="운영 응답 헤더의 x-nextjs-cache와 cache-control" loading="lazy" decoding="async"><figcaption>운영 응답 헤더: Next.js 캐시에서 나간 응답</figcaption></figure>
       <p>정적 페이지의 속도는 그대로 두고, 관리자가 저장한 글은 바로 보인다.</p>
+      <p>관리자 쪽 편의도 하나 더했다. 유튜브 링크만 넣으면 제목과 게시일이 채워진다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법무법인 로백스 홈페이지</h2>

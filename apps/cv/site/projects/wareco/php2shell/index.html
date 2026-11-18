@@ -44,15 +44,20 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#공개-다음-날">공개 다음 날</a></li><li class="l2"><a href="#완화-네-겹">완화 네 겹</a></li><li class="l2"><a href="#수정-한-겹-직접-빌드">수정 한 겹: 직접 빌드</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#공개-다음-날">공개 다음 날</a></li><li class="l2"><a href="#요청이-PHP에-닿기까지">요청이 PHP에 닿기까지</a></li><li class="l2"><a href="#완화-네-겹">완화 네 겹</a></li><li class="l2"><a href="#수정-한-겹-직접-빌드">수정 한 겹: 직접 빌드</a></li><li class="l2"><a href="#패치가-들어갔는지-어떻게-알까">패치가 들어갔는지 어떻게 알까</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="공개-다음-날">공개 다음 날</h2>
       <p>인증 없이 원격 코드 실행이 가능한 PHP 취약점 PHP2Shell(CVE-2026-109618 · 109619, CVSS 9.2)이 공개됐다.</p>
       <p>문제는 버전이었다.<br>사이트는 PHP 7.4였고, 공식 이미지는 7.4.33에서 멈춰 있었다. 지원이 끝난 버전이라 기다려도 패치된 이미지는 나오지 않는다.</p>
+      <p>그래서 두 가지를 동시에 했다.<br>당장 공격이 PHP에 닿지 못하게 막는 <b>완화</b>, 그리고 PHP 자체를 고치는 <b>수정</b>.</p>
+      <h2 id="요청이-PHP에-닿기까지">요청이 PHP에 닿기까지</h2>
+      <p>완화를 하려면 요청이 어떤 길을 지나 PHP에 닿는지부터 알아야 했다.</p>
+      <p>요청은 Caddy → Apache → PHP 순서로 지나간다.<br>그리고 PHP는 스크립트를 실행하기 <b>전에</b> 요청 본문을 먼저 다 읽고 파싱한다. 업로드 파일이나 폼 데이터가 <code>$_POST</code>, <code>$_FILES</code>에 미리 들어 있는 이유다.</p>
+      <p>이 취약점은 요청 본문을 다루는 쪽을 노렸다.<br>그러니 본문이 크면 PHP에 닿기 전에 잘라야 한다.</p>
+      <figure class="diagram" data-diagram="wareco/limits"><div class="dg"><svg viewBox="0 0 680 196" role="img" aria-label="요청이 Caddy, Apache, PHP 본문 파싱, 스크립트 순서로 지나가고, 상한을 앞쪽에 걸어 PHP가 보기 전에 막으며, 스크립트의 ini_set은 이미 늦은 지점인 구조"><g class="node"><rect class="b" x="0" y="40" width="110" height="70" rx="6"/><text x="55" y="75" text-anchor="middle" dominant-baseline="middle">요청</text></g><path class="l" d="M110 75 L140 75"/><polygon class="ah" points="140.0,75.0 132.0,79.0 132.0,71.0"/><g class="node"><rect class="b hl" x="140" y="40" width="120" height="70" rx="6"/><text x="200" y="66" text-anchor="middle" dominant-baseline="middle">Caddy</text><text x="200" y="84" class="m" text-anchor="middle" dominant-baseline="middle">본문 상한 8MB</text></g><path class="l" d="M260 75 L290 75"/><polygon class="ah" points="290.0,75.0 282.0,79.0 282.0,71.0"/><g class="grp"><rect class="g solid" x="280" y="0" width="400" height="156" rx="8"/><text x="292" y="16" class="m" text-anchor="start" dominant-baseline="middle">컨테이너 · 메모리 상한 1g</text></g><g class="node"><rect class="b hl" x="290" y="40" width="120" height="70" rx="6"/><text x="350" y="57" text-anchor="middle" dominant-baseline="middle">Apache</text><text x="350" y="75" class="m" text-anchor="middle" dominant-baseline="middle">LimitRequestBody</text><text x="350" y="93" class="m" text-anchor="middle" dominant-baseline="middle">8MB</text></g><path class="l" d="M410 75 L430 75"/><polygon class="ah" points="430.0,75.0 422.0,79.0 422.0,71.0"/><g class="node"><rect class="b hl" x="430" y="40" width="120" height="70" rx="6"/><text x="490" y="66" text-anchor="middle" dominant-baseline="middle">PHP 본문 파싱</text><text x="490" y="84" class="m" text-anchor="middle" dominant-baseline="middle">php_admin_value</text></g><path class="l" d="M550 75 L570 75"/><polygon class="ah" points="570.0,75.0 562.0,79.0 562.0,71.0"/><g class="node"><rect class="b bad" x="570" y="40" width="100" height="70" rx="6"/><text x="620" y="66" text-anchor="middle" dominant-baseline="middle">스크립트</text><text x="620" y="84" class="m" text-anchor="middle" dominant-baseline="middle">ini_set()</text></g><path class="l m" d="M490 110 L490 134"/><text x="490" y="144" class="m" text-anchor="middle" dominant-baseline="middle">본문은 여기서 이미 다 읽힌다</text><text x="620" y="128" class="bad" text-anchor="middle" dominant-baseline="middle">이미 늦다</text><text x="0" y="184" class="m" text-anchor="start" dominant-baseline="middle">상한은 앞에서부터 건다. 앞에서 막힐수록 PHP는 그 요청을 보지도 않는다.</text></svg></div><figcaption>상한을 거는 자리와 시점</figcaption></figure>
       <h2 id="완화-네-겹">완화 네 겹</h2>
-      <p>먼저 요청이 PHP에 닿기 전에 막을 수 있는 것부터 막았다.</p>
       <ol><li>Caddy: 요청 본문 상한</li><li>Apache: <code>LimitRequestBody</code></li><li>PHP: 본문 파싱 전에 적용되는 <code>php_admin_value</code></li><li>컨테이너: 메모리 상한 1g</li></ol>
       <div class="code"><div class="code-head"><span class="file">web/apache.conf</span><span class="lang">Apache</span></div><pre><code><span class="hljs-attribute">php_admin_value</span> memory_limit -<span class="hljs-number">1</span>
 <span class="hljs-comment"># 요청 본문 크기. Caddy 와 같은 값이며 크기를 밝히지 않은(chunked) 요청에도 적용된다.</span>
@@ -64,9 +69,9 @@
     <span class="hljs-attribute">php_admin_value</span> post_max_size <span class="hljs-number">32</span>M
     <span class="hljs-attribute">php_admin_value</span> upload_max_filesize <span class="hljs-number">30</span>M
 <span class="hljs-section">&lt;/Directory&gt;</span></code></pre></div>
-      <p>같은 값을 코드의 <code>ini_set</code>으로 걸면 소용이 없다.<br><code>ini_set</code>은 본문을 파싱한 뒤에 실행돼서 이미 늦다. 설정은 무엇보다 &quot;언제&quot; 적용되는지가 중요했다.</p>
+      <p>같은 값을 코드의 <code>ini_set</code>으로 걸면 소용이 없다.<br><code>ini_set</code>은 스크립트 안에서 실행된다. 그때는 본문 파싱이 이미 끝났다.<br>설정은 &quot;무엇&quot;보다 &quot;언제&quot; 적용되는지가 중요했다.</p>
       <h2 id="수정-한-겹-직접-빌드">수정 한 겹: 직접 빌드</h2>
-      <p>완화만으로 끝내지 않고 PHP 자체를 고쳤다.<br>PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(<code>php-config --configure-options</code>) 그대로 다시 빌드했다.</p>
+      <p>완화만으로 끝내지 않고 PHP 자체를 고쳤다.<br>PHP 보안팀이 낸 7.4 백포트 패치를 받아, 이미지에 들어 있는 PHP의 원래 빌드 옵션(<code>php-config --configure-options</code>) 그대로 다시 빌드했다.<br>빌드 옵션이 같아야 확장 모듈이나 동작이 바뀌지 않는다.</p>
       <div class="code"><div class="code-head"><span class="file">web/php-cve/rebuild-php.sh</span><span class="lang">Bash</span></div><pre><code>[ <span class="hljs-string">&quot;<span class="hljs-subst">$(php -r &#x27;echo PHP_VERSION;&#x27;)</span>&quot;</span> = <span class="hljs-string">&quot;7.4.33&quot;</span> ] || { <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;PHP 7.4.33 이미지(php:7.4-*)에서만 쓴다&quot;</span>; <span class="hljs-built_in">exit</span> 1; }
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PATCH_SHA256</span>  <span class="hljs-variable">$PATCH</span>&quot;</span> | <span class="hljs-built_in">sha256sum</span> -c -
 
@@ -76,8 +81,10 @@ docker-php-source extract
 patch -p1 --forward &lt; <span class="hljs-string">&quot;<span class="hljs-variable">$PATCH</span>&quot;</span>
 <span class="hljs-built_in">eval</span> <span class="hljs-string">&quot;./configure <span class="hljs-variable">$opts</span>&quot;</span>
 make -j<span class="hljs-string">&quot;<span class="hljs-subst">$(nproc)</span>&quot;</span></code></pre></div>
-      <p>패치 파일은 sha256부터 검사한다.</p>
-      <p>패치가 들어갔는지 확인하는 방법도 따로 필요했다.<br>백포트는 버전을 올리지 않아서, 패치 전후 모두 버전 문자열이 7.4.33이다.<br>그래서 패치가 새로 추가한 설정 <code>max_multipart_body_parts</code>를 마커로 삼았다. 이 값이 없으면 빌드가 실패한다.</p>
+      <p>패치 파일은 sha256부터 검사한다. 받은 파일이 바뀌었으면 빌드하지 않는다.</p>
+      <h2 id="패치가-들어갔는지-어떻게-알까">패치가 들어갔는지 어떻게 알까</h2>
+      <p>백포트는 버전을 올리지 않는다. 패치 전후 모두 버전 문자열이 7.4.33이다.<br>버전으로는 확인할 수 없었다.</p>
+      <p>그래서 패치가 새로 추가한 설정 <code>max_multipart_body_parts</code>를 마커로 삼았다.<br>이 설정이 있으면 패치가 들어간 PHP다. 없으면 빌드가 실패한다.</p>
       <h2 id="결과">결과</h2>
       <ul><li>요청 최대 크기 <b>210MB → 8MB</b></li><li>CMS 업로드 상한만 200MB → 30MB로 줄였다. 방문자는 차이를 모른다.</li></ul>
     </article>

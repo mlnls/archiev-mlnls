@@ -50,9 +50,12 @@
     <article class="post">
       <h2 id="어느-화면이-어느-시안까지">어느 화면이 어느 시안까지?</h2>
       <p>2주 사이에 시안이 여러 번 바뀌었다.<br>어느 화면이 어느 시안까지 반영됐는지 헷갈리기 시작했다.</p>
+      <p>어떤 화면이 최신 시안인지 확인하려면, 코드를 열어 보고 시안과 하나하나 비교하는 수밖에 없었다.</p>
       <h2 id="커밋에-노드-ID-남기기">커밋에 노드 ID 남기기</h2>
-      <p>방법은 단순했다.<br>시안을 반영한 커밋 메시지 끝에 Figma 노드 ID를 남겼다.</p>
+      <p>Figma에서는 화면의 각 프레임이 고유한 노드 ID를 가진다.<br>그 ID가 있으면 시안의 정확히 그 프레임으로 바로 간다.</p>
+      <p>그래서 시안을 반영한 커밋 메시지 끝에 Figma 노드 ID를 남겼다.</p>
       <figure><img src="/projects/eoullim/figma-log.webp" width="1600" height="822" alt="Figma 노드 ID가 남은 커밋 목록" loading="lazy" decoding="async"><figcaption>git log: 커밋마다 반영한 Figma 노드</figcaption></figure>
+      <p>커밋은 어차피 남는다. 따로 표를 관리하지 않아도, 커밋 기록이 그대로 &quot;반영 기록&quot;이 된다.</p>
       <h2 id="결과">결과</h2>
       <p>10/22 ~ 11/06 사이 17번 바뀐 시안을 커밋만 보고 따라간다.<br><code>git log --grep=Figma</code> 한 줄이면 된다.</p>
     </article>

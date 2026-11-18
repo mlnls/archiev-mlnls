@@ -44,19 +44,32 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#검색엔진과-AI가-관계를-몰랐다">검색엔진과 AI가 관계를 몰랐다</a></li><li class="l2"><a href="#JSON-LD-그래프로-묶기">JSON-LD 그래프로 묶기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#사람은-아는데-기계는-모르는-것">사람은 아는데 기계는 모르는 것</a></li><li class="l2"><a href="#JSON-LD는-사실을-표로-적어-두는-것">JSON-LD는 사실을 표로 적어 두는 것</a></li><li class="l2"><a href="#화면에-없는-건-채우지-않는다">화면에 없는 건 채우지 않는다</a></li><li class="l2"><a href="#AI가-가져갈-문장">AI가 가져갈 문장</a></li><li class="l2"><a href="#0종에서-7종으로">0종에서 7종으로</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="검색엔진과-AI가-관계를-몰랐다">검색엔진과 AI가 관계를 몰랐다</h2>
-      <p>로백스라는 법인, 그 구성원, 구성원이 쓴 글.<br>사람은 화면을 보면 이 셋의 관계를 바로 알지만, 검색엔진과 AI는 알 수 없었다. 구조화 데이터가 하나도 없었다.</p>
-      <p>AI가 답변에 인용할 때 그대로 가져갈 만한 짧고 정확한 문장도 없었다.</p>
-      <h2 id="JSON-LD-그래프로-묶기">JSON-LD 그래프로 묶기</h2>
-      <p>법인 · 구성원 · 글을 같은 <code>@id</code>로 연결한 JSON-LD 그래프로 묶었다.<br>원칙은 하나였다. <b>화면에 없는 정보는 채우지 않는다.</b></p>
-      <p>그리고 업무분야 페이지 맨 앞에 두 문장짜리 요약과 <code>&lt;time dateTime&gt;</code>을 두었다.<br>AI가 인용할 문장과 그 글이 언제 쓰였는지를 가장 먼저 찾을 수 있게.</p>
-      <h2 id="결과">결과</h2>
+      <h2 id="사람은-아는데-기계는-모르는-것">사람은 아는데 기계는 모르는 것</h2>
+      <p>로백스라는 법인, 그 구성원, 구성원이 쓴 글.<br>사람은 화면을 보면 이 셋의 관계를 바로 안다.</p>
+      <p>검색엔진과 AI는 그렇지 않다. 화면의 배치를 보고 관계를 짐작해야 한다.<br>로백스에는 그 관계를 알려 주는 구조화 데이터가 하나도 없었다.</p>
+      <h2 id="JSON-LD는-사실을-표로-적어-두는-것">JSON-LD는 사실을 표로 적어 두는 것</h2>
+      <p>JSON-LD는 페이지 안에 <code>&lt;script type=&quot;application/ld+json&quot;&gt;</code>으로 넣는 데이터다.<br>schema.org가 정한 단어로 &quot;이건 법률 서비스다&quot;, &quot;이 사람은 여기서 일한다&quot;를 적는다.</p>
+      <p>핵심은 <code>@id</code>다.<br>법인에 <code>#organization</code>이라는 id를 한 번 정해 두면, 다른 페이지에서는 그 id만 가리키면 된다.<br>구성원 페이지의 Person은 <code>worksFor</code>로, 소식 페이지의 NewsArticle은 <code>publisher</code>로 같은 법인을 가리킨다.<br>그러면 페이지가 달라도 하나의 그래프로 이어진다.</p>
+      <figure class="diagram" data-diagram="lawvax/graph"><div class="dg"><svg viewBox="0 0 680 322" role="img" aria-label="로백스 법인을 중심으로 구성원, 업무분야, 소식, 영상, 사이트가 @id로 이어진 그래프"><g class="node"><rect class="b hl" x="250" y="116" width="180" height="64" rx="6"/><text x="340" y="139" text-anchor="middle" dominant-baseline="middle">로백스</text><text x="340" y="157" class="m" text-anchor="middle" dominant-baseline="middle">LegalService · #organization</text></g><g class="node"><rect class="b" x="0" y="16" width="170" height="52" rx="6"/><text x="85" y="33" class="mono" text-anchor="middle" dominant-baseline="middle">Person</text><text x="85" y="51" class="m" text-anchor="middle" dominant-baseline="middle">구성원</text></g><g class="node"><rect class="b" x="0" y="196" width="170" height="52" rx="6"/><text x="85" y="213" class="mono" text-anchor="middle" dominant-baseline="middle">Service</text><text x="85" y="231" class="m" text-anchor="middle" dominant-baseline="middle">업무분야</text></g><g class="node"><rect class="b" x="510" y="16" width="170" height="52" rx="6"/><text x="595" y="33" class="mono" text-anchor="middle" dominant-baseline="middle">NewsArticle</text><text x="595" y="51" class="m" text-anchor="middle" dominant-baseline="middle">법인 소식 · 언론보도</text></g><g class="node"><rect class="b" x="510" y="196" width="170" height="52" rx="6"/><text x="595" y="213" class="mono" text-anchor="middle" dominant-baseline="middle">VideoObject</text><text x="595" y="231" class="m" text-anchor="middle" dominant-baseline="middle">영상</text></g><g class="node"><rect class="b" x="255" y="262" width="170" height="52" rx="6"/><text x="340" y="279" class="mono" text-anchor="middle" dominant-baseline="middle">WebSite</text><text x="340" y="297" class="m" text-anchor="middle" dominant-baseline="middle">사이트 전체</text></g><g class="node"><rect class="b dim" x="0" y="270" width="170" height="44" rx="6"/><text x="85" y="283" class="mono" text-anchor="middle" dominant-baseline="middle">BreadcrumbList</text><text x="85" y="301" class="m" text-anchor="middle" dominant-baseline="middle">페이지마다 따로</text></g><path class="l hl" d="M170 42 L250 130"/><polygon class="ah hl" points="250.0,130.0 241.7,126.8 247.6,121.4"/><text x="204" y="96" class="m" text-anchor="end" dominant-baseline="middle">worksFor</text><path class="l hl" d="M170 222 L250 166"/><polygon class="ah hl" points="250.0,166.0 245.7,173.9 241.2,167.3"/><text x="206" y="192" class="m" text-anchor="end" dominant-baseline="middle">provider</text><path class="l hl" d="M510 42 L430 130"/><polygon class="ah hl" points="430.0,130.0 432.4,121.4 438.3,126.8"/><text x="488" y="92" class="m" text-anchor="start" dominant-baseline="middle">publisher · about</text><path class="l hl" d="M510 222 L430 166"/><polygon class="ah hl" points="430.0,166.0 438.8,167.3 434.3,173.9"/><text x="470" y="186" class="m" text-anchor="start" dominant-baseline="middle">publisher</text><path class="l hl" d="M340 262 L340 180"/><polygon class="ah hl" points="340.0,180.0 344.0,188.0 336.0,188.0"/><text x="350" y="221" class="m" text-anchor="start" dominant-baseline="middle">publisher</text></svg></div><figcaption>@id로 이어진 로백스 JSON-LD 그래프</figcaption></figure>
+      <p>언론보도는 하나 더 신경 썼다.<br>기사는 다른 매체가 쓴 거고, 로백스 사이트는 그걸 옮겨 실었다.<br>그래서 작성자는 원 매체로, 게시자는 로백스로 나눠 적었다.</p>
+      <div class="code"><div class="code-head"><span class="file">apps/next/src/lib/utils/structuredData.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-comment">// 이 페이지는 로백스 사이트가 게시한다(publisher). 언론보도면 원 매체는 작성자·출처로 남긴다.</span>
+<span class="hljs-attr">author</span>: article.<span class="hljs-property">sourceName</span>
+  ? { <span class="hljs-string">&#x27;@type&#x27;</span>: <span class="hljs-string">&#x27;Organization&#x27;</span>, <span class="hljs-attr">name</span>: article.<span class="hljs-property">sourceName</span> }
+  : organizationRef,
+<span class="hljs-attr">publisher</span>: organizationRef,</code></pre></div>
+      <h2 id="화면에-없는-건-채우지-않는다">화면에 없는 건 채우지 않는다</h2>
+      <p>원칙은 하나였다. <b>화면에 없는 정보는 JSON-LD에도 넣지 않는다.</b></p>
+      <p>구조화 데이터는 화면의 내용을 기계가 읽기 쉽게 다시 적은 것이어야 한다.<br>화면에 없는 값을 채우면 검색엔진 입장에서는 확인할 수 없는 주장이 된다.<br>AI가 그걸 그대로 인용하면 틀린 사실이 퍼진다.</p>
+      <h2 id="AI가-가져갈-문장">AI가 가져갈 문장</h2>
+      <p>AI는 답변을 만들 때 페이지에서 짧고 완결된 문장을 찾아 인용한다.<br>그래서 업무분야 페이지 맨 앞에 두 문장짜리 요약을 두었다.</p>
+      <p>그리고 그 글이 언제 쓰였는지를 <code>&lt;time dateTime&gt;</code>으로 적었다.<br>사람에게는 날짜로 보이고, 기계에게는 정확한 시각으로 읽힌다.</p>
+      <h2 id="0종에서-7종으로">0종에서 7종으로</h2>
       <figure><img src="/projects/lawvax/geo-jsonld.webp" width="1600" height="468" alt="업무분야 페이지 HTML에서 뽑은 JSON-LD 타입 목록" loading="lazy" decoding="async"><figcaption>형사 업무분야 페이지의 첫 HTML에 들어 있는 JSON-LD 타입</figcaption></figure>
-      <p>구조화 데이터 타입이 <b>0 → 7종</b>이 됐다. (LegalService, Person, Service, BreadcrumbList, WebSite 등)</p>
+      <p>구조화 데이터 타입이 <b>0 → 7종</b>이 됐다.<br>최상위 타입 기준으로 LegalService, Person, Service, NewsArticle, VideoObject, WebSite, BreadcrumbList다.<br>주소나 목록 항목 같은 하위 타입은 세지 않았다.</p>
       <p>해 보니 GEO는 SEO 위에 &quot;그 페이지가 말하는 사실이 정확한가&quot;가 더해진 일이었다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">

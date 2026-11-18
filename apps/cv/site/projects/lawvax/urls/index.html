@@ -44,14 +44,26 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#옛-주소가-아직-살아-있었다">옛 주소가 아직 살아 있었다</a></li><li class="l2"><a href="#주소는-308로">주소는 308로</a></li><li class="l2"><a href="#도메인은-301로">도메인은 301로</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#옛-주소가-아직-살아-있었다">옛 주소가 아직 살아 있었다</a></li><li class="l2"><a href="#리디렉트는-상태-코드로-말한다">리디렉트는 상태 코드로 말한다</a></li><li class="l2"><a href="#요청-하나를-따라가-보면">요청 하나를 따라가 보면</a></li><li class="l2"><a href="#한글-주소는-두-번-인코딩">한글 주소는 두 번 인코딩</a></li><li class="l2"><a href="#canonical과-sitemap은-같은-함수에서">canonical과 sitemap은 같은 함수에서</a></li><li class="l2"><a href="#운영-서버에서-확인">운영 서버에서 확인</a></li></ol>
       </nav>
     </aside>
     <article class="post">
       <h2 id="옛-주소가-아직-살아-있었다">옛 주소가 아직 살아 있었다</h2>
       <p>새 사이트는 주소 체계가 달랐다.<br>그런데 이전 사이트의 <code>/intro</code>, <code>/workfield/...</code> 같은 주소가 외부 링크와 검색 결과에 그대로 남아 있었다.<br>도메인도 lvx.co.kr에서 lawvax.co.kr로 옮겨야 했다.</p>
-      <h2 id="주소는-308로">주소는 308로</h2>
-      <p>레거시 주소를 21개 패턴으로 정리해서 새 주소로 <b>308</b> 리디렉트했다.<br><code>next.config.ts</code>에 옛 주소와 새 주소를 표처럼 적어 두고, 전부 영구 이동으로 돌린다.</p>
+      <p>옛 주소를 그냥 두면 들어온 사람은 404를 보고, 검색엔진은 그 주소가 쌓아 온 평가를 버린다.</p>
+      <h2 id="리디렉트는-상태-코드로-말한다">리디렉트는 상태 코드로 말한다</h2>
+      <p>리디렉트는 &quot;이 주소는 이제 저기 있다&quot;를 상태 코드로 알려 주는 일이다.<br>검색엔진은 이 코드를 보고 옛 주소를 어떻게 다룰지 정한다.</p>
+      <div class="table"><table><thead><tr><th>코드</th><th>뜻</th><th>검색엔진</th><th>요청 메서드</th></tr></thead><tbody><tr><td>301</td><td>영구 이동</td><td>새 주소로 바꿔 색인</td><td>POST가 GET으로 바뀔 수 있다</td></tr><tr><td>308</td><td>영구 이동</td><td>새 주소로 바꿔 색인</td><td>메서드와 본문을 그대로 유지</td></tr><tr><td>302 · 307</td><td>임시 이동</td><td>옛 주소를 계속 들고 있다</td><td></td></tr></tbody></table></div>
+      <p>주소 체계가 바뀐 거니까 임시가 아니라 영구 이동이어야 했다.</p>
+      <h2 id="요청-하나를-따라가-보면">요청 하나를 따라가 보면</h2>
+      <p>옛 도메인의 옛 주소로 들어온 요청은 두 번 넘겨져서 공식 주소에 닿는다.</p>
+      <figure class="diagram" data-diagram="lawvax/redirect"><div class="dg"><svg viewBox="0 0 680 226" role="img" aria-label="옛 도메인 옛 주소에서 301, 308을 거쳐 공식 주소에 닿는 과정"><g class="node"><rect class="b dim" x="0" y="0" width="420" height="44" rx="6"/><text x="210" y="22" class="mono" text-anchor="middle" dominant-baseline="middle">lvx.co.kr/workfield/detail/형사</text></g><text x="450" y="22" class="m" text-anchor="start" dominant-baseline="middle">옛 도메인 · 옛 주소</text><path class="l" d="M210 44 L210 90"/><polygon class="ah" points="210.0,90.0 206.0,82.0 214.0,82.0"/><text x="226" y="67" class="m" text-anchor="start" dominant-baseline="middle">301 · Caddy가 도메인만 바꿔 넘긴다 (앱까지 안 옴)</text><g class="node"><rect class="b dim" x="0" y="90" width="420" height="44" rx="6"/><text x="210" y="112" class="mono" text-anchor="middle" dominant-baseline="middle">lawvax.co.kr/workfield/detail/형사</text></g><text x="450" y="112" class="m" text-anchor="start" dominant-baseline="middle">새 도메인 · 옛 주소</text><path class="l hl" d="M210 134 L210 180"/><polygon class="ah hl" points="210.0,180.0 206.0,172.0 214.0,172.0"/><text x="226" y="157" class="m" text-anchor="start" dominant-baseline="middle">308 · next.config.ts 의 LEGACY_REDIRECTS</text><g class="node"><rect class="b hl" x="0" y="180" width="420" height="44" rx="6"/><text x="210" y="202" class="mono" text-anchor="middle" dominant-baseline="middle">lawvax.co.kr/practice-detail?workField=형사</text></g><text x="450" y="202" class="hl" text-anchor="start" dominant-baseline="middle">200 · canonical도 이 주소</text></svg></div><figcaption>요청 하나가 공식 주소에 닿기까지</figcaption></figure>
+      <p>도메인과 주소 체계를 서로 다른 곳에서 처리했다.</p>
+      <p>도메인은 앱이 알 필요가 없다. 그래서 앱까지 오기 전에 Caddy에서 <b>301</b>로 넘겼다.<br>경로와 쿼리는 <code>{uri}</code>로 그대로 붙여 보낸다.</p>
+      <div class="code"><div class="code-head"><span class="file">Caddyfile</span><span class="lang">Caddyfile</span></div><pre><code>{$REDIRECT_DOMAINS::8081} {
+	redir https://{$DOMAIN:localhost}{uri} permanent
+}</code></pre></div>
+      <p>주소 체계는 앱이 안다. 레거시 주소를 21개 패턴으로 정리해서 <code>next.config.ts</code>에 표처럼 적었다.<br><code>permanent: true</code>를 주면 Next.js는 <b>308</b>로 응답한다.</p>
       <div class="code"><div class="code-head"><span class="file">next.config.ts</span><span class="lang">TypeScript</span></div><pre><code><span class="hljs-keyword">const</span> <span class="hljs-attr">LEGACY_REDIRECTS</span>: { <span class="hljs-attr">source</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">destination</span>: <span class="hljs-built_in">string</span> }[] = [
   { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/intro&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/&#x27;</span> },
   { <span class="hljs-attr">source</span>: <span class="hljs-string">&#x27;/workfield&#x27;</span>, <span class="hljs-attr">destination</span>: <span class="hljs-string">&#x27;/practice&#x27;</span> },
@@ -64,17 +76,18 @@
 <span class="hljs-keyword">async</span> <span class="hljs-title function_">redirects</span>(<span class="hljs-params"></span>) {
   <span class="hljs-keyword">return</span> <span class="hljs-variable constant_">LEGACY_REDIRECTS</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">redirect</span>) =&gt;</span> ({ ...redirect, <span class="hljs-attr">permanent</span>: <span class="hljs-literal">true</span> }));
 },</code></pre></div>
-      <p>한글이 들어간 주소는 한 번 더 신경 써야 했다.<br>Next가 destination의 쿼리를 한 번 디코딩한 뒤 Location 헤더에 넣기 때문에, 한글은 두 번 인코딩해 두었다.</p>
-      <h2 id="도메인은-301로">도메인은 301로</h2>
-      <p>옛 도메인은 앱까지 오기 전에 Caddy에서 <b>301</b>로 넘겼다. 경로와 쿼리는 그대로 붙여 보낸다.</p>
-      <div class="code"><div class="code-head"><span class="file">Caddyfile</span><span class="lang">Caddyfile</span></div><pre><code>{$REDIRECT_DOMAINS::8081} {
-	redir https://{$DOMAIN:localhost}{uri} permanent
-}</code></pre></div>
-      <p>마지막으로 canonical과 sitemap이 같은 함수에서 주소를 만들게 했다.<br>둘이 따로 주소를 만들면 언젠가는 어긋난다.</p>
-      <h2 id="결과">결과</h2>
+      <h2 id="한글-주소는-두-번-인코딩">한글 주소는 두 번 인코딩</h2>
+      <p><code>Location</code> 헤더에는 한글을 그대로 쓸 수 없어서 퍼센트 인코딩한다.<br><code>형사</code>는 <code>%ED%98%95%EC%82%AC</code>가 된다.</p>
+      <p>그런데 Next.js는 destination의 쿼리를 한 번 디코딩한 뒤에 <code>Location</code>에 넣는다.<br>한 번만 인코딩해 두면 디코딩되면서 한글이 그대로 헤더에 들어가 버린다.</p>
+      <p>그래서 한글은 미리 두 번 인코딩해 두었다. <code>%</code>가 <code>%25</code>가 되는 식이다.<br>한 번 풀리고 나면 정상적인 인코딩 한 겹이 남는다.</p>
+      <h2 id="canonical과-sitemap은-같은-함수에서">canonical과 sitemap은 같은 함수에서</h2>
+      <p>같은 내용이 여러 주소로 열릴 때가 있다.<br>업무분야 상세는 <code>?title=</code>로도, <code>?workField=</code>로도 열린다.</p>
+      <p>이럴 때 검색엔진에게 대표 주소를 알려 주는 게 canonical이다.<br>sitemap은 &quot;이 주소들을 수집해 달라&quot;는 목록이다.</p>
+      <p>둘이 다른 주소를 말하면 검색엔진은 어느 쪽을 믿을지 헷갈린다.<br>그래서 둘 다 같은 함수에서 주소를 만들게 했다. 따로 만들면 언젠가는 어긋난다.</p>
+      <h2 id="운영-서버에서-확인">운영 서버에서 확인</h2>
       <figure><img src="/projects/lawvax/urls-curl.webp" width="1600" height="626" alt="curl로 확인한 옛 도메인 301과 레거시 주소 308 응답" loading="lazy" decoding="async"><figcaption>운영 서버 응답: 옛 도메인은 301, 레거시 주소는 308</figcaption></figure>
       <p>이제 어느 옛 주소로 들어와도 공식 주소 하나로 모인다.</p>
-      <p>작업하면서 크롤러는 본문보다 상태 코드를 먼저 읽는다는 걸 알게 됐다.<br>soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다.</p>
+      <p>크롤러는 본문보다 상태 코드를 먼저 읽는다.<br>soft 404, 308, noindex 헤더 하나가 검색 결과를 바꾼다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
       <h2>법무법인 로백스 홈페이지</h2>

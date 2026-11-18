@@ -44,16 +44,26 @@
     <aside class="toc" aria-label="이 글의 목차">
       <nav>
         <p>목차</p>
-        <ol><li class="l2"><a href="#아무도-쓰지-않는-기능">아무도 쓰지 않는 기능</a></li><li class="l2"><a href="#걷어내고-막기">걷어내고, 막기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+        <ol><li class="l2"><a href="#같은-CLI로-만들었는데-구조가-달랐다">같은 CLI로 만들었는데 구조가 달랐다</a></li><li class="l2"><a href="#왜-어긋나나">왜 어긋나나</a></li><li class="l2"><a href="#최신이-아니면-멈추기">최신이 아니면 멈추기</a></li><li class="l2"><a href="#안-쓰는-건-걷어내기">안 쓰는 건 걷어내기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
       </nav>
     </aside>
     <article class="post">
-      <h2 id="아무도-쓰지-않는-기능">아무도 쓰지 않는 기능</h2>
-      <p><code>bc init</code>을 할 때마다 묻는 질문들이 있었고, 채팅 기능도 있었다. 둘 다 쓰이지 않았다.</p>
-      <p>그리고 오래된 설치본으로 만든 프로젝트는 템플릿이 어긋났다.<br>같은 CLI로 만들었는데 프로젝트마다 구조가 조금씩 달랐다.</p>
-      <h2 id="걷어내고-막기">걷어내고, 막기</h2>
-      <p>채팅과 생성 질문을 걷어내고 v3.0.0으로 정리했다.</p>
-      <p>그리고 실행할 때 npm 최신 버전과 비교하게 했다.<br>버전이 다르면 업데이트를 안내하고 실행을 멈춘다.</p>
+      <h2 id="같은-CLI로-만들었는데-구조가-달랐다">같은 CLI로 만들었는데 구조가 달랐다</h2>
+      <p>오래된 설치본으로 만든 프로젝트는 템플릿이 어긋났다.<br>같은 CLI로 만들었는데 프로젝트마다 구조가 조금씩 달랐다.</p>
+      <h2 id="왜-어긋나나">왜 어긋나나</h2>
+      <p>원인을 따라가 보니 CLI가 버전표를 어디서 읽는지에 있었다.</p>
+      <p>CLI는 &quot;어떤 의존성을 몇 버전으로 깔지&quot;를 적은 버전표를, 자기와 같이 설치된 settings 패키지에서 읽는다.<br>CLI를 예전에 전역으로 깔았으면 버전표도 그때 것으로 굳어 있다.</p>
+      <p>그런데 생성된 <code>package.json</code>에는 settings가 <code>^</code> 범위로 들어간다.<br>그래서 설치할 때는 최신 settings가 깔린다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/drift"><div class="dg"><svg viewBox="0 0 680 180" role="img" aria-label="예전에 설치한 CLI의 옛 버전표로 앱 의존성이 들어가고, settings는 ^ 범위라 최신이 깔려 둘이 어긋나는 모습"><g class="node"><rect class="b" x="0" y="0" width="220" height="64" rx="6"/><text x="110" y="23" text-anchor="middle" dominant-baseline="middle">전역 설치된 CLI</text><text x="110" y="41" class="m" text-anchor="middle" dominant-baseline="middle">예전에 깐 버전</text></g><path class="l" d="M110 64 L110 104"/><polygon class="ah" points="110.0,104.0 106.0,96.0 114.0,96.0"/><g class="node"><rect class="b" x="0" y="104" width="220" height="64" rx="6"/><text x="110" y="127" text-anchor="middle" dominant-baseline="middle">CLI 에 같이 깔린 settings</text><text x="110" y="145" class="m" text-anchor="middle" dominant-baseline="middle">버전표도 그때 것</text></g><path class="l" d="M220 136 L300 136"/><polygon class="ah" points="300.0,136.0 292.0,140.0 292.0,132.0"/><g class="node"><rect class="b bad" x="300" y="104" width="160" height="64" rx="6"/><text x="380" y="127" text-anchor="middle" dominant-baseline="middle">앱 의존성</text><text x="380" y="145" class="m" text-anchor="middle" dominant-baseline="middle">옛 버전표대로</text></g><g class="node"><rect class="b bad" x="520" y="104" width="160" height="64" rx="6"/><text x="600" y="127" text-anchor="middle" dominant-baseline="middle">settings</text><text x="600" y="145" class="m" text-anchor="middle" dominant-baseline="middle">^ 범위라 설치 때 최신</text></g><text x="490" y="136" class="bad b" text-anchor="middle" dominant-baseline="middle">≠</text><g class="grp"><rect class="g" x="290" y="72" width="390" height="108" rx="8"/><text x="302" y="88" class="m" text-anchor="start" dominant-baseline="middle">생성된 package.json</text></g></svg></div><figcaption>한 프로젝트 안에서 버전표가 둘</figcaption></figure>
+      <p>앱 의존성은 옛 버전표대로, 설정은 새 settings대로.<br>한 프로젝트 안에 서로 다른 시점의 규칙이 섞였다.</p>
+      <h2 id="최신이-아니면-멈추기">최신이 아니면 멈추기</h2>
+      <p>그래서 CLI가 실행될 때 npm에 올라간 최신 버전과 비교하게 했다.<br>정확히 같지 않으면 업데이트를 안내하고 멈춘다.</p>
+      <figure class="diagram" data-diagram="frontend-tools/guard"><div class="dg"><svg viewBox="0 0 680 170" role="img" aria-label="bc 실행 시 npm 최신 버전과 비교해 같으면 생성, 다르면 멈추고, 조회에 실패하면 경고만 하고 진행하는 흐름"><g class="node"><rect class="b" x="0" y="50" width="120" height="56" rx="6"/><text x="60" y="78" class="mono" text-anchor="middle" dominant-baseline="middle">bc 실행</text></g><path class="l" d="M120 78 L160 78"/><polygon class="ah" points="160.0,78.0 152.0,82.0 152.0,74.0"/><g class="node"><rect class="b" x="160" y="50" width="170" height="56" rx="6"/><text x="245" y="69" text-anchor="middle" dominant-baseline="middle">npm 최신 버전 조회</text><text x="245" y="87" class="m" text-anchor="middle" dominant-baseline="middle">npm view</text></g><path class="l hl" d="M330 78 L350 78 L350 26 L380 26"/><polygon class="ah hl" points="380.0,26.0 372.0,30.0 372.0,22.0"/><g class="node"><rect class="b hl" x="380" y="0" width="300" height="52" rx="6"/><text x="530" y="26" text-anchor="middle" dominant-baseline="middle">같음 → 생성</text></g><path class="l bad" d="M330 78 L380 78"/><polygon class="ah bad" points="380.0,78.0 372.0,82.0 372.0,74.0"/><g class="node"><rect class="b bad" x="380" y="60" width="300" height="52" rx="6"/><text x="530" y="77" text-anchor="middle" dominant-baseline="middle">다름 → 업데이트 안내하고 멈춤</text><text x="530" y="95" class="m" text-anchor="middle" dominant-baseline="middle">낮아도(옛 설치본) 높아도(배포 전 빌드)</text></g><path class="l m dash" d="M330 78 L350 78 L350 146 L380 146"/><polygon class="ah m" points="380.0,146.0 372.0,150.0 372.0,142.0"/><g class="node"><rect class="b dim" x="380" y="120" width="300" height="50" rx="6"/><text x="530" y="145" text-anchor="middle" dominant-baseline="middle">조회 실패 → 경고만 하고 진행</text></g></svg></div><figcaption>bc를 실행하면 먼저 하는 일</figcaption></figure>
+      <p>낮을 때만이 아니라 높을 때도 멈춘다.<br>배포 전 로컬 빌드로 만든 프로젝트도 결국 배포된 템플릿과 다르기 때문이다.</p>
+      <p>반대로 npm에 접속하지 못하면 경고만 하고 진행한다.<br>네트워크가 없다고 일을 못 하게 만들 수는 없었다.</p>
+      <h2 id="안-쓰는-건-걷어내기">안 쓰는 건 걷어내기</h2>
+      <p>같이 정리한 게 있다.<br><code>bc init</code>을 할 때마다 묻는 질문들이 있었고, 채팅 기능도 있었다. 둘 다 쓰이지 않았다.</p>
+      <p>쓰이지 않는 기능도 의존성을 끌고 오고, 고칠 때마다 같이 신경 써야 한다.<br>걷어내고 v3.0.0으로 정리했다.</p>
       <h2 id="결과">결과</h2>
       <p><b>5,923줄</b>과 의존성 <b>9개</b>를 지웠다.<br>이제 모든 프로젝트가 같은 버전의 CLI로 만들어진다.</p>
     </article>
