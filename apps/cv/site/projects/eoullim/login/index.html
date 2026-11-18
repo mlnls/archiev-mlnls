@@ -41,12 +41,18 @@
       <h1>설치와 로그인</h1>
       <p class="meta">어울림 · 5/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#휴대폰으로-쓰는-서비스">휴대폰으로 쓰는 서비스</a></li><li class="l2"><a href="#설치와-로그인">설치와 로그인</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>휴대폰으로 쓰는 서비스</h2>
+      <h2 id="휴대폰으로-쓰는-서비스">휴대폰으로 쓰는 서비스</h2>
       <p>주민들이 주로 휴대폰으로 쓰는 서비스였다.<br>앱처럼 설치해서 쓰고, 쉽게 들어올 수 있어야 했다.</p>
-      <h2>설치와 로그인</h2>
+      <h2 id="설치와-로그인">설치와 로그인</h2>
       <ul><li>PWA 설치 안내를 넣었다</li><li>로그인 아이디를 휴대폰 번호로 바꿨다</li><li>로그인하고 나면 보려던 화면으로 돌아가게 했다</li></ul>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>로그인을 해도 보던 흐름이 끊기지 않는다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -55,5 +61,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/editor/">← 서버는 JSON, 에디터는 HTML</a><a href="/projects/eoullim/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

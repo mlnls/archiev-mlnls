@@ -41,14 +41,20 @@
       <h1>시안이 바뀌는 동안 같이 개발하기</h1>
       <p class="meta">어울림 · 1/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#시안과-개발이-동시에">시안과 개발이 동시에</a></li><li class="l2"><a href="#화면은-토큰만-본다">화면은 토큰만 본다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>시안과 개발이 동시에</h2>
+      <h2 id="시안과-개발이-동시에">시안과 개발이 동시에</h2>
       <p>어울림은 디자인과 개발이 동시에 진행됐다.<br>그 사이 디자인 토큰은 v0.2 → v0.3 → v0.5로, 시안은 1차 → 2차 → 수정 시안으로 바뀌었다.</p>
       <p>시안이 바뀔 때마다 화면을 하나씩 찾아 고치면 끝이 없다.</p>
-      <h2>화면은 토큰만 본다</h2>
+      <h2 id="화면은-토큰만-본다">화면은 토큰만 본다</h2>
       <p>색, 글꼴, 그림자는 토큰으로만 쓰게 했다. 화면 코드에 색상값을 직접 적지 않는다.</p>
       <p>디자이너가 넘긴 <code>tokens.json</code>은 style-dictionary를 거쳐 <code>tokens.css</code>가 된다.<br>변환 규칙은 사내 settings 패키지가 맡는다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>토큰 export만 바꾸면 화면 전체가 한 번에 바뀐다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/eoullim/">← 목차</a><a href="/projects/eoullim/figma/">어느 시안을 반영했는지 커밋으로 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

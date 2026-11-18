@@ -41,13 +41,19 @@
       <h1>배포가 성공했을 때만 릴리즈가 남게</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 3/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#지금-운영에-뭐가-떠-있지">지금 운영에 뭐가 떠 있지?</a></li><li class="l2"><a href="#법조인대관에서-먼저-해-본-것">법조인대관에서 먼저 해 본 것</a></li><li class="l2"><a href="#bc-deploy">bc deploy</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>지금 운영에 뭐가 떠 있지?</h2>
+      <h2 id="지금-운영에-뭐가-떠-있지">지금 운영에 뭐가 떠 있지?</h2>
       <p>SI 회사라 프로젝트가 계속 새로 생긴다.<br>배포 방식은 프로젝트마다 제각각이었고, 릴리즈 노트는 손으로 쓰거나 아예 남지 않았다.</p>
       <p>그래서 지금 운영에 어떤 버전이 떠 있는지는 물어봐야 알 수 있었다.</p>
-      <h2>법조인대관에서 먼저 해 본 것</h2>
+      <h2 id="법조인대관에서-먼저-해-본-것">법조인대관에서 먼저 해 본 것</h2>
       <p><a href="/projects/lawtimes/release/">법조인대관</a>에서는 배포가 끝나면 태그와 Release가 남는 흐름을 먼저 운영하고 있었다.<br>이걸 모든 프로젝트로 옮기기로 했다.</p>
-      <h2>bc deploy</h2>
+      <h2 id="bc-deploy">bc deploy</h2>
       <p><code>bc deploy</code>는 질문 4개에 답하면 <code>.github/workflows/deploy.yml</code>을 만든다. Enter만 누르면 기본값으로 간다.</p>
       <figure><img src="/projects/frontend-tools/cli-deploy.webp" width="1600" height="926" alt="bc deploy: 질문 4개에 답하면 bc.config.json과 배포 workflow가 생성되는 화면" loading="lazy" decoding="async"><figcaption>bc deploy 실행 화면</figcaption></figure>
       <p>핵심은 순서다.<br>만들어지는 workflow에서 release job은 deploy job 뒤에 묶여 있다. 배포가 성공해야만 태그 · Release · Slack 알림이 이어진다.</p>
@@ -61,7 +67,7 @@
       <span class="hljs-comment"># ...</span>
       <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">gh</span> <span class="hljs-string">release</span> <span class="hljs-string">create</span> <span class="hljs-string">&quot;$<span class="hljs-template-variable">{{ steps.notes.outputs.tag }}</span>&quot;</span> <span class="hljs-string">--target</span> <span class="hljs-string">&quot;$<span class="hljs-template-variable">{{ github.sha }}</span>&quot;</span> <span class="hljs-string">--notes-file</span> <span class="hljs-string">notes.md</span></code></pre></div>
       <p>CHANGELOG.md 선택지는 일부러 막았다. 머지할 때 쓰는 CHANGELOG는 실패한 배포까지 기록하기 때문이다.<br>Slack 웹훅은 URL 대신 GitHub Secret 이름만 저장한다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>최신 Release가 곧 지금 운영 버전이다.</p>
       <p>배포 기록은 &quot;배포 성공&quot;에 묶어야 믿을 수 있다.</p>
     </article>
@@ -71,5 +77,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/expo/">← 앱 프로젝트도 같은 규칙으로</a><a href="/projects/frontend-tools/release-notes/">릴리즈 노트는 커밋에서 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

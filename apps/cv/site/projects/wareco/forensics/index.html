@@ -41,13 +41,19 @@
       <h1>흔적 없음이 안전하다는 뜻은 아니다</h1>
       <p class="meta">수자원기술 홈페이지 · 5/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#이미-들어왔다면">이미 들어왔다면?</a></li><li class="l2"><a href="#점검--패치--재점검">점검 → 패치 → 재점검</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>이미 들어왔다면?</h2>
+      <h2 id="이미-들어왔다면">이미 들어왔다면?</h2>
       <p>패치는 앞으로의 공격을 막는다.<br>하지만 취약점이 공개되고 패치하기까지 사이에 이미 누가 들어왔는지는 따로 확인해야 했다.</p>
-      <h2>점검 → 패치 → 재점검</h2>
+      <h2 id="점검--패치--재점검">점검 → 패치 → 재점검</h2>
       <p>8개 항목을 점검했다. 공격 흔적, 웹쉘, 최근 바뀐 PHP 파일, 업로드 경로에 있는 스크립트 등이다.</p>
       <p>점검만 한 번 하고 끝내지 않았다.<br>점검 → 패치 → 재점검을 한 세트로 돌렸다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>침입 흔적은 없었다.</p>
       <p>다만 흔적이 없다는 게 안전하다는 뜻은 아니다. 그래서 점검을 한 번이 아니라 패치 앞뒤로 두 번 했다.</p>
     </article>
@@ -57,5 +63,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/wareco/php2shell/">← 패치가 나오지 않는 PHP 7.4</a><a href="/projects/wareco/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,14 +41,20 @@
       <h1>SSR이 꺼져 있던 렌더링</h1>
       <p class="meta">법률신문 한국법조인대관 · 1/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#Nextjs인데-SSR이-꺼져-있었다">Next.js인데 SSR이 꺼져 있었다</a></li><li class="l2"><a href="#필요한-곳만-클라이언트로">필요한 곳만 클라이언트로</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>Next.js인데 SSR이 꺼져 있었다</h2>
+      <h2 id="Nextjs인데-SSR이-꺼져-있었다">Next.js인데 SSR이 꺼져 있었다</h2>
       <p>법조인대관은 Next.js로 만든 서비스였다.<br>그런데 클라이언트 전용 렌더링이 화면 전체를 감싸고 있었다.</p>
       <p>Next.js를 쓰고 있었지만 실제로는 SSR이 동작하지 않았다.<br>서버는 빈 껍데기를 보내고, 화면은 브라우저가 JS를 받아 실행한 뒤에야 그려졌다.</p>
-      <h2>필요한 곳만 클라이언트로</h2>
+      <h2 id="필요한-곳만-클라이언트로">필요한 곳만 클라이언트로</h2>
       <p>클라이언트 렌더링이 꼭 필요한 컴포넌트만 남기고, 나머지는 서버에서 그리게 범위를 좁혔다.</p>
       <p>한글 폰트도 손봤다.<br>dynamic subset으로 바꿔 페이지에 쓰인 글자 묶음만 받게 하고, 캐시를 적용했다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <ul><li>Lighthouse Performance <b>80 → 99</b></li><li>FCP <b>−77%</b>, LCP <b>−73%</b></li></ul>
       <figure class="narrow"><img src="/projects/lawtimes/render-mobile.webp" width="780" height="1688" alt="한국법조인대관 모바일 메인 화면" loading="lazy" decoding="async"><figcaption>운영 화면 (모바일)</figcaption></figure>
     </article>
@@ -58,5 +64,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/">← 목차</a><a href="/projects/lawtimes/ga4/">페이지뷰가 빠지고 있었다 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,12 +41,18 @@
       <h1>종이로도 나눠 주는 리포트</h1>
       <p class="meta">서강교육그룹 성취도 평가 · 배치고사 · 2/3</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#종이로도-나눠-준다">종이로도 나눠 준다</a></li><li class="l2"><a href="#인쇄용-화면-맞추기">인쇄용 화면 맞추기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>종이로도 나눠 준다</h2>
+      <h2 id="종이로도-나눠-준다">종이로도 나눠 준다</h2>
       <p>성적 리포트는 화면으로만 보는 게 아니라 종이로 뽑아서 나눠 주기도 했다.<br>화면에서 멀쩡한 차트가 인쇄하면 배율이 틀어지거나 잘렸다.</p>
-      <h2>인쇄용 화면 맞추기</h2>
+      <h2 id="인쇄용-화면-맞추기">인쇄용 화면 맞추기</h2>
       <p>반 · 개인 성적을 차트로 그리고, 인쇄용 화면에서 배율과 차트 잘림을 맞췄다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>화면과 종이에서 같은 리포트를 쓴다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -55,5 +61,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/sogang/roles/">← 같은 데이터, 세 가지 깊이</a><a href="/projects/sogang/placement/">배치고사 함께 출시 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

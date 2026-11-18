@@ -41,12 +41,18 @@
       <h1>언제든 되돌릴 수 있는 전환</h1>
       <p class="meta">제주이어드림 · 3/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#옮기다-문제가-생기면">옮기다 문제가 생기면</a></li><li class="l2"><a href="#기존-규칙-뒤에-두기">기존 규칙 뒤에 두기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>옮기다 문제가 생기면</h2>
+      <h2 id="옮기다-문제가-생기면">옮기다 문제가 생기면</h2>
       <p>운영 중인 서비스를 새 서버로 옮기는 작업이었다.<br>중간에 문제가 생기면 바로 돌아갈 길이 있어야 했다.</p>
-      <h2>기존 규칙 뒤에 두기</h2>
+      <h2 id="기존-규칙-뒤에-두기">기존 규칙 뒤에 두기</h2>
       <p>새 리스너 규칙을 바로 앞에 두지 않고, 우선순위 509 · 510으로 기존 규칙 뒤에 두었다.<br>그 상태로 새 경로를 확인한 다음, 직접 전환했다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>확인이 끝날 때까지 기존 경로가 그대로 살아 있었다.<br>전환한 뒤에도 언제든 바로 되돌릴 수 있다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -55,5 +61,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/jeju/golden-image/">← 콘솔 수작업 대신 yaml</a><a href="/projects/jeju/isr/">메인 조회 API에 ISR →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

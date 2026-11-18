@@ -41,14 +41,20 @@
       <h1>공통 패키지 결함 12건</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 6/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#하나씩-보고되던-버그">하나씩 보고되던 버그</a></li><li class="l2"><a href="#고친-것들">고친 것들</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#배포하려는데-CI가-깨졌다">배포하려는데 CI가 깨졌다</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>하나씩 보고되던 버그</h2>
+      <h2 id="하나씩-보고되던-버그">하나씩 보고되던 버그</h2>
       <p>사내 서비스들이 함께 쓰는 core · basic-ui · utils · hooks 패키지에서 버그가 하나씩 보고되고 있었다.<br>모아서 한 번에 고쳤다. (MOD-21 ~ 35)</p>
-      <h2>고친 것들</h2>
+      <h2 id="고친-것들">고친 것들</h2>
       <ul><li>1월 31일에서 다음 달로 넘기면 3월이 되던 달력</li><li>KST에서 달이 하나 밀리던 문제</li><li>SSR에서 <code>SanitizeHtml</code>이 터지던 문제</li><li>이메일 · 생년월일 · 주민번호 정규식 오류</li></ul>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>결함 12건을 고쳐 changeset으로 배포했다.</p>
-      <h2>배포하려는데 CI가 깨졌다</h2>
+      <h2 id="배포하려는데-CI가-깨졌다">배포하려는데 CI가 깨졌다</h2>
       <p>Release CI가 실패했다.<br>npm 11로 만든 lockfile이 Node 20의 <code>npm ci</code>에서 깨진 것이었다.</p>
       <p>npm 10으로 lockfile을 다시 만들어 두 버전 모두에서 통과시켰다.</p>
     </article>
@@ -58,5 +64,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/v3/">← 쓰지 않는 기능은 걷어내기</a><a href="/projects/frontend-tools/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

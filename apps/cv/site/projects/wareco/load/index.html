@@ -41,10 +41,16 @@
       <h1>서버 한 대가 얼마까지 버티나</h1>
       <p class="meta">수자원기술 홈페이지 · 3/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#서버는-한-대뿐">서버는 한 대뿐</a></li><li class="l2"><a href="#단계별로-부하-걸기">단계별로 부하 걸기</a></li><li class="l2"><a href="#숫자-읽기">숫자 읽기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>서버는 한 대뿐</h2>
+      <h2 id="서버는-한-대뿐">서버는 한 대뿐</h2>
       <p>자동 확장이 없는 서버 한 대로 운영해야 했다. 그것도 버스트형 CPU다.<br>이 서버가 얼마까지 버티는지 모르고 출시할 수는 없었다.</p>
-      <h2>단계별로 부하 걸기</h2>
+      <h2 id="단계별로-부하-걸기">단계별로 부하 걸기</h2>
       <p>동시 접속 10명부터 200명까지, 단계마다 30초씩 부하를 걸었다.<br>초당 처리량과 응답 시간(p50 / 95 / 99)만이 아니라 서버 load, 메모리, 컨테이너별 CPU까지 같이 기록했다.</p>
       <p>실제 결과 파일에서 메인 페이지 부분만 옮기면 이렇다.</p>
       <div class="code"><div class="code-head"><span class="file">test-results/loadtest-20261007-1800.txt</span><span class="lang">Text</span></div><pre><code>== /kor/main/
@@ -53,12 +59,12 @@
   동시   50명 | 초당    55.3건 | 실패 0 (0.0%) | 응답 50%   864ms 95%   976ms 99%  3565ms
   동시  100명 | 초당   53.83건 | 실패 0 (0.0%) | 응답 50%  1722ms 95%  1976ms 99% 10092ms
   동시  200명 | 초당   53.02건 | 실패 0 (0.0%) | 응답 50%  2542ms 95%  3002ms 99% 12514ms</code></pre></div>
-      <h2>숫자 읽기</h2>
+      <h2 id="숫자-읽기">숫자 읽기</h2>
       <p>동시 접속을 20배 늘려도 처리량은 초당 약 50건에서 평평했다. 늘어난 건 기다리는 시간뿐이었다.</p>
       <p>리틀의 법칙(L = λ × W)으로 맞춰 봤다.<br>동시 50명을 초당 약 55건으로 나누면 0.9초쯤 나온다. 실측 p50 864ms와 맞았다.</p>
       <p>실패가 0건이라고 괜찮은 건 아니었다.<br>Apache는 넘치는 요청을 버리지 않고 줄을 세운다. 그래서 실패는 0인데 200명에서 p99는 12초가 넘었다. 사용자에게 12초는 실패와 같다.</p>
       <p>측정 타이밍에도 한 번 속았다.<br>부하가 끝난 뒤에 찍은 CPU는 0.5%였는데, 부하가 걸린 동안 찍으니 70%였다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <ul><li>200명까지 실패 0, 처리량 천장은 초당 약 50</li><li>편하게 버티는 속도는 <b>분당 1,500</b> (실패 0 · p95 164ms)</li></ul>
       <p>실제 트래픽은 그 수백 분의 1이었다. 2GB · 월 $12 플랜 그대로 운영에 들어갔다.</p>
     </article>
@@ -68,5 +74,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/wareco/cms/">← 해외사업을 지도에서</a><a href="/projects/wareco/php2shell/">패치가 나오지 않는 PHP 7.4 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

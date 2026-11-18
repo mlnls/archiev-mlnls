@@ -41,10 +41,16 @@
       <h1>버전과 릴리스 노트도 자동으로</h1>
       <p class="meta">법률신문 한국법조인대관 · 6/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#버전을-사람이-정하고-있었다">버전을 사람이 정하고 있었다</a></li><li class="l2"><a href="#PR-라벨로-버전-정하기">PR 라벨로 버전 정하기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>버전을 사람이 정하고 있었다</h2>
+      <h2 id="버전을-사람이-정하고-있었다">버전을 사람이 정하고 있었다</h2>
       <p>배포할 때마다 버전 번호를 사람이 정했다.<br>무엇이 바뀌었는지도 사람이 따로 적어야 했다.</p>
-      <h2>PR 라벨로 버전 정하기</h2>
+      <h2 id="PR-라벨로-버전-정하기">PR 라벨로 버전 정하기</h2>
       <p>PR에 <code>release:major</code>나 <code>release:minor</code> 라벨을 붙이면 그 자리를 올리고, 라벨이 없으면 patch를 올린다.<br>PR 없이 바로 push한 커밋은 항상 patch다.</p>
       <div class="code"><div class="code-head"><span class="file">scripts/lawpeople-version.sh</span><span class="lang">Bash</span></div><pre><code>bump=patch
 labels=<span class="hljs-string">&quot; <span class="hljs-subst">$(echo $LABELS)</span> &quot;</span>
@@ -52,7 +58,7 @@ labels=<span class="hljs-string">&quot; <span class="hljs-subst">$(echo $LABELS)
 <span class="hljs-keyword">elif</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$labels</span>&quot;</span> == *<span class="hljs-string">&quot; release:minor &quot;</span>* ]]; <span class="hljs-keyword">then</span> bump=minor
 <span class="hljs-keyword">fi</span></code></pre></div>
       <p>배포가 끝나면 태그를 붙이고 GitHub Release에 변경 내역을 남긴다.<br>release job은 운영 서버에 새 버전이 배포됐을 때만 돈다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <figure><img src="/projects/lawtimes/release-list.webp" width="1600" height="311" alt="lawpeople GitHub Release 목록" loading="lazy" decoding="async"><figcaption>운영 저장소의 Release 목록</figcaption></figure>
       <p>운영 버전과 변경 내역이 Release 목록에 쌓인다.</p>
       <p>이 흐름은 나중에 <a href="/projects/frontend-tools/deploy/">사내 CLI의 bc deploy</a>로 옮겨 다른 프로젝트에서도 쓰게 했다.</p>
@@ -63,5 +69,18 @@ labels=<span class="hljs-string">&quot; <span class="hljs-subst">$(echo $LABELS)
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/security/">← 배포 권한은 레포 권한만큼만</a><a href="/projects/lawtimes/">목차 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

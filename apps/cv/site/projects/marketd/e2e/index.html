@@ -41,14 +41,20 @@
       <h1>jsdom이 못 보는 곳만 브라우저로</h1>
       <p class="meta">마켓:D · 4/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#jsdom이-못-보는-곳">jsdom이 못 보는 곳</a></li><li class="l2"><a href="#전부-옮기지-않기">전부 옮기지 않기</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>jsdom이 못 보는 곳</h2>
+      <h2 id="jsdom이-못-보는-곳">jsdom이 못 보는 곳</h2>
       <p>통합 테스트는 jsdom에서 돈다.<br>그런데 jsdom은 File을 멀티파트로 바꿀 때 파일명과 내용을 잃는다.</p>
       <p>업로드가 제대로 되는지는 통합 테스트로 확인할 수 없었다.</p>
-      <h2>전부 옮기지 않기</h2>
+      <h2 id="전부-옮기지-않기">전부 옮기지 않기</h2>
       <p>그렇다고 테스트를 전부 브라우저로 옮기지는 않았다.<br>통합 테스트가 못 보는 지점만 골라 Playwright로 옮겼다.</p>
       <ul><li>배너 이미지 업로드</li><li>엑셀 업로드</li><li>실제 달력</li><li>체크박스</li></ul>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>E2E는 브라우저로만 확인할 수 있는 곳 5개만 남겼다.<br>나머지는 빠른 통합 테스트가 맡는다.</p>
       <p>&quot;Playwright를 썼다&quot;보다 &quot;어디까지 통합 테스트로 보고, 어디부터 브라우저로 보나&quot;를 정한 일이었다.</p>
     </article>
@@ -58,5 +64,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/admin-test/">← 하나 고치면 어디가 깨졌는지 몰랐다</a><a href="/projects/marketd/signed-url/">주소만 알면 누구나 보던 채팅 사진 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

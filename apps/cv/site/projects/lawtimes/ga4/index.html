@@ -41,13 +41,19 @@
       <h1>페이지뷰가 빠지고 있었다</h1>
       <p class="meta">법률신문 한국법조인대관 · 2/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#첫-페이지만-기록되고-있었다">첫 페이지만 기록되고 있었다</a></li><li class="l2"><a href="#라우트가-바뀔-때마다">라우트가 바뀔 때마다</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>첫 페이지만 기록되고 있었다</h2>
+      <h2 id="첫-페이지만-기록되고-있었다">첫 페이지만 기록되고 있었다</h2>
       <p>법조인대관은 화면 안에서 주소가 바뀌는 SPA 라우팅을 쓴다.<br>그런데 GA4 page_view는 첫 진입 때만 기록되고, 그 뒤로 화면을 옮겨 다닌 기록은 빠지고 있었다.</p>
       <p>사용자가 들어온 뒤 어디로 이동하는지 알 수 없는 데이터였다.</p>
-      <h2>라우트가 바뀔 때마다</h2>
+      <h2 id="라우트가-바뀔-때마다">라우트가 바뀔 때마다</h2>
       <p>라우트가 바뀌는 시점에 page_view를 보내도록 추적을 다시 설계했다.<br>그리고 주요 CTA에는 커스텀 이벤트를 연결해, 페이지뷰만이 아니라 무엇을 눌렀는지도 남게 했다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>한 달에 이벤트 <b>1,039,503건</b>, 사용자 <b>88,231명</b>의 행동 데이터를 모으고 있다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -56,5 +62,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/lawtimes/render/">← SSR이 꺼져 있던 렌더링</a><a href="/projects/lawtimes/runner/">들어갈 수 없는 서버에 배포하기 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

@@ -41,14 +41,20 @@
       <h1>한 달에 하루 몰리는 트래픽</h1>
       <p class="meta">제주이어드림 · 1/5</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#공고-날마다-멈췄다">공고 날마다 멈췄다</a></li><li class="l2"><a href="#필요할-때만-늘어나는-서버">필요할 때만 늘어나는 서버</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>공고 날마다 멈췄다</h2>
+      <h2 id="공고-날마다-멈췄다">공고 날마다 멈췄다</h2>
       <p>제주이어드림은 청년 지원 공고가 올라오는 날 사람이 몰린다.<br>그날이면 프론트 서버와 백엔드 서버가 같이 멈췄다.</p>
       <p>프론트는 S3 + CloudFront 정적 호스팅이었다.<br>여기에는 사양을 바꿀 옵션이 없다. 몰리는 날을 대비할 방법이 없었다.</p>
-      <h2>필요할 때만 늘어나는 서버</h2>
+      <h2 id="필요할-때만-늘어나는-서버">필요할 때만 늘어나는 서버</h2>
       <p>Next.js를 SSR로 돌리고, EC2 + ALB + Auto Scaling 위로 옮겼다.</p>
       <p>늘어나는 기준은 요청 수다.<br>타깃 하나당 요청이 3,000을 넘으면 2대, 6,000을 넘으면 3대로 늘어나는 Step Scaling을 걸었다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>평소에는 1대로 돌고(최대 5대), 몰릴 때만 늘어난다.</p>
       <p>해 보니 클라이언트가 원한 건 서버를 늘리는 기술보다, 비용과 안정성을 같이 설계하는 일이었다.</p>
     </article>
@@ -58,5 +64,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/jeju/">← 목차</a><a href="/projects/jeju/golden-image/">콘솔 수작업 대신 yaml →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

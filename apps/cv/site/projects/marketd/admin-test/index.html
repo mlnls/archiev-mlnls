@@ -41,16 +41,22 @@
       <h1>하나 고치면 어디가 깨졌는지 몰랐다</h1>
       <p class="meta">마켓:D · 3/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#고칠-때마다-손으로-눌러-봤다">고칠 때마다 손으로 눌러 봤다</a></li><li class="l2"><a href="#요구사항처럼-읽히는-통합-테스트">요구사항처럼 읽히는 통합 테스트</a></li><li class="l2"><a href="#결과">결과</a></li><li class="l2"><a href="#zod가-조용히-지운-필드">zod가 조용히 지운 필드</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>고칠 때마다 손으로 눌러 봤다</h2>
+      <h2 id="고칠-때마다-손으로-눌러-봤다">고칠 때마다 손으로 눌러 봤다</h2>
       <p>관리자 화면은 넓었다. 회원, 상품, 결제, 정산, 통계, 배달, 고객센터까지.<br>수정도 잦았다.</p>
       <p>하나 고치면 어디가 깨졌는지 알 수 없어서, 매번 손으로 눌러 봐야 했다.</p>
-      <h2>요구사항처럼 읽히는 통합 테스트</h2>
+      <h2 id="요구사항처럼-읽히는-통합-테스트">요구사항처럼 읽히는 통합 테스트</h2>
       <ul><li>MSW로 서버 대신 목업 API를 띄웠다</li><li>도메인별 fixture를 만들고, alert · table · download처럼 자주 하는 확인은 공통 유틸로 뺐다</li><li>테스트 이름은 &quot;~하면 ~한다&quot; 문장으로 썼다</li></ul>
       <p>마지막 규칙 덕분에 테스트 목록을 위에서부터 읽으면 그대로 요구사항 목록이 된다.</p>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>테스트 파일 <b>84개</b>, 케이스 <b>935개</b>.<br>로컬에서 다시 돌린 175개는 약 10초에 모두 통과했다.</p>
-      <h2>zod가 조용히 지운 필드</h2>
+      <h2 id="zod가-조용히-지운-필드">zod가 조용히 지운 필드</h2>
       <p>하나 배운 게 있다.<br>zod는 스키마에 없는 필드를 에러 없이 지운다.</p>
       <p>관리자 스키마에 새 필드를 넣지 않으면, 서버가 그 값을 보내도 화면까지 오지 못하고 조용히 사라진다.</p>
     </article>
@@ -60,5 +66,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/marketd/ota/">← 긴급 수정이 스토어 심사를 기다렸다</a><a href="/projects/marketd/e2e/">jsdom이 못 보는 곳만 브라우저로 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>

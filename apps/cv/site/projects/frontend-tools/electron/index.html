@@ -41,10 +41,16 @@
       <h1>데스크톱 프로젝트도 명령 하나로</h1>
       <p class="meta">벽촌 FE 공통 모듈 · 사내 CLI · 1/6</p>
     </header>
+    <aside class="toc" aria-label="이 글의 목차">
+      <nav>
+        <p>목차</p>
+        <ol><li class="l2"><a href="#데스크톱은-매번-손으로">데스크톱은 매번 손으로</a></li><li class="l2"><a href="#Desktop-선택지-추가">Desktop 선택지 추가</a></li><li class="l2"><a href="#결과">결과</a></li></ol>
+      </nav>
+    </aside>
     <article class="post">
-      <h2>데스크톱은 매번 손으로</h2>
+      <h2 id="데스크톱은-매번-손으로">데스크톱은 매번 손으로</h2>
       <p>사내 CLI의 <code>bc init</code>은 웹 프로젝트(React · Next)만 만들 수 있었다.<br>데스크톱 앱 요청이 들어오면 Electron 프로젝트는 매번 손으로 세팅했다.</p>
-      <h2>Desktop 선택지 추가</h2>
+      <h2 id="Desktop-선택지-추가">Desktop 선택지 추가</h2>
       <p><code>bc init</code>에 Desktop(Electron)을 더했다.</p>
       <figure><img src="/projects/frontend-tools/cli-init.webp" width="1600" height="706" alt="bc init에서 React, Next.js, Mobile(Expo), Desktop(Electron) 중 하나를 고르는 화면" loading="lazy" decoding="async"><figcaption>bc init 실행 화면</figcaption></figure>
       <p>Desktop을 고르면 이런 프로젝트가 만들어진다.</p>
@@ -58,7 +64,7 @@
   <span class="hljs-attr">sandbox</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">nodeIntegration</span>: <span class="hljs-literal">false</span>,
 },</code></pre></div>
-      <h2>결과</h2>
+      <h2 id="결과">결과</h2>
       <p>Desktop을 고르면 웹 프로젝트와 같은 규칙으로 데스크톱 앱이 시작된다.</p>
     </article>
     <nav class="others" aria-label="이 프로젝트의 다른 글">
@@ -67,5 +73,18 @@
     </nav>
     <nav class="pager" aria-label="이전 · 다음 글"><a href="/projects/frontend-tools/">← 목차</a><a href="/projects/frontend-tools/expo/">앱 프로젝트도 같은 규칙으로 →</a></nav>
   </main>
+  <script>(() => {
+    const links = [...document.querySelectorAll(".toc a")];
+    const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let at = 0;
+      heads.forEach((h, i) => { if (h && h.getBoundingClientRect().top < 120) at = i; });
+      links.forEach((a, i) => a.toggleAttribute("aria-current", i === at));
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();</script>
 </body>
 </html>
