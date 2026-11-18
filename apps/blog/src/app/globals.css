@@ -316,16 +316,12 @@ input, textarea { font: inherit; color: inherit; }
 .cover-actions button { padding: 3px 10px; background: var(--raised); border: 1px solid var(--rule); border-radius: 5px; font: inherit; font-size: 13px; color: var(--ink); cursor: pointer; }
 @media (hover: none) { .cover-actions { opacity: 1; } }
 
-/* 공개 글의 목차 자리에 두는 글 속성 */
-.editor-props { position: sticky; top: 80px; align-self: start; display: grid; gap: 18px; padding-left: 16px; border-left: 1px solid var(--rule); font-size: 13px; line-height: 1.5; color: var(--muted); }
-.editor-props label { display: grid; align-content: start; gap: 4px; }
-.editor-props :is(input, textarea) { width: 100%; padding: 0; resize: none; field-sizing: content; background: none; border: 0; outline: none; color: var(--ink); }
-.editor-props :is(input, textarea)::placeholder { color: var(--muted); opacity: 0.7; }
-@media (max-width: 960px) {
-  .editor-props { position: static; order: -1; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; padding: 12px 0 0; border-left: 0; border-top: 1px solid var(--rule); }
-}
+/* 목차: 공개 글과 같은 모양. 위에 붙는 저장 막대 아래에 멈춥니다 */
+.editor-layout .toc { top: 88px; }
+.editor-layout .toc button { padding: 0; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: color 140ms ease-out; }
+@media (hover: hover) { .editor-layout .toc button:hover { color: var(--ink); } }
+.editor-body .prose :is(h2, h3) { scroll-margin-top: 88px; }
 
-.editor-body { position: relative; }
 .editor-body { min-width: 0; }
 .editor-body .prose { min-height: 50dvh; padding-bottom: 40dvh; outline: none; }
 .editor-body .prose > :first-child { margin-top: 0; }

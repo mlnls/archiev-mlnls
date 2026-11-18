@@ -35,20 +35,40 @@ const imagesOf = (files: FileList | File[] | null | undefined) =>
 /** 이미지 파일 주소 하나만 붙여 넣으면 링크 대신 이미지로 넣습니다 */
 const IMAGE_URL = /^https?:\/\/\S+\.(?:png|jpe?g|gif|webp|avif)(?:[?#]\S*)?$/i;
 
+export interface EditorHeading {
+  level: 2 | 3;
+  text: string;
+  pos: number;
+}
+
+/** 공개 글의 목차와 같은 기준: 본문의 제목 2, 제목 3 */
+function headingsOf(ed: TiptapEditor): EditorHeading[] {
+  const out: EditorHeading[] = [];
+  ed.state.doc.descendants((node, pos) => {
+    if (node.type.name !== "heading") return;
+    const level = node.attrs.level as number;
+    const text = node.textContent.trim();
+    if ((level === 2 || level === 3) && text) out.push({ level, text, pos });
+    return false;
+  });
+  return out;
+}
+
 interface Props {
   /** 처음 열 때의 마크다운. 이후 값은 편집기가 들고 있습니다 */
   initial: string;
   onChange: (markdown: string) => void;
+  onHeadings: (headings: EditorHeading[]) => void;
   onError: (message: string) => void;
   onUploadingChange: (uploading: boolean) => void;
   editorRef: RefObject<TiptapEditor | null>;
 }
 
 /** 노션처럼 적으면서 바로 모양이 바뀌는 본문 편집기. 저장은 마크다운으로 합니다 */
-export function BodyEditor({ initial, onChange, onError, onUploadingChange, editorRef }: Props) {
+export function BodyEditor({ initial, onChange, onHeadings, onError, onUploadingChange, editorRef }: Props) {
   const wrap = useRef<HTMLDivElement>(null);
-  const callbacks = useRef({ onChange, onError, onUploadingChange });
-  callbacks.current = { onChange, onError, onUploadingChange };
+  const callbacks = useRef({ onChange, onHeadings, onError, onUploadingChange });
+  callbacks.current = { onChange, onHeadings, onError, onUploadingChange };
   const [imagePanel, setImagePanel] = useState<{ top: number; left: number } | null>(null);
 
   const uploading = useSyncExternalStore(uploadState.subscribe, () => uploadState.count() > 0, () => false);
@@ -61,7 +81,11 @@ export function BodyEditor({ initial, onChange, onError, onUploadingChange, edit
     contentType: "markdown",
     // 서버 렌더링과 어긋나지 않도록 브라우저에서 처음 그릴 때 만듭니다
     immediatelyRender: false,
-    onUpdate: ({ editor: ed }) => callbacks.current.onChange(cleanMarkdown(ed.getMarkdown())),
+    onCreate: ({ editor: ed }) => callbacks.current.onHeadings(headingsOf(ed)),
+    onUpdate: ({ editor: ed }) => {
+      callbacks.current.onChange(cleanMarkdown(ed.getMarkdown()));
+      callbacks.current.onHeadings(headingsOf(ed));
+    },
     editorProps: {
       attributes: { class: "prose", "aria-label": "본문" },
       handlePaste: (_view, event) => {

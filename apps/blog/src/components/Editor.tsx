@@ -3,7 +3,7 @@
 import type { Editor as TiptapEditor } from "@tiptap/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
-import { BodyEditor } from "@/components/editor/BodyEditor";
+import { BodyEditor, type EditorHeading } from "@/components/editor/BodyEditor";
 import { CoverImage, useCoverPicker } from "@/components/editor/CoverField";
 import { api, formatDate, slugify } from "@/lib/client";
 import { parseTags } from "@/lib/editor";
@@ -51,7 +51,7 @@ export function Editor({ post }: { post?: Post }) {
       ? { title: post.title, slug: post.slug, summary: post.summary, tags: post.tags.join(", "), cover: post.coverImage ?? "", body: post.body }
       : (loadLocalDraft() ?? EMPTY),
   );
-  // 공개 전에는 주소가 제목을 따라갑니다. 직접 고쳤거나 이미 공개한 글은 고정합니다
+  // 공개 전에는 주소가 제목을 따라가고, 공개하면 고정합니다 (예전에 직접 고친 주소도 그대로 둡니다)
   const [slugTouched, setSlugTouched] = useState(() => (post ? post.published || post.slug !== slugify(post.title) : !!draft.slug && draft.slug !== slugify(draft.title)));
   const [published, setPublished] = useState(post?.published ?? false);
   const [publishedAt, setPublishedAt] = useState(post?.publishedAt ?? null);
@@ -63,6 +63,7 @@ export function Editor({ post }: { post?: Post }) {
   const [uploading, setUploading] = useState(false);
   const [coverUploading, setCoverUploading] = useState(false);
   const body = useRef<TiptapEditor | null>(null);
+  const [headings, setHeadings] = useState<EditorHeading[]>([]);
   const titleBox = useRef<HTMLTextAreaElement>(null);
 
   // 저장 중에 들어온 수정도 놓치지 않도록 최신 값과 상태를 ref로 들고 있습니다
@@ -195,6 +196,15 @@ export function Editor({ post }: { post?: Post }) {
     ed.commands.focus(at);
   };
 
+  const goToHeading = (pos: number) => {
+    const ed = body.current;
+    if (!ed) return;
+    const dom = ed.view.nodeDOM(pos);
+    if (dom instanceof HTMLElement) dom.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    ed.chain().setTextSelection(pos + 1 + (ed.state.doc.nodeAt(pos)?.content.size ?? 0)).run();
+    ed.view.focus();
+  };
+
   // 글 옆이나 아래의 빈 곳을 눌러도 바로 이어서 쓸 수 있게 합니다
   const onBlankMouseDown = (e: MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -275,27 +285,24 @@ export function Editor({ post }: { post?: Post }) {
           initial={draft.body}
           editorRef={body}
           onChange={(markdown) => update({ body: markdown })}
+          onHeadings={setHeadings}
           onError={setError}
           onUploadingChange={setUploading}
         />
-        {/* 공개 글에서 목차가 놓이는 자리에 글 속성을 둡니다 */}
-        <aside className="editor-props" aria-label="글 속성">
-          <label>
-            <span>요약</span>
-            <textarea rows={2} placeholder="목록과 검색 결과에 보입니다. 비우면 본문 앞부분을 씁니다" maxLength={300} value={draft.summary} onChange={(e) => update({ summary: e.target.value })} />
-          </label>
-          <label>
-            <span>주소</span>
-            <input
-              placeholder="제목에서 자동으로"
-              value={draft.slug}
-              onChange={(e) => {
-                setSlugTouched(true);
-                update({ slug: e.target.value });
-              }}
-            />
-          </label>
-        </aside>
+        {/* 공개 글과 같은 자리, 같은 모양의 목차. 누르면 그 제목으로 갑니다 */}
+        {headings.length > 1 && (
+          <nav className="toc" aria-label="목차">
+            <ul>
+              {headings.map((h) => (
+                <li key={h.pos} className={h.level === 3 ? "h3" : undefined}>
+                  <button type="button" onClick={() => goToHeading(h.pos)}>
+                    {h.text}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
     </main>
   );
