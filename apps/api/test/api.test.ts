@@ -5,6 +5,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { closeDb, getDb, jobs, saveProfile } from "@archiev/db";
 import profileJson from "../../../data/profile.example.json";
 import { createApp, type ApiConfig } from "../src/app";
+import { fetchImage, FetchImageError, isPublicAddress, unwrapNotionImage } from "../src/fetchImage";
 import { webhookPayload } from "../src/notify";
 import { hashPassword } from "../src/security";
 
@@ -219,6 +220,74 @@ describe("uploads", () => {
 
   it("rejects path traversal", async () => {
     expect((await app.request("/uploads/..%2F..%2Fetc%2Fpasswd")).status).toBe(404);
+  });
+
+  it("stores a pasted image from another site and serves it from ours", async () => {
+    const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 9, 9]);
+    const local = createApp({ ...cfg, fetchImage: async () => png }).app;
+    const res = await local.request("/admin/uploads/fetch", {
+      method: "POST",
+      headers: { cookie, origin: ORIGIN, "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://example.com/a.png" }),
+    });
+    expect(res.status).toBe(201);
+    const { url } = (await res.json()) as { url: string };
+    expect(url).toMatch(/^\/api\/uploads\/[a-z0-9-]+\.png$/);
+  });
+
+  it("explains why an image could not be fetched", async () => {
+    const local = createApp({ ...cfg, fetchImage: async () => Promise.reject(new FetchImageError("가져올 수 없는 주소입니다")) }).app;
+    const res = await local.request("/admin/uploads/fetch", {
+      method: "POST",
+      headers: { cookie, origin: ORIGIN, "content-type": "application/json" },
+      body: JSON.stringify({ url: "http://169.254.169.254/latest" }),
+    });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toEqual({ error: "가져올 수 없는 주소입니다" });
+  });
+
+  it("needs a session to fetch images", async () => {
+    const res = await app.request("/admin/uploads/fetch", {
+      method: "POST",
+      headers: { origin: ORIGIN, "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://example.com/a.png" }),
+    });
+    expect(res.status).toBe(401);
+  });
+});
+
+describe("fetchImage", () => {
+  const publicDns = async () => ["93.184.216.34"];
+  const reply = (status: number, init: { body?: Uint8Array; location?: string } = {}) =>
+    new Response(init.body ? new Blob([init.body as Uint8Array<ArrayBuffer>]) : null, { status, headers: init.location ? { location: init.location } : {} });
+
+  it("refuses private and metadata addresses", async () => {
+    expect(isPublicAddress("10.0.0.5")).toBe(false);
+    expect(isPublicAddress("169.254.169.254")).toBe(false);
+    expect(isPublicAddress("::ffff:127.0.0.1")).toBe(false);
+    expect(isPublicAddress("93.184.216.34")).toBe(true);
+    await expect(fetchImage("http://internal.test/a.png", { resolve: async () => ["172.18.0.3"], fetch: vi.fn() })).rejects.toThrow("가져올 수 없는 주소");
+  });
+
+  it("checks every redirect so a public address cannot bounce inward", async () => {
+    const fetcher = vi.fn(async () => reply(302, { location: "http://127.0.0.1/secret" }));
+    const resolve = async (host: string) => (host === "127.0.0.1" ? ["127.0.0.1"] : ["93.184.216.34"]);
+    await expect(fetchImage("https://example.com/a.png", { fetch: fetcher as never, resolve })).rejects.toThrow("가져올 수 없는 주소");
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it("stops reading past the size limit", async () => {
+    const fetcher = vi.fn(async () => reply(200, { body: new Uint8Array(64) }));
+    await expect(fetchImage("https://example.com/a.png", { fetch: fetcher as never, resolve: publicDns, limit: 16 })).rejects.toThrow("10MB");
+  });
+
+  it("tries the real file behind a notion.so/image link first", async () => {
+    const inner = "https://prod-files-secure.s3.us-west-2.amazonaws.com/x/y.png?X-Amz-Signature=1";
+    expect(unwrapNotionImage(`https://www.notion.so/image/${encodeURIComponent(inner)}?table=block&id=1`)).toEqual([
+      inner,
+      `https://www.notion.so/image/${encodeURIComponent(inner)}?table=block&id=1`,
+    ]);
+    expect(unwrapNotionImage("https://a.com/b.png")).toEqual(["https://a.com/b.png"]);
   });
 });
 

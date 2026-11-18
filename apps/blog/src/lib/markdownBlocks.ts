@@ -1,4 +1,5 @@
 import { CALLOUTS, CALLOUT_TYPES, type CalloutType } from "./callout";
+import { splitImageSrc } from "./imageAttrs";
 import type { LinkPreview } from "./linkPreview";
 
 /**
@@ -94,6 +95,35 @@ function splitLines(children: HastNode[]): (HastNode[] | string)[] | null {
   return found ? out : null;
 }
 
+/**
+ * 문단에 이미지 하나만 있으면 노션의 이미지 블록처럼 그립니다.
+ * 주소 뒤 #w=60&a=left 는 폭과 정렬, 제목("...")은 캡션입니다.
+ */
+const DROP: HastNode = { type: "drop" };
+
+function toFigure(paragraph: HastNode): HastNode | null {
+  const visible = (paragraph.children ?? []).filter((c) => !isBlank(c));
+  const img = visible.length === 1 && visible[0]!.tagName === "img" ? visible[0]! : null;
+  if (!img) return null;
+  const src = img.properties?.src;
+  // 노션의 attachment: 처럼 살균에서 주소가 지워진 이미지는 빈 틀만 남으므로 그리지 않습니다
+  if (typeof src !== "string") return DROP;
+
+  const { url, width, align } = splitImageSrc(src);
+  const caption = typeof img.properties!.title === "string" ? img.properties!.title.trim() : "";
+  const alt = typeof img.properties!.alt === "string" && img.properties!.alt ? img.properties!.alt : caption;
+  const image = el("img", null, [], { src: url, alt, loading: "lazy", decoding: "async" });
+  const children = [image];
+  if (caption) children.push(el("figcaption", null, [text(caption)]));
+  // 폭은 정수로만 읽었으므로 style에 그대로 써도 안전합니다
+  const properties: Record<string, unknown> = { className: ["image"] };
+  if (width) {
+    properties.style = `width: ${width}%`;
+    properties.dataAlign = align;
+  }
+  return el("figure", null, children, properties);
+}
+
 function emptyCard(url: string): HastNode {
   return el("a", "bookmark", [], { href: url, target: "_blank", rel: "noopener noreferrer nofollow" });
 }
@@ -127,6 +157,11 @@ function walk(parent: HastNode, cards: { card: HastNode; url: string }[]) {
       }
     }
     if (child.tagName === "p") {
+      const figure = toFigure(child);
+      if (figure) {
+        if (figure !== DROP) next.push(figure);
+        continue;
+      }
       const lines = splitLines(child.children ?? []);
       if (lines) {
         for (const line of lines) next.push(typeof line === "string" ? card(line) : el("p", null, line));

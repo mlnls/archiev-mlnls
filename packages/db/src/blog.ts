@@ -37,7 +37,8 @@ const listColumns = {
  */
 function firstBodyImage(body: string) {
   for (const m of body.replace(/```[\s\S]*?```/g, "").matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) {
-    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return m[1]!;
+    // 편집기가 폭과 정렬을 적어 두는 # 뒤는 목록 썸네일에 필요 없습니다
+    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return m[1]!.split("#")[0]!;
   }
   return null;
 }
