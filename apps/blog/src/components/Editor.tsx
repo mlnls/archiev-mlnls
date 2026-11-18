@@ -2,12 +2,12 @@
 
 import type { Editor as TiptapEditor } from "@tiptap/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { BodyEditor } from "@/components/editor/BodyEditor";
-import { CoverField } from "@/components/editor/CoverField";
-import { api, slugify } from "@/lib/client";
+import { CoverImage, useCoverPicker } from "@/components/editor/CoverField";
+import { api, formatDate, slugify } from "@/lib/client";
 import { parseTags } from "@/lib/editor";
-import { postPath } from "@/lib/site";
+import { AUTHOR, postPath } from "@/lib/site";
 import type { Post } from "@/lib/types";
 
 const DRAFT_KEY = "blog-new-draft";
@@ -54,6 +54,7 @@ export function Editor({ post }: { post?: Post }) {
   // 공개 전에는 주소가 제목을 따라갑니다. 직접 고쳤거나 이미 공개한 글은 고정합니다
   const [slugTouched, setSlugTouched] = useState(() => (post ? post.published || post.slug !== slugify(post.title) : !!draft.slug && draft.slug !== slugify(draft.title)));
   const [published, setPublished] = useState(post?.published ?? false);
+  const [publishedAt, setPublishedAt] = useState(post?.publishedAt ?? null);
   const [postId, setPostId] = useState(post?.id);
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [savedAt, setSavedAt] = useState<Date | null>(null);
@@ -61,8 +62,8 @@ export function Editor({ post }: { post?: Post }) {
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [coverUploading, setCoverUploading] = useState(false);
-  const [moreProps, setMoreProps] = useState(!!draft.summary);
   const body = useRef<TiptapEditor | null>(null);
+  const titleBox = useRef<HTMLTextAreaElement>(null);
 
   // 저장 중에 들어온 수정도 놓치지 않도록 최신 값과 상태를 ref로 들고 있습니다
   const latest = useRef({ draft, postId, slugTouched, published });
@@ -114,6 +115,7 @@ export function Editor({ post }: { post?: Post }) {
     try {
       const saved = await run;
       setPublished(saved.published);
+      setPublishedAt(saved.publishedAt);
       setDraft((cur) => ({ ...cur, slug: saved.slug }));
       if (saved.published) setSlugTouched(true);
       setSavedAt(new Date());
@@ -147,6 +149,16 @@ export function Editor({ post }: { post?: Post }) {
     }
   }
 
+  const cover = useCoverPicker({ onChange: (url) => update({ cover: url }), onError: setError, onUploadingChange: setCoverUploading });
+
+  // 제목은 공개 글처럼 여러 줄로 감기므로 글자에 맞춰 높이를 늘립니다
+  useLayoutEffect(() => {
+    const box = titleBox.current;
+    if (!box) return;
+    box.style.height = "auto";
+    box.style.height = `${box.scrollHeight}px`;
+  }, [draft.title]);
+
   const blocked = uploading || coverUploading;
   const filled = !!draft.title.trim() && !!draft.body.trim();
   // 올리는 중에 저장하면 그 이미지가 글에서 빠지므로 끝날 때까지 막습니다
@@ -175,12 +187,20 @@ export function Editor({ post }: { post?: Post }) {
     }
   };
 
+  /** 편집기의 focus 명령은 한 프레임 늦게 옮기므로, 곧바로 치는 글자가 제목 칸에 남지 않게 먼저 초점을 옮깁니다 */
+  const focusBody = (at: "start" | "end") => {
+    const ed = body.current;
+    if (!ed) return;
+    ed.view.focus();
+    ed.commands.focus(at);
+  };
+
   // 글 옆이나 아래의 빈 곳을 눌러도 바로 이어서 쓸 수 있게 합니다
   const onBlankMouseDown = (e: MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    if (target !== e.currentTarget && !target.classList.contains("editor-doc")) return;
+    if (target !== e.currentTarget && !target.classList.contains("editor-layout")) return;
     e.preventDefault();
-    body.current?.commands.focus("end");
+    focusBody("end");
   };
 
   const statusText = (() => {
@@ -210,49 +230,47 @@ export function Editor({ post }: { post?: Post }) {
           </button>
         </div>
       </div>
-      <div className="editor-doc">
-        <div className="editor-meta">
-          <CoverField value={draft.cover} onChange={(cover) => update({ cover })} onError={setError} onUploadingChange={setCoverUploading} />
-          <input
-            className="title-input"
-            aria-label="제목"
-            placeholder="제목 없음"
-            value={draft.title}
-            onChange={(e) => update({ title: e.target.value, ...(slugTouched ? {} : { slug: slugify(e.target.value) }) })}
-            onKeyDown={(e) => {
-              if ((e.key === "Enter" || e.key === "ArrowDown") && !e.nativeEvent.isComposing) {
-                e.preventDefault();
-                body.current?.commands.focus("start");
-              }
-            }}
-          />
-          <div className="prop">
-            <label htmlFor="prop-tags">태그</label>
-            <input id="prop-tags" placeholder="쉼표로 구분" value={draft.tags} onChange={(e) => update({ tags: e.target.value })} />
-          </div>
-          {moreProps ? (
-            <>
-              <div className="prop">
-                <label htmlFor="prop-summary">요약</label>
-                <input id="prop-summary" placeholder="검색 결과와 목록에 보입니다. 비우면 본문 앞부분을 씁니다" maxLength={300} value={draft.summary} onChange={(e) => update({ summary: e.target.value })} />
-              </div>
-              <div className="prop">
-                <label htmlFor="prop-slug">주소</label>
-                <input
-                  id="prop-slug"
-                  placeholder="제목에서 자동으로 만듭니다"
-                  value={draft.slug}
-                  onChange={(e) => {
-                    setSlugTouched(true);
-                    update({ slug: e.target.value });
-                  }}
-                />
-              </div>
-            </>
-          ) : (
-            <button type="button" className="prop-more" onClick={() => setMoreProps(true)}>속성 더 보기</button>
+      {/* 공개 글(.post-head, .post-hero, .post-layout)과 같은 틀이라 쓰는 모습이 그대로 공개됩니다 */}
+      <header className="post-head editor-head">
+        <input
+          className="tags-input"
+          aria-label="태그"
+          placeholder="태그를 쉼표로 구분해 쓰세요"
+          value={draft.tags}
+          onChange={(e) => update({ tags: e.target.value })}
+        />
+        <textarea
+          ref={titleBox}
+          className="title-input"
+          aria-label="제목"
+          placeholder="제목 없음"
+          rows={1}
+          value={draft.title}
+          onChange={(e) => {
+            const title = e.target.value.replace(/\n/g, " ");
+            update({ title, ...(slugTouched ? {} : { slug: slugify(title) }) });
+          }}
+          onKeyDown={(e) => {
+            if (e.nativeEvent.isComposing) return;
+            if (e.key === "Enter" || (e.key === "ArrowDown" && e.currentTarget.selectionStart === e.currentTarget.value.length)) {
+              e.preventDefault();
+              focusBody("start");
+            }
+          }}
+        />
+        <div className="post-meta">
+          <span>{AUTHOR.name}</span>
+          <span>{publishedAt ? formatDate(publishedAt) : "공개 전"}</span>
+          {!draft.cover && (
+            <button type="button" className="meta-btn" disabled={cover.uploading} onClick={cover.pick}>
+              {cover.uploading ? "커버 올리는 중" : "커버 추가"}
+            </button>
           )}
         </div>
+        {cover.fileInput}
+      </header>
+      {draft.cover && <CoverImage value={draft.cover} uploading={cover.uploading} onPick={cover.pick} onRemove={() => update({ cover: "" })} />}
+      <div className="post-layout editor-layout">
         <BodyEditor
           initial={draft.body}
           editorRef={body}
@@ -260,6 +278,24 @@ export function Editor({ post }: { post?: Post }) {
           onError={setError}
           onUploadingChange={setUploading}
         />
+        {/* 공개 글에서 목차가 놓이는 자리에 글 속성을 둡니다 */}
+        <aside className="editor-props" aria-label="글 속성">
+          <label>
+            <span>요약</span>
+            <textarea rows={2} placeholder="목록과 검색 결과에 보입니다. 비우면 본문 앞부분을 씁니다" maxLength={300} value={draft.summary} onChange={(e) => update({ summary: e.target.value })} />
+          </label>
+          <label>
+            <span>주소</span>
+            <input
+              placeholder="제목에서 자동으로"
+              value={draft.slug}
+              onChange={(e) => {
+                setSlugTouched(true);
+                update({ slug: e.target.value });
+              }}
+            />
+          </label>
+        </aside>
       </div>
     </main>
   );

@@ -2,63 +2,58 @@
 
 import { useRef, useState } from "react";
 import { uploadImage } from "@/lib/client";
+import { prepareImage } from "@/lib/prepareImage";
 
-interface Props {
-  value: string;
+interface PickerOptions {
   onChange: (url: string) => void;
   onError: (message: string) => void;
   onUploadingChange: (uploading: boolean) => void;
 }
 
-/** 노션의 커버처럼 제목 위에 넓게 놓습니다. 비워 두면 목록은 본문의 첫 이미지를 씁니다 */
-export function CoverField({ value, onChange, onError, onUploadingChange }: Props) {
+/** 커버 파일 고르기와 올리기. "커버 추가" 버튼과 커버 이미지가 화면의 다른 자리에 있어서 따로 씁니다 */
+export function useCoverPicker({ onChange, onError, onUploadingChange }: PickerOptions) {
   const input = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
-  const setBusy = (busy: boolean) => {
-    setUploading(busy);
-    onUploadingChange(busy);
-  };
-
   const upload = async (file: File) => {
-    setBusy(true);
+    setUploading(true);
+    onUploadingChange(true);
     try {
-      onChange(await uploadImage(file));
+      onChange(await uploadImage(await prepareImage(file)));
     } catch (err) {
       onError((err as Error).message);
     } finally {
-      setBusy(false);
+      setUploading(false);
+      onUploadingChange(false);
     }
   };
 
-  const pick = () => input.current?.click();
+  const fileInput = (
+    <input
+      ref={input}
+      type="file"
+      accept="image/*"
+      hidden
+      onChange={(e) => {
+        const file = e.target.files?.[0];
+        e.target.value = "";
+        if (file) void upload(file);
+      }}
+    />
+  );
 
+  return { pick: () => input.current?.click(), uploading, fileInput };
+}
+
+/** 공개 글과 같은 자리, 같은 크기로 커버를 보여 줍니다 */
+export function CoverImage({ value, uploading, onPick, onRemove }: { value: string; uploading: boolean; onPick: () => void; onRemove: () => void }) {
   return (
-    <>
-      {value ? (
-        <div className="cover">
-          <img src={value} alt="커버 이미지" />
-          <div className="cover-actions">
-            <button type="button" disabled={uploading} onClick={pick}>{uploading ? "올리는 중" : "커버 변경"}</button>
-            <button type="button" disabled={uploading} onClick={() => onChange("")}>제거</button>
-          </div>
-        </div>
-      ) : (
-        <div className="cover-add">
-          <button type="button" disabled={uploading} onClick={pick}>{uploading ? "올리는 중" : "커버 추가"}</button>
-        </div>
-      )}
-      <input
-        ref={input}
-        type="file"
-        accept="image/png,image/jpeg,image/gif,image/webp"
-        hidden
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          e.target.value = "";
-          if (file) void upload(file);
-        }}
-      />
-    </>
+    <div className="cover">
+      <img className="post-hero" src={value} alt="커버 이미지" />
+      <div className="cover-actions">
+        <button type="button" disabled={uploading} onClick={onPick}>{uploading ? "올리는 중" : "커버 변경"}</button>
+        <button type="button" disabled={uploading} onClick={onRemove}>제거</button>
+      </div>
+    </div>
   );
 }
