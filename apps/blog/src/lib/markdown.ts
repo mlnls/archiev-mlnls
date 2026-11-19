@@ -7,8 +7,10 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
+import { splitImageSrc } from "./imageAttrs";
 import { fetchLinkPreview } from "./linkPreview";
 import { transformBlocks, type HastNode, type PreviewFetcher } from "./markdownBlocks";
+import { remarkDetails } from "./remarkDetails";
 
 /** 코드 강조용 class와 제목 id만 추가로 허용합니다. 스크립트, iframe, on* 속성은 지워집니다 */
 const schema: Schema = {
@@ -29,6 +31,7 @@ function rehypeBlocks() {
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
+  .use(remarkDetails as never)
   .use(remarkRehype)
   .use(rehypeSanitize, schema)
   .use(rehypeSlug)
@@ -60,6 +63,7 @@ export function extractHeadings(html: string): Heading[] {
 export function plainText(source: string, max = 150): string {
   const text = source
     .replace(/```[\s\S]*?```/g, " ")
+    .replace(/<\/?(?:details|summary)>/g, " ")
     .replace(/^\s*>\s*\[![a-z]+\]/gim, " ")
     // 편집기가 저장할 때 붙이는 이스케이프를 되돌립니다 (snake\_case, R&amp;D)
     .replace(/\\([!-/:-@[-`{-~])/g, "$1")
@@ -80,7 +84,7 @@ export function plainText(source: string, max = 150): string {
 export function firstImage(source: string): string | null {
   for (const m of source.matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) {
     // 노션에서 붙여 넣은 attachment: 주소는 브라우저가 열 수 없습니다
-    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return m[1]!;
+    if (/^(?:https?:\/\/|\/)/.test(m[1]!)) return splitImageSrc(m[1]!).url;
   }
   return null;
 }

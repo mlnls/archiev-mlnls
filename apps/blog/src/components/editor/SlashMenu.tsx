@@ -13,7 +13,7 @@ interface MenuState {
   left: number;
 }
 
-export function SlashMenu({ editor, wrapRef, pickImage }: { editor: Editor; wrapRef: RefObject<HTMLDivElement | null>; pickImage: () => void }) {
+export function SlashMenu({ editor, wrapRef, openImage }: { editor: Editor; wrapRef: RefObject<HTMLDivElement | null>; openImage: () => void }) {
   const [menu, setMenu] = useState<MenuState | null>(null);
   const [index, setIndex] = useState(0);
   /** Esc로 닫은 "/"로는 다시 열지 않습니다 */
@@ -66,9 +66,9 @@ export function SlashMenu({ editor, wrapRef, pickImage }: { editor: Editor; wrap
       if (!menu || !item) return;
       editor.chain().focus().deleteRange({ from: menu.from, to: menu.to }).run();
       close();
-      item.run({ editor, pickImage });
+      item.run({ editor, openImage });
     },
-    [editor, menu, close, pickImage],
+    [editor, menu, close, openImage],
   );
 
   useEffect(() => {

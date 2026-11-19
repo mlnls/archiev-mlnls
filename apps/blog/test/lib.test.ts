@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { formatShortDate, slugify } from "@/lib/client";
+import { joinImageSrc, splitImageSrc } from "@/lib/imageAttrs";
 import { postGraph, serializeJsonLd } from "@/lib/jsonld";
 import { isPublicAddress, parseLinkPreview } from "@/lib/linkPreview";
 import { extractHeadings, firstImage, plainText, renderMarkdown } from "@/lib/markdown";
 import type { PreviewFetcher } from "@/lib/markdownBlocks";
+import { fitWithin } from "@/lib/prepareImage";
 import type { Post } from "@/lib/types";
 
 const post: Post = {
@@ -206,5 +208,40 @@ describe("firstImage", () => {
   it("skips addresses a browser cannot open", () => {
     expect(firstImage("![노션](attachment:a:image.png)\n![실제](https://a.com/x.png)")).toBe("https://a.com/x.png");
     expect(firstImage("![노션](attachment:a:image.png)")).toBeNull();
+  });
+});
+
+describe("image layout in the address", () => {
+  it("reads width and alignment after #", () => {
+    expect(splitImageSrc("/api/uploads/a.png#w=40&a=right")).toEqual({ url: "/api/uploads/a.png", width: 40, align: "right" });
+    expect(splitImageSrc("/api/uploads/a.png")).toEqual({ url: "/api/uploads/a.png", width: null, align: "center" });
+  });
+
+  it("keeps a hash that is not ours", () => {
+    expect(splitImageSrc("https://a.com/x.png#section")).toEqual({ url: "https://a.com/x.png#section", width: null, align: "center" });
+  });
+
+  it("clamps odd widths and ignores unknown alignments", () => {
+    expect(splitImageSrc("a.png#w=3&a=top")).toEqual({ url: "a.png", width: 10, align: "center" });
+    expect(splitImageSrc("a.png#w=abc")).toEqual({ url: "a.png", width: null, align: "center" });
+  });
+
+  it("writes nothing for a full-width centered image", () => {
+    expect(joinImageSrc("a.png", { width: null, align: "center" })).toBe("a.png");
+    expect(joinImageSrc("a.png", { width: 100, align: "left" })).toBe("a.png");
+    expect(joinImageSrc("a.png", { width: 55.4, align: "center" })).toBe("a.png#w=55");
+    expect(joinImageSrc("a.png", { width: 30, align: "left" })).toBe("a.png#w=30&a=left");
+  });
+
+  it("uses the plain address for list thumbnails", () => {
+    expect(firstImage("![a](/api/uploads/a.png#w=30&a=left)")).toBe("/api/uploads/a.png");
+  });
+});
+
+describe("prepareImage sizes", () => {
+  it("fits the long side within the limit and never scales up", () => {
+    expect(fitWithin(4800, 3600)).toEqual({ width: 2400, height: 1800, scale: 0.5 });
+    expect(fitWithin(800, 600)).toEqual({ width: 800, height: 600, scale: 1 });
+    expect(fitWithin(1000, 6000, 1200)).toEqual({ width: 200, height: 1200, scale: 0.2 });
   });
 });

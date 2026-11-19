@@ -44,10 +44,13 @@ import {
   type PostInput,
 } from "@archiev/db";
 import { rescoreAll, runBatch } from "@archiev/scraper";
+import { fetchImage, FetchImageError } from "./fetchImage";
 import { notifyComment, sendWebhook, WEBHOOK_KEY, WebhookUrl } from "./notify";
 import { createSession, hashPassword, RateLimiter, safeEqual, SESSION_MAX_AGE, sniffImage, verifyPassword, verifySession } from "./security";
 
 export interface ApiConfig {
+  /** 테스트에서 외부 이미지 요청을 바꿔 끼웁니다 */
+  fetchImage?: typeof fetchImage;
   sessionSecret: string;
   adminPasswordHash: string;
   workerToken: string;
@@ -286,18 +289,33 @@ export function createApp(cfg: ApiConfig) {
     return c.json({ ok: true });
   });
 
-  admin.post("/uploads", async (c) => {
-    const form = await c.req.parseBody();
-    const file = form.file;
-    if (!(file instanceof File)) return c.json({ error: "파일이 없습니다" }, 400);
-    if (file.size > 5 * 1024 * 1024) return c.json({ error: "5MB 이하만 올릴 수 있습니다" }, 413);
-    const buf = new Uint8Array(await file.arrayBuffer());
+  const saveImage = async (c: Context, buf: Uint8Array) => {
     const kind = sniffImage(buf);
     if (!kind) return c.json({ error: "PNG, JPG, GIF, WebP만 올릴 수 있습니다" }, 415);
     await mkdir(cfg.uploadDir, { recursive: true });
     const name = `${Date.now().toString(36)}-${randomBytes(6).toString("hex")}.${kind.ext}`;
     await writeFile(path.join(cfg.uploadDir, name), buf);
     return c.json({ url: `/api/uploads/${name}` }, 201);
+  };
+
+  admin.post("/uploads", async (c) => {
+    const form = await c.req.parseBody();
+    const file = form.file;
+    if (!(file instanceof File)) return c.json({ error: "파일이 없습니다" }, 400);
+    if (file.size > 5 * 1024 * 1024) return c.json({ error: "5MB 이하만 올릴 수 있습니다" }, 413);
+    return saveImage(c, new Uint8Array(await file.arrayBuffer()));
+  });
+
+  /** 붙여 넣은 외부 이미지(노션, 다른 사이트)를 받아 와 우리 서버에 저장합니다 */
+  admin.post("/uploads/fetch", async (c) => {
+    const parsed = z.object({ url: z.string().trim().url().max(4000) }).safeParse(await c.req.json().catch(() => ({})));
+    if (!parsed.success) return c.json({ error: "이미지 주소를 확인해 주세요" }, 400);
+    try {
+      return await saveImage(c, await (cfg.fetchImage ?? fetchImage)(parsed.data.url));
+    } catch (e) {
+      if (e instanceof FetchImageError) return c.json({ error: e.message }, 422);
+      throw e;
+    }
   });
 
   // 주소를 아는 사람은 누구나 메시지를 보낼 수 있으므로 저장한 뒤에는 돌려주지 않습니다

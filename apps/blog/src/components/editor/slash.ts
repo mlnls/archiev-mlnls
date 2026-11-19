@@ -3,7 +3,8 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 
 export interface SlashContext {
   editor: Editor;
-  pickImage: () => void;
+  /** 파일 올리기와 주소 붙여 넣기를 고르는 이미지 창을 엽니다 */
+  openImage: () => void;
 }
 
 export interface SlashItem {
@@ -25,12 +26,13 @@ export const SLASH_ITEMS: SlashItem[] = [
   { id: "ul", label: "목록", hint: "-", keywords: "ul bullet list 글머리 리스트", run: ({ editor }) => chain(editor).toggleBulletList().run() },
   { id: "ol", label: "번호 목록", hint: "1.", keywords: "ol ordered number list 순서", run: ({ editor }) => chain(editor).toggleOrderedList().run() },
   { id: "todo", label: "체크리스트", hint: "[]", keywords: "todo task check 할일 할 일", run: ({ editor }) => chain(editor).toggleTaskList().run() },
+  { id: "toggle", label: "토글", hint: "▸", keywords: "toggle details 접기 펼치기 토글목록", run: ({ editor }) => chain(editor).setDetails().run() },
   { id: "quote", label: "인용", hint: ">", keywords: "quote blockquote", run: ({ editor }) => chain(editor).toggleBlockquote().run() },
   { id: "callout", label: "콜아웃", hint: "💡", keywords: "callout 강조 메모 팁 주의 경고 노트 note tip warning", run: ({ editor }) => chain(editor).setCallout().run() },
   { id: "code", label: "코드 블록", hint: "```", keywords: "code", run: ({ editor }) => chain(editor).setCodeBlock({ language: "ts" }).run() },
   { id: "table", label: "표", hint: "| |", keywords: "table 테이블", run: ({ editor }) => chain(editor).insertTable({ rows: 2, cols: 2, withHeaderRow: true }).run() },
   { id: "hr", label: "구분선", hint: "---", keywords: "hr divider line 선", run: ({ editor }) => chain(editor).setHorizontalRule().run() },
-  { id: "image", label: "이미지", hint: "파일 선택", keywords: "image photo picture 사진 그림", run: ({ pickImage }) => pickImage() },
+  { id: "image", label: "이미지", hint: "올리기 · 링크", keywords: "image photo picture 사진 그림 업로드 upload", run: ({ openImage }) => openImage() },
   { id: "row", label: "아래에 행 추가", hint: "표", keywords: "row 표 줄", inTable: true, run: ({ editor }) => chain(editor).addRowAfter().run() },
   { id: "col", label: "오른쪽에 열 추가", hint: "표", keywords: "column col 표 칸", inTable: true, run: ({ editor }) => chain(editor).addColumnAfter().run() },
   { id: "delrow", label: "행 삭제", hint: "표", keywords: "delete row 표 줄 지우기", inTable: true, run: ({ editor }) => chain(editor).deleteRow().run() },
