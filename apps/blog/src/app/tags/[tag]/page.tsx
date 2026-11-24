@@ -19,12 +19,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TagPage({ params }: Props) {
   const tag = decodeURIComponent((await params).tag);
-  const [{ items }, tags] = await Promise.all([fetchPosts({ tag }), fetchTags()]);
+  const [{ items, total }, tags] = await Promise.all([fetchPosts({ tag }), fetchTags()]);
   if (!items.length) notFound();
   return (
     <main className="home">
-      <h1 className="sr-only">{tag}</h1>
-      <TagRow tags={tags} current={tag} />
+      <header className="tag-head">
+        <p>주제</p>
+        <h1>{tag}</h1>
+        <span>글 {total}편</span>
+      </header>
+      <div className="list-head">
+        <TagRow tags={tags} current={tag} />
+      </div>
       <PostList posts={items} />
     </main>
   );

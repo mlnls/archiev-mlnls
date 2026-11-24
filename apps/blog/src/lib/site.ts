@@ -3,6 +3,8 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://blog.mlnl.
 export const CV_URL = `${(process.env.NEXT_PUBLIC_CV_URL ?? "https://mlnl.site").replace(/\/$/, "")}/`;
 export const SITE_NAME = "mlnl 블로그";
 export const SITE_DESCRIPTION = "프론트엔드 개발자 오승민이 렌더링, 성능, SEO, 배포를 직접 겪으며 정리한 글을 올립니다.";
+/** 홈 첫 화면의 큰 문장. SITE_DESCRIPTION을 짧게 줄인 것입니다 */
+export const SITE_HEADLINE = "렌더링, 성능, SEO, 배포를 직접 겪으며 정리합니다";
 export const AUTHOR = {
   name: "오승민",
   url: CV_URL,
