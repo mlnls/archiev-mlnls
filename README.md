@@ -3,8 +3,9 @@
 | 경로 | 주소 | 설명 |
 | --- | --- | --- |
 | `apps/cv` | [mlnl.54-116-117-190.sslip.io](https://mlnl.54-116-117-190.sslip.io) | 한 페이지 이력 (정적 HTML) |
-| `apps/blog` | [blog.mlnl.54-116-117-190.sslip.io](https://blog.mlnl.54-116-117-190.sslip.io) | 마크다운 블로그 (Next.js, JSON-LD 자동 생성, 댓글) |
+| `apps/blog` | [blog.mlnl.54-116-117-190.sslip.io](https://blog.mlnl.54-116-117-190.sslip.io) | 마크다운 블로그 (Next.js, JSON-LD 자동 생성) |
 | `apps/archive` | archiev.mlnl.54-116-117-190.sslip.io | 사진과 동영상 보관함 (혼자 쓰는 로그인) |
+| `apps/cs` | [cs.mlnl.54-116-117-190.sslip.io](https://cs.mlnl.54-116-117-190.sslip.io) | 비트에서 네트워크까지 컴퓨터 기초 로드맵 (정적 HTML) |
 | `apps/employ` | employ.mlnl.54-116-117-190.sslip.io | 채용 공고 추천과 맞춤 이력서 (관리자 전용) |
 | `apps/employ-worker` | Mac에서 실행 | 이력서 요청을 Claude Code로 처리 |
 | `apps/api` | `/api/*` | Node.js(Hono) API, SQLite, 매일 8시 수집 |
@@ -18,7 +19,7 @@
 ```bash
 pnpm install
 cp .env.example .env       # 값 채우기 (node scripts/hash-password.mjs '<비밀번호>')
-pnpm dev                   # api :4000, blog :3001, employ :3002, cv :3003
+pnpm dev                   # api :4000, blog :3001, employ :3002, cv :3003, cs :3005
 pnpm test                  # 전체 vitest
 pnpm batch:dry             # DB 저장 없이 수집기 동작 확인
 ```
@@ -29,7 +30,7 @@ pnpm batch:dry             # DB 저장 없이 수집기 동작 확인
 [BLOG/feature] 댓글 삭제 추가
 ```
 
-- 범위: `BLOG`, `CV`, `EMPLOY`, `API`, `COMMON`
+- 범위: `BLOG`, `CV`, `EMPLOY`, `API`, `ARCHIVE`, `CS`, `COMMON`
 - 종류: `feature`, `fix`, `refactor`, `style`, `docs`, `test`, `chore`, `ci`, `perf`
 - 앱 폴더 하나만 고치면 그 앱, 둘 이상이거나 `packages/`, 루트 파일을 고치면 `COMMON`입니다.
 - husky가 커밋 때, CI가 PR 제목에서 검사합니다. 키, `.env`, `.pem`은 커밋이 막힙니다.
