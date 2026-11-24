@@ -2,15 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { Comments } from "@/components/Comments";
 import { JsonLd } from "@/components/JsonLd";
 import { Toc } from "@/components/Toc";
-import { fetchPost, safely } from "@/lib/api";
+import { fetchPost } from "@/lib/api";
 import { formatDate } from "@/lib/client";
 import { postGraph } from "@/lib/jsonld";
 import { extractHeadings, firstImage, plainText, renderMarkdown } from "@/lib/markdown";
 import { AUTHOR, postPath, tagPath } from "@/lib/site";
-import type { Comment } from "@/lib/types";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -41,12 +39,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function fetchComments(slug: string): Promise<Comment[]> {
-  const base = process.env.API_INTERNAL_URL ?? "http://localhost:4000";
-  const res = await fetch(`${base}/posts/${encodeURIComponent(slug)}/comments`, { cache: "no-store" });
-  return res.ok ? ((await res.json()) as Comment[]) : [];
-}
-
 export default async function PostPage({ params }: Props) {
   const slug = decodeURIComponent((await params).slug);
   const post = await getPost(slug);
@@ -54,8 +46,6 @@ export default async function PostPage({ params }: Props) {
 
   const html = await renderMarkdown(post.body);
   const headings = extractHeadings(html);
-  // 댓글 API가 실패해도 글은 보여 줍니다
-  const comments = await safely(() => fetchComments(slug), []);
   const edited = post.publishedAt && new Date(post.updatedAt).getTime() - new Date(post.publishedAt).getTime() > 86_400_000;
 
   return (
@@ -85,7 +75,6 @@ export default async function PostPage({ params }: Props) {
               <div className="post-main">
                 {/* renderMarkdown이 스크립트, 이벤트 속성, 위험한 링크를 지운 결과입니다 */}
                 <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
-                <Comments slug={post.slug} initial={comments} />
               </div>
               {headings.length > 1 && <Toc items={headings.map((h) => ({ key: h.id, text: h.text, level: h.level }))} />}
             </div>
