@@ -14,6 +14,13 @@ function readSavedUsername() {
   }
 }
 
+/** 같은 아이디는 늘 같은 색 동그라미로 보입니다 */
+function toneOf(name: string) {
+  let sum = 0;
+  for (const ch of name) sum += ch.codePointAt(0) ?? 0;
+  return sum % 2 ? "amber" : "blue";
+}
+
 export function Comments({ slug, initial }: { slug: string; initial: Comment[] }) {
   const [comments, setComments] = useState(initial);
   const [username, setUsername] = useState("");
@@ -66,19 +73,22 @@ export function Comments({ slug, initial }: { slug: string; initial: Comment[] }
 
   return (
     <section id="comments" className="comments" aria-labelledby="comments-title">
-      <h2 id="comments-title">댓글 {comments.length}</h2>
+      <h2 id="comments-title">
+        댓글 <b>{comments.length}</b>
+      </h2>
       {comments.length > 0 && (
         <ul className="comment-list">
           {comments.map((c) => (
             <li key={c.id} className="comment">
               <div className="comment-head">
-                <span>
-                  <b>{c.username}</b>
-                  <time dateTime={new Date(c.createdAt).toISOString()}>{formatDate(new Date(c.createdAt).toISOString())}</time>
+                <span className="comment-face" data-tone={toneOf(c.username)} aria-hidden="true">
+                  {[...c.username][0]?.toUpperCase()}
                 </span>
+                <b>{c.username}</b>
+                <time dateTime={new Date(c.createdAt).toISOString()}>{formatDate(new Date(c.createdAt).toISOString())}</time>
                 <button
                   type="button"
-                  className="btn btn-text"
+                  className="comment-tool"
                   onClick={() => {
                     setDeleting(deleting === c.id ? null : c.id);
                     setDeletePassword("");
@@ -118,17 +128,21 @@ export function Comments({ slug, initial }: { slug: string; initial: Comment[] }
         </ul>
       )}
       <form className="comment-form" onSubmit={submit}>
-        <div className="comment-ids">
-          <input className="field" aria-label="아이디" placeholder="아이디" autoComplete="username" required minLength={2} maxLength={20} value={username} onChange={(e) => setUsername(e.target.value)} />
-          <input className="field" aria-label="비밀번호" placeholder="비밀번호" type="password" autoComplete="current-password" required minLength={4} maxLength={100} value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <textarea className="field" aria-label="댓글 내용" placeholder="댓글을 남겨 주세요" required maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
+        <textarea className="comment-input" aria-label="댓글 내용" placeholder="댓글을 남겨 주세요" required maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
         <div className="comment-foot">
-          <span>처음 쓰는 아이디는 이 비밀번호로 만들어집니다.</span>
-          <button className="btn btn-primary" type="submit" disabled={busy}>{busy ? "등록 중" : "등록"}</button>
+          <div className="comment-ids">
+            <input aria-label="아이디" placeholder="아이디" autoComplete="username" required minLength={2} maxLength={20} value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input aria-label="비밀번호" placeholder="비밀번호" type="password" autoComplete="current-password" required minLength={4} maxLength={100} value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button className="comment-send" type="submit" disabled={busy || !body.trim()} aria-label={busy ? "등록 중" : "등록"}>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 19V5M6 11l6-6 6 6" />
+            </svg>
+          </button>
         </div>
-        {error && <p className="error" role="alert">{error}</p>}
       </form>
+      <p className="comment-hint">처음 쓰는 아이디는 이 비밀번호로 만들어집니다.</p>
+      {error && <p className="error" role="alert">{error}</p>}
     </section>
   );
 }
