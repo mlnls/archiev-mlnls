@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 264">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="0" y="22">집 안 (사설 IP)</text>
+  <rect class="bx-dash" x="0" y="30" width="170" height="190" rx="10"/>
+  <rect class="bx" x="14" y="56" width="142" height="44" rx="8"/>
+  <text x="85" y="74" text-anchor="middle">노트북</text>
+  <text class="tx-s tx-m" x="85" y="92" text-anchor="middle">192.168.0.23</text>
+  <rect class="bx" x="14" y="146" width="142" height="44" rx="8"/>
+  <text x="85" y="164" text-anchor="middle">휴대폰</text>
+  <text class="tx-s tx-m" x="85" y="182" text-anchor="middle">192.168.0.31</text>
+  <line class="ln" x1="156" y1="80" x2="228" y2="96" marker-end="url(#a)"/>
+  <line class="ln" x1="156" y1="166" x2="228" y2="150" marker-end="url(#a)"/>
+
+  <rect class="bx" x="230" y="40" width="260" height="180" rx="8"/>
+  <text class="tx-b" x="242" y="62">공유기</text>
+  <text class="tx-s" x="300" y="62">공인 IP <tspan class="tx-m">211.36.10.5</tspan></text>
+  <text class="tx-l" x="242" y="96">안쪽</text>
+  <text class="tx-l" x="400" y="96">바깥쪽 포트</text>
+  <line class="ln-faint" x1="242" y1="102" x2="478" y2="102"/>
+  <text class="tx-s tx-m" x="242" y="122">192.168.0.23:51000</text>
+  <text class="tx-s tx-m" x="400" y="122">:40001</text>
+  <text class="tx-s tx-m" x="242" y="146">192.168.0.31:51000</text>
+  <text class="tx-s tx-m" x="400" y="146">:40002</text>
+  <text class="tx-s tx-m" x="242" y="170">192.168.0.23:51002</text>
+  <text class="tx-s tx-m" x="400" y="170">:40003</text>
+  <text class="tx-s" x="242" y="204">안에서 먼저 나갈 때만 줄이 생김</text>
+
+  <line class="ln" x1="490" y1="88" x2="558" y2="74" marker-end="url(#a)"/>
+  <line class="ln" x1="490" y1="140" x2="558" y2="148" marker-end="url(#a)"/>
+  <rect class="bx" x="560" y="48" width="160" height="48" rx="8"/>
+  <text x="640" y="67" text-anchor="middle">구글</text>
+  <text class="tx-s tx-m" x="640" y="85" text-anchor="middle">142.250.207.46:443</text>
+  <rect class="bx" x="560" y="124" width="160" height="48" rx="8"/>
+  <text x="640" y="143" text-anchor="middle">다른 서버</text>
+  <text class="tx-s tx-m" x="640" y="161" text-anchor="middle">13.124.10.20:443</text>
+
+  <line class="ln-ink" x1="714" y1="200" x2="508" y2="200"/>
+  <g class="ln-ink"><line x1="494" y1="192" x2="510" y2="208"/><line x1="510" y1="192" x2="494" y2="208"/></g>
+  <text class="tx-s" x="714" y="192" text-anchor="end">밖에서 먼저 <tspan class="tx-m">:3000</tspan>으로</text>
+  <text class="tx-s" x="714" y="222" text-anchor="end">맞는 줄이 없어 버림</text>
+
+  <text class="tx-s" x="0" y="252">서버들은 세 연결 모두 <tspan class="tx-m">211.36.10.5</tspan>에서 온 것으로 봅니다. 답이 <tspan class="tx-m">:40002</tspan>로 오면 공유기가 표를 보고 휴대폰에 건넵니다.</text>
+</svg>

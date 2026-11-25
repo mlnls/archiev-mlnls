@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 292">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-l" x="0" y="14">① 누구의 것인가: 받는 포트</text>
+  <rect class="bx-soft" x="0" y="26" width="190" height="28" rx="5"/>
+  <rect class="bx-ink" x="0" y="58" width="190" height="28" rx="5"/>
+  <text class="tx-s" x="12" y="45">IP · 받는 주소 172.26.x.x</text>
+  <text class="tx-inv tx-s" x="12" y="77">TCP · 받는 포트 443</text>
+  <line class="ln" x1="190" y1="56" x2="236" y2="56" marker-end="url(#m)"/>
+  <rect class="bx" x="240" y="30" width="140" height="52" rx="8"/>
+  <text x="310" y="52" text-anchor="middle">서버의 커널</text>
+  <text class="tx-s" x="310" y="70" text-anchor="middle">받는 포트를 봄</text>
+  <rect class="bx-ink" x="440" y="20" width="110" height="26" rx="5"/>
+  <g class="bx"><rect x="440" y="52" width="110" height="26" rx="5"/><rect x="440" y="84" width="110" height="26" rx="5"/></g>
+  <g class="tx-m" text-anchor="middle">
+    <text class="tx-inv" x="495" y="38">:443</text><text x="495" y="70">:80</text><text x="495" y="102">:22</text>
+  </g>
+  <g class="tx-s">
+    <text x="564" y="38">Caddy (HTTPS)</text><text x="564" y="70">Caddy (https로 돌림)</text><text x="564" y="102">SSH 서버</text>
+  </g>
+  <line class="ln-ink" x1="380" y1="52" x2="436" y2="34" marker-end="url(#a)"/>
+  <g class="ln-faint"><line x1="380" y1="58" x2="436" y2="65"/><line x1="380" y1="64" x2="436" y2="96"/></g>
+
+  <line class="ln-faint" x1="0" y1="126" x2="720" y2="126"/>
+  <text class="tx-l" x="0" y="150">② 빠짐없이 순서대로: 순서 번호</text>
+  <g class="tx-s"><text x="0" y="182">서버가 보냄</text><text x="0" y="234">노트북에 도착</text></g>
+  <g class="bx-soft">
+    <rect x="110" y="162" width="72" height="30" rx="5"/><rect x="190" y="162" width="72" height="30" rx="5"/><rect x="270" y="162" width="72" height="30" rx="5"/>
+    <rect x="350" y="162" width="72" height="30" rx="5"/><rect x="430" y="162" width="72" height="30" rx="5"/><rect x="510" y="162" width="72" height="30" rx="5"/>
+    <rect x="110" y="214" width="72" height="30" rx="5"/><rect x="190" y="214" width="72" height="30" rx="5"/><rect x="270" y="214" width="72" height="30" rx="5"/>
+    <rect x="430" y="214" width="72" height="30" rx="5"/><rect x="510" y="214" width="72" height="30" rx="5"/>
+  </g>
+  <rect class="bx-dash" x="350" y="214" width="72" height="30" rx="5"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="146" y="182">0</text><text x="226" y="182">1460</text><text x="306" y="182">2920</text>
+    <text x="386" y="182">4380</text><text x="466" y="182">5840</text><text x="546" y="182">7300</text>
+    <text x="146" y="234">0</text><text x="226" y="234">1460</text><text x="306" y="234">2920</text>
+    <text x="466" y="234">5840</text><text x="546" y="234">7300</text>
+  </g>
+  <text class="tx-s" x="386" y="234" text-anchor="middle">빈칸</text>
+  <text class="tx-s" x="386" y="207" text-anchor="middle">사라짐</text>
+  <rect class="bx-ink" x="610" y="214" width="72" height="30" rx="5"/>
+  <text class="tx-inv tx-m" x="646" y="234" text-anchor="middle">4380</text>
+  <text class="tx-s" x="646" y="207" text-anchor="middle">다시 보냄</text>
+  <path class="ln-ink" d="M646 244 V260 H386 V250" marker-end="url(#a)"/>
+  <text class="tx-s" x="0" y="286">세그먼트 하나에 HTML 1460바이트씩. 빈칸이 채워지면 0번 바이트부터 순서대로 브라우저의 소켓에 넘깁니다</text>
+</svg>

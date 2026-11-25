@@ -2,57 +2,51 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { stages, tracks } from "../content/roadmap.mjs";
+import { parts, upcoming } from "../content/book.mjs";
 import { build } from "../scripts/build.mjs";
 
 let out = "";
+let slugs: string[] = [];
 const read = (path: string) => readFileSync(join(out, path), "utf8");
-const pages = () => ["index.html", ...stages.map((s) => `${s.slug}/index.html`)];
+const pages = () => ["index.html", "terms/index.html", ...slugs.map((s) => `${s}/index.html`)];
 
 beforeAll(async () => {
   out = mkdtempSync(join(tmpdir(), "cs-build-"));
-  await build(out);
+  const data = await build(out);
+  slugs = data.chapters.map((c: { slug: string }) => c.slug);
 });
 
 afterAll(() => rmSync(out, { recursive: true, force: true }));
 
-describe("content", () => {
-  it("has unique stage slugs and unique item ids within each stage", () => {
-    expect(new Set(stages.map((s) => s.slug)).size).toBe(stages.length);
-    for (const s of stages) {
-      for (const items of [s.concepts, s.practice]) expect(new Set(items.map((i) => i.id)).size).toBe(items.length);
-    }
+describe("차례", () => {
+  it("장 주소가 겹치지 않습니다", () => {
+    const all = parts.flatMap((p) => p.chapters);
+    expect(new Set(all).size).toBe(all.length);
   });
 
-  it("gives every stage what a learner needs", () => {
-    for (const s of stages) {
-      expect(s.weeks, s.slug).toBeGreaterThan(0);
-      expect(s.outcomes.length, s.slug).toBeGreaterThan(0);
-      expect(s.concepts.length, s.slug).toBeGreaterThan(0);
-      expect(s.practice.length, s.slug).toBeGreaterThan(0);
-      expect(s.questions.length, s.slug).toBeGreaterThan(0);
-      expect(s.resources.filter((r) => r.main), `${s.slug}: 메인 자료는 하나`).toHaveLength(1);
+  it("쓴 장은 모두 만들고, 아직 안 쓴 장은 준비 중으로만 보입니다", () => {
+    const all = parts.flatMap((p) => p.chapters);
+    for (const slug of all) {
+      const written = existsSync(join(__dirname, "..", "content", "chapters", `${slug}.md`));
+      expect(written || slug in upcoming, slug).toBe(true);
+      expect(slugs.includes(slug), slug).toBe(written);
     }
-  });
-
-  it("links resources only over https", () => {
-    const all = [...stages.flatMap((s) => s.resources), ...tracks.flatMap((t) => t.resources)];
-    for (const r of all) if (r.url) expect(r.url, r.title).toMatch(/^https:\/\//);
+    expect(read("index.html").match(/class="row is-soon"/g)?.length ?? 0).toBe(all.length - slugs.length);
   });
 });
 
-describe("built site", () => {
-  it("writes the home page, one page per stage, robots and sitemap", () => {
+describe("만든 사이트", () => {
+  it("첫 화면, 장마다 한 쪽, 용어 사전, robots, sitemap을 씁니다", () => {
     for (const p of pages()) expect(existsSync(join(out, p)), p).toBe(true);
     expect(read("robots.txt")).toContain("Sitemap: https://cs.mlnl.site/sitemap.xml");
-    expect(read("sitemap.xml").match(/<loc>/g)).toHaveLength(stages.length + 1);
+    expect(read("sitemap.xml").match(/<loc>/g)).toHaveLength(slugs.length + 2);
   });
 
-  it("has exactly one h1 on every page", () => {
+  it("쪽마다 h1이 하나입니다", () => {
     for (const p of pages()) expect(read(p).match(/<h1[\s>]/g), p).toHaveLength(1);
   });
 
-  it("only links to pages and assets that exist", () => {
+  it("있는 쪽과 파일로만 링크합니다", () => {
     for (const p of pages()) {
       for (const [, href] of read(p).matchAll(/(?:href|src)="(\/[^"#]*)"/g)) {
         const file = href.endsWith("/") ? `${href}index.html` : href;
@@ -61,25 +55,55 @@ describe("built site", () => {
     }
   });
 
-  it("names assets by content so they can be cached for a year", () => {
+  it("같은 쪽 안의 #링크는 그 쪽의 id를 가리킵니다", () => {
+    for (const p of pages()) {
+      const html = read(p);
+      const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+      for (const [, id] of html.matchAll(/href="#([^"]+)"/g)) expect(ids.has(decodeURIComponent(id)), `${p} → #${id}`).toBe(true);
+    }
+  });
+
+  it("그림을 넣어도 쪽 안의 id가 겹치지 않습니다", () => {
+    for (const p of pages()) {
+      const ids = [...read(p).matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+      const dup = ids.filter((id, i) => ids.indexOf(id) !== i);
+      expect(dup, p).toEqual([]);
+    }
+  });
+
+  it("자원 파일 이름에 내용의 해시를 넣어 1년 동안 캐시할 수 있게 합니다", () => {
     const names = readdirSync(join(out, "assets"));
-    expect(names).toEqual(expect.arrayContaining([expect.stringMatching(/^style\.[0-9a-f]{10}\.css$/), expect.stringMatching(/^app\.[0-9a-f]{10}\.js$/)]));
+    expect(names).toEqual(
+      expect.arrayContaining([expect.stringMatching(/^style\.[0-9a-f]{10}\.css$/), expect.stringMatching(/^app\.[0-9a-f]{10}\.js$/)]),
+    );
   });
 
-  it("uses a different progress key for every checkbox", () => {
-    const keys = pages().flatMap((p) => [...read(p).matchAll(/data-key="([^"]+)"/g)].map((m) => m[1]));
-    expect(keys.length).toBe(stages.reduce((n, s) => n + s.concepts.length + s.practice.length, 0));
+  it("체크와 문제의 저장 열쇠가 겹치지 않습니다", () => {
+    const keys = slugs.flatMap((s) =>
+      [...read(`${s}/index.html`).matchAll(/data-(?:key|quiz)="([^"]+)"/g)].map((m) => m[1]),
+    );
     expect(new Set(keys).size).toBe(keys.length);
+    for (const s of slugs) expect(read(`${s}/index.html`), s).toContain(`data-key="${s}:read"`);
   });
 
-  it("escapes text and turns backticks into code", () => {
-    const html = read("url/index.html");
-    expect(html).toContain("<code>&lt;script&gt;</code>");
-    expect(html).not.toContain("<script> 태그");
+  it("선택형 문제마다 정답이 하나입니다", () => {
+    for (const s of slugs) {
+      for (const quiz of read(`${s}/index.html`).split('<div class="quiz" ').slice(1)) {
+        const options = quiz.split('class="quiz-explain"')[0];
+        if (!options.includes('class="quiz-options"')) continue;
+        expect(options.match(/data-correct/g), `${s}: ${quiz.slice(0, 60)}`).toHaveLength(1);
+      }
+    }
   });
 
-  it("links stages in order and back to the roadmap at the end", () => {
-    expect(read(`${stages[0].slug}/index.html`)).toContain(`href="/${stages[1].slug}/"`);
-    expect(read(`${stages.at(-1)!.slug}/index.html`)).toContain("로드맵으로 돌아가기");
+  it("글자를 이스케이프하고 백틱을 코드로 바꿉니다", () => {
+    const html = read("dns/index.html");
+    expect(html).toContain("<code>&lt;link rel=&quot;dns-prefetch&quot;&gt;</code>");
+    expect(html).not.toMatch(/<p>[^<]*<script/);
+  });
+
+  it("장을 차례대로 잇습니다", () => {
+    expect(read(`${slugs[0]}/index.html`)).toContain(`href="/${slugs[1]}/"`);
+    expect(read(`${slugs[1]}/index.html`)).toContain(`href="/${slugs[0]}/"`);
   });
 });

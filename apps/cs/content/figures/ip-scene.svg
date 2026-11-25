@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <g class="tx-l">
+    <text x="0" y="14">지나는 곳</text><text x="220" y="14">보내는 IP</text><text x="360" y="14">받는 IP</text><text x="510" y="14">하는 일</text>
+  </g>
+  <!-- 지나는 곳 -->
+  <g class="bx">
+    <rect x="0" y="24" width="180" height="42" rx="7"/><rect x="0" y="78" width="180" height="42" rx="7"/>
+    <rect x="0" y="132" width="180" height="42" rx="7"/><rect x="0" y="186" width="180" height="42" rx="7"/>
+    <rect x="0" y="240" width="180" height="42" rx="7"/>
+  </g>
+  <g class="tx-b">
+    <text x="12" y="41">노트북</text><text x="12" y="95">공유기</text><text x="12" y="149">통신사, IX의 라우터들</text>
+    <text x="12" y="203">Amazon의 네트워크</text><text x="12" y="257">서버 (Lightsail)</text>
+  </g>
+  <g class="tx-s">
+    <text x="12" y="58">192.168.0.23</text><text x="12" y="112">공인 IP 211.36.10.5</text><text x="12" y="166">AS 여러 개, 10~20홉</text>
+    <text x="12" y="220">BGP로 54.116… 범위를 알림</text><text x="12" y="274">네트워크 카드는 172.26.x.x</text>
+  </g>
+  <g class="ln">
+    <line x1="90" y1="66" x2="90" y2="75" marker-end="url(#m)"/><line x1="90" y1="120" x2="90" y2="129" marker-end="url(#m)"/>
+    <line x1="90" y1="174" x2="90" y2="183" marker-end="url(#m)"/><line x1="90" y1="228" x2="90" y2="237" marker-end="url(#m)"/>
+  </g>
+
+  <!-- IP 헤더 -->
+  <g class="bx-soft">
+    <rect x="220" y="28" width="130" height="34" rx="5"/><rect x="360" y="28" width="130" height="34" rx="5"/>
+    <rect x="360" y="82" width="130" height="34" rx="5"/>
+    <rect x="220" y="136" width="130" height="34" rx="5"/><rect x="360" y="136" width="130" height="34" rx="5"/>
+    <rect x="220" y="190" width="130" height="34" rx="5"/>
+  </g>
+  <g class="bx-ink">
+    <rect x="220" y="82" width="130" height="34" rx="5"/><rect x="360" y="190" width="130" height="34" rx="5"/>
+  </g>
+  <rect class="bx-dash" x="220" y="244" width="270" height="34" rx="5"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="285" y="50">192.168.0.23</text><text x="425" y="50">54.116.117.190</text>
+    <text class="tx-inv" x="285" y="104">211.36.10.5</text><text x="425" y="104">54.116.117.190</text>
+    <text x="285" y="158">211.36.10.5</text><text x="425" y="158">54.116.117.190</text>
+    <text x="285" y="212">211.36.10.5</text><text class="tx-inv" x="425" y="212">172.26.x.x</text>
+  </g>
+  <text class="tx-s" x="355" y="266" text-anchor="middle">IP 헤더를 벗겨 TCP(12장)에 넘김</text>
+
+  <!-- 하는 일 -->
+  <g class="tx-s">
+    <text x="510" y="41">받는 주소가 다른 네트워크라</text><text x="510" y="57">기본 게이트웨이로 건넴</text>
+    <text x="510" y="95">NAT 표에 한 줄 적고</text><text x="510" y="111">보내는 주소를 공인 IP로 바꿈</text>
+    <text x="510" y="149">받는 주소만 보고 표에서</text><text x="510" y="165">가장 길게 맞는 줄의 다음 홉으로</text>
+    <text x="510" y="203">공인 IP를 서버의</text><text x="510" y="219">사설 IP로 바꿔 건넴</text>
+    <text x="510" y="257">이 패킷은 어느</text><text x="510" y="273">프로그램의 것일까?</text>
+  </g>
+</svg>

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <text class="tx-b" x="20" y="24">풀 테이블 스캔</text>
+  <text class="tx-s" x="20" y="44">email 인덱스가 없을 때</text>
+  <text class="tx-b" x="380" y="24">인덱스로 찾기</text>
+  <text class="tx-s" x="380" y="44">email 인덱스가 있을 때</text>
+  <line class="ln-faint" x1="350" y1="10" x2="350" y2="280"/>
+
+  <!-- 왼쪽: 처음부터 끝까지 -->
+  <line class="ln" x1="20" y1="84" x2="300" y2="84" marker-end="url(#a)"/>
+  <text class="tx-s" x="20" y="76">0번 페이지부터 차례로</text>
+
+  <!-- 오른쪽: 인덱스 페이지 셋 -->
+  <rect class="bx" x="380" y="58" width="60" height="26" rx="5"/>
+  <rect class="bx" x="460" y="58" width="60" height="26" rx="5"/>
+  <rect class="bx" x="540" y="58" width="60" height="26" rx="5"/>
+  <g class="tx-s" text-anchor="middle">
+    <text x="410" y="75">루트</text><text x="490" y="75">중간</text><text x="570" y="75">리프</text>
+  </g>
+  <line class="ln" x1="441" y1="71" x2="458" y2="71" marker-end="url(#a)"/>
+  <line class="ln" x1="521" y1="71" x2="538" y2="71" marker-end="url(#a)"/>
+  <path class="ln-ink" d="M601 71 H684 V167 H665" marker-end="url(#k)"/>
+
+  <!-- 테이블 페이지 40개 -->
+  <g>
+    <rect class="dot-soft" x="20" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="56" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="92" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="128" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="164" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="200" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="236" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="272" y="100" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="20" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="56" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="92" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="128" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="164" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="200" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="236" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="272" y="128" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="20" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="56" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="92" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="128" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="164" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="200" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="236" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="272" y="156" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="20" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="56" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="92" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="128" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="164" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="200" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="236" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="272" y="184" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="20" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="56" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="92" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="128" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="164" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="200" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="236" y="212" width="30" height="22" rx="3"/>
+    <rect class="dot-soft" x="272" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="380" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="416" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="452" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="488" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="524" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="560" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="596" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="632" y="100" width="30" height="22" rx="3"/>
+    <rect class="bx" x="380" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="416" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="452" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="488" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="524" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="560" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="596" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="632" y="128" width="30" height="22" rx="3"/>
+    <rect class="bx" x="380" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="416" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="452" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="488" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="524" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="560" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="596" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx-ink" x="632" y="156" width="30" height="22" rx="3"/>
+    <rect class="bx" x="380" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="416" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="452" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="488" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="524" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="560" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="596" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="632" y="184" width="30" height="22" rx="3"/>
+    <rect class="bx" x="380" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="416" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="452" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="488" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="524" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="560" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="596" y="212" width="30" height="22" rx="3"/>
+    <rect class="bx" x="632" y="212" width="30" height="22" rx="3"/>
+  </g>
+
+  <text class="tx-b" x="20" y="262">페이지 40개를 모두 읽고 행마다 비교</text>
+  <text class="tx-s" x="20" y="280">행이 늘어나는 만큼 읽을 양도 늘어남: O(n)</text>
+  <text class="tx-b" x="380" y="262">인덱스 3개 + 테이블 1개, 페이지 4개</text>
+  <text class="tx-s" x="380" y="280">행이 크게 늘어도 한두 개 늘 뿐: O(log n)</text>
+</svg>

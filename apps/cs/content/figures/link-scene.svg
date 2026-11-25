@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 노트북이 내보낸 프레임 -->
+  <text class="tx-l" x="0" y="14">노트북이 공중에 내보낸 프레임 하나</text>
+  <rect class="bx-ink" x="0" y="22" width="150" height="42" rx="5"/>
+  <rect class="bx" x="154" y="22" width="150" height="42" rx="5"/>
+  <rect class="bx-soft" x="308" y="22" width="300" height="42" rx="5"/>
+  <rect class="bx" x="612" y="22" width="56" height="42" rx="5"/>
+  <g class="tx-s">
+    <text class="tx-inv" x="12" y="39">받는 쪽 MAC</text><text x="166" y="39">보내는 쪽 MAC</text>
+    <text x="320" y="39">페이로드: IP 패킷</text><text x="624" y="39">FCS</text>
+  </g>
+  <text class="tx-inv" x="12" y="57" font-weight="700">공유기</text>
+  <text x="166" y="57">노트북</text>
+  <text class="tx-m" x="320" y="57">… 54.116.117.190 … GET /</text>
+
+  <!-- 노트북과 전파 -->
+  <rect class="bx" x="0" y="144" width="130" height="56" rx="8"/>
+  <text class="tx-b" x="65" y="168" text-anchor="middle">노트북</text>
+  <text class="tx-s" x="65" y="186" text-anchor="middle">192.168.0.23</text>
+  <g class="ln">
+    <path d="M140 156 Q148 172 140 188"/><path d="M150 148 Q162 172 150 196"/><path d="M160 140 Q176 172 160 204"/>
+  </g>
+
+  <!-- 받는 기기들 -->
+  <rect class="bx-ink" x="300" y="92" width="170" height="36" rx="6"/>
+  <g class="bx"><rect x="300" y="138" width="170" height="36" rx="6"/><rect x="300" y="184" width="170" height="36" rx="6"/></g>
+  <rect class="bx-dash" x="300" y="230" width="170" height="36" rx="6"/>
+  <text class="tx-inv" x="385" y="115" text-anchor="middle" font-weight="700">공유기 (AP)</text>
+  <g text-anchor="middle">
+    <text x="385" y="161">휴대폰</text><text x="385" y="207">TV</text><text x="385" y="253">옆집 노트북</text>
+  </g>
+  <line class="ln-ink" x1="182" y1="166" x2="296" y2="112" marker-end="url(#a)"/>
+  <g class="ln ln-dash">
+    <line x1="182" y1="170" x2="296" y2="156" marker-end="url(#m)"/>
+    <line x1="182" y1="176" x2="296" y2="200" marker-end="url(#m)"/>
+    <line x1="182" y1="180" x2="296" y2="244" marker-end="url(#m)"/>
+  </g>
+
+  <!-- 각자의 판단 -->
+  <text class="tx-b" x="490" y="108">받는 MAC이 내 것: 받음</text>
+  <text class="tx-s" x="490" y="124">FCS를 확인하고 Wi-Fi ACK를 돌려보냄</text>
+  <g class="tx-s">
+    <text x="490" y="161">받는 MAC이 내 것이 아님: 버림</text>
+    <text x="490" y="207">받는 MAC이 내 것이 아님: 버림</text>
+    <text x="490" y="245">다른 네트워크라 암호를 몰라</text>
+    <text x="490" y="261">읽지 못함</text>
+  </g>
+</svg>

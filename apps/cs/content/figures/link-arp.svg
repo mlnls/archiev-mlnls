@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 316">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 생명선 -->
+  <g class="ln ln-dash">
+    <line x1="90" y1="54" x2="90" y2="226"/>
+    <line x1="400" y1="54" x2="400" y2="226"/>
+    <line x1="640" y1="54" x2="640" y2="226"/>
+  </g>
+  <rect class="bx" x="20" y="6" width="140" height="48" rx="8"/>
+  <text class="tx-b" x="90" y="26" text-anchor="middle">노트북</text>
+  <text class="tx-s tx-m" x="90" y="44" text-anchor="middle">192.168.0.23</text>
+  <rect class="bx" x="330" y="6" width="140" height="48" rx="8"/>
+  <text class="tx-b" x="400" y="26" text-anchor="middle">공유기</text>
+  <text class="tx-s tx-m" x="400" y="44" text-anchor="middle">192.168.0.1</text>
+  <rect class="bx" x="570" y="6" width="140" height="48" rx="8"/>
+  <text class="tx-b" x="640" y="26" text-anchor="middle">프린터</text>
+  <text class="tx-s tx-m" x="640" y="44" text-anchor="middle">192.168.0.50</text>
+
+  <!-- ① 브로드캐스트 질문: 모두가 받음 -->
+  <text x="102" y="90">① 모두에게: 192.168.0.1인 기기 있나요?</text>
+  <line class="ln" x1="90" y1="100" x2="636" y2="100" marker-end="url(#a)"/>
+  <circle class="dot" cx="400" cy="100" r="4"/>
+  <text class="tx-s" x="102" y="120">받는 MAC <tspan class="tx-m">ff:ff:ff:ff:ff:ff</tspan></text>
+  <text class="tx-s" x="410" y="120">내 주소다</text>
+  <text class="tx-s" x="630" y="120" text-anchor="end">내 주소 아님 → 무시</text>
+
+  <!-- ② 한 기기에게만 답 -->
+  <text x="102" y="164">② 나에게만: 192.168.0.1은 88:36:6c:aa:bb:cc</text>
+  <line class="ln-ink" x1="400" y1="174" x2="94" y2="174" marker-end="url(#k)"/>
+  <text class="tx-s" x="102" y="194">받는 MAC <tspan class="tx-m">3c:22:fb:a1:b2:c3</tspan> (노트북)</text>
+
+  <!-- ③ 캐시 -->
+  <rect class="bx-soft" x="20" y="236" width="300" height="64" rx="8"/>
+  <text class="tx-l" x="34" y="258">노트북의 ARP 캐시</text>
+  <text class="tx-s tx-m" x="34" y="284">192.168.0.1   88:36:6c:aa:bb:cc</text>
+  <text class="tx-s" x="340" y="264">③ 답을 적어 두고 몇 분 동안은</text>
+  <text class="tx-s" x="340" y="282">다시 묻지 않고 바로 프레임을 만듭니다</text>
+</svg>

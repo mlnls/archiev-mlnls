@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340">
+  <!-- 층마다 앞에 헤더를 하나씩 붙입니다. 그 층이 새로 붙인 헤더만 진하게 -->
+  <g>
+    <text class="tx-b" x="0" y="37">응용</text>
+    <text class="tx-s" x="0" y="54">메시지</text>
+    <rect class="bx" x="400" y="22" width="240" height="40" rx="6"/>
+    <text x="520" y="40" text-anchor="middle">HTTP 요청</text>
+    <text class="tx-s tx-m" x="520" y="55" text-anchor="middle">GET / HTTP/1.1 …</text>
+  </g>
+  <line class="ln ln-dash" x1="400" y1="62" x2="400" y2="84"/>
+  <line class="ln ln-dash" x1="640" y1="62" x2="640" y2="84"/>
+
+  <g>
+    <text class="tx-b" x="0" y="99">전송</text>
+    <text class="tx-s" x="0" y="116">세그먼트</text>
+    <rect class="bx-ink" x="310" y="84" width="90" height="40" rx="6"/>
+    <text class="tx-inv" x="355" y="102" text-anchor="middle" font-weight="700">TCP 헤더</text>
+    <text class="tx-inv tx-s" x="355" y="117" text-anchor="middle">포트 번호</text>
+    <rect class="bx" x="400" y="84" width="240" height="40" rx="6"/>
+    <text class="tx-s" x="520" y="108" text-anchor="middle">HTTP 요청 (페이로드)</text>
+  </g>
+  <line class="ln ln-dash" x1="310" y1="124" x2="310" y2="146"/>
+  <line class="ln ln-dash" x1="640" y1="124" x2="640" y2="146"/>
+
+  <g>
+    <text class="tx-b" x="0" y="161">인터넷</text>
+    <text class="tx-s" x="0" y="178">패킷</text>
+    <rect class="bx-ink" x="220" y="146" width="90" height="40" rx="6"/>
+    <text class="tx-inv" x="265" y="164" text-anchor="middle" font-weight="700">IP 헤더</text>
+    <text class="tx-inv tx-s" x="265" y="179" text-anchor="middle">IP 주소</text>
+    <rect class="bx-soft" x="310" y="146" width="90" height="40" rx="6"/>
+    <text class="tx-s" x="355" y="170" text-anchor="middle">TCP 헤더</text>
+    <rect class="bx" x="400" y="146" width="240" height="40" rx="6"/>
+    <text class="tx-s" x="520" y="170" text-anchor="middle">HTTP 요청</text>
+  </g>
+  <line class="ln ln-dash" x1="220" y1="186" x2="220" y2="208"/>
+  <line class="ln ln-dash" x1="640" y1="186" x2="640" y2="208"/>
+
+  <g>
+    <text class="tx-b" x="0" y="223">네트워크 접근</text>
+    <text class="tx-s" x="0" y="240">프레임</text>
+    <rect class="bx-ink" x="120" y="208" width="100" height="40" rx="6"/>
+    <text class="tx-inv" x="170" y="226" text-anchor="middle" font-weight="700">이더넷 헤더</text>
+    <text class="tx-inv tx-s" x="170" y="241" text-anchor="middle">MAC 주소</text>
+    <rect class="bx-soft" x="220" y="208" width="90" height="40" rx="6"/>
+    <text class="tx-s" x="265" y="232" text-anchor="middle">IP 헤더</text>
+    <rect class="bx-soft" x="310" y="208" width="90" height="40" rx="6"/>
+    <text class="tx-s" x="355" y="232" text-anchor="middle">TCP 헤더</text>
+    <rect class="bx" x="400" y="208" width="240" height="40" rx="6"/>
+    <text class="tx-s" x="520" y="232" text-anchor="middle">HTTP 요청</text>
+    <rect class="bx-ink" x="640" y="208" width="48" height="40" rx="6"/>
+    <text class="tx-inv" x="664" y="232" text-anchor="middle" font-weight="700">FCS</text>
+  </g>
+
+  <!-- 크기 -->
+  <g class="tx-s" text-anchor="middle">
+    <text x="170" y="266">14바이트</text>
+    <text x="265" y="266">20바이트</text>
+    <text x="355" y="266">20바이트</text>
+    <text x="520" y="266">최대 약 1460바이트</text>
+    <text x="664" y="266">4바이트</text>
+  </g>
+  <g class="ln">
+    <line x1="220" y1="290" x2="640" y2="290"/>
+    <line x1="220" y1="284" x2="220" y2="296"/>
+    <line x1="640" y1="284" x2="640" y2="296"/>
+    <line x1="120" y1="322" x2="688" y2="322"/>
+    <line x1="120" y1="316" x2="120" y2="328"/>
+    <line x1="688" y1="316" x2="688" y2="328"/>
+  </g>
+  <rect class="bx-soft" x="330" y="281" width="200" height="18" rx="4"/>
+  <text class="tx-s" x="430" y="294" text-anchor="middle">IP 패킷: 최대 1500바이트 (MTU)</text>
+  <rect class="bx-soft" x="310" y="313" width="188" height="18" rx="4"/>
+  <text class="tx-s" x="404" y="326" text-anchor="middle">이더넷 프레임: 최대 1518바이트</text>
+</svg>

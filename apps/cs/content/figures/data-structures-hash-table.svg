@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="0" y="60">키 → 해시 함수 → 칸 번호 (나머지)</text>
+  <text class="tx-l" x="440" y="20">칸 8개</text>
+  <!-- grape -->
+  <rect class="bx" x="0" y="84" width="80" height="32" rx="6"/><text class="tx-m" x="40" y="105" text-anchor="middle">"grape"</text>
+  <line class="ln" x1="82" y1="100" x2="116" y2="100" marker-end="url(#a)"/>
+  <rect class="bx-soft" x="118" y="84" width="90" height="32" rx="6"/><text x="163" y="105" text-anchor="middle">해시 함수</text>
+  <line class="ln" x1="210" y1="100" x2="244" y2="100" marker-end="url(#a)"/>
+  <text class="tx-s tx-m" x="250" y="104">4122 % 8 = 2</text>
+  <line class="ln" x1="344" y1="100" x2="436" y2="113" marker-end="url(#a)"/>
+  <!-- apple -->
+  <rect class="bx" x="0" y="164" width="80" height="32" rx="6"/><text class="tx-m" x="40" y="185" text-anchor="middle">"apple"</text>
+  <line class="ln" x1="82" y1="180" x2="116" y2="180" marker-end="url(#a)"/>
+  <rect class="bx-soft" x="118" y="164" width="90" height="32" rx="6"/><text x="163" y="185" text-anchor="middle">해시 함수</text>
+  <line class="ln" x1="210" y1="180" x2="244" y2="180" marker-end="url(#a)"/>
+  <text class="tx-s tx-m" x="250" y="184">9135 % 8 = 7</text>
+  <line class="ln" x1="344" y1="180" x2="436" y2="278" marker-end="url(#a)"/>
+  <!-- melon -->
+  <rect class="bx" x="0" y="234" width="80" height="32" rx="6"/><text class="tx-m" x="40" y="255" text-anchor="middle">"melon"</text>
+  <line class="ln" x1="82" y1="250" x2="116" y2="250" marker-end="url(#a)"/>
+  <rect class="bx-soft" x="118" y="234" width="90" height="32" rx="6"/><text x="163" y="255" text-anchor="middle">해시 함수</text>
+  <line class="ln" x1="210" y1="250" x2="244" y2="250" marker-end="url(#a)"/>
+  <text class="tx-s tx-m" x="250" y="254">3255 % 8 = 7</text>
+  <line class="ln" x1="344" y1="250" x2="436" y2="289" marker-end="url(#a)"/>
+
+  <!-- 칸 0~7 -->
+  <g>
+    <rect class="bx" x="440" y="30" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="64" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="98" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="132" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="166" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="200" width="50" height="30" rx="4"/>
+    <rect class="bx" x="440" y="234" width="50" height="30" rx="4"/>
+    <rect class="bx-ink" x="440" y="268" width="50" height="30" rx="4"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="465" y="49">0</text><text x="465" y="83">1</text><text x="465" y="117">2</text><text x="465" y="151">3</text>
+    <text x="465" y="185">4</text><text x="465" y="219">5</text><text x="465" y="253">6</text>
+    <text class="tx-inv" x="465" y="287">7</text>
+  </g>
+  <!-- 칸에 달린 목록 -->
+  <line class="ln" x1="492" y1="113" x2="516" y2="113" marker-end="url(#a)"/>
+  <rect class="bx" x="518" y="99" width="80" height="28" rx="6"/><text class="tx-s tx-m" x="558" y="117" text-anchor="middle">grape</text>
+  <line class="ln" x1="492" y1="283" x2="516" y2="283" marker-end="url(#a)"/>
+  <rect class="bx" x="518" y="269" width="80" height="28" rx="6"/><text class="tx-s tx-m" x="558" y="287" text-anchor="middle">apple</text>
+  <line class="ln" x1="600" y1="283" x2="622" y2="283" marker-end="url(#a)"/>
+  <rect class="bx" x="624" y="269" width="80" height="28" rx="6"/><text class="tx-s tx-m" x="664" y="287" text-anchor="middle">melon</text>
+  <text class="tx-s" x="518" y="324">충돌: 같은 칸에 목록으로 이어 둠(체이닝)</text>
+</svg>

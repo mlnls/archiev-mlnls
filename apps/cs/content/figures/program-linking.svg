@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 352">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <rect class="bx" x="250" y="8" width="220" height="52" rx="8"/>
+  <text class="tx-m" x="360" y="29" text-anchor="middle">hello.o</text>
+  <text class="tx-s" x="360" y="48" text-anchor="middle">main은 있고, printf 주소는 빈칸</text>
+
+  <polyline class="ln" points="360,60 360,76 170,76 170,104" marker-end="url(#a)"/>
+  <polyline class="ln" points="360,76 550,76 550,104" marker-end="url(#a)"/>
+  <text class="tx-b" x="20" y="96">정적 링크</text>
+  <text class="tx-b" x="700" y="96" text-anchor="end">동적 링크</text>
+
+  <!-- 정적 -->
+  <rect class="bx-line" x="20" y="106" width="300" height="98" rx="8"/>
+  <text class="tx-l" x="32" y="124">실행 파일 hello</text>
+  <rect class="bx" x="32" y="132" width="276" height="28" rx="6"/>
+  <text x="170" y="151" text-anchor="middle">main</text>
+  <rect class="bx-ink" x="32" y="166" width="276" height="28" rx="6"/>
+  <text class="tx-inv" x="170" y="185" text-anchor="middle">printf 기계어 (라이브러리에서 복사)</text>
+  <g class="tx-s">
+    <text x="20" y="226">파일 하나로 어디서든 돌지만 큽니다.</text>
+    <text x="20" y="244">라이브러리가 고쳐지면 다시 빌드해야 반영됩니다.</text>
+  </g>
+
+  <!-- 동적 -->
+  <rect class="bx-line" x="400" y="106" width="300" height="98" rx="8"/>
+  <text class="tx-l" x="412" y="124">실행 파일 hello</text>
+  <rect class="bx" x="412" y="132" width="276" height="28" rx="6"/>
+  <text x="550" y="151" text-anchor="middle">main</text>
+  <rect class="bx-dash" x="412" y="166" width="276" height="28" rx="6"/>
+  <text x="550" y="185" text-anchor="middle">printf는 <tspan class="tx-m">libc.so.6</tspan>에서 찾을 것</text>
+
+  <line class="ln" x1="550" y1="204" x2="550" y2="244" marker-end="url(#a)"/>
+  <text class="tx-s" x="560" y="229">실행할 때 동적 링커가 연결</text>
+
+  <rect class="bx-soft" x="400" y="246" width="300" height="100" rx="8"/>
+  <text class="tx-l" x="412" y="264">메모리</text>
+  <g text-anchor="middle">
+    <rect class="bx" x="412" y="274" width="90" height="28" rx="6"/><text x="457" y="293">hello</text>
+    <rect class="bx" x="412" y="310" width="90" height="28" rx="6"/><text x="457" y="329">curl</text>
+    <rect class="bx" x="560" y="290" width="128" height="32" rx="6"/><text class="tx-m" x="624" y="311">libc.so.6</text>
+  </g>
+  <g class="ln">
+    <line x1="502" y1="288" x2="558" y2="300" marker-end="url(#a)"/>
+    <line x1="502" y1="324" x2="558" y2="312" marker-end="url(#a)"/>
+  </g>
+  <text class="tx-s" x="624" y="282" text-anchor="middle">한 벌을 나눠 씀</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 두 쪽 -->
+  <rect class="bx" x="90" y="8" width="180" height="34" rx="6"/>
+  <text class="tx-b" x="180" y="30" text-anchor="middle">사용자 프로그램</text>
+  <rect class="bx" x="450" y="8" width="180" height="34" rx="6"/>
+  <text class="tx-b" x="540" y="30" text-anchor="middle">커널</text>
+  <text class="tx-s" x="180" y="60" text-anchor="middle">사용자 모드</text>
+  <text class="tx-s" x="540" y="60" text-anchor="middle">커널 모드</text>
+  <line class="ln-faint" x1="180" y1="66" x2="180" y2="296"/>
+  <line class="ln-faint" x1="540" y1="66" x2="540" y2="296"/>
+
+  <!-- 실행 중인 구간 -->
+  <rect class="bx-soft" x="172" y="74" width="16" height="54"/>
+  <rect class="bx-soft" x="532" y="128" width="16" height="110"/>
+  <rect class="bx-soft" x="172" y="238" width="16" height="54"/>
+
+  <!-- ① 준비 -->
+  <text x="164" y="94" text-anchor="end">① 시스템 콜 번호와</text>
+  <text x="164" y="112" text-anchor="end">인자를 레지스터에</text>
+
+  <!-- ② 넘어가기 -->
+  <text x="360" y="120" text-anchor="middle">② <tspan class="tx-m">syscall</tspan> (ARM은 <tspan class="tx-m">svc</tspan>)</text>
+  <line class="ln-ink" x1="188" y1="128" x2="530" y2="128" marker-end="url(#k)"/>
+  <text class="tx-s" x="360" y="146" text-anchor="middle">CPU가 커널 모드로 바꾸고 정해진 입구로</text>
+
+  <!-- ③ 커널의 일 -->
+  <text x="558" y="158">③ 권한 검사</text>
+  <text class="tx-s" x="558" y="176">이 파일을 읽어도 되나?</text>
+  <text x="558" y="204">일하기</text>
+  <text class="tx-s" x="558" y="222">파일 시스템 → 드라이버</text>
+
+  <!-- ④ 돌아오기 -->
+  <text x="360" y="230" text-anchor="middle">④ 결과를 레지스터에 넣고</text>
+  <line class="ln" x1="532" y1="238" x2="190" y2="238" marker-end="url(#a)"/>
+  <text class="tx-s" x="360" y="256" text-anchor="middle">사용자 모드로 돌아감</text>
+
+  <!-- ⑤ 이어서 -->
+  <text x="164" y="270" text-anchor="end">⑤ 다음 줄을 이어서</text>
+</svg>

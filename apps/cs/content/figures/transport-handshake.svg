@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 244">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <g text-anchor="middle">
+    <text class="tx-b" x="150" y="16">노트북 (브라우저)</text><text class="tx-b" x="600" y="16">서버 (Caddy)</text>
+  </g>
+  <g class="tx-s" text-anchor="middle"><text x="150" y="32">임시 포트 51000</text><text x="600" y="32">포트 443에서 LISTEN</text></g>
+  <g class="ln-faint"><line x1="150" y1="40" x2="150" y2="236"/><line x1="600" y1="40" x2="600" y2="236"/></g>
+  <line class="ln" x1="152" y1="50" x2="596" y2="86" marker-end="url(#m)"/>
+  <line class="ln" x1="598" y1="96" x2="154" y2="132" marker-end="url(#m)"/>
+  <line class="ln" x1="152" y1="142" x2="596" y2="178" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="152" y1="188" x2="596" y2="224" marker-end="url(#a)"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="375" y="58">SYN, seq=1000</text>
+    <text x="375" y="102">SYN+ACK, seq=5000, ack=1001</text>
+    <text x="375" y="150">ACK, ack=5001</text>
+  </g>
+  <text class="tx-s" x="375" y="196" text-anchor="middle">이제 데이터 (TLS, HTTP)</text>
+  <g class="tx-l" text-anchor="end"><text x="140" y="56">SYN_SENT</text><text x="140" y="148">ESTABLISHED</text></g>
+  <g class="tx-l"><text x="610" y="100">SYN_RCVD</text><text x="610" y="182">ESTABLISHED</text></g>
+  <path class="ln" d="M52 50 H46 V132 H52"/>
+  <text class="tx-s" x="0" y="96">1 RTT</text>
+</svg>

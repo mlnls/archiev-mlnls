@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 396">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 원래 두 테이블 -->
+  <text class="tx-b" x="20" y="22">users u</text>
+  <text class="tx-b" x="200" y="22">posts p</text>
+  <g>
+    <rect class="bx-soft" x="20" y="32" width="40" height="28"/><rect class="bx-soft" x="60" y="32" width="70" height="28"/>
+    <rect class="bx" x="20" y="60" width="40" height="28"/><rect class="bx" x="60" y="60" width="70" height="28"/>
+    <rect class="bx" x="20" y="88" width="40" height="28"/><rect class="bx" x="60" y="88" width="70" height="28"/>
+    <rect class="bx" x="20" y="116" width="40" height="28"/><rect class="bx" x="60" y="116" width="70" height="28"/>
+
+    <rect class="bx-soft" x="200" y="32" width="40" height="28"/><rect class="bx-soft" x="240" y="32" width="70" height="28"/><rect class="bx-soft" x="310" y="32" width="90" height="28"/>
+    <rect class="bx" x="200" y="60" width="40" height="28"/><rect class="bx" x="240" y="60" width="70" height="28"/><rect class="bx" x="310" y="60" width="90" height="28"/>
+    <rect class="bx" x="200" y="88" width="40" height="28"/><rect class="bx" x="240" y="88" width="70" height="28"/><rect class="bx" x="310" y="88" width="90" height="28"/>
+    <rect class="bx" x="200" y="116" width="40" height="28"/><rect class="bx" x="240" y="116" width="70" height="28"/><rect class="bx" x="310" y="116" width="90" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="40" y="51">id</text><text class="tx-b" x="95" y="51">name</text>
+    <text x="40" y="79">1</text><text x="95" y="79">민수</text>
+    <text x="40" y="107">2</text><text x="95" y="107">지은</text>
+    <text x="40" y="135">3</text><text x="95" y="135">준</text>
+    <text class="tx-b" x="220" y="51">id</text><text class="tx-b" x="275" y="51">user_id</text><text class="tx-b" x="355" y="51">title</text>
+    <text x="220" y="79">10</text><text x="275" y="79">1</text><text x="355" y="79">첫 글</text>
+    <text x="220" y="107">11</text><text x="275" y="107">1</text><text x="355" y="107">둘째 글</text>
+    <text x="220" y="135">12</text><text x="275" y="135">2</text><text x="355" y="135">안녕</text>
+  </g>
+  <text class="tx-s tx-m" x="440" y="70">ON u.id = p.user_id</text>
+  <text class="tx-s" x="440" y="92">id와 user_id가 같은 행끼리 짝을 짓습니다.</text>
+  <text class="tx-s" x="440" y="112">준(id 3)을 가리키는 글은 없습니다.</text>
+
+  <line class="ln-faint" x1="20" y1="166" x2="700" y2="166"/>
+
+  <!-- INNER JOIN 결과 -->
+  <text class="tx-b" x="20" y="192">JOIN 결과</text>
+  <g>
+    <rect class="bx-soft" x="20" y="202" width="70" height="28"/><rect class="bx-soft" x="90" y="202" width="100" height="28"/>
+    <rect class="bx" x="20" y="230" width="70" height="28"/><rect class="bx" x="90" y="230" width="100" height="28"/>
+    <rect class="bx" x="20" y="258" width="70" height="28"/><rect class="bx" x="90" y="258" width="100" height="28"/>
+    <rect class="bx" x="20" y="286" width="70" height="28"/><rect class="bx" x="90" y="286" width="100" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="55" y="221">name</text><text class="tx-b" x="140" y="221">title</text>
+    <text x="55" y="249">민수</text><text x="140" y="249">첫 글</text>
+    <text x="55" y="277">민수</text><text x="140" y="277">둘째 글</text>
+    <text x="55" y="305">지은</text><text x="140" y="305">안녕</text>
+  </g>
+  <text class="tx-s" x="20" y="338">짝이 없는 준은 빠집니다</text>
+
+  <!-- LEFT JOIN 결과 -->
+  <text class="tx-b" x="250" y="192">LEFT JOIN 결과</text>
+  <g>
+    <rect class="bx-soft" x="250" y="202" width="70" height="28"/><rect class="bx-soft" x="320" y="202" width="100" height="28"/>
+    <rect class="bx" x="250" y="230" width="70" height="28"/><rect class="bx" x="320" y="230" width="100" height="28"/>
+    <rect class="bx" x="250" y="258" width="70" height="28"/><rect class="bx" x="320" y="258" width="100" height="28"/>
+    <rect class="bx" x="250" y="286" width="70" height="28"/><rect class="bx" x="320" y="286" width="100" height="28"/>
+    <rect class="bx" x="250" y="314" width="70" height="28"/><rect class="bx-dash" x="320.5" y="314.5" width="99" height="27"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="285" y="221">name</text><text class="tx-b" x="370" y="221">title</text>
+    <text x="285" y="249">민수</text><text x="370" y="249">첫 글</text>
+    <text x="285" y="277">민수</text><text x="370" y="277">둘째 글</text>
+    <text x="285" y="305">지은</text><text x="370" y="305">안녕</text>
+    <text x="285" y="333">준</text><text class="tx-s tx-m" x="370" y="333">NULL</text>
+  </g>
+
+  <!-- 묶어서 세기 -->
+  <line class="ln" x1="432" y1="272" x2="528" y2="272" marker-end="url(#a)"/>
+  <text class="tx-s tx-m" x="480" y="262" text-anchor="middle">GROUP BY</text>
+  <text class="tx-s tx-m" x="480" y="292" text-anchor="middle">COUNT(p.id)</text>
+
+  <text class="tx-b" x="540" y="192">사용자별 글 수</text>
+  <g>
+    <rect class="bx-soft" x="540" y="202" width="70" height="28"/><rect class="bx-soft" x="610" y="202" width="70" height="28"/>
+    <rect class="bx" x="540" y="230" width="70" height="28"/><rect class="bx" x="610" y="230" width="70" height="28"/>
+    <rect class="bx" x="540" y="258" width="70" height="28"/><rect class="bx" x="610" y="258" width="70" height="28"/>
+    <rect class="bx" x="540" y="286" width="70" height="28"/><rect class="bx-ink" x="610" y="286" width="70" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="575" y="221">name</text><text class="tx-b" x="645" y="221">글 수</text>
+    <text x="575" y="249">민수</text><text x="645" y="249">2</text>
+    <text x="575" y="277">지은</text><text x="645" y="277">1</text>
+    <text x="575" y="305">준</text><text class="tx-inv" x="645" y="305">0</text>
+  </g>
+
+  <text class="tx-s" x="20" y="370">LEFT JOIN은 왼쪽(users)의 행을 모두 남기고, 짝이 없으면 오른쪽 칸을 NULL로 채웁니다.</text>
+  <text class="tx-s" x="20" y="388">COUNT(p.id)는 NULL을 세지 않으니 준의 글 수는 0이 됩니다.</text>
+</svg>

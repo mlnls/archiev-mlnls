@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-s" x="0" y="16">화살표마다: 다음 고리의 디지털 서명을 확인한 뒤에만 실행</text>
+
+  <rect class="bx-ink" x="0" y="32" width="120" height="58" rx="8"/>
+  <text class="tx-inv" x="60" y="56" text-anchor="middle" font-weight="700">UEFI 펌웨어</text>
+  <text class="tx-inv tx-s" x="60" y="76" text-anchor="middle">Microsoft 키 보관</text>
+  <g class="bx">
+    <rect x="150" y="32" width="120" height="58" rx="8"/><rect x="300" y="32" width="120" height="58" rx="8"/>
+    <rect x="450" y="32" width="120" height="58" rx="8"/><rect x="600" y="32" width="120" height="58" rx="8"/>
+  </g>
+  <g class="tx-b" text-anchor="middle">
+    <text x="210" y="56">shim</text><text x="360" y="56">GRUB</text><text x="510" y="56">Linux 커널</text><text x="660" y="56">커널 모듈</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="210" y="76">Microsoft가 서명</text><text x="360" y="76">Ubuntu가 서명</text><text x="510" y="76">Ubuntu가 서명</text><text x="660" y="76">서명 확인 후 적재</text>
+  </g>
+  <g class="ln-ink">
+    <line x1="120" y1="61" x2="148" y2="61" marker-end="url(#a)"/><line x1="270" y1="61" x2="298" y2="61" marker-end="url(#a)"/>
+    <line x1="420" y1="61" x2="448" y2="61" marker-end="url(#a)"/><line x1="570" y1="61" x2="598" y2="61" marker-end="url(#a)"/>
+  </g>
+
+  <!-- 바꿔치기된 고리 -->
+  <path class="ln ln-dash" d="M240 90 V150 H298"/>
+  <rect class="bx-dash" x="300" y="126" width="180" height="50" rx="8"/>
+  <text x="390" y="147" text-anchor="middle">바꿔치기된 GRUB</text>
+  <text class="tx-s" x="390" y="166" text-anchor="middle">서명이 맞지 않음 → 여기서 멈춤</text>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 누가 부르나 -->
+  <g text-anchor="middle">
+    <rect class="bx" x="20" y="8" width="200" height="54" rx="8"/>
+    <text class="tx-b" x="120" y="30">프로그램이 일부러</text>
+    <text class="tx-s" x="120" y="49">파일 읽어 줘, 패킷 보내 줘</text>
+    <rect class="bx" x="260" y="8" width="200" height="54" rx="8"/>
+    <text class="tx-b" x="360" y="30">하드웨어 장치가</text>
+    <text class="tx-s" x="360" y="49">키 입력, 패킷 도착, 타이머</text>
+    <rect class="bx" x="500" y="8" width="200" height="54" rx="8"/>
+    <text class="tx-b" x="600" y="30">실행 중인 명령어가</text>
+    <text class="tx-s" x="600" y="49">0으로 나누기, 페이지 폴트</text>
+  </g>
+
+  <!-- 세 문 -->
+  <g class="ln">
+    <line x1="120" y1="62" x2="120" y2="164" marker-end="url(#a)"/>
+    <line x1="360" y1="62" x2="360" y2="164" marker-end="url(#a)"/>
+    <line x1="600" y1="62" x2="600" y2="164" marker-end="url(#a)"/>
+  </g>
+  <g text-anchor="middle">
+    <rect class="bx" x="66" y="86" width="108" height="30" rx="15"/>
+    <text class="tx-b" x="120" y="106">시스템 콜</text>
+    <rect class="bx" x="306" y="86" width="108" height="30" rx="15"/>
+    <text class="tx-b" x="360" y="106">인터럽트</text>
+    <rect class="bx" x="546" y="86" width="108" height="30" rx="15"/>
+    <text class="tx-b" x="600" y="106">예외</text>
+  </g>
+
+  <!-- 경계 -->
+  <line class="ln ln-dash" x1="0" y1="140" x2="720" y2="140"/>
+  <text class="tx-s" x="716" y="134" text-anchor="end">사용자 모드</text>
+  <text class="tx-s" x="716" y="156" text-anchor="end">커널 모드</text>
+
+  <!-- 커널 -->
+  <rect class="bx-ink" x="20" y="166" width="680" height="42" rx="8"/>
+  <text class="tx-inv" x="360" y="192" text-anchor="middle" font-weight="700">커널: 이 세 문으로만 일을 시작합니다</text>
+  <text class="tx-s" x="20" y="236">일을 마치면 사용자 모드로 돌아갑니다. 잘못된 메모리 접근 같은 예외면 프로그램을 끝내기도 합니다.</text>
+</svg>

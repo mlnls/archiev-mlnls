@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 424">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 위: 이름 하나를 이름표로 나누기 -->
+  <line class="ln" x1="640" y1="18" x2="40" y2="18" marker-end="url(#a)"/>
+  <text class="tx-s" x="340" y="12" text-anchor="middle">오른쪽(큰 것)에서 왼쪽(작은 것)으로 읽습니다</text>
+
+  <rect class="bx" x="40" y="32" width="80" height="36" rx="6"/>
+  <text class="tx-m" x="80" y="55" text-anchor="middle">blog</text>
+  <text class="tx-b" x="147" y="56" text-anchor="middle">.</text>
+  <rect class="bx" x="175" y="32" width="110" height="36" rx="6"/>
+  <text class="tx-m" x="230" y="55" text-anchor="middle">example</text>
+  <text class="tx-b" x="311" y="56" text-anchor="middle">.</text>
+  <rect class="bx" x="338" y="32" width="64" height="36" rx="6"/>
+  <text class="tx-m" x="370" y="55" text-anchor="middle">co</text>
+  <text class="tx-b" x="430" y="56" text-anchor="middle">.</text>
+  <rect class="bx-ink" x="458" y="32" width="64" height="36" rx="6"/>
+  <text class="tx-m tx-inv" x="490" y="55" text-anchor="middle">kr</text>
+  <text class="tx-b" x="550" y="56" text-anchor="middle">.</text>
+  <rect class="bx-dash" x="578" y="32" width="64" height="36" rx="6"/>
+
+  <text x="80" y="90" text-anchor="middle">서브도메인</text>
+  <text class="tx-s" x="80" y="108" text-anchor="middle">주인이 마음대로</text>
+  <text x="230" y="90" text-anchor="middle">등록한 이름</text>
+  <text class="tx-s" x="230" y="108" text-anchor="middle">등록 기관에서 빌림</text>
+  <text x="370" y="90" text-anchor="middle">2단계</text>
+  <text class="tx-s" x="370" y="108" text-anchor="middle">한국의 회사용</text>
+  <text x="490" y="90" text-anchor="middle">TLD</text>
+  <text class="tx-s" x="490" y="108" text-anchor="middle">KISA가 관리</text>
+  <text x="610" y="90" text-anchor="middle">루트</text>
+  <text class="tx-s" x="610" y="108" text-anchor="middle">빈 이름표, 보통 생략</text>
+
+  <!-- 아래: 같은 이름을 나무로 -->
+  <line class="ln-faint" x1="0" y1="126" x2="720" y2="126"/>
+  <text class="tx-l" x="0" y="158">루트</text>
+  <text class="tx-l" x="0" y="218">TLD</text>
+  <text class="tx-l" x="0" y="278">2단계</text>
+  <text class="tx-l" x="0" y="338">등록한 이름</text>
+  <text class="tx-l" x="0" y="398">서브도메인</text>
+
+  <!-- 연결선 -->
+  <line class="ln" x1="360" y1="168" x2="220" y2="200"/>
+  <line class="ln" x1="360" y1="168" x2="500" y2="200"/>
+  <line class="ln" x1="360" y1="228" x2="420" y2="260"/>
+  <line class="ln" x1="300" y1="348" x2="350" y2="380"/>
+  <line class="ln-ink" x1="360" y1="168" x2="360" y2="200"/>
+  <line class="ln-ink" x1="360" y1="228" x2="300" y2="260"/>
+  <line class="ln-ink" x1="300" y1="288" x2="300" y2="320"/>
+  <line class="ln-ink" x1="300" y1="348" x2="250" y2="380"/>
+
+  <rect class="bx" x="315" y="140" width="90" height="28" rx="6"/>
+  <text class="tx-s" x="360" y="158" text-anchor="middle">(루트)</text>
+  <rect class="bx" x="190" y="200" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="220" y="219" text-anchor="middle">com</text>
+  <rect class="bx" x="330" y="200" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="360" y="219" text-anchor="middle">kr</text>
+  <rect class="bx" x="470" y="200" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="500" y="219" text-anchor="middle">io</text>
+  <rect class="bx" x="270" y="260" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="300" y="279" text-anchor="middle">co</text>
+  <rect class="bx" x="390" y="260" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="420" y="279" text-anchor="middle">or</text>
+  <rect class="bx" x="255" y="320" width="90" height="28" rx="6"/>
+  <text class="tx-m" x="300" y="339" text-anchor="middle">example</text>
+  <rect class="bx" x="220" y="380" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="250" y="399" text-anchor="middle">blog</text>
+  <rect class="bx" x="320" y="380" width="60" height="28" rx="6"/>
+  <text class="tx-m" x="350" y="399" text-anchor="middle">www</text>
+
+  <!-- 위임받은 가지 -->
+  <rect class="bx-dash" x="205" y="310" width="190" height="108" rx="8"/>
+  <text class="tx-s" x="410" y="352">도메인을 사면 이 가지는</text>
+  <text class="tx-s" x="410" y="370">내 네임서버에 위임됩니다</text>
+  <text class="tx-s" x="420" y="158">루트는 "kr은 저 서버들에게"라고 위임</text>
+  <text class="tx-s" x="545" y="219">.kr은 KISA가 맡음</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 306">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 왼쪽 이름표 -->
+  <text class="tx-b" x="0" y="44">사용자 공간</text>
+  <text class="tx-s" x="0" y="62">링 3 · EL0</text>
+  <text class="tx-b" x="0" y="174">커널</text>
+  <text class="tx-s" x="0" y="192">링 0 · EL1</text>
+  <text class="tx-b" x="0" y="284">하드웨어</text>
+
+  <!-- 사용자 공간 -->
+  <rect class="bx-soft" x="110" y="10" width="610" height="76" rx="8"/>
+  <g text-anchor="middle">
+    <rect class="bx" x="126" y="28" width="130" height="40" rx="6"/><text x="191" y="53">브라우저</text>
+    <rect class="bx" x="272" y="28" width="130" height="40" rx="6"/><text x="337" y="53">VS Code</text>
+    <rect class="bx" x="418" y="28" width="130" height="40" rx="6"/><text x="483" y="53">Node</text>
+    <rect class="bx" x="564" y="28" width="130" height="40" rx="6"/><text x="629" y="53">Finder</text>
+  </g>
+
+  <!-- CPU가 지키는 경계 -->
+  <line class="ln ln-dash" x1="110" y1="108" x2="720" y2="108"/>
+  <text class="tx-s" x="716" y="102" text-anchor="end">CPU가 지키는 벽</text>
+
+  <!-- 직접 접근은 막힘 -->
+  <line class="ln ln-dash" x1="191" y1="68" x2="191" y2="104"/>
+  <line class="ln-ink" x1="179" y1="104" x2="203" y2="104"/>
+  <text class="tx-s" x="200" y="96">장치를 직접 만지면 CPU가 막음</text>
+
+  <!-- 시스템 콜 -->
+  <line class="ln-ink" x1="483" y1="68" x2="483" y2="146" marker-end="url(#k)"/>
+  <text class="tx-b" x="492" y="100">시스템 콜</text>
+
+  <!-- 커널 -->
+  <rect class="bx-line" x="110" y="126" width="610" height="106" rx="8"/>
+  <g text-anchor="middle">
+    <rect class="bx" x="124" y="150" width="108" height="40" rx="6"/><text x="178" y="175">프로세스</text>
+    <rect class="bx" x="242" y="150" width="108" height="40" rx="6"/><text x="296" y="175">메모리</text>
+    <rect class="bx" x="360" y="150" width="108" height="40" rx="6"/><text x="414" y="175">파일 시스템</text>
+    <rect class="bx" x="478" y="150" width="108" height="40" rx="6"/><text x="532" y="175">네트워크</text>
+    <rect class="bx" x="596" y="150" width="108" height="40" rx="6"/><text x="650" y="175">드라이버</text>
+  </g>
+  <text class="tx-s" x="124" y="218">부팅 때 메모리에 올라와 꺼질 때까지 머무릅니다</text>
+
+  <!-- 하드웨어 -->
+  <g text-anchor="middle">
+    <rect class="bx-soft" x="126" y="262" width="130" height="40" rx="6"/><text x="191" y="287">CPU</text>
+    <rect class="bx-soft" x="272" y="262" width="130" height="40" rx="6"/><text x="337" y="287">메모리</text>
+    <rect class="bx-soft" x="418" y="262" width="130" height="40" rx="6"/><text x="483" y="287">SSD</text>
+    <rect class="bx-soft" x="564" y="262" width="130" height="40" rx="6"/><text x="629" y="287">네트워크 카드</text>
+  </g>
+  <line class="ln" x1="664" y1="190" x2="664" y2="260" marker-end="url(#a)"/>
+  <text class="tx-s" x="672" y="250">명령</text>
+  <line class="ln" x1="610" y1="262" x2="610" y2="192" marker-end="url(#a)"/>
+  <text class="tx-s" x="602" y="250" text-anchor="end">인터럽트</text>
+</svg>

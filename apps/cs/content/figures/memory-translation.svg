@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 열 제목 -->
+  <g class="tx-l" text-anchor="middle">
+    <text x="85" y="20">가상 주소</text>
+    <text x="335" y="20">프로세스마다 따로 있는 페이지 테이블</text>
+    <text x="630" y="20">RAM (물리 주소)</text>
+  </g>
+
+  <!-- 프로세스 A -->
+  <rect class="bx" x="0" y="48" width="170" height="64" rx="8"/>
+  <text class="tx-b" x="85" y="74" text-anchor="middle">프로세스 A</text>
+  <text class="tx-m" x="85" y="96" text-anchor="middle">0x1000</text>
+
+  <!-- 프로세스 B -->
+  <rect class="bx" x="0" y="190" width="170" height="64" rx="8"/>
+  <text class="tx-b" x="85" y="216" text-anchor="middle">프로세스 B</text>
+  <text class="tx-m" x="85" y="238" text-anchor="middle">0x1000</text>
+
+  <!-- A의 페이지 테이블 -->
+  <rect class="bx-soft" x="240" y="40" width="190" height="88" rx="8"/>
+  <text class="tx-l" x="252" y="58">A의 표</text>
+  <rect class="bx" x="250" y="66" width="170" height="24" rx="4"/>
+  <text class="tx-s" x="262" y="82">페이지 0</text>
+  <text class="tx-s tx-m" x="408" y="82" text-anchor="end">프레임 0x51</text>
+  <rect class="bx" x="250" y="96" width="170" height="24" rx="4"/>
+  <text x="262" y="112">페이지 1</text>
+  <text class="tx-m" x="408" y="112" text-anchor="end">프레임 0x7A</text>
+
+  <!-- B의 페이지 테이블 -->
+  <rect class="bx-soft" x="240" y="180" width="190" height="88" rx="8"/>
+  <text class="tx-l" x="252" y="198">B의 표</text>
+  <rect class="bx" x="250" y="206" width="170" height="24" rx="4"/>
+  <text class="tx-s" x="262" y="222">페이지 0</text>
+  <text class="tx-s tx-m" x="408" y="222" text-anchor="end">프레임 0x12</text>
+  <rect class="bx" x="250" y="236" width="170" height="24" rx="4"/>
+  <text x="262" y="252">페이지 1</text>
+  <text class="tx-m" x="408" y="252" text-anchor="end">프레임 0x3C</text>
+
+  <!-- RAM -->
+  <g>
+    <rect class="bx" x="545" y="40" width="170" height="26" rx="4"/>
+    <text class="tx-s tx-m" x="557" y="57">0x7B000</text>
+    <rect class="bx-ink" x="545" y="70" width="170" height="26" rx="4"/>
+    <text class="tx-m tx-inv" x="557" y="87">0x7A000</text>
+    <text class="tx-inv" x="703" y="87" text-anchor="end" font-weight="700">A의 값</text>
+    <rect class="bx" x="545" y="100" width="170" height="26" rx="4"/>
+    <text class="tx-s tx-m" x="557" y="117">0x79000</text>
+    <rect class="bx-soft" x="545" y="130" width="170" height="70" rx="4"/>
+    <text class="tx-s" x="630" y="169" text-anchor="middle">⋮</text>
+    <rect class="bx" x="545" y="204" width="170" height="26" rx="4"/>
+    <text class="tx-s tx-m" x="557" y="221">0x3D000</text>
+    <rect class="bx-ink" x="545" y="234" width="170" height="26" rx="4"/>
+    <text class="tx-m tx-inv" x="557" y="251">0x3C000</text>
+    <text class="tx-inv" x="703" y="251" text-anchor="end" font-weight="700">B의 값</text>
+  </g>
+
+  <!-- 화살표 -->
+  <line class="ln" x1="172" y1="88" x2="246" y2="106" marker-end="url(#a)"/>
+  <line class="ln" x1="172" y1="230" x2="246" y2="246" marker-end="url(#a)"/>
+  <line class="ln" x1="422" y1="108" x2="541" y2="85" marker-end="url(#a)"/>
+  <line class="ln" x1="422" y1="248" x2="541" y2="248" marker-end="url(#a)"/>
+  <text class="tx-s" x="482" y="150" text-anchor="middle">MMU가</text>
+  <text class="tx-s" x="482" y="166" text-anchor="middle">번역</text>
+
+  <text class="tx-s" x="0" y="284">4KB 페이지라서 0x1000은 1번 페이지의 첫 바이트입니다. 프레임 번호 뒤에 000을 붙이면 물리 주소가 됩니다</text>
+</svg>

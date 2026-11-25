@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <rect class="bx" x="15" y="10" width="150" height="36" rx="8"/>
+  <text class="tx-b" x="90" y="33" text-anchor="middle">evil.example</text>
+  <rect class="bx" x="285" y="10" width="150" height="36" rx="8"/>
+  <text class="tx-b" x="360" y="33" text-anchor="middle">사용자 브라우저</text>
+  <rect class="bx" x="555" y="10" width="150" height="36" rx="8"/>
+  <text class="tx-b" x="630" y="33" text-anchor="middle">bank.example</text>
+  <g class="ln-faint">
+    <line x1="90" y1="46" x2="90" y2="410"/>
+    <line x1="360" y1="46" x2="360" y2="410"/>
+    <line x1="630" y1="46" x2="630" y2="410"/>
+  </g>
+  <rect class="bx-soft" x="270" y="60" width="180" height="30" rx="6"/>
+  <text class="tx-s" x="360" y="80" text-anchor="middle">bank 로그인 쿠키를 가진 상태</text>
+
+  <text x="225" y="122" text-anchor="middle">1. 숨겨진 폼 + 자동 제출</text>
+  <line class="ln" x1="90" y1="130" x2="358" y2="130" marker-end="url(#a)"/>
+  <text class="tx-s" x="225" y="146" text-anchor="middle">페이지를 열기만 해도</text>
+
+  <text class="tx-b" x="495" y="182" text-anchor="middle">2. POST /transfer</text>
+  <line class="ln-ink" x1="360" y1="190" x2="628" y2="190" marker-end="url(#k)"/>
+  <text class="tx-s" x="495" y="206" text-anchor="middle">쿠키가 자동으로 붙음</text>
+
+  <rect class="bx-soft" x="515" y="222" width="200" height="32" rx="6"/>
+  <text class="tx-s" x="615" y="243" text-anchor="middle">3. 사용자 요청인 줄 알고 송금</text>
+
+  <text x="495" y="282" text-anchor="middle">4. 응답</text>
+  <line class="ln" x1="630" y1="290" x2="362" y2="290" marker-end="url(#a)"/>
+  <text x="225" y="282" text-anchor="middle">응답은 못 읽음 (CORS)</text>
+  <line class="ln ln-dash" x1="360" y1="290" x2="92" y2="290" marker-end="url(#a)"/>
+  <text class="tx-s" x="225" y="306" text-anchor="middle">하지만 송금은 이미 끝난 뒤</text>
+
+  <line class="ln" x1="0" y1="330" x2="720" y2="330"/>
+  <text class="tx-l" x="104" y="352">SAMESITE=LAX 쿠키라면</text>
+
+  <text x="495" y="372" text-anchor="middle">2. POST /transfer</text>
+  <line class="ln" x1="360" y1="380" x2="628" y2="380" marker-end="url(#a)"/>
+  <text class="tx-s" x="495" y="396" text-anchor="middle">쿠키가 안 붙음 → 로그인 안 된 요청으로 거절</text>
+</svg>

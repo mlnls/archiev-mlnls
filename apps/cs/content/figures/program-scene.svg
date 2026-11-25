@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 왼쪽: 두 가지 재료 -->
+  <rect class="bx" x="0" y="24" width="170" height="64" rx="8"/>
+  <text class="tx-l" x="14" y="42">SSD</text>
+  <text class="tx-b" x="14" y="62">브라우저 실행 파일</text>
+  <text class="tx-s" x="14" y="79">C++를 컴파일한 기계어</text>
+  <rect class="bx" x="0" y="132" width="170" height="64" rx="8"/>
+  <text class="tx-l" x="14" y="150">네트워크</text>
+  <text class="tx-b tx-m" x="14" y="170">app.js</text>
+  <text class="tx-s" x="14" y="187">이 페이지의 JS (글자)</text>
+
+  <!-- 가운데: 브라우저 프로세스 -->
+  <rect class="bx-soft" x="230" y="6" width="290" height="208" rx="10"/>
+  <text class="tx-l" x="244" y="24">브라우저 프로세스 (RAM)</text>
+  <rect class="bx" x="244" y="34" width="262" height="56" rx="8"/>
+  <text x="258" y="57">브라우저의 기계어</text>
+  <text class="tx-s" x="258" y="76">로더가 실행 파일에서 올린 코드</text>
+  <rect class="bx" x="244" y="104" width="262" height="96" rx="8"/>
+  <text class="tx-b" x="258" y="127">V8 엔진</text>
+  <text class="tx-s" x="258" y="148">app.js를 파싱해 바이트코드로 실행</text>
+  <text class="tx-s" x="258" y="166">자주 도는 함수만 기계어로 (JIT)</text>
+  <text class="tx-s" x="258" y="184">V8 자신도 브라우저 기계어의 일부</text>
+
+  <line class="ln-ink" x1="170" y1="56" x2="240" y2="60" marker-end="url(#a)"/>
+  <text class="tx-b" x="196" y="48" text-anchor="middle">①</text>
+  <line class="ln-ink" x1="170" y1="164" x2="240" y2="150" marker-end="url(#a)"/>
+  <text class="tx-b" x="196" y="148" text-anchor="middle">②</text>
+
+  <!-- 오른쪽: CPU -->
+  <rect class="bx-ink" x="590" y="80" width="130" height="60" rx="8"/>
+  <text class="tx-inv" x="655" y="105" text-anchor="middle" font-weight="700">CPU</text>
+  <text class="tx-inv tx-s" x="655" y="124" text-anchor="middle">기계어만 실행</text>
+  <line class="ln" x1="506" y1="62" x2="586" y2="100" marker-end="url(#m)"/>
+  <line class="ln ln-dash" x1="506" y1="160" x2="586" y2="122" marker-end="url(#m)"/>
+</svg>

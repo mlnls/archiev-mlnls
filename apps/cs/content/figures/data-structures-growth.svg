@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 축: 가로 n은 0~20, 세로 연산 횟수는 0~60 (넘치면 위에서 자름) -->
+  <line class="ln" x1="70" y1="290" x2="70" y2="24" marker-end="url(#a)"/>
+  <line class="ln" x1="70" y1="290" x2="566" y2="290" marker-end="url(#a)"/>
+  <text class="tx-s" x="78" y="20">연산 횟수</text>
+  <text class="tx-s" x="560" y="322" text-anchor="end">입력 크기 n →</text>
+  <g class="tx-s" text-anchor="middle">
+    <text x="192.5" y="306">5</text>
+    <text x="315" y="306">10</text>
+    <text x="437.5" y="306">15</text>
+    <text x="560" y="306">20</text>
+    <text x="70" y="306">0</text>
+  </g>
+  <g class="ln-faint">
+    <line x1="192.5" y1="290" x2="192.5" y2="30"/>
+    <line x1="315" y1="290" x2="315" y2="30"/>
+    <line x1="437.5" y1="290" x2="437.5" y2="30"/>
+  </g>
+
+  <!-- 곡선 -->
+  <polyline class="ln" fill="none" points="70,285.7 560,285.7"/>
+  <polyline class="ln" fill="none" points="94.5,290 104.3,287.9 114.1,286.3 123.9,285.1 143.5,283.1 163.1,281.7 182.7,280.5 212.1,279 241.5,277.8 270.9,276.8 310.1,275.7 349.3,274.8 398.3,273.8 447.3,272.9 506.1,272 560,271.3"/>
+  <polyline class="ln" fill="none" points="70,290 560,203.3"/>
+  <polyline class="ln" fill="none" points="94.5,290 104.3,287.1 114.1,283.4 123.9,279.2 133.7,274.5 143.5,269.4 153.3,264 163.1,258.3 172.9,252.3 182.7,246.1 192.5,239.7 202.3,233.1 212.1,226.3 221.9,219.3 231.7,212.1 241.5,204.8 251.3,197.4 261.1,189.8 270.9,182.1 280.7,174.3 290.5,166.4 300.3,158.3 310.1,150.2 319.9,141.9 329.7,133.6 339.5,125.1 349.3,116.6 359.1,107.9 368.9,99.2 378.7,90.4 388.5,81.5 398.3,72.6 408.1,63.6 417.9,54.5 427.7,45.3 437.5,36.1 444.9,30"/>
+  <polyline class="ln-ink" fill="none" points="70,290 79.8,289.3 89.6,287.2 99.4,283.8 109.2,278.9 119,272.7 128.8,265 138.6,256 148.4,245.6 158.2,233.8 168,220.7 177.8,206.1 187.6,190.2 197.4,172.8 207.2,154.1 217,134 226.8,112.5 236.6,89.6 246.4,65.4 256.2,39.7 259.9,30"/>
+
+  <!-- 곡선 이름 -->
+  <text class="tx-b" x="268" y="40">O(n²)</text>
+  <text class="tx-b" x="452" y="40">O(n log n)</text>
+  <text class="tx-b" x="572" y="208">O(n)</text>
+  <text class="tx-b" x="572" y="274">O(log n)</text>
+  <text class="tx-b" x="572" y="294">O(1)</text>
+
+  <!-- n = 20일 때 값 -->
+  <rect class="bx-soft" x="476" y="58" width="226" height="124" rx="8"/>
+  <text class="tx-l" x="492" y="80">n = 20일 때 연산 횟수</text>
+  <g class="tx-s tx-m">
+    <text x="492" y="102">O(1)</text>
+    <text x="492" y="120">O(log n)</text>
+    <text x="492" y="138">O(n)</text>
+    <text x="492" y="156">O(n log n)</text>
+    <text x="492" y="174">O(n²)</text>
+  </g>
+  <g class="tx-s" text-anchor="end">
+    <text x="686" y="102">1</text>
+    <text x="686" y="120">약 4</text>
+    <text x="686" y="138">20</text>
+    <text x="686" y="156">약 86</text>
+    <text x="686" y="174">400</text>
+  </g>
+</svg>

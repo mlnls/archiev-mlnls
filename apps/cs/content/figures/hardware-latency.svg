@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320">
+  <!-- 로그 눈금: 0.1ns가 x=170, 10배마다 44px -->
+  <text class="tx-l" x="0" y="14">한 번 읽는 데 걸리는 시간 · 1나노초를 1초로 늘리면</text>
+  <g class="ln-faint">
+    <line x1="214" y1="26" x2="214" y2="292"/><line x1="346" y1="26" x2="346" y2="292"/>
+    <line x1="478" y1="26" x2="478" y2="292"/><line x1="610" y1="26" x2="610" y2="292"/>
+  </g>
+  <g class="tx-l" text-anchor="middle">
+    <text x="214" y="310">1ns</text><text x="346" y="310">1µs</text><text x="478" y="310">1ms</text><text x="610" y="310">1초</text>
+  </g>
+
+  <g>
+    <text x="0" y="45">레지스터</text>
+    <text x="0" y="73">L1 캐시</text>
+    <text x="0" y="101">L2 캐시</text>
+    <text x="0" y="129">L3 캐시</text>
+    <text class="tx-b" x="0" y="157">RAM</text>
+    <text x="0" y="185">NVMe SSD</text>
+    <text x="0" y="213">같은 데이터센터 왕복</text>
+    <text x="0" y="241">HDD</text>
+    <text class="tx-b" x="0" y="269">서울↔미국 서부 왕복</text>
+  </g>
+  <g class="dot-soft">
+    <rect x="170" y="32" width="21" height="18" rx="3"/>
+    <rect x="170" y="60" width="44" height="18" rx="3"/>
+    <rect x="170" y="88" width="70" height="18" rx="3"/>
+    <rect x="170" y="116" width="101" height="18" rx="3"/>
+    <rect x="170" y="172" width="251" height="18" rx="3"/>
+    <rect x="170" y="228" width="345" height="18" rx="3"/>
+  </g>
+  <g class="bx-ink">
+    <rect x="170" y="144" width="132" height="18" rx="3"/>
+    <rect x="170" y="200" width="295" height="18" rx="3"/>
+    <rect x="170" y="256" width="402" height="18" rx="3"/>
+  </g>
+  <g class="tx-s">
+    <text x="198" y="45">0.3ns · 0.3초</text>
+    <text x="222" y="73">1ns · 1초</text>
+    <text x="248" y="101">4ns · 4초</text>
+    <text x="279" y="129">10~40ns · 반 분</text>
+    <text x="310" y="157">100ns · 1분 40초</text>
+    <text x="429" y="185">20~100µs · 하루</text>
+    <text x="473" y="213">0.5ms · 6일</text>
+    <text x="523" y="241">5~10ms · 3~4개월</text>
+    <text x="580" y="269">약 140ms · 4~5년</text>
+  </g>
+</svg>

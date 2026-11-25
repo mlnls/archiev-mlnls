@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270">
+  <!-- 구역 -->
+  <rect class="bx-soft" x="0" y="24" width="236" height="150" rx="10"/>
+  <rect class="bx-soft" x="246" y="24" width="160" height="150" rx="10"/>
+  <rect class="bx-soft" x="596" y="24" width="124" height="150" rx="10"/>
+  <g class="tx-l">
+    <text x="12" y="44">집 · LAN</text>
+    <text x="258" y="44">통신사 · ISP</text>
+    <text x="608" y="44">데이터센터</text>
+  </g>
+  <g class="tx-s">
+    <text x="12" y="162">Wi-Fi로 공유기에 붙음</text>
+    <text x="258" y="162">KT · SKB · LGU+</text>
+    <text x="608" y="162">클라우드의 리전</text>
+  </g>
+
+  <!-- 선 -->
+  <line class="ln ln-dash" x1="68" y1="100" x2="92" y2="100"/>
+  <g class="ln">
+    <line x1="148" y1="100" x2="168" y2="100"/>
+    <line x1="224" y1="100" x2="258" y2="100"/>
+    <line x1="318" y1="100" x2="334" y2="100"/>
+    <line x1="394" y1="100" x2="420" y2="100"/>
+    <line x1="468" y1="100" x2="478" y2="100"/>
+    <line x1="584" y1="100" x2="630" y2="100"/>
+  </g>
+  <!-- 바다 밑 케이블 -->
+  <path class="ln-ink" d="M478 100 q 6.6 -8 13.2 0 t 13.2 0 t 13.2 0 t 13.2 0 t 13.2 0 t 13.2 0 t 13.2 0 t 13.2 0"/>
+  <text x="531" y="78" text-anchor="middle" class="tx-b">해저 케이블</text>
+  <text x="531" y="126" text-anchor="middle" class="tx-s">부산·거제에서</text>
+  <text x="531" y="142" text-anchor="middle" class="tx-s">바다 밑으로</text>
+
+  <!-- 장비 -->
+  <rect class="bx" x="12" y="80" width="56" height="40" rx="8"/>
+  <text x="40" y="105" text-anchor="middle">노트북</text>
+  <rect class="bx" x="92" y="80" width="56" height="40" rx="8"/>
+  <text x="120" y="105" text-anchor="middle">공유기</text>
+  <rect class="bx" x="168" y="80" width="56" height="40" rx="8"/>
+  <text x="196" y="105" text-anchor="middle">ONT</text>
+  <text x="196" y="138" text-anchor="middle" class="tx-s">벽의 광 단자</text>
+
+  <rect class="bx" x="258" y="80" width="60" height="40" rx="8"/>
+  <text x="288" y="105" text-anchor="middle">국사</text>
+  <rect class="bx" x="334" y="80" width="60" height="40" rx="8"/>
+  <text x="364" y="105" text-anchor="middle">백본</text>
+  <text x="326" y="138" text-anchor="middle" class="tx-s">동네에서 모여 큰 망으로</text>
+
+  <rect class="bx" x="420" y="80" width="48" height="40" rx="8"/>
+  <text x="444" y="105" text-anchor="middle">IX</text>
+  <text x="444" y="196" text-anchor="middle" class="tx-s">망끼리 잇는 곳</text>
+  <line class="ln-faint" x1="444" y1="120" x2="444" y2="182"/>
+
+  <!-- 서버 선반 -->
+  <rect class="bx" x="630" y="62" width="64" height="78" rx="6"/>
+  <g class="bx-soft">
+    <rect x="638" y="70" width="48" height="12" rx="2"/>
+    <rect x="638" y="86" width="48" height="12" rx="2"/>
+    <rect x="638" y="102" width="48" height="12" rx="2"/>
+    <rect x="638" y="118" width="48" height="12" rx="2"/>
+  </g>
+  <g class="dot">
+    <circle cx="680" cy="76" r="2"/><circle cx="680" cy="92" r="2"/><circle cx="680" cy="108" r="2"/><circle cx="680" cy="124" r="2"/>
+  </g>
+
+  <!-- 왕복 시간이 어디서 쓰이나 -->
+  <text class="tx-l" x="0" y="222">서울의 집에서 미국 서부의 서버까지 왕복 약 130ms</text>
+  <rect class="dot-soft" x="0" y="232" width="55" height="18" rx="3"/>
+  <rect class="bx-ink" x="57" y="232" width="649" height="18" rx="3"/>
+  <rect class="dot-soft" x="708" y="232" width="12" height="18" rx="3"/>
+  <text class="tx-inv tx-s" x="381" y="245" text-anchor="middle">바다를 건너 오가는 데 약 120ms. 빛도 1ms에 200km밖에 못 갑니다</text>
+  <text class="tx-s" x="0" y="266">집과 통신사 10ms 안팎</text>
+  <text class="tx-s" x="720" y="266" text-anchor="end">데이터센터 안 1ms 안팎</text>
+</svg>

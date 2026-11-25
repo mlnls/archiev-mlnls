@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230">
+  <!-- 왼쪽: 열 단계. 3을 보냈는데 잡음 때문에 2나 4 칸으로 넘어감 -->
+  <text class="tx-b" x="0" y="16">열 단계로 나누면</text>
+  <text class="tx-s" x="0" y="34">칸이 좁아 조금만 흔들려도 옆 칸으로 넘어갑니다</text>
+  <g class="ln-faint">
+    <line x1="30" y1="50" x2="330" y2="50"/><line x1="30" y1="64" x2="330" y2="64"/><line x1="30" y1="78" x2="330" y2="78"/>
+    <line x1="30" y1="92" x2="330" y2="92"/><line x1="30" y1="106" x2="330" y2="106"/><line x1="30" y1="120" x2="330" y2="120"/>
+    <line x1="30" y1="134" x2="330" y2="134"/><line x1="30" y1="148" x2="330" y2="148"/><line x1="30" y1="162" x2="330" y2="162"/>
+    <line x1="30" y1="176" x2="330" y2="176"/><line x1="30" y1="190" x2="330" y2="190"/>
+  </g>
+  <rect class="bx-soft" x="30" y="134" width="300" height="14"/>
+  <g class="tx-s" text-anchor="end">
+    <text x="24" y="61">9</text><text x="24" y="145">3</text><text x="24" y="187">0</text>
+  </g>
+  <polyline class="ln-ink" points="30,141 50,132 70,151 90,138 110,128 130,146 150,153 170,136 190,130 210,147 230,140 250,127 270,150 290,137 310,144 330,139"/>
+  <g class="dot">
+    <circle cx="110" cy="128" r="3.5"/><circle cx="150" cy="153" r="3.5"/><circle cx="250" cy="127" r="3.5"/><circle cx="270" cy="150" r="3.5"/>
+  </g>
+  <text class="tx-s" x="180" y="214" text-anchor="middle">보낸 값은 3. 점마다 2나 4로 읽힙니다</text>
+
+  <!-- 오른쪽: 두 단계. 같은 잡음이어도 높은지 낮은지는 분명함 -->
+  <g transform="translate(390 0)">
+    <text class="tx-b" x="0" y="16">두 단계로 나누면</text>
+    <text class="tx-s" x="0" y="34">같은 잡음이 섞여도 높은지 낮은지는 분명합니다</text>
+    <rect class="bx-soft" x="30" y="50" width="300" height="66"/>
+    <line class="ln ln-dash" x1="30" y1="120" x2="330" y2="120"/>
+    <g class="tx-s" text-anchor="end">
+      <text x="24" y="88">1</text><text x="24" y="160">0</text>
+    </g>
+    <polyline class="ln-ink" points="30,72 45,66 60,79 75,68 90,74 90,166 105,175 120,160 135,172 150,165 150,71 165,64 180,77 195,69 210,76 225,65 240,73 255,66 270,74 270,168 285,176 300,161 315,173 330,167"/>
+    <g class="tx-m" text-anchor="middle">
+      <text x="60" y="214">1</text><text x="120" y="214">0</text><text x="180" y="214">1</text><text x="240" y="214">1</text><text x="300" y="214">0</text>
+    </g>
+  </g>
+</svg>

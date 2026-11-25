@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 244">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 메모리의 기계어 -->
+  <text class="tx-l" x="24" y="16">메모리 (주소와 명령어)</text>
+  <rect class="bx" x="24" y="26" width="280" height="34" rx="6"/>
+  <rect class="bx-ink" x="24" y="66" width="280" height="34" rx="6"/>
+  <rect class="bx" x="24" y="106" width="280" height="34" rx="6"/>
+  <rect class="bx" x="24" y="146" width="280" height="34" rx="6"/>
+  <g class="tx-m">
+    <text class="tx-s" x="38" y="48">0x1000</text><text x="110" y="48">mov rax, [rbp-8]</text>
+    <text class="tx-s tx-inv" x="38" y="88">0x1004</text><text class="tx-inv" x="110" y="88">add rax, 1</text>
+    <text class="tx-s" x="38" y="128">0x1008</text><text x="110" y="128">cmp rax, 10</text>
+    <text class="tx-s" x="38" y="168">0x100C</text><text x="110" y="168">jl 0x1000</text>
+  </g>
+  <!-- 분기: 맨 위로 되돌아감 -->
+  <path class="ln ln-dash" d="M24 163 H10 V43 H20" marker-end="url(#m)"/>
+
+  <!-- 사이클 -->
+  <rect class="bx" x="370" y="40" width="100" height="56" rx="10"/>
+  <text class="tx-b" x="420" y="64" text-anchor="middle">가져오기</text>
+  <text class="tx-s" x="420" y="82" text-anchor="middle">PC 위치 읽기</text>
+  <rect class="bx" x="490" y="40" width="100" height="56" rx="10"/>
+  <text class="tx-b" x="540" y="64" text-anchor="middle">해독</text>
+  <text class="tx-s" x="540" y="82" text-anchor="middle">무슨 명령인지</text>
+  <rect class="bx" x="610" y="40" width="100" height="56" rx="10"/>
+  <text class="tx-b" x="660" y="64" text-anchor="middle">실행</text>
+  <text class="tx-s" x="660" y="82" text-anchor="middle">계산·읽기·쓰기</text>
+  <line class="ln" x1="470" y1="68" x2="488" y2="68" marker-end="url(#m)"/>
+  <line class="ln" x1="590" y1="68" x2="608" y2="68" marker-end="url(#m)"/>
+  <path class="ln" d="M660 96 V130 H420 V100" marker-end="url(#m)"/>
+  <text class="tx-s" x="540" y="148" text-anchor="middle">PC를 다음 칸으로 (분기면 다른 주소로)</text>
+
+  <!-- 프로그램 카운터 -->
+  <rect class="bx-ink" x="370" y="180" width="220" height="38" rx="8"/>
+  <text class="tx-inv tx-m" x="480" y="204" text-anchor="middle">프로그램 카운터 = 0x1004</text>
+  <path class="ln-ink" d="M370 199 H338 V83 H310" marker-end="url(#a)"/>
+  <text class="tx-s" x="24" y="206">점선: jl이 조건을 만족하면 PC가 0x1000으로 바뀌어 반복문이 됩니다</text>
+</svg>

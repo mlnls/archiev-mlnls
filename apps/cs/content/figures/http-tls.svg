@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 252">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <g class="tx-b" text-anchor="middle"><text x="100" y="16">브라우저</text><text x="420" y="16">Caddy</text></g>
+  <g class="ln-faint"><line x1="100" y1="28" x2="100" y2="248"/><line x1="420" y1="28" x2="420" y2="248"/></g>
+  <line class="ln" x1="102" y1="48" x2="416" y2="72" marker-end="url(#m)"/>
+  <line class="ln" x1="418" y1="90" x2="104" y2="114" marker-end="url(#m)"/>
+  <line class="ln-faint ln-dash" x1="60" y1="128" x2="720" y2="128"/>
+  <text class="tx-l" x="720" y="122" text-anchor="end">여기서부터 암호화</text>
+  <line class="ln" x1="418" y1="150" x2="104" y2="174" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="102" y1="216" x2="416" y2="240" marker-end="url(#a)"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="260" y="51">ClientHello</text><text x="260" y="93">ServerHello</text>
+  </g>
+  <text class="tx-s" x="260" y="150" text-anchor="middle">인증서 체인, 서명, Finished</text>
+  <text class="tx-m" x="260" y="216" text-anchor="middle">Finished + GET /http/</text>
+  <text class="tx-s" x="110" y="196">브라우저: 체인을 루트까지 확인하고 대칭키를 계산</text>
+  <g class="tx-s">
+    <text x="450" y="58">암호 방식, 키 교환 값</text><text x="450" y="74">SNI: cs.mlnl.…sslip.io, ALPN: h2</text>
+    <text x="450" y="102">고른 방식, 서버의 키 교환 값</text>
+    <text x="450" y="158">"이 공개키는 cs.mlnl.…의 것" 보증서와</text><text x="450" y="174">개인키로 한 서명</text>
+    <text x="450" y="232">첫 요청이 Finished와 함께 감</text>
+  </g>
+  <path class="ln" d="M46 48 H40 V174 H46"/>
+  <text class="tx-s" x="0" y="115">1 RTT</text>
+</svg>

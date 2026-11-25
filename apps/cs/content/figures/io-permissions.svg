@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <!-- -rwxr-xr--  1 me  staff  1200  deploy.sh -->
+  <rect class="bx-soft" x="0" y="10" width="34" height="40" rx="5"/>
+  <g class="bx">
+    <rect x="40" y="10" width="34" height="40" rx="5"/><rect x="76" y="10" width="34" height="40" rx="5"/><rect x="112" y="10" width="34" height="40" rx="5"/>
+    <rect x="156" y="10" width="34" height="40" rx="5"/><rect x="192" y="10" width="34" height="40" rx="5"/><rect x="228" y="10" width="34" height="40" rx="5"/>
+    <rect x="272" y="10" width="34" height="40" rx="5"/><rect x="308" y="10" width="34" height="40" rx="5"/><rect x="344" y="10" width="34" height="40" rx="5"/>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="17" y="35">-</text>
+    <text x="57" y="35">r</text><text x="93" y="35">w</text><text x="129" y="35">x</text>
+    <text x="173" y="35">r</text><text x="209" y="35">-</text><text x="245" y="35">x</text>
+    <text x="289" y="35">r</text><text x="325" y="35">-</text><text x="361" y="35">-</text>
+  </g>
+  <text class="tx-s tx-m" x="400" y="35">1 me staff 1200 deploy.sh</text>
+
+  <!-- 묶음 표시 -->
+  <g class="ln">
+    <path d="M40 58 V64 H146 V58"/><path d="M156 58 V64 H262 V58"/><path d="M272 58 V64 H378 V58"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="93" y="86">주인 (me)</text><text class="tx-b" x="209" y="86">그룹 (staff)</text><text class="tx-b" x="325" y="86">나머지</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="93" y="104">읽기, 쓰기, 실행</text><text x="209" y="104">읽기, 실행</text><text x="325" y="104">읽기만</text>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="93" y="132">4+2+1 = 7</text><text x="209" y="132">4+0+1 = 5</text><text x="325" y="132">4+0+0 = 4</text>
+  </g>
+  <rect class="bx-ink" x="150" y="148" width="118" height="34" rx="6"/>
+  <text class="tx-inv tx-m" x="209" y="170" text-anchor="middle">chmod 754</text>
+  <text class="tx-s" x="17" y="80" text-anchor="middle">종류</text>
+  <text class="tx-s" x="17" y="96" text-anchor="middle">- 파일</text>
+  <text class="tx-s" x="420" y="132">r = 4, w = 2, x = 1을 무리마다 더해</text>
+  <text class="tx-s" x="420" y="150">숫자 세 자리로 씁니다</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 452">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="170" y="14">이더넷 헤더: 이번 한 걸음</text>
+  <text class="tx-l" x="430" y="14">IP 헤더: 여행 전체</text>
+
+  <!-- 장비 -->
+  <rect class="bx" x="0" y="28" width="130" height="32" rx="8"/>
+  <text x="65" y="49" text-anchor="middle">노트북</text>
+  <rect class="bx" x="0" y="118" width="130" height="32" rx="8"/>
+  <text x="65" y="139" text-anchor="middle">공유기 (NAT)</text>
+  <rect class="bx" x="0" y="208" width="130" height="32" rx="8"/>
+  <text x="65" y="229" text-anchor="middle">통신사 라우터</text>
+  <rect class="bx" x="0" y="318" width="130" height="32" rx="8"/>
+  <text x="65" y="339" text-anchor="middle">마지막 라우터</text>
+  <rect class="bx" x="0" y="408" width="130" height="32" rx="8"/>
+  <text x="65" y="429" text-anchor="middle">서버</text>
+  <g class="ln">
+    <line x1="65" y1="60" x2="65" y2="116" marker-end="url(#a)"/>
+    <line x1="65" y1="150" x2="65" y2="206" marker-end="url(#a)"/>
+    <line class="ln ln-dash" x1="65" y1="240" x2="65" y2="316" marker-end="url(#a)"/>
+    <line x1="65" y1="350" x2="65" y2="406" marker-end="url(#a)"/>
+  </g>
+
+  <!-- 구간 1 -->
+  <rect class="bx" x="170" y="73" width="250" height="32" rx="6"/>
+  <text x="295" y="94" text-anchor="middle">노트북 → 공유기</text>
+  <rect class="bx-soft" x="430" y="73" width="200" height="32" rx="6"/>
+  <text x="530" y="94" text-anchor="middle">192.168.0.23 → 서버</text>
+  <rect class="bx-line" x="640" y="73" width="80" height="32" rx="6"/>
+  <text class="tx-s" x="680" y="93" text-anchor="middle">데이터</text>
+
+  <!-- 구간 2: NAT로 보내는 IP만 바뀜 -->
+  <rect class="bx" x="170" y="163" width="250" height="32" rx="6"/>
+  <text x="295" y="184" text-anchor="middle">공유기 바깥쪽 → 통신사 라우터</text>
+  <rect class="bx-ink" x="430" y="163" width="200" height="32" rx="6"/>
+  <text class="tx-inv" x="530" y="184" text-anchor="middle" font-weight="700">공인 IP → 서버</text>
+  <rect class="bx-line" x="640" y="163" width="80" height="32" rx="6"/>
+  <text class="tx-s" x="680" y="183" text-anchor="middle">데이터</text>
+  <text class="tx-s" x="430" y="212">공유기의 NAT가 보내는 IP를 바꿈 (11장)</text>
+
+  <!-- 중간 -->
+  <text class="tx-s" x="170" y="282">… 라우터를 지날 때마다 이더넷 헤더는 새로, IP 헤더는 그대로</text>
+
+  <!-- 마지막 구간 -->
+  <rect class="bx" x="170" y="363" width="250" height="32" rx="6"/>
+  <text x="295" y="384" text-anchor="middle">마지막 라우터 → 서버</text>
+  <rect class="bx-soft" x="430" y="363" width="200" height="32" rx="6"/>
+  <text x="530" y="384" text-anchor="middle">공인 IP → 서버</text>
+  <rect class="bx-line" x="640" y="363" width="80" height="32" rx="6"/>
+  <text class="tx-s" x="680" y="383" text-anchor="middle">데이터</text>
+</svg>

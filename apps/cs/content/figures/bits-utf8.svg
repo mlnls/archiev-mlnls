@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 210">
+  <g class="tx-l">
+    <text x="0" y="16">글자</text>
+    <text x="64" y="16">번호 (코드 포인트)</text>
+    <text x="196" y="16">UTF-8로 적으면 (웹, 파일)</text>
+    <text x="496" y="16">UTF-16으로 적으면 (JS 문자열)</text>
+  </g>
+  <line class="ln-faint" x1="0" y1="26" x2="720" y2="26"/>
+
+  <!-- A -->
+  <text class="tx-b" x="14" y="62" text-anchor="middle">A</text>
+  <rect class="bx-soft" x="64" y="40" width="96" height="32" rx="5"/>
+  <text class="tx-m" x="112" y="61" text-anchor="middle">U+0041</text>
+  <rect class="bx" x="196" y="40" width="52" height="32" rx="5"/>
+  <text class="tx-m" x="222" y="61" text-anchor="middle">41</text>
+  <text class="tx-s" x="436" y="61">1바이트</text>
+  <rect class="bx" x="496" y="40" width="80" height="32" rx="5"/>
+  <text class="tx-m" x="536" y="61" text-anchor="middle">0041</text>
+  <text class="tx-s" x="670" y="61">2바이트</text>
+
+  <!-- 가 -->
+  <text class="tx-b" x="14" y="122" text-anchor="middle">가</text>
+  <rect class="bx-soft" x="64" y="100" width="96" height="32" rx="5"/>
+  <text class="tx-m" x="112" y="121" text-anchor="middle">U+AC00</text>
+  <g class="bx">
+    <rect x="196" y="100" width="52" height="32" rx="5"/><rect x="252" y="100" width="52" height="32" rx="5"/><rect x="308" y="100" width="52" height="32" rx="5"/>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="222" y="121">EA</text><text x="278" y="121">B0</text><text x="334" y="121">80</text>
+  </g>
+  <text class="tx-s" x="436" y="121">3바이트</text>
+  <rect class="bx" x="496" y="100" width="80" height="32" rx="5"/>
+  <text class="tx-m" x="536" y="121" text-anchor="middle">AC00</text>
+  <text class="tx-s" x="670" y="121">2바이트</text>
+
+  <!-- 😀 -->
+  <text x="14" y="182" text-anchor="middle">😀</text>
+  <rect class="bx-soft" x="64" y="160" width="96" height="32" rx="5"/>
+  <text class="tx-m" x="112" y="181" text-anchor="middle">U+1F600</text>
+  <g class="bx">
+    <rect x="196" y="160" width="52" height="32" rx="5"/><rect x="252" y="160" width="52" height="32" rx="5"/>
+    <rect x="308" y="160" width="52" height="32" rx="5"/><rect x="364" y="160" width="52" height="32" rx="5"/>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="222" y="181">F0</text><text x="278" y="181">9F</text><text x="334" y="181">98</text><text x="390" y="181">80</text>
+  </g>
+  <text class="tx-s" x="436" y="181">4바이트</text>
+  <rect class="bx-ink" x="496" y="160" width="80" height="32" rx="5"/>
+  <rect class="bx-ink" x="580" y="160" width="80" height="32" rx="5"/>
+  <g class="tx-m tx-inv" text-anchor="middle">
+    <text x="536" y="181">D83D</text><text x="620" y="181">DE00</text>
+  </g>
+  <text class="tx-s" x="670" y="181">4바이트</text>
+  <text class="tx-s" x="578" y="206" text-anchor="middle">서로게이트 쌍: JS length가 2</text>
+</svg>

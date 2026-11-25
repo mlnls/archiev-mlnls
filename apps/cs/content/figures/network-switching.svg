@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <!-- 왼쪽: 회선 교환. 길 하나를 잡아 두고 독차지 -->
+  <g>
+    <text class="tx-b" x="0" y="16">회선 교환</text>
+    <text class="tx-s" x="0" y="36">전화망. 처음에 길을 잡아 두고 끝날 때까지 독차지</text>
+    <g class="ln-faint">
+      <line x1="72" y1="140" x2="120" y2="90"/>
+      <line x1="72" y1="140" x2="120" y2="190"/>
+      <line x1="120" y1="90" x2="220" y2="90"/>
+      <line x1="120" y1="190" x2="220" y2="190"/>
+      <line x1="120" y1="90" x2="220" y2="190"/>
+      <line x1="120" y1="190" x2="220" y2="90"/>
+      <line x1="120" y1="90" x2="120" y2="190"/>
+      <line x1="220" y1="90" x2="220" y2="190"/>
+      <line x1="220" y1="90" x2="268" y2="140"/>
+      <line x1="220" y1="190" x2="268" y2="140"/>
+    </g>
+    <polyline class="ln-ink" points="72,140 120,90 220,90 268,140"/>
+    <g class="dot-soft">
+      <circle cx="120" cy="90" r="5"/><circle cx="120" cy="190" r="5"/>
+      <circle cx="220" cy="90" r="5"/><circle cx="220" cy="190" r="5"/>
+    </g>
+    <circle class="dot" cx="120" cy="90" r="5"/><circle class="dot" cx="220" cy="90" r="5"/>
+    <text class="tx-s" x="170" y="76" text-anchor="middle">통화 내내 이 길은 내 것</text>
+    <rect class="bx" x="0" y="124" width="72" height="32" rx="8"/>
+    <text x="36" y="145" text-anchor="middle">전화기</text>
+    <rect class="bx" x="268" y="124" width="72" height="32" rx="8"/>
+    <text x="304" y="145" text-anchor="middle">전화기</text>
+    <text class="tx-s" x="0" y="238">말이 없는 동안에도 길은 비어 있는 채로 묶여 있습니다</text>
+  </g>
+
+  <line class="bx-line" x1="360" y1="0" x2="360" y2="246"/>
+
+  <!-- 오른쪽: 패킷 교환. 조각마다 따로, 길은 모두가 나눠 씀 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">패킷 교환</text>
+    <text class="tx-s" x="0" y="36">인터넷. 잘라서 조각마다 주소를 붙여 따로 보냄</text>
+    <g class="ln-faint">
+      <line x1="72" y1="140" x2="120" y2="90"/>
+      <line x1="72" y1="140" x2="120" y2="190"/>
+      <line x1="120" y1="90" x2="220" y2="90"/>
+      <line x1="120" y1="190" x2="220" y2="190"/>
+      <line x1="120" y1="90" x2="220" y2="190"/>
+      <line x1="120" y1="190" x2="220" y2="90"/>
+      <line x1="120" y1="90" x2="120" y2="190"/>
+      <line x1="220" y1="90" x2="220" y2="190"/>
+      <line x1="220" y1="90" x2="268" y2="140"/>
+      <line x1="220" y1="190" x2="268" y2="140"/>
+    </g>
+    <g class="dot-soft">
+      <circle cx="120" cy="90" r="5"/><circle cx="120" cy="190" r="5"/>
+      <circle cx="220" cy="90" r="5"/><circle cx="220" cy="190" r="5"/>
+    </g>
+    <!-- 내 패킷 1, 2, 3은 서로 다른 길로 -->
+    <rect class="bx-ink" x="159" y="82" width="22" height="16" rx="3"/>
+    <text class="tx-inv tx-s" x="170" y="94" text-anchor="middle">1</text>
+    <rect class="bx-ink" x="141" y="104" width="22" height="16" rx="3"/>
+    <text class="tx-inv tx-s" x="152" y="116" text-anchor="middle">2</text>
+    <rect class="bx-ink" x="159" y="182" width="22" height="16" rx="3"/>
+    <text class="tx-inv tx-s" x="170" y="194" text-anchor="middle">3</text>
+    <!-- 다른 사람의 패킷이 같은 선을 함께 씀 -->
+    <rect class="bx" x="83" y="155" width="22" height="16" rx="3"/>
+    <rect class="bx" x="233" y="99" width="22" height="16" rx="3"/>
+    <rect class="bx" x="109" y="132" width="22" height="16" rx="3"/>
+    <rect class="bx" x="0" y="124" width="72" height="32" rx="8"/>
+    <text x="36" y="145" text-anchor="middle">내 컴퓨터</text>
+    <rect class="bx" x="268" y="124" width="72" height="32" rx="8"/>
+    <text x="304" y="145" text-anchor="middle">서버</text>
+    <rect class="bx-ink" x="0" y="227" width="16" height="12" rx="2"/>
+    <text class="tx-s" x="22" y="238">내 패킷</text>
+    <rect class="bx" x="82" y="227" width="16" height="12" rx="2"/>
+    <text class="tx-s" x="104" y="238">다른 사람의 패킷. 같은 선을 나눠 씁니다</text>
+  </g>
+</svg>

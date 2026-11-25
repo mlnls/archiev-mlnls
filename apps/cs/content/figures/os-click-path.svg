@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 층 -->
+  <text class="tx-b" x="0" y="66">사용자 공간</text>
+  <text class="tx-b" x="0" y="170">커널</text>
+  <text class="tx-b" x="0" y="260">하드웨어</text>
+  <line class="ln ln-dash" x1="100" y1="112" x2="720" y2="112"/>
+  <text class="tx-s" x="720" y="106" text-anchor="end">CPU가 지키는 벽</text>
+  <line class="ln-faint" x1="100" y1="214" x2="720" y2="214"/>
+
+  <!-- 사용자 공간 -->
+  <rect class="bx" x="210" y="38" width="160" height="50" rx="8"/>
+  <text class="tx-b" x="290" y="60" text-anchor="middle">창 관리자</text>
+  <text class="tx-s" x="290" y="78" text-anchor="middle">WindowServer, win32k</text>
+  <rect class="bx-ink" x="420" y="38" width="170" height="50" rx="8"/>
+  <text class="tx-inv" x="505" y="60" text-anchor="middle" font-weight="700">브라우저</text>
+  <text class="tx-inv tx-s" x="505" y="78" text-anchor="middle">체크 → localStorage에 기록</text>
+
+  <!-- 커널 -->
+  <rect class="bx" x="110" y="140" width="210" height="50" rx="8"/>
+  <text x="215" y="161" text-anchor="middle">인터럽트 핸들러</text>
+  <text class="tx-s" x="215" y="179" text-anchor="middle">마우스 드라이버</text>
+  <rect class="bx" x="470" y="140" width="210" height="50" rx="8"/>
+  <text x="575" y="161" text-anchor="middle">파일 시스템</text>
+  <text class="tx-s" x="575" y="179" text-anchor="middle">SSD 드라이버</text>
+
+  <!-- 하드웨어 -->
+  <rect class="bx-soft" x="110" y="232" width="110" height="44" rx="8"/>
+  <text x="165" y="259" text-anchor="middle">마우스</text>
+  <rect class="bx-soft" x="570" y="232" width="110" height="44" rx="8"/>
+  <text x="625" y="259" text-anchor="middle">SSD</text>
+
+  <!-- 흐름 -->
+  <g class="ln-ink">
+    <line x1="165" y1="232" x2="165" y2="194" marker-end="url(#a)"/>
+    <line x1="290" y1="140" x2="290" y2="92" marker-end="url(#a)"/>
+    <line x1="370" y1="63" x2="416" y2="63" marker-end="url(#a)"/>
+    <line x1="530" y1="88" x2="530" y2="136" marker-end="url(#a)"/>
+    <line x1="625" y1="190" x2="625" y2="228" marker-end="url(#a)"/>
+  </g>
+  <g class="tx-s">
+    <text x="174" y="218">① 인터럽트</text>
+    <text x="298" y="128">② 클릭 사건 전달</text>
+    <text x="374" y="54">③</text>
+    <text x="538" y="128">④ write 시스템 콜</text>
+    <text x="633" y="208">⑤ 장치 명령</text>
+  </g>
+</svg>

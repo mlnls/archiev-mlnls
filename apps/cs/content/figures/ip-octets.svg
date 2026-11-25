@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 184">
+  <text class="tx-b" x="0" y="16">IPv4 주소 하나 = 32비트 = 1바이트(8비트) × 4</text>
+  <rect class="bx" x="0" y="32" width="170" height="70" rx="6"/>
+  <text class="tx-b" x="85" y="58" text-anchor="middle">192</text>
+  <text class="tx-m" x="85" y="86" text-anchor="middle">11000000</text>
+  <text class="tx-b" x="175" y="72" text-anchor="middle">.</text>
+  <rect class="bx" x="180" y="32" width="170" height="70" rx="6"/>
+  <text class="tx-b" x="265" y="58" text-anchor="middle">168</text>
+  <text class="tx-m" x="265" y="86" text-anchor="middle">10101000</text>
+  <text class="tx-b" x="355" y="72" text-anchor="middle">.</text>
+  <rect class="bx" x="360" y="32" width="170" height="70" rx="6"/>
+  <text class="tx-b" x="445" y="58" text-anchor="middle">0</text>
+  <text class="tx-m" x="445" y="86" text-anchor="middle">00000000</text>
+  <text class="tx-b" x="535" y="72" text-anchor="middle">.</text>
+  <rect class="bx" x="540" y="32" width="170" height="70" rx="6"/>
+  <text class="tx-b" x="625" y="58" text-anchor="middle">23</text>
+  <text class="tx-m" x="625" y="86" text-anchor="middle">00010111</text>
+  <g class="ln"><line x1="0" y1="116" x2="170" y2="116"/><line x1="0" y1="110" x2="0" y2="122"/><line x1="170" y1="110" x2="170" y2="122"/></g>
+  <text class="tx-s" x="85" y="138" text-anchor="middle">8비트: 0~255</text>
+  <text class="tx-s" x="625" y="124" text-anchor="middle">00010111</text>
+  <text class="tx-s" x="625" y="142" text-anchor="middle">= 16 + 4 + 2 + 1 = 23</text>
+  <text class="tx-s" x="0" y="170">점 사이의 숫자 하나가 1바이트입니다. 그래서 어느 칸도 255를 넘지 않습니다.</text>
+</svg>

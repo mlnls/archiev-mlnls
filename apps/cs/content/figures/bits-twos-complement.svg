@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 350">
+  <!-- 8비트 값 256개를 계량기처럼 원으로. 위가 0, 시계 방향으로 +1 -->
+  <text class="tx-s" x="0" y="16">칸마다: 비트 / 부호 없는 정수 · 2의 보수</text>
+
+  <path class="ln" d="M360 60 A115 115 0 0 1 360 290"/>
+  <path class="ln-ink" d="M360 290 A115 115 0 0 1 360 60"/>
+
+  <text class="tx-s" x="490" y="112">맨 앞 비트 0: 두 방식이 같은 값</text>
+  <text class="tx-b" x="230" y="112" text-anchor="end">맨 앞 비트 1: 2의 보수로는 음수</text>
+
+  <!-- 0 -->
+  <circle class="dot" cx="366" cy="60" r="4.5"/>
+  <text class="tx-m" x="378" y="42">0000 0000</text>
+  <text class="tx-s" x="378" y="58">0 · 0</text>
+  <!-- 255 = -1 -->
+  <circle class="dot" cx="354" cy="60" r="4.5"/>
+  <text class="tx-m" x="342" y="42" text-anchor="end">1111 1111</text>
+  <text class="tx-s" x="342" y="58" text-anchor="end">255 · −1</text>
+  <!-- 64 -->
+  <circle class="dot" cx="475" cy="175" r="4.5"/>
+  <text class="tx-m" x="490" y="171">0100 0000</text>
+  <text class="tx-s" x="490" y="187">64 · 64</text>
+  <!-- 192 = -64 -->
+  <circle class="dot" cx="245" cy="175" r="4.5"/>
+  <text class="tx-m" x="230" y="171" text-anchor="end">1100 0000</text>
+  <text class="tx-s" x="230" y="187" text-anchor="end">192 · −64</text>
+  <!-- 127 -->
+  <circle class="dot" cx="372" cy="289" r="4.5"/>
+  <text class="tx-m" x="384" y="304">0111 1111</text>
+  <text class="tx-s" x="384" y="320">127 · 127</text>
+  <!-- 128 = -128 -->
+  <circle class="dot" cx="348" cy="289" r="4.5"/>
+  <text class="tx-m" x="336" y="304" text-anchor="end">1000 0000</text>
+  <text class="tx-s" x="336" y="320" text-anchor="end">128 · −128</text>
+
+  <text class="tx-s" x="360" y="170" text-anchor="middle">+1 할 때마다</text>
+  <text class="tx-s" x="360" y="186" text-anchor="middle">시계 방향으로 한 칸</text>
+  <text class="tx-b" x="360" y="345" text-anchor="middle">127에서 한 칸 더 가면 −128: 오버플로</text>
+</svg>

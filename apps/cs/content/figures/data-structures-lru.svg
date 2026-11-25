@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-b" x="0" y="66">해시 테이블</text>
+  <text class="tx-s" x="0" y="84">키로 노드를 O(1)에</text>
+  <text class="tx-b" x="0" y="153">양방향 연결 리스트</text>
+  <text class="tx-s" x="0" y="171">쓴 순서대로 줄 세움</text>
+  <rect class="bx-soft" x="164" y="34" width="440" height="54" rx="8"/>
+  <rect class="bx" x="200" y="44" width="50" height="34" rx="6"/><text class="tx-m" x="225" y="66" text-anchor="middle">x</text>
+  <rect class="bx" x="360" y="44" width="50" height="34" rx="6"/><text class="tx-m" x="385" y="66" text-anchor="middle">y</text>
+  <rect class="bx" x="520" y="44" width="50" height="34" rx="6"/><text class="tx-m" x="545" y="66" text-anchor="middle">z</text>
+  <line class="ln" x1="225" y1="80" x2="225" y2="126" marker-end="url(#a)"/>
+  <line class="ln" x1="385" y1="80" x2="385" y2="126" marker-end="url(#a)"/>
+  <line class="ln" x1="545" y1="80" x2="545" y2="126" marker-end="url(#a)"/>
+  <rect class="bx" x="180" y="130" width="90" height="36" rx="6"/><text class="tx-b" x="225" y="153" text-anchor="middle">x</text>
+  <rect class="bx" x="340" y="130" width="90" height="36" rx="6"/><text class="tx-b" x="385" y="153" text-anchor="middle">y</text>
+  <rect class="bx" x="500" y="130" width="90" height="36" rx="6"/><text class="tx-b" x="545" y="153" text-anchor="middle">z</text>
+  <line class="ln" x1="272" y1="142" x2="338" y2="142" marker-end="url(#a)"/>
+  <line class="ln" x1="338" y1="155" x2="272" y2="155" marker-end="url(#a)"/>
+  <line class="ln" x1="432" y1="142" x2="498" y2="142" marker-end="url(#a)"/>
+  <line class="ln" x1="498" y1="155" x2="432" y2="155" marker-end="url(#a)"/>
+  <text class="tx-s" x="225" y="186" text-anchor="middle">가장 오래됨</text>
+  <text class="tx-s" x="545" y="186" text-anchor="middle">가장 최근</text>
+  <text class="tx-s" x="612" y="153">크기 3</text>
+
+  <line class="ln-faint" x1="0" y1="206" x2="720" y2="206"/>
+
+  <!-- get(y) -->
+  <text class="tx-m" x="0" y="246">get(y)</text>
+  <rect class="bx" x="177" y="226" width="46" height="30" rx="5"/><text x="200" y="246" text-anchor="middle">x</text>
+  <line class="ln" x1="223" y1="241" x2="237" y2="241"/>
+  <rect class="bx" x="237" y="226" width="46" height="30" rx="5"/><text x="260" y="246" text-anchor="middle">z</text>
+  <line class="ln" x1="283" y1="241" x2="297" y2="241"/>
+  <rect class="bx-ink" x="297" y="226" width="46" height="30" rx="5"/><text class="tx-inv" x="320" y="246" text-anchor="middle" font-weight="700">y</text>
+  <text class="tx-s" x="430" y="246">쓴 y를 맨 뒤(가장 최근)로 옮김</text>
+
+  <!-- set(w) -->
+  <text class="tx-m" x="0" y="302">set(w)</text>
+  <rect class="bx-dash" x="177" y="282" width="46" height="30" rx="5"/><text class="tx-s" x="200" y="302" text-anchor="middle">x</text>
+  <line class="ln" x1="182" y1="306" x2="218" y2="288"/>
+  <rect class="bx" x="237" y="282" width="46" height="30" rx="5"/><text x="260" y="302" text-anchor="middle">z</text>
+  <line class="ln" x1="283" y1="297" x2="297" y2="297"/>
+  <rect class="bx" x="297" y="282" width="46" height="30" rx="5"/><text x="320" y="302" text-anchor="middle">y</text>
+  <line class="ln" x1="343" y1="297" x2="357" y2="297"/>
+  <rect class="bx-ink" x="357" y="282" width="46" height="30" rx="5"/><text class="tx-inv" x="380" y="302" text-anchor="middle" font-weight="700">w</text>
+  <text class="tx-s" x="430" y="302">4개가 되어 맨 앞 x를 버림</text>
+</svg>

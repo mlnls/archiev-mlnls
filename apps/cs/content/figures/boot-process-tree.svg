@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 254">
+  <!-- 커널, launchd -->
+  <rect class="bx-soft" x="290" y="6" width="140" height="40" rx="8"/>
+  <text x="360" y="24" text-anchor="middle">kernel_task</text>
+  <text class="tx-s" x="360" y="40" text-anchor="middle">PID 0 · 커널</text>
+  <line class="ln" x1="360" y1="46" x2="360" y2="68"/>
+  <rect class="bx" x="290" y="68" width="140" height="40" rx="8"/>
+  <text class="tx-b" x="360" y="86" text-anchor="middle">launchd</text>
+  <text class="tx-s" x="360" y="102" text-anchor="middle">PID 1 · 모든 프로세스의 조상</text>
+
+  <!-- 자식들 -->
+  <g class="ln">
+    <path d="M360 108 V124"/><path d="M60 124 H660"/>
+    <path d="M60 124 V142"/><path d="M210 124 V142"/><path d="M360 124 V142"/><path d="M510 124 V142"/><path d="M660 124 V142"/>
+  </g>
+  <g class="bx">
+    <rect x="0" y="142" width="120" height="40" rx="8"/><rect x="150" y="142" width="120" height="40" rx="8"/>
+    <rect x="300" y="142" width="120" height="40" rx="8"/><rect x="450" y="142" width="120" height="40" rx="8"/>
+    <rect x="600" y="142" width="120" height="40" rx="8"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="60" y="160">WindowServer</text><text x="210" y="160">loginwindow</text><text class="tx-b" x="360" y="160">Chrome</text>
+    <text x="510" y="160">Finder</text><text x="660" y="160">Dock</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="60" y="176">화면 합성</text><text x="210" y="176">로그인</text><text x="360" y="176">브라우저 프로세스</text>
+    <text x="510" y="176">파일 관리</text><text x="660" y="176">앱 막대</text>
+  </g>
+
+  <!-- 브라우저의 자식들 -->
+  <g class="ln">
+    <path d="M360 182 V198"/><path d="M210 198 H510"/>
+    <path d="M210 198 V212"/><path d="M360 198 V212"/><path d="M510 198 V212"/>
+  </g>
+  <rect class="bx-ink" x="145" y="212" width="130" height="40" rx="8"/>
+  <text class="tx-inv" x="210" y="230" text-anchor="middle" font-weight="700">렌더러</text>
+  <text class="tx-inv tx-s" x="210" y="246" text-anchor="middle">이 페이지</text>
+  <g class="bx">
+    <rect x="295" y="212" width="130" height="40" rx="8"/><rect x="445" y="212" width="130" height="40" rx="8"/>
+  </g>
+  <text x="360" y="230" text-anchor="middle">GPU 프로세스</text>
+  <text class="tx-s" x="360" y="246" text-anchor="middle">화면 그리기</text>
+  <text x="510" y="230" text-anchor="middle">네트워크 서비스</text>
+  <text class="tx-s" x="510" y="246" text-anchor="middle">요청 보내고 받기</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 176">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 프로그램 네 개가 줄지어 요청을 주고받음 -->
+  <rect class="bx" x="10" y="30" width="130" height="56" rx="8"/>
+  <text class="tx-b" x="75" y="54" text-anchor="middle">브라우저</text>
+  <text class="tx-s" x="75" y="72" text-anchor="middle">탭 하나</text>
+
+  <rect class="bx-ink" x="200" y="30" width="130" height="56" rx="8"/>
+  <text class="tx-inv" x="265" y="54" text-anchor="middle" font-weight="700">블로그 서버</text>
+  <text class="tx-inv tx-s tx-m" x="265" y="72" text-anchor="middle">Next.js :3000</text>
+
+  <rect class="bx" x="390" y="30" width="130" height="56" rx="8"/>
+  <text class="tx-b" x="455" y="54" text-anchor="middle">API 서버</text>
+  <text class="tx-s tx-m" x="455" y="72" text-anchor="middle">Node :4000</text>
+
+  <rect class="bx" x="580" y="30" width="130" height="56" rx="8"/>
+  <text class="tx-b" x="645" y="54" text-anchor="middle">데이터베이스</text>
+  <text class="tx-s tx-m" x="645" y="72" text-anchor="middle">:5432</text>
+
+  <!-- 요청(→)과 응답(←) -->
+  <g class="ln">
+    <line x1="142" y1="48" x2="198" y2="48" marker-end="url(#a)"/>
+    <line x1="332" y1="48" x2="388" y2="48" marker-end="url(#a)"/>
+    <line x1="522" y1="48" x2="578" y2="48" marker-end="url(#a)"/>
+  </g>
+  <g class="ln ln-dash">
+    <line x1="198" y1="70" x2="142" y2="70" marker-end="url(#a)"/>
+    <line x1="388" y1="70" x2="332" y2="70" marker-end="url(#a)"/>
+    <line x1="578" y1="70" x2="522" y2="70" marker-end="url(#a)"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="170" y="40">요청</text><text x="360" y="40">요청</text><text x="550" y="40">요청</text>
+    <text x="170" y="90">응답</text><text x="360" y="90">응답</text><text x="550" y="90">응답</text>
+  </g>
+
+  <!-- 상대에 따라 달라지는 역할 -->
+  <g text-anchor="middle">
+    <text x="75" y="120">클라이언트</text>
+    <text x="265" y="120">브라우저에게는 서버</text>
+    <text x="265" y="138">API에게는 클라이언트</text>
+    <text x="455" y="120">블로그에게는 서버</text>
+    <text x="455" y="138">DB에게는 클라이언트</text>
+    <text x="645" y="120">서버</text>
+  </g>
+  <text class="tx-s" x="360" y="170" text-anchor="middle">서버와 클라이언트는 컴퓨터의 종류가 아니라, 연결 하나마다 정해지는 역할입니다</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+  <!-- 시간축: t=-600초 → x=160, t=0 → x=237, t=3600 → x=700 (0.1286 px/초) -->
+  <text class="tx-b" x="0" y="18">TTL 3600초 (1시간)</text>
+  <text class="tx-s" x="720" y="18" text-anchor="end">바꾼 뒤에도 최대 1시간 동안 옛 IP로 가는 사람이 있습니다</text>
+
+  <text class="tx-s" x="0" y="48">권한 있는 네임서버</text>
+  <rect class="bx-soft" x="160" y="32" width="77" height="22" rx="4"/>
+  <text class="tx-s" x="198" y="48" text-anchor="middle">옛 IP</text>
+  <rect class="bx" x="237" y="32" width="463" height="22" rx="4"/>
+  <text class="tx-s" x="300" y="48" text-anchor="middle">새 IP (바로 바뀜)</text>
+
+  <text class="tx-s" x="0" y="78">리졸버 A</text>
+  <rect class="bx-soft" x="160" y="62" width="231" height="22" rx="4"/>
+  <text class="tx-s" x="314" y="78" text-anchor="middle">옛 답 (40분 전에 받음)</text>
+  <rect class="bx" x="391" y="62" width="309" height="22" rx="4"/>
+  <text class="tx-s" x="545" y="78" text-anchor="middle">새 IP</text>
+
+  <text class="tx-s" x="0" y="108">리졸버 B</text>
+  <rect class="bx-soft" x="160" y="92" width="476" height="22" rx="4"/>
+  <text class="tx-s" x="436" y="108" text-anchor="middle">옛 답 (8분 전에 받음)</text>
+  <rect class="bx" x="636" y="92" width="64" height="22" rx="4"/>
+  <text class="tx-s" x="668" y="108" text-anchor="middle">새 IP</text>
+
+  <text class="tx-s" x="0" y="138">리졸버 C</text>
+  <rect class="bx-soft" x="160" y="122" width="527" height="22" rx="4"/>
+  <text class="tx-s" x="462" y="138" text-anchor="middle">옛 답 (바꾸기 직전에 받음)</text>
+  <rect class="bx" x="687" y="122" width="13" height="22" rx="3"/>
+
+  <text class="tx-b" x="0" y="186">미리 TTL을 60초로 줄여 두었을 때</text>
+  <text class="tx-s" x="720" y="186" text-anchor="end">옛 답은 길어야 1분 안에 사라집니다</text>
+
+  <text class="tx-s" x="0" y="216">권한 있는 네임서버</text>
+  <rect class="bx-soft" x="160" y="200" width="77" height="22" rx="4"/>
+  <text class="tx-s" x="198" y="216" text-anchor="middle">옛 IP</text>
+  <rect class="bx" x="237" y="200" width="463" height="22" rx="4"/>
+  <text class="tx-s" x="300" y="216" text-anchor="middle">새 IP</text>
+
+  <text class="tx-s" x="0" y="246">리졸버 A</text>
+  <rect class="bx-soft" x="160" y="230" width="81" height="22" rx="4"/>
+  <text class="tx-s" x="198" y="246" text-anchor="middle">옛 IP</text>
+  <rect class="bx" x="241" y="230" width="459" height="22" rx="4"/>
+  <text class="tx-s" x="300" y="246" text-anchor="middle">새 IP</text>
+
+  <text class="tx-s" x="0" y="276">리졸버 B</text>
+  <rect class="bx-soft" x="160" y="260" width="84" height="22" rx="4"/>
+  <text class="tx-s" x="198" y="276" text-anchor="middle">옛 IP</text>
+  <rect class="bx" x="244" y="260" width="456" height="22" rx="4"/>
+  <text class="tx-s" x="300" y="276" text-anchor="middle">새 IP</text>
+
+  <!-- 레코드를 바꾼 순간 -->
+  <line class="ln-ink" x1="237" y1="26" x2="237" y2="296"/>
+  <!-- 축 -->
+  <line class="ln" x1="160" y1="296" x2="700" y2="296"/>
+  <line class="ln" x1="391" y1="292" x2="391" y2="300"/>
+  <line class="ln" x1="546" y1="292" x2="546" y2="300"/>
+  <line class="ln" x1="700" y1="292" x2="700" y2="300"/>
+  <text class="tx-s" x="237" y="316" text-anchor="middle">레코드를 바꿈</text>
+  <text class="tx-s" x="391" y="316" text-anchor="middle">20분</text>
+  <text class="tx-s" x="546" y="316" text-anchor="middle">40분</text>
+  <text class="tx-s" x="700" y="316" text-anchor="end">60분</text>
+</svg>

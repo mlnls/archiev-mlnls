@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 370">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 생명선 -->
+  <g>
+    <rect class="bx" x="30" y="8" width="120" height="34" rx="6"/>
+    <text class="tx-b" x="90" y="30" text-anchor="middle">프로그램</text>
+    <rect class="bx" x="210" y="8" width="120" height="34" rx="6"/>
+    <text class="tx-b" x="270" y="30" text-anchor="middle">MMU</text>
+    <rect class="bx" x="390" y="8" width="120" height="34" rx="6"/>
+    <text class="tx-b" x="450" y="30" text-anchor="middle">커널</text>
+    <rect class="bx" x="570" y="8" width="120" height="34" rx="6"/>
+    <text class="tx-b" x="630" y="30" text-anchor="middle">디스크</text>
+  </g>
+  <g class="ln-faint">
+    <line x1="90" y1="42" x2="90" y2="330"/>
+    <line x1="270" y1="42" x2="270" y2="330"/>
+    <line x1="450" y1="42" x2="450" y2="330"/>
+    <line x1="630" y1="42" x2="630" y2="330"/>
+  </g>
+
+  <!-- 1. 접근 -->
+  <line class="ln" x1="90" y1="76" x2="266" y2="76" marker-end="url(#a)"/>
+  <text x="180" y="68" text-anchor="middle">가상 주소 접근</text>
+
+  <!-- 2. 페이지 폴트 -->
+  <line class="ln-ink" x1="270" y1="112" x2="446" y2="112" marker-end="url(#k)"/>
+  <text class="tx-b" x="360" y="104" text-anchor="middle">페이지 폴트 (예외)</text>
+  <text class="tx-s" x="262" y="104" text-anchor="end">"있음" 표시 없음</text>
+
+  <!-- 3. 디스크 읽기 (필요할 때만) -->
+  <line class="ln ln-dash" x1="450" y1="150" x2="626" y2="150" marker-end="url(#a)"/>
+  <text class="tx-s" x="540" y="142" text-anchor="middle">파일·스왑이면 읽기</text>
+  <line class="ln ln-dash" x1="630" y1="182" x2="454" y2="182" marker-end="url(#a)"/>
+  <text class="tx-s" x="540" y="174" text-anchor="middle">내용</text>
+
+  <!-- 4. 표 고치기 -->
+  <rect class="bx" x="370" y="202" width="160" height="46" rx="6"/>
+  <text class="tx-s" x="450" y="221" text-anchor="middle">프레임을 채워</text>
+  <text class="tx-s" x="450" y="238" text-anchor="middle">페이지 테이블에 연결</text>
+
+  <!-- 5. 다시 실행 -->
+  <line class="ln" x1="450" y1="276" x2="94" y2="276" marker-end="url(#a)"/>
+  <text x="270" y="268" text-anchor="middle">같은 명령을 다시 실행</text>
+
+  <!-- 6. 성공 -->
+  <line class="ln" x1="90" y1="312" x2="266" y2="312" marker-end="url(#a)"/>
+  <text x="180" y="304" text-anchor="middle">가상 주소 접근</text>
+  <text class="tx-s" x="282" y="316">이번엔 번역 성공, RAM에서 읽음</text>
+
+  <text class="tx-s" x="0" y="360">점선 단계가 끼면 major 폴트, 빈 프레임을 0으로 채우거나 복사만 하면 minor 폴트입니다</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 위: 운영체제를 거치는 길 -->
+  <rect class="bx" x="0" y="40" width="190" height="56" rx="8"/>
+  <text class="tx-b" x="95" y="64" text-anchor="middle">브라우저, ping</text>
+  <text class="tx-s tx-m" x="95" y="84" text-anchor="middle">Node dns.lookup</text>
+
+  <rect class="bx-soft" x="226" y="14" width="350" height="100" rx="10"/>
+  <text class="tx-l" x="240" y="34">운영체제 (getaddrinfo)</text>
+  <rect class="bx" x="240" y="46" width="146" height="52" rx="6"/>
+  <text x="313" y="68" text-anchor="middle">hosts 파일</text>
+  <text class="tx-s" x="313" y="87" text-anchor="middle">적혀 있으면 끝</text>
+  <rect class="bx" x="416" y="46" width="146" height="52" rx="6"/>
+  <text x="489" y="68" text-anchor="middle">OS DNS 캐시</text>
+  <text class="tx-s" x="489" y="87" text-anchor="middle">있으면 끝</text>
+
+  <line class="ln" x1="190" y1="72" x2="238" y2="72" marker-end="url(#a)"/>
+  <line class="ln" x1="386" y1="72" x2="414" y2="72" marker-end="url(#a)"/>
+  <line class="ln" x1="562" y1="72" x2="608" y2="72" marker-end="url(#a)"/>
+
+  <!-- DNS 서버 -->
+  <rect class="bx" x="610" y="14" width="110" height="196" rx="8"/>
+  <text class="tx-b" x="665" y="108" text-anchor="middle">DNS 서버</text>
+  <text class="tx-s" x="665" y="128" text-anchor="middle">재귀 리졸버</text>
+
+  <!-- 아래: DNS 서버에 바로 묻는 길 -->
+  <rect class="bx" x="0" y="154" width="190" height="56" rx="8"/>
+  <text class="tx-b" x="95" y="178" text-anchor="middle">dig, nslookup</text>
+  <text class="tx-s tx-m" x="95" y="198" text-anchor="middle">Node dns.resolve</text>
+  <line class="ln-ink" x1="190" y1="182" x2="606" y2="182" marker-end="url(#k)"/>
+  <text class="tx-s" x="400" y="172" text-anchor="middle">hosts 파일과 OS 캐시를 보지 않고 바로 묻습니다</text>
+
+  <text class="tx-s" x="0" y="240">그래서 hosts 파일에 적은 이름은 dig으로 풀리지 않고,</text>
+  <text class="tx-s" x="0" y="258">OS 캐시에 남은 옛 답은 브라우저에만 보일 수 있습니다.</text>
+</svg>

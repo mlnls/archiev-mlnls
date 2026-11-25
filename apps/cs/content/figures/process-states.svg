@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 256">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <rect class="bx" x="0" y="40" width="90" height="44" rx="22"/>
+  <text x="45" y="67" text-anchor="middle">생성</text>
+  <rect class="bx" x="170" y="40" width="110" height="44" rx="22"/>
+  <text class="tx-b" x="225" y="67" text-anchor="middle">준비</text>
+  <rect class="bx-ink" x="400" y="40" width="110" height="44" rx="22"/>
+  <text class="tx-inv" x="455" y="67" text-anchor="middle" font-weight="700">실행</text>
+  <rect class="bx" x="610" y="40" width="90" height="44" rx="22"/>
+  <text x="655" y="67" text-anchor="middle">종료</text>
+  <rect class="bx" x="285" y="172" width="110" height="44" rx="22"/>
+  <text class="tx-b" x="340" y="199" text-anchor="middle">대기</text>
+
+  <line class="ln" x1="90" y1="62" x2="166" y2="62" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="280" y1="52" x2="396" y2="52" marker-end="url(#a)"/>
+  <text class="tx-s" x="338" y="40" text-anchor="middle">스케줄러가 고름</text>
+  <line class="ln" x1="400" y1="74" x2="284" y2="74" marker-end="url(#m)"/>
+  <text class="tx-s" x="342" y="96" text-anchor="middle">타임 슬라이스를 다 씀</text>
+  <line class="ln" x1="510" y1="62" x2="606" y2="62" marker-end="url(#m)"/>
+  <path class="ln" d="M455 84 V194 H399" marker-end="url(#m)"/>
+  <text class="tx-s" x="464" y="140">디스크, 네트워크,</text>
+  <text class="tx-s" x="464" y="156">사용자 입력을 기다림</text>
+  <path class="ln" d="M285 194 H225 V88" marker-end="url(#m)"/>
+  <text class="tx-s" x="216" y="140" text-anchor="end">기다리던 일이 옴</text>
+  <text class="tx-s" x="216" y="156" text-anchor="end">(인터럽트)</text>
+
+  <text class="tx-s" x="340" y="240" text-anchor="middle">이 페이지를 띄운 렌더러도 지금은 거의 여기에서 다음 클릭을 기다립니다</text>
+</svg>

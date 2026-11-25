@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 리졸버 -->
+  <rect class="bx" x="0" y="20" width="150" height="210" rx="8"/>
+  <text class="tx-b" x="75" y="104" text-anchor="middle">재귀 리졸버</text>
+  <text class="tx-s" x="75" y="128" text-anchor="middle">CNAME을 만나면</text>
+  <text class="tx-s" x="75" y="146" text-anchor="middle">그 이름을 다시 찾음</text>
+
+  <!-- 1. 내 도메인의 네임서버 -->
+  <line class="ln" x1="150" y1="50" x2="328" y2="50" marker-end="url(#a)"/>
+  <text class="tx-s" x="240" y="42" text-anchor="middle">① www.example.com A?</text>
+  <line class="ln ln-dash" x1="328" y1="82" x2="152" y2="82" marker-end="url(#a)"/>
+  <text class="tx-s" x="240" y="74" text-anchor="middle">CNAME: 저 이름을 찾아라</text>
+  <rect class="bx" x="330" y="20" width="390" height="80" rx="8"/>
+  <text class="tx-b" x="346" y="46">example.com 네임서버</text>
+  <text class="tx-s" x="704" y="46" text-anchor="end">내 설정</text>
+  <text class="tx-s tx-m" x="346" y="78">www.example.com.  CNAME  cname.vercel-dns.com.</text>
+
+  <!-- 2. Vercel의 네임서버 -->
+  <line class="ln" x1="150" y1="180" x2="328" y2="180" marker-end="url(#a)"/>
+  <text class="tx-s" x="240" y="172" text-anchor="middle">② cname.vercel-dns.com A?</text>
+  <line class="ln-ink" x1="328" y1="212" x2="152" y2="212"/>
+  <path class="ah-ink" d="M152 212 L161 207.5 L161 216.5 z"/>
+  <text class="tx-s" x="240" y="204" text-anchor="middle">A 198.51.100.7</text>
+  <rect class="bx" x="330" y="150" width="390" height="80" rx="8"/>
+  <text class="tx-b" x="346" y="176">vercel-dns.com 네임서버</text>
+  <text class="tx-s" x="704" y="176" text-anchor="end">Vercel이 관리</text>
+  <text class="tx-s tx-m" x="346" y="208">cname.vercel-dns.com.  A  198.51.100.7</text>
+
+  <text class="tx-s" x="0" y="258">Vercel이 서버 IP를 바꾸면 아래 칸만 바뀌고, 위의 내 설정은 그대로입니다.</text>
+</svg>

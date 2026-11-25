@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">HTML: no-cache</text>
+  <text class="tx-s" x="0" y="34">저장은 하되 쓰기 전에 매번 확인</text>
+  <g text-anchor="middle"><text x="40" y="60">브라우저</text><text x="300" y="60">nginx</text></g>
+  <g class="ln-faint"><line x1="40" y1="68" x2="40" y2="150"/><line x1="300" y1="68" x2="300" y2="150"/></g>
+  <line class="ln" x1="42" y1="92" x2="296" y2="92" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="298" y1="128" x2="44" y2="128" marker-end="url(#a)"/>
+  <text class="tx-m" x="170" y="86" text-anchor="middle">If-None-Match: "a1b2"</text>
+  <text class="tx-m" x="170" y="122" text-anchor="middle">304 Not Modified</text>
+  <text class="tx-s" x="170" y="146" text-anchor="middle">본문 없이 "그대로"만. 왕복 1번</text>
+  <text class="tx-s" x="0" y="180">바뀌었으면 200과 새 HTML이 옵니다</text>
+
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="196"/>
+
+  <g transform="translate(390 0)">
+    <text class="tx-b" x="0" y="16">/assets/: immutable, 1년</text>
+    <text class="tx-s" x="0" y="34">이름에 내용의 해시가 들어 있음</text>
+    <rect class="bx" x="0" y="50" width="160" height="72" rx="8"/>
+    <text class="tx-l" x="12" y="68">브라우저 캐시</text>
+    <g class="tx-m"><text x="12" y="90">style.3f9a….css</text><text x="12" y="110">app.c81e….js</text></g>
+    <g class="tx-s"><text x="176" y="80">HTML이 이 이름을 가리키는 한</text><text x="176" y="96">서버에 묻지도 않고 바로 씀</text></g>
+    <rect class="bx-ink" x="0" y="140" width="160" height="34" rx="8"/>
+    <text class="tx-inv tx-m" x="12" y="162">style.9b1e….css</text>
+    <g class="tx-s"><text x="176" y="154">CSS를 고치면 이름이 바뀌고,</text><text x="176" y="170">새 HTML을 따라 새로 받음</text></g>
+  </g>
+</svg>
