@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <!-- 적을 수: 0x12345678 -->
+  <text class="tx-b tx-m" x="0" y="40">0x12345678</text>
+  <g class="bx-soft">
+    <rect x="140" y="20" width="70" height="30" rx="5"/><rect x="216" y="20" width="70" height="30" rx="5"/>
+    <rect x="292" y="20" width="70" height="30" rx="5"/><rect x="368" y="20" width="70" height="30" rx="5"/>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="175" y="40">12</text><text x="251" y="40">34</text><text x="327" y="40">56</text><text x="403" y="40">78</text>
+  </g>
+  <text class="tx-s" x="175" y="66" text-anchor="middle">큰 자리</text>
+  <text class="tx-s" x="403" y="66" text-anchor="middle">작은 자리</text>
+
+  <!-- 메모리 주소 -->
+  <g class="tx-l" text-anchor="middle">
+    <text x="175" y="94">주소 +0</text><text x="251" y="94">+1</text><text x="327" y="94">+2</text><text x="403" y="94">+3</text>
+  </g>
+
+  <text class="tx-b" x="0" y="122">빅 엔디언</text>
+  <rect class="bx-ink" x="140" y="102" width="70" height="30" rx="5"/>
+  <g class="bx">
+    <rect x="216" y="102" width="70" height="30" rx="5"/><rect x="292" y="102" width="70" height="30" rx="5"/><rect x="368" y="102" width="70" height="30" rx="5"/>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text class="tx-inv" x="175" y="122">12</text><text x="251" y="122">34</text><text x="327" y="122">56</text><text x="403" y="122">78</text>
+  </g>
+  <text class="tx-s" x="466" y="122">네트워크 바이트 순서 (패킷 헤더)</text>
+
+  <text class="tx-b" x="0" y="170">리틀 엔디언</text>
+  <g class="bx">
+    <rect x="140" y="150" width="70" height="30" rx="5"/><rect x="216" y="150" width="70" height="30" rx="5"/><rect x="292" y="150" width="70" height="30" rx="5"/>
+  </g>
+  <rect class="bx-ink" x="368" y="150" width="70" height="30" rx="5"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="175" y="170">78</text><text x="251" y="170">56</text><text x="327" y="170">34</text><text class="tx-inv" x="403" y="170">12</text>
+  </g>
+  <text class="tx-s" x="466" y="170">x86, ARM CPU의 메모리</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <!-- 클럭 칸: x = 110 + 50k, 폭 48 -->
+  <g class="tx-l" text-anchor="middle">
+    <text x="135" y="14">1</text><text x="185" y="14">2</text><text x="235" y="14">3</text><text x="285" y="14">4</text>
+    <text x="335" y="14">5</text><text x="385" y="14">6</text><text x="435" y="14">7</text><text x="485" y="14">8</text>
+    <text x="535" y="14">9</text><text x="585" y="14">10</text><text x="635" y="14">11</text><text x="685" y="14">12</text>
+  </g>
+  <text class="tx-l" x="0" y="14">클럭</text>
+
+  <!-- 하나씩 끝내기 -->
+  <text class="tx-b" x="0" y="40">하나씩 끝내면 12클럭</text>
+  <text class="tx-s" x="720" y="40" text-anchor="end">F 가져오기 · D 해독 · E 실행</text>
+  <g class="tx-s">
+    <text x="0" y="62">명령어 1</text><text x="0" y="86">명령어 2</text><text x="0" y="110">명령어 3</text><text x="0" y="134">명령어 4</text>
+  </g>
+  <g class="bx-soft">
+    <rect x="111" y="48" width="48" height="20" rx="3"/><rect x="161" y="48" width="48" height="20" rx="3"/><rect x="211" y="48" width="48" height="20" rx="3"/>
+    <rect x="261" y="72" width="48" height="20" rx="3"/><rect x="311" y="72" width="48" height="20" rx="3"/><rect x="361" y="72" width="48" height="20" rx="3"/>
+    <rect x="411" y="96" width="48" height="20" rx="3"/><rect x="461" y="96" width="48" height="20" rx="3"/><rect x="511" y="96" width="48" height="20" rx="3"/>
+    <rect x="561" y="120" width="48" height="20" rx="3"/><rect x="611" y="120" width="48" height="20" rx="3"/><rect x="661" y="120" width="48" height="20" rx="3"/>
+  </g>
+  <g class="tx-s tx-m" text-anchor="middle">
+    <text x="135" y="62">F</text><text x="185" y="62">D</text><text x="235" y="62">E</text>
+    <text x="285" y="86">F</text><text x="335" y="86">D</text><text x="385" y="86">E</text>
+    <text x="435" y="110">F</text><text x="485" y="110">D</text><text x="535" y="110">E</text>
+    <text x="585" y="134">F</text><text x="635" y="134">D</text><text x="685" y="134">E</text>
+  </g>
+
+  <line class="ln-faint" x1="0" y1="156" x2="720" y2="156"/>
+
+  <!-- 겹치기 -->
+  <text class="tx-b" x="0" y="182">단계를 겹치면 6클럭</text>
+  <g class="tx-s">
+    <text x="0" y="204">명령어 1</text><text x="0" y="228">명령어 2</text><text x="0" y="252">명령어 3</text><text x="0" y="276">명령어 4</text>
+  </g>
+  <g class="bx-soft">
+    <rect x="111" y="190" width="48" height="20" rx="3"/><rect x="161" y="190" width="48" height="20" rx="3"/>
+    <rect x="161" y="214" width="48" height="20" rx="3"/><rect x="211" y="214" width="48" height="20" rx="3"/>
+    <rect x="211" y="238" width="48" height="20" rx="3"/><rect x="261" y="238" width="48" height="20" rx="3"/>
+    <rect x="261" y="262" width="48" height="20" rx="3"/><rect x="311" y="262" width="48" height="20" rx="3"/>
+  </g>
+  <g class="bx-ink">
+    <rect x="211" y="190" width="48" height="20" rx="3"/><rect x="261" y="214" width="48" height="20" rx="3"/>
+    <rect x="311" y="238" width="48" height="20" rx="3"/><rect x="361" y="262" width="48" height="20" rx="3"/>
+  </g>
+  <g class="tx-s tx-m" text-anchor="middle">
+    <text x="135" y="204">F</text><text x="185" y="204">D</text><text class="tx-inv" x="235" y="204">E</text>
+    <text x="185" y="228">F</text><text x="235" y="228">D</text><text class="tx-inv" x="285" y="228">E</text>
+    <text x="235" y="252">F</text><text x="285" y="252">D</text><text class="tx-inv" x="335" y="252">E</text>
+    <text x="285" y="276">F</text><text x="335" y="276">D</text><text class="tx-inv" x="385" y="276">E</text>
+  </g>
+  <text class="tx-s" x="430" y="236">3클럭째부터는 매 클럭 하나씩 끝남</text>
+</svg>

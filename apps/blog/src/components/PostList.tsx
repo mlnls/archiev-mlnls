@@ -1,63 +1,56 @@
 import Link from "next/link";
-import { formatDate, formatShortDate } from "@/lib/client";
+import { formatShortDate } from "@/lib/client";
 import { postPath, tagPath } from "@/lib/site";
 import type { PostSummary } from "@/lib/types";
+import { Thumb } from "./Thumb";
 
-function Meta({ post }: { post: PostSummary }) {
+/** 글 한 줄: 제목, 요약, 날짜 · 읽는 시간 · 태그. 커버가 있으면 오른쪽에 작게 */
+function Row({ post, eager }: { post: PostSummary; eager: boolean }) {
   return (
-    <div className="post-meta">
-      {post.tags.slice(0, 3).map((t) => <span key={t}>{t}</span>)}
-      <span>{post.readingMinutes}분</span>
-    </div>
-  );
-}
-
-/** 첫 글은 크게 보여 주고 나머지는 날짜 순서의 목록으로 둡니다 */
-export function PostList({ posts }: { posts: PostSummary[] }) {
-  if (!posts.length) return <p className="empty">아직 올린 글이 없습니다.</p>;
-  const [lead, ...rest] = posts as [PostSummary, ...PostSummary[]];
-  return (
-    <>
-      <Link href={postPath(lead.slug)} className={lead.coverImage ? "lead-link" : "lead-link no-cover"}>
-        <div className="lead-text">
-          <time className="meta" dateTime={lead.publishedAt ?? undefined}>{formatDate(lead.publishedAt)}</time>
-          <h2>{lead.title}</h2>
-          {lead.summary ? <p>{lead.summary}</p> : null}
-          <Meta post={lead} />
+    <li>
+      <Link href={postPath(post.slug)} className="row">
+        <div className="row-text">
+          <h2>{post.title}</h2>
+          {post.summary ? <p>{post.summary}</p> : null}
+          <div className="post-meta">
+            <time dateTime={post.publishedAt ?? undefined}>{formatShortDate(post.publishedAt)}</time>
+            <span>{post.readingMinutes}분</span>
+            {post.tags.length > 0 && <span>{post.tags.join(", ")}</span>}
+          </div>
         </div>
-        {/* 바로 옆 제목이 같은 내용을 말하므로 대체 글을 비웁니다 */}
-        {lead.coverImage ? <img className="lead-cover" src={lead.coverImage} alt="" decoding="async" /> : null}
+        {post.coverImage ? <Thumb src={post.coverImage} eager={eager} /> : null}
       </Link>
-      {rest.length > 0 && (
-        <ol className="post-list">
-          {rest.map((p) => (
-            <li key={p.id}>
-              <Link href={postPath(p.slug)} className="post-link">
-                <time className="post-date" dateTime={p.publishedAt ?? undefined}>{formatShortDate(p.publishedAt)}</time>
-                <div className="post-text">
-                  <h2>{p.title}</h2>
-                  {p.summary ? <p>{p.summary}</p> : null}
-                  <Meta post={p} />
-                </div>
-                {p.coverImage ? <img className="post-cover" src={p.coverImage} alt="" loading="lazy" decoding="async" /> : null}
-              </Link>
-            </li>
-          ))}
-        </ol>
-      )}
-    </>
+    </li>
   );
 }
 
-export function TagRow({ tags, current }: { tags: { tag: string; n: number }[]; current?: string }) {
+export function PostList({ posts }: { posts: PostSummary[] }) {
+  if (!posts.length) return <p className="empty">아직 올린 글이 없어요.</p>;
   return (
-    <nav className="tag-row" aria-label="주제별로 보기">
-      <Link href="/" aria-current={current ? undefined : "page"}>전체</Link>
-      {tags.map((t) => (
-        <Link key={t.tag} href={tagPath(t.tag)} aria-current={current === t.tag ? "page" : undefined}>
-          {t.tag}<span className="tag-count">{t.n}</span>
-        </Link>
-      ))}
+    <ol className="rows">
+      {posts.map((p, i) => <Row key={p.id} post={p} eager={i < 3} />)}
+    </ol>
+  );
+}
+
+/** 넓은 화면에서는 글 화면의 목차 자리(오른쪽)에, 좁은 화면에서는 목록 위 한 줄로 놓입니다 */
+export function TagRow({ tags, current }: { tags: { tag: string; n: number }[]; current?: string }) {
+  if (!tags.length) return null;
+  return (
+    <nav className="topics" aria-label="주제별로 보기">
+      <p className="topics-title">주제</p>
+      <ul>
+        <li>
+          <Link href="/" className="topic" aria-current={current ? undefined : "page"}>전체</Link>
+        </li>
+        {tags.map((t) => (
+          <li key={t.tag}>
+            <Link href={tagPath(t.tag)} className="topic" aria-current={current === t.tag ? "page" : undefined}>
+              {t.tag}<span className="topic-count">{t.n}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }

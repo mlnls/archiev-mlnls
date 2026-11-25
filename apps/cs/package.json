@@ -1,0 +1,14 @@
+{
+  "name": "@archiev/cs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build.mjs --draft && npx --yes serve@14.2.5 dist -l 3005",
+    "build": "node scripts/build.mjs",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 228">
+  <line class="ln" x1="60" y1="180" x2="640" y2="180"/>
+  <rect class="bx-ink" x="80" y="162" width="50" height="18" rx="3"/>
+  <g class="bx-soft">
+    <rect x="160" y="144" width="50" height="36" rx="3"/><rect x="240" y="107" width="50" height="73" rx="3"/>
+    <rect x="320" y="34" width="50" height="146" rx="3"/><rect x="400" y="107" width="50" height="73" rx="3"/>
+    <rect x="480" y="99" width="50" height="81" rx="3"/><rect x="560" y="92" width="50" height="88" rx="3"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="105" y="156">14KB</text><text x="185" y="138">28KB</text><text x="265" y="101">56KB</text>
+    <text x="345" y="28">112KB</text><text x="425" y="101">56KB</text><text x="505" y="93">62KB</text><text x="585" y="86">68KB</text>
+  </g>
+  <g class="tx-m" text-anchor="middle">
+    <text x="105" y="198">1</text><text x="185" y="198">2</text><text x="265" y="198">3</text><text x="345" y="198">4</text>
+    <text x="425" y="198">5</text><text x="505" y="198">6</text><text x="585" y="198">7</text>
+  </g>
+  <text class="tx-l" x="650" y="198">왕복</text>
+  <text class="tx-b" x="80" y="40">슬로 스타트</text>
+  <text class="tx-s" x="80" y="58">왕복마다 두 배</text>
+  <text class="tx-b" x="384" y="44">손실을 만나면</text>
+  <text class="tx-s" x="384" y="62">크게 줄였다가</text>
+  <text class="tx-s" x="480" y="64">혼잡 회피: 조금씩 늘림</text>
+  <text class="tx-s" x="0" y="222">첫 왕복에 보낼 수 있는 건 약 14KB입니다. 첫 화면에 꼭 필요한 HTML과 CSS를 이 안에 넣으라는 "14KB 규칙"이 여기서 나옵니다</text>
+</svg>

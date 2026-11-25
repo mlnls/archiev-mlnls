@@ -42,6 +42,12 @@ describe("renderMarkdown", () => {
     const html = await renderMarkdown("## 렌더링 구조\n\n```ts\nconst a = 1;\n```");
     expect(html).toContain('<h2 id="렌더링-구조">');
     expect(html).toContain("hljs");
+    expect(html).toContain('<pre data-lang="TypeScript">');
+  });
+
+  it("labels code blocks with an unknown language by its own name", async () => {
+    expect(await renderMarkdown("```rust\nfn main() {}\n```")).toContain('<pre data-lang="rust">');
+    expect(await renderMarkdown("```\nplain\n```")).not.toContain("data-lang");
   });
 });
 

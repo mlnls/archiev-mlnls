@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 312">
+  <g class="tx-l"><text x="0" y="14">물어본 곳</text><text x="240" y="14">답</text></g>
+  <g class="bx">
+    <rect x="0" y="24" width="210" height="30" rx="6"/><rect x="0" y="62" width="210" height="30" rx="6"/>
+    <rect x="0" y="100" width="210" height="30" rx="6"/><rect x="0" y="138" width="210" height="30" rx="6"/>
+  </g>
+  <g class="bx-soft">
+    <rect x="30" y="176" width="180" height="30" rx="6"/><rect x="30" y="214" width="180" height="30" rx="6"/>
+  </g>
+  <rect class="bx-ink" x="30" y="252" width="180" height="30" rx="6"/>
+  <g>
+    <text x="12" y="44">브라우저의 DNS 캐시</text><text x="12" y="82">운영체제: hosts 파일, 캐시</text>
+    <text x="12" y="120">공유기</text><text x="12" y="158">통신사의 재귀 리졸버</text>
+    <text x="42" y="196">루트 네임서버</text><text class="tx-m" x="42" y="234">.io 네임서버</text>
+    <text class="tx-inv" x="42" y="272" font-weight="700">sslip.io 네임서버</text>
+  </g>
+  <path class="ln" d="M14 168 V267 H28 M14 191 H28 M14 229 H28"/>
+  <g class="tx-s">
+    <text x="240" y="44">처음 방문이라 없음</text>
+    <text x="240" y="82">없음. DHCP로 받은 DNS 서버에 UDP 53번으로 물음</text>
+    <text x="240" y="120">통신사의 리졸버로 넘김</text>
+    <text x="240" y="158">캐시에도 없음. "끝까지 찾아 줄게"</text>
+    <text x="240" y="196">".io는 저 서버들에게 물어봐"</text>
+    <text x="240" y="234">"sslip.io는 저 서버들에게 물어봐"</text>
+  </g>
+  <text class="tx-b" x="240" y="272">이름 속 54-116-117-190을 읽어 "A 54.116.117.190"</text>
+  <text class="tx-s" x="0" y="306">답은 같은 길을 거꾸로 돌아오며 리졸버, 운영체제, 브라우저의 캐시에 TTL 동안 남습니다</text>
+</svg>

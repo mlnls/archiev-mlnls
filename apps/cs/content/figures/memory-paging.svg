@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 가상 주소: 페이지 번호 + 오프셋 -->
+  <text class="tx-b" x="0" y="55">가상 주소</text>
+  <g class="tx-s" text-anchor="middle">
+    <text x="280" y="22">위쪽 비트</text>
+    <text x="440" y="22">아래 12비트 (4KB = 2¹²)</text>
+  </g>
+  <rect class="bx" x="200" y="30" width="160" height="40" rx="6"/>
+  <text x="280" y="55" text-anchor="middle">페이지 번호 <tspan class="tx-m">0x1</tspan></text>
+  <rect class="bx" x="360" y="30" width="160" height="40" rx="6"/>
+  <text x="440" y="55" text-anchor="middle">오프셋 <tspan class="tx-m">0x234</tspan></text>
+  <text class="tx-m" x="540" y="55">= 0x1234</text>
+
+  <!-- TLB -->
+  <line class="ln" x1="280" y1="70" x2="280" y2="106" marker-end="url(#a)"/>
+  <rect class="bx" x="200" y="110" width="160" height="52" rx="6"/>
+  <text class="tx-b" x="280" y="132" text-anchor="middle">TLB</text>
+  <text class="tx-s" x="280" y="150" text-anchor="middle">최근 번역 결과</text>
+
+  <!-- 페이지 테이블 -->
+  <rect class="bx-soft" x="0" y="104" width="120" height="64" rx="6"/>
+  <text class="tx-b" x="60" y="130" text-anchor="middle">페이지 테이블</text>
+  <text class="tx-s" x="60" y="150" text-anchor="middle">RAM 안, 4~5단계</text>
+  <line class="ln" x1="198" y1="124" x2="124" y2="124" marker-end="url(#a)"/>
+  <line class="ln" x1="124" y1="148" x2="196" y2="148" marker-end="url(#a)"/>
+  <text class="tx-s" x="160" y="117" text-anchor="middle">없으면</text>
+  <text class="tx-s" x="160" y="165" text-anchor="middle">기억</text>
+
+  <!-- 적중 -->
+  <line class="ln" x1="280" y1="162" x2="280" y2="236" marker-end="url(#a)"/>
+  <text class="tx-s" x="290" y="204">있으면 바로</text>
+
+  <!-- 오프셋은 그대로 -->
+  <line class="ln ln-dash" x1="440" y1="70" x2="440" y2="236" marker-end="url(#a)"/>
+  <text class="tx-s" x="450" y="150">번역하지 않고</text>
+  <text class="tx-s" x="450" y="166">그대로</text>
+
+  <!-- 물리 주소 -->
+  <text class="tx-b" x="0" y="265">물리 주소</text>
+  <rect class="bx-ink" x="200" y="240" width="160" height="40" rx="6"/>
+  <text class="tx-inv" x="280" y="265" text-anchor="middle" font-weight="700">프레임 번호 <tspan class="tx-m">0x7A</tspan></text>
+  <rect class="bx" x="360" y="240" width="160" height="40" rx="6"/>
+  <text x="440" y="265" text-anchor="middle">오프셋 <tspan class="tx-m">0x234</tspan></text>
+  <text class="tx-m tx-b" x="540" y="265">= 0x7A234</text>
+</svg>

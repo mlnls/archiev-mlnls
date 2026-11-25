@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 204">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="0" y="16">주자</text>
+  <!-- 주자: x = 0, 123, 246, 369, 492, 615 (폭 104) -->
+  <g class="bx">
+    <rect x="0" y="26" width="104" height="58" rx="8"/><rect x="123" y="26" width="104" height="58" rx="8"/>
+    <rect x="246" y="26" width="104" height="58" rx="8"/><rect x="369" y="26" width="104" height="58" rx="8"/>
+    <rect x="492" y="26" width="104" height="58" rx="8"/>
+  </g>
+  <rect class="bx-ink" x="615" y="26" width="104" height="58" rx="8"/>
+  <g class="tx-b" text-anchor="middle">
+    <text x="52" y="50">전원·CPU</text><text x="175" y="50">펌웨어</text><text x="298" y="50">부트로더</text>
+    <text x="421" y="50">커널</text><text x="544" y="50">첫 프로세스</text><text class="tx-inv" x="667" y="50">로그인·앱</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="52" y="70">리셋 벡터로</text><text x="175" y="70">UEFI, BIOS</text><text x="298" y="70">GRUB, iBoot</text>
+    <text x="421" y="70">드라이버, 메모리</text><text x="544" y="70">PID 1</text><text class="tx-inv" x="667" y="70">브라우저도 여기</text>
+  </g>
+  <g class="ln">
+    <line x1="104" y1="55" x2="121" y2="55" marker-end="url(#m)"/><line x1="227" y1="55" x2="244" y2="55" marker-end="url(#m)"/>
+    <line x1="350" y1="55" x2="367" y2="55" marker-end="url(#m)"/><line x1="473" y1="55" x2="490" y2="55" marker-end="url(#m)"/>
+    <line x1="596" y1="55" x2="613" y2="55" marker-end="url(#m)"/>
+  </g>
+
+  <text class="tx-l" x="0" y="112">들어 있던 곳</text>
+  <g class="bx-soft">
+    <rect x="0" y="120" width="104" height="30" rx="6"/><rect x="123" y="120" width="104" height="30" rx="6"/>
+    <rect x="246" y="120" width="104" height="30" rx="6"/><rect x="369" y="120" width="104" height="30" rx="6"/>
+    <rect x="492" y="120" width="104" height="30" rx="6"/><rect x="615" y="120" width="104" height="30" rx="6"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="52" y="140">CPU 회로</text><text x="175" y="140">메인보드 플래시</text><text x="298" y="140">디스크의 ESP</text>
+    <text x="421" y="140">디스크 /boot</text><text x="544" y="140">디스크</text><text x="667" y="140">디스크</text>
+  </g>
+
+  <line class="ln" x1="0" y1="182" x2="720" y2="182"/>
+  <line class="ln" x1="0" y1="176" x2="0" y2="188"/><line class="ln" x1="720" y1="176" x2="720" y2="188"/>
+  <rect class="bx-soft" x="300" y="173" width="120" height="18" rx="4"/>
+  <text class="tx-s" x="360" y="186" text-anchor="middle">보통 10~30초</text>
+  <text class="tx-s" x="0" y="202">전원 버튼</text>
+  <text class="tx-s" x="720" y="202" text-anchor="end">로그인 화면</text>
+</svg>

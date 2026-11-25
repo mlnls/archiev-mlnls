@@ -9,8 +9,9 @@ export default async function HomePage() {
   await connection();
   const [{ items }, tags] = await Promise.all([fetchPosts(), fetchTags()]);
   return (
-    <main className="home">
+    <main className="list-page">
       <JsonLd data={siteGraph()} />
+      {/* 제목 줄 없이 글부터 보여 줍니다. 제목은 화면 읽기 프로그램과 검색엔진용으로만 둡니다 */}
       <h1 className="sr-only">{SITE_NAME}</h1>
       <TagRow tags={tags} />
       <PostList posts={items} />

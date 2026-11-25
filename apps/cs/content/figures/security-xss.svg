@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 232">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 들어오는 길 셋 -->
+  <rect class="bx" x="0" y="30" width="190" height="46" rx="8"/>
+  <text class="tx-b" x="12" y="50">저장형</text>
+  <text class="tx-s" x="12" y="67">DB에 저장된 댓글</text>
+  <rect class="bx" x="0" y="100" width="190" height="46" rx="8"/>
+  <text class="tx-b" x="12" y="120">반사형</text>
+  <text class="tx-s" x="12" y="137">URL 쿼리를 그대로 출력</text>
+  <rect class="bx" x="0" y="170" width="190" height="46" rx="8"/>
+  <text class="tx-b" x="12" y="190">DOM 기반</text>
+  <text class="tx-s" x="12" y="207">JS가 hash를 innerHTML에</text>
+
+  <line class="ln" x1="190" y1="53" x2="288" y2="112" marker-end="url(#a)"/>
+  <line class="ln" x1="190" y1="123" x2="288" y2="123" marker-end="url(#a)"/>
+  <line class="ln" x1="190" y1="193" x2="288" y2="134" marker-end="url(#a)"/>
+  <!-- 방어 1: 이스케이프 -->
+  <line class="ln-ink" x1="240" y1="36" x2="240" y2="210"/>
+  <text class="tx-s" x="240" y="20" text-anchor="middle">출력할 때 이스케이프</text>
+
+  <rect class="bx" x="290" y="100" width="160" height="46" rx="8"/>
+  <text class="tx-b" x="370" y="119" text-anchor="middle">섞여 든 스크립트</text>
+  <text class="tx-s" x="370" y="136" text-anchor="middle">우리 출처의 페이지 안</text>
+
+  <line class="ln" x1="450" y1="123" x2="515" y2="123"/>
+  <!-- 방어 2: CSP -->
+  <line class="ln-ink" x1="482" y1="106" x2="482" y2="140"/>
+  <text class="tx-b" x="482" y="96" text-anchor="middle">CSP</text>
+  <text class="tx-s" x="482" y="162" text-anchor="middle">허락한 출처만 실행</text>
+
+  <line class="ln" x1="515" y1="123" x2="558" y2="55" marker-end="url(#a)"/>
+  <line class="ln" x1="515" y1="123" x2="558" y2="123" marker-end="url(#a)"/>
+  <line class="ln" x1="515" y1="123" x2="558" y2="191" marker-end="url(#a)"/>
+
+  <!-- 결과 셋 -->
+  <rect class="bx" x="560" y="30" width="160" height="46" rx="8"/>
+  <text class="tx-b" x="572" y="50">토큰 훔치기</text>
+  <text class="tx-s" x="572" y="67">HttpOnly면 못 읽음</text>
+  <rect class="bx" x="560" y="100" width="160" height="46" rx="8"/>
+  <text class="tx-b" x="572" y="120">그 사용자로 요청</text>
+  <text class="tx-s" x="572" y="137">글쓰기, 송금, 설정 변경</text>
+  <rect class="bx" x="560" y="170" width="160" height="46" rx="8"/>
+  <text class="tx-b" x="572" y="190">가짜 로그인 창</text>
+  <text class="tx-s" x="572" y="207">비밀번호를 받아 감</text>
+</svg>

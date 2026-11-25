@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <text class="tx-s tx-m" x="0" y="16">PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</text>
+
+  <!-- 셸 -->
+  <rect class="bx" x="0" y="96" width="120" height="52" rx="8"/>
+  <text class="tx-b" x="60" y="117" text-anchor="middle">셸</text>
+  <text class="tx-m" x="60" y="137" text-anchor="middle">$ node</text>
+
+  <!-- 앞에서부터 차례로 -->
+  <line class="ln" x1="120" y1="112" x2="208" y2="49" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="120" y1="122" x2="208" y2="93" marker-end="url(#k)"/>
+  <line class="ln ln-dash" x1="120" y1="132" x2="208" y2="137"/>
+  <line class="ln ln-dash" x1="120" y1="142" x2="208" y2="181"/>
+
+  <rect class="bx" x="210" y="32" width="300" height="34" rx="6"/>
+  <text class="tx-m" x="222" y="54">/opt/homebrew/bin/node</text>
+  <rect class="bx-ink" x="210" y="76" width="300" height="34" rx="6"/>
+  <text class="tx-m tx-inv" x="222" y="98">/usr/local/bin/node</text>
+  <rect class="bx-dash" x="210" y="120" width="300" height="34" rx="6"/>
+  <text class="tx-m" x="222" y="142">/usr/bin/node</text>
+  <rect class="bx-dash" x="210" y="164" width="300" height="34" rx="6"/>
+  <text class="tx-m" x="222" y="186">/bin/node</text>
+
+  <text x="526" y="54">① 없음 → 다음으로</text>
+  <text class="tx-b" x="526" y="98">② 있음 → 실행</text>
+  <text class="tx-s" x="526" y="142">③ 보지 않음</text>
+  <text class="tx-s" x="526" y="186">④ 보지 않음</text>
+
+  <text class="tx-s" x="0" y="228">네 곳 모두에 없으면 command not found. 같은 이름이 두 곳에 있으면 앞쪽이 이깁니다.</text>
+</svg>

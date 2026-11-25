@@ -1,4 +1,5 @@
 import { CALLOUTS, CALLOUT_TYPES, type CalloutType } from "./callout";
+import { CODE_LANGUAGES } from "./editor";
 import { splitImageSrc } from "./imageAttrs";
 import type { LinkPreview } from "./linkPreview";
 
@@ -124,6 +125,16 @@ function toFigure(paragraph: HastNode): HastNode | null {
   return el("figure", null, children, properties);
 }
 
+const LANGUAGE_LABELS: Record<string, string> = Object.fromEntries(CODE_LANGUAGES.filter(([value]) => value));
+
+/** 코드 블록 오른쪽 위에 언어 이름을 붙입니다 (```ts → TypeScript) */
+function labelCode(pre: HastNode) {
+  const code = pre.children?.find((c) => c.tagName === "code");
+  const classes = code?.properties?.className;
+  const language = Array.isArray(classes) ? classes.find((c): c is string => typeof c === "string" && c.startsWith("language-"))?.slice(9) : undefined;
+  if (language) pre.properties = { ...pre.properties, dataLang: LANGUAGE_LABELS[language] ?? language };
+}
+
 function emptyCard(url: string): HastNode {
   return el("a", "bookmark", [], { href: url, target: "_blank", rel: "noopener noreferrer nofollow" });
 }
@@ -148,6 +159,11 @@ function walk(parent: HastNode, cards: { card: HastNode; url: string }[]) {
     return node;
   };
   for (const child of parent.children ?? []) {
+    if (child.tagName === "pre") {
+      labelCode(child);
+      next.push(child);
+      continue;
+    }
     if (child.tagName === "blockquote") {
       const callout = toCallout(child);
       if (callout) {

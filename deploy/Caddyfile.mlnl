@@ -42,6 +42,11 @@ employ.__SITE_DOMAIN__ {
 		reverse_proxy mlnl-employ:80
 	}
 }
+cs.__SITE_DOMAIN__ {
+	import mlnl_common
+	reverse_proxy mlnl-cs:80
+}
+
 archiev.__SITE_DOMAIN__ {
 	import mlnl_common
 	header X-Robots-Tag "noindex, nofollow"

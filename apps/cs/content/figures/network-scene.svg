@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 세 주인공 -->
+  <g text-anchor="middle">
+    <text class="tx-b" x="80" y="16">노트북의 브라우저</text>
+    <text class="tx-b" x="300" y="16">DNS 리졸버</text>
+    <text class="tx-b" x="540" y="16">서버</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="80" y="32">주소창에 엔터</text>
+    <text x="300" y="32">보통 통신사의 것</text>
+    <text x="540" y="32">54.116.117.190</text>
+  </g>
+  <g class="ln-faint">
+    <line x1="80" y1="40" x2="80" y2="254"/><line x1="300" y1="40" x2="300" y2="254"/><line x1="540" y1="40" x2="540" y2="254"/>
+  </g>
+
+  <!-- 왕복 1: DNS -->
+  <line class="ln" x1="82" y1="60" x2="296" y2="60" marker-end="url(#m)"/>
+  <line class="ln ln-dash" x1="298" y1="84" x2="84" y2="84" marker-end="url(#m)"/>
+  <g class="tx-s" text-anchor="middle">
+    <text x="190" y="54">cs.mlnl.…sslip.io의 IP는?</text>
+    <text x="190" y="78">54.116.117.190</text>
+  </g>
+  <!-- 왕복 2~4: 서버와 -->
+  <g class="ln">
+    <line x1="82" y1="112" x2="536" y2="112" marker-end="url(#m)"/>
+    <line x1="82" y1="164" x2="536" y2="164" marker-end="url(#m)"/>
+  </g>
+  <g class="ln ln-dash">
+    <line x1="538" y1="136" x2="84" y2="136" marker-end="url(#m)"/>
+    <line x1="538" y1="188" x2="84" y2="188" marker-end="url(#m)"/>
+  </g>
+  <line class="ln-ink" x1="82" y1="216" x2="536" y2="216" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="538" y1="240" x2="84" y2="240" marker-end="url(#a)"/>
+  <g class="tx-s" text-anchor="middle">
+    <text x="420" y="106">SYN</text>
+    <text x="420" y="130">SYN-ACK</text>
+    <text x="420" y="158">ACK, ClientHello</text>
+    <text x="420" y="182">ServerHello, 인증서</text>
+  </g>
+  <text class="tx-m" x="420" y="210" text-anchor="middle">GET /</text>
+  <text class="tx-m" x="420" y="234" text-anchor="middle">200 OK + HTML</text>
+
+  <!-- 왼쪽: 왕복 번호 -->
+  <g class="tx-l">
+    <text x="0" y="76">왕복 1</text><text x="0" y="128">왕복 2</text><text x="0" y="180">왕복 3</text><text x="0" y="232">왕복 4</text>
+  </g>
+  <!-- 오른쪽: 장 -->
+  <g class="ln">
+    <path d="M600 52 H606 V88 H600"/><path d="M600 104 H606 V140 H600"/>
+    <path d="M600 156 H606 V192 H600"/><path d="M600 208 H606 V244 H600"/>
+  </g>
+  <g class="tx-s">
+    <text x="616" y="74">13장 DNS</text><text x="616" y="126">12장 TCP</text>
+    <text x="616" y="178">14장 TLS</text><text x="616" y="230">14장 HTTP</text>
+  </g>
+  <text class="tx-s" x="0" y="282">화살표 하나하나가 IP 패킷(11장)이 되어, 구간마다 Wi-Fi나 이더넷 프레임(10장)에 실려 갑니다</text>
+</svg>

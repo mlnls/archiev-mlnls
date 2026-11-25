@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 392">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-b" x="0" y="14"><tspan class="tx-m">execve</tspan> 한 번에 커널과 로더가 하는 일</text>
+  <text class="tx-s" x="0" y="34">각 구역의 시작 주소는 실행할 때마다</text>
+  <text class="tx-s" x="0" y="50">달라집니다 (ASLR)</text>
+
+  <!-- 새 주소 공간 -->
+  <text class="tx-b" x="330" y="14">② 새 주소 공간</text>
+  <text class="tx-s" x="560" y="14" text-anchor="end">높은 주소</text>
+  <rect class="bx-line" x="330" y="24" width="230" height="342" rx="8"/>
+  <rect class="bx" x="342" y="36" width="206" height="44" rx="6"/>
+  <text x="445" y="63" text-anchor="middle">스택</text>
+  <text class="tx-s" x="445" y="128" text-anchor="middle">(빈 곳)</text>
+  <rect class="bx" x="342" y="170" width="206" height="44" rx="6"/>
+  <text class="tx-m" x="445" y="197" text-anchor="middle">libc.so.6</text>
+  <text class="tx-s" x="445" y="252" text-anchor="middle">(빈 곳)</text>
+  <rect class="bx-ink" x="342" y="290" width="206" height="64" rx="6"/>
+  <text class="tx-inv" x="445" y="318" text-anchor="middle" font-weight="700">코드 · 데이터</text>
+  <text class="tx-inv tx-s tx-m" x="445" y="338" text-anchor="middle">.text .data</text>
+  <text class="tx-s" x="560" y="386" text-anchor="end">낮은 주소</text>
+
+  <!-- 오른쪽 설명 -->
+  <text x="574" y="54">④ 명령줄 인자,</text>
+  <text x="574" y="72">환경 변수를 올림</text>
+  <text x="574" y="188">⑤ 동적 링커가</text>
+  <text x="574" y="206">라이브러리를 붙임</text>
+  <text x="574" y="318">⑥ 엔트리 포인트로</text>
+  <text x="574" y="336">건너뜀</text>
+
+  <!-- 디스크의 파일들 -->
+  <text class="tx-s" x="0" y="162">필요한 동적 라이브러리</text>
+  <rect class="bx" x="0" y="170" width="180" height="44" rx="6"/>
+  <text class="tx-m" x="90" y="197" text-anchor="middle">libc.so.6</text>
+  <line class="ln ln-dash" x1="180" y1="192" x2="340" y2="192" marker-end="url(#a)"/>
+  <text class="tx-s" x="190" y="184">⑤ 찾아서 연결</text>
+
+  <text class="tx-s" x="0" y="262">디스크의 실행 파일 hello</text>
+  <rect class="bx" x="0" y="270" width="180" height="32" rx="6"/>
+  <text x="90" y="291" text-anchor="middle">머리말</text>
+  <rect class="bx" x="0" y="306" width="180" height="48" rx="6"/>
+  <text class="tx-m" x="90" y="335" text-anchor="middle">.text .data</text>
+  <text class="tx-s" x="190" y="290">① 형식, CPU 확인</text>
+  <line class="ln ln-dash" x1="180" y1="330" x2="340" y2="322" marker-end="url(#a)"/>
+  <text class="tx-s" x="190" y="314">③ 연결만 해 둠</text>
+  <text class="tx-s" x="190" y="352">읽기는 처음 쓸 때</text>
+</svg>

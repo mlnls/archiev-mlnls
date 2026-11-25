@@ -2,9 +2,10 @@
 
 import type { Editor as TiptapEditor } from "@tiptap/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { BodyEditor, type EditorHeading } from "@/components/editor/BodyEditor";
 import { CoverImage, useCoverPicker } from "@/components/editor/CoverField";
+import { Toc } from "@/components/Toc";
 import { api, formatDate, slugify } from "@/lib/client";
 import { parseTags } from "@/lib/editor";
 import { AUTHOR, postPath } from "@/lib/site";
@@ -196,19 +197,27 @@ export function Editor({ post }: { post?: Post }) {
     ed.commands.focus(at);
   };
 
-  const goToHeading = (pos: number) => {
+  const tocItems = useMemo(() => headings.map((h) => ({ key: String(h.pos), text: h.text, level: h.level })), [headings]);
+
+  const findHeading = useCallback((key: string) => {
+    const dom = body.current?.view.nodeDOM(Number(key));
+    return dom instanceof HTMLElement ? dom : null;
+  }, []);
+
+  const selectHeading = useCallback((key: string) => {
     const ed = body.current;
     if (!ed) return;
+    const pos = Number(key);
     const dom = ed.view.nodeDOM(pos);
     if (dom instanceof HTMLElement) dom.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     ed.chain().setTextSelection(pos + 1 + (ed.state.doc.nodeAt(pos)?.content.size ?? 0)).run();
     ed.view.focus();
-  };
+  }, []);
 
   // 글 옆이나 아래의 빈 곳을 눌러도 바로 이어서 쓸 수 있게 합니다
   const onBlankMouseDown = (e: MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    if (target !== e.currentTarget && !target.classList.contains("editor-layout")) return;
+    if (target !== e.currentTarget && !target.classList.contains("editor-layout") && !target.classList.contains("post-wrap")) return;
     e.preventDefault();
     focusBody("end");
   };
@@ -240,69 +249,62 @@ export function Editor({ post }: { post?: Post }) {
           </button>
         </div>
       </div>
-      {/* 공개 글(.post-head, .post-hero, .post-layout)과 같은 틀이라 쓰는 모습이 그대로 공개됩니다 */}
-      <header className="post-head editor-head">
-        <input
-          className="tags-input"
-          aria-label="태그"
-          placeholder="태그를 쉼표로 구분해 쓰세요"
-          value={draft.tags}
-          onChange={(e) => update({ tags: e.target.value })}
-        />
-        <textarea
-          ref={titleBox}
-          className="title-input"
-          aria-label="제목"
-          placeholder="제목 없음"
-          rows={1}
-          value={draft.title}
-          onChange={(e) => {
-            const title = e.target.value.replace(/\n/g, " ");
-            update({ title, ...(slugTouched ? {} : { slug: slugify(title) }) });
-          }}
-          onKeyDown={(e) => {
-            if (e.nativeEvent.isComposing) return;
-            if (e.key === "Enter" || (e.key === "ArrowDown" && e.currentTarget.selectionStart === e.currentTarget.value.length)) {
-              e.preventDefault();
-              focusBody("start");
-            }
-          }}
-        />
-        <div className="post-meta">
-          <span>{AUTHOR.name}</span>
-          <span>{publishedAt ? formatDate(publishedAt) : "공개 전"}</span>
-          {!draft.cover && (
-            <button type="button" className="meta-btn" disabled={cover.uploading} onClick={cover.pick}>
-              {cover.uploading ? "커버 올리는 중" : "커버 추가"}
-            </button>
-          )}
-        </div>
-        {cover.fileInput}
-      </header>
+      {/* 공개 글(.post-hero, .post-head, .post-layout)과 같은 틀이라 쓰는 모습이 그대로 공개됩니다 */}
       {draft.cover && <CoverImage value={draft.cover} uploading={cover.uploading} onPick={cover.pick} onRemove={() => update({ cover: "" })} />}
-      <div className="post-layout editor-layout">
-        <BodyEditor
-          initial={draft.body}
-          editorRef={body}
-          onChange={(markdown) => update({ body: markdown })}
-          onHeadings={setHeadings}
-          onError={setError}
-          onUploadingChange={setUploading}
-        />
-        {/* 공개 글과 같은 자리, 같은 모양의 목차. 누르면 그 제목으로 갑니다 */}
-        {headings.length > 1 && (
-          <nav className="toc" aria-label="목차">
-            <ul>
-              {headings.map((h) => (
-                <li key={h.pos} className={h.level === 3 ? "h3" : undefined}>
-                  <button type="button" onClick={() => goToHeading(h.pos)}>
-                    {h.text}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+      <div className="post-wrap">
+        <header className="post-head editor-head">
+          <div className="post-meta">
+            <span>{AUTHOR.name}</span>
+            <span>{publishedAt ? formatDate(publishedAt) : "공개 전"}</span>
+            {/* 입력칸에는 가운뎃점(::before)이 붙지 않아서 한 번 감쌉니다 */}
+            <span>
+              <input
+                className="tags-input"
+                aria-label="태그"
+                placeholder="태그를 쉼표로 구분해 쓰세요"
+                value={draft.tags}
+                onChange={(e) => update({ tags: e.target.value })}
+              />
+            </span>
+            {!draft.cover && (
+              <button type="button" className="meta-btn" disabled={cover.uploading} onClick={cover.pick}>
+                {cover.uploading ? "커버 올리는 중" : "커버 추가"}
+              </button>
+            )}
+          </div>
+          <textarea
+            ref={titleBox}
+            className="title-input"
+            aria-label="제목"
+            placeholder="제목 없음"
+            rows={1}
+            value={draft.title}
+            onChange={(e) => {
+              const title = e.target.value.replace(/\n/g, " ");
+              update({ title, ...(slugTouched ? {} : { slug: slugify(title) }) });
+            }}
+            onKeyDown={(e) => {
+              if (e.nativeEvent.isComposing) return;
+              if (e.key === "Enter" || (e.key === "ArrowDown" && e.currentTarget.selectionStart === e.currentTarget.value.length)) {
+                e.preventDefault();
+                focusBody("start");
+              }
+            }}
+          />
+          {cover.fileInput}
+        </header>
+        <div className="post-layout editor-layout">
+          <BodyEditor
+            initial={draft.body}
+            editorRef={body}
+            onChange={(markdown) => update({ body: markdown })}
+            onHeadings={setHeadings}
+            onError={setError}
+            onUploadingChange={setUploading}
+          />
+          {/* 공개 글과 같은 자리, 같은 모양의 목차. 누르면 그 제목으로 갑니다 */}
+          {tocItems.length > 1 && <Toc items={tocItems} find={findHeading} onSelect={selectHeading} />}
+        </div>
       </div>
     </main>
   );

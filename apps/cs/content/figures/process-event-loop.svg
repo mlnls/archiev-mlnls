@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 콜 스택 -->
+  <text class="tx-l" x="0" y="16">메인 스레드의 콜 스택</text>
+  <rect class="bx-line" x="0" y="24" width="190" height="200" rx="8"/>
+  <rect class="bx-soft" x="12" y="114" width="166" height="30" rx="5"/>
+  <text class="tx-s tx-m" x="95" y="133" text-anchor="middle">el.style.setProperty</text>
+  <rect class="bx-soft" x="12" y="148" width="166" height="30" rx="5"/>
+  <text class="tx-s tx-m" x="95" y="167" text-anchor="middle">render()</text>
+  <rect class="bx-ink" x="12" y="182" width="166" height="30" rx="5"/>
+  <text class="tx-s tx-inv" x="95" y="201" text-anchor="middle">change 핸들러 (app.js)</text>
+  <text class="tx-s" x="95" y="244" text-anchor="middle">끝날 때까지 다른 JS는 못 끼어듦</text>
+
+  <!-- 큐 -->
+  <rect class="bx" x="250" y="24" width="220" height="62" rx="8"/>
+  <text x="264" y="46">마이크로태스크 큐</text>
+  <text class="tx-s" x="264" y="66">Promise의 then, await 다음</text>
+  <text class="tx-s" x="264" y="80">스택이 비면 이것부터 모두</text>
+  <rect class="bx" x="250" y="106" width="220" height="74" rx="8"/>
+  <text x="264" y="128">태스크 큐</text>
+  <rect class="bx-ink" x="262" y="138" width="196" height="30" rx="5"/>
+  <text class="tx-s tx-inv" x="360" y="157" text-anchor="middle">change 이벤트: 체크박스</text>
+  <rect class="bx-dash" x="250" y="200" width="220" height="44" rx="8"/>
+  <text x="360" y="220" text-anchor="middle">화면 다시 그리기</text>
+  <text class="tx-s" x="360" y="236" text-anchor="middle">태스크 사이사이, 약 16ms마다</text>
+
+  <!-- 바깥 -->
+  <text class="tx-l" x="530" y="16">JS 바깥 (다른 스레드, 운영체제)</text>
+  <g class="bx">
+    <rect x="530" y="24" width="190" height="44" rx="8"/><rect x="530" y="78" width="190" height="44" rx="8"/><rect x="530" y="132" width="190" height="44" rx="8"/>
+  </g>
+  <text x="546" y="44">입력</text>
+  <text class="tx-s" x="546" y="60">IPC로 온 클릭</text>
+  <text x="546" y="98">타이머</text>
+  <text class="tx-s" x="546" y="114">setTimeout</text>
+  <text x="546" y="152">네트워크</text>
+  <text class="tx-s" x="546" y="168">fetch 응답</text>
+
+  <path class="ln-ink" d="M530 46 H500 V153 H474" marker-end="url(#a)"/>
+  <text class="tx-s" x="496" y="196" text-anchor="middle">① 줄 섬</text>
+  <path class="ln-ink" d="M250 153 H220 V197 H194" marker-end="url(#a)"/>
+  <text class="tx-s" x="222" y="108" text-anchor="middle">② 스택이</text>
+  <text class="tx-s" x="222" y="124" text-anchor="middle">비면 꺼냄</text>
+  <line class="ln" x1="530" y1="100" x2="504" y2="100"/>
+  <line class="ln" x1="530" y1="154" x2="504" y2="154"/>
+</svg>

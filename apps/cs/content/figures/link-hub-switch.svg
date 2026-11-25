@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 272">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 왼쪽: 허브. A가 C에게 보낸 프레임이 모든 포트로 복사됨 -->
+  <g>
+    <text class="tx-b" x="0" y="16">허브</text>
+    <text class="tx-s" x="0" y="36">들어온 신호를 모든 포트로 복사</text>
+    <line class="ln-ink" x1="64" y1="146" x2="128" y2="146" marker-end="url(#k)"/>
+    <text class="tx-s" x="97" y="138" text-anchor="middle">C에게</text>
+    <line class="ln" x1="170" y1="128" x2="170" y2="90" marker-end="url(#a)"/>
+    <line class="ln" x1="210" y1="146" x2="274" y2="146" marker-end="url(#a)"/>
+    <line class="ln" x1="170" y1="164" x2="170" y2="202" marker-end="url(#a)"/>
+    <rect class="bx-soft" x="130" y="128" width="80" height="36" rx="6"/>
+    <text class="tx-b" x="170" y="151" text-anchor="middle">허브</text>
+    <rect class="bx" x="0" y="130" width="64" height="32" rx="8"/>
+    <text x="32" y="151" text-anchor="middle">A</text>
+    <rect class="bx" x="138" y="56" width="64" height="32" rx="8"/>
+    <text x="170" y="77" text-anchor="middle">B</text>
+    <rect class="bx" x="276" y="130" width="64" height="32" rx="8"/>
+    <text x="308" y="151" text-anchor="middle">C</text>
+    <rect class="bx" x="138" y="204" width="64" height="32" rx="8"/>
+    <text x="170" y="225" text-anchor="middle">D</text>
+    <text class="tx-s" x="212" y="77">내 것 아님 → 버림</text>
+    <text class="tx-s" x="212" y="225">내 것 아님 → 버림</text>
+    <text class="tx-s" x="0" y="264">둘이 동시에 보내면 신호가 섞여 충돌</text>
+  </g>
+
+  <line class="bx-line" x1="360" y1="0" x2="360" y2="268"/>
+
+  <!-- 오른쪽: 스위치. C의 포트로만 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">스위치</text>
+    <text class="tx-s" x="0" y="36">MAC 주소 테이블을 보고 받는 기기의 포트로만</text>
+    <line class="ln-ink" x1="64" y1="146" x2="128" y2="146" marker-end="url(#k)"/>
+    <text class="tx-s" x="97" y="138" text-anchor="middle">C에게</text>
+    <line class="ln-faint" x1="170" y1="128" x2="170" y2="88"/>
+    <line class="ln-ink" x1="210" y1="146" x2="274" y2="146" marker-end="url(#k)"/>
+    <line class="ln-faint" x1="170" y1="164" x2="170" y2="204"/>
+    <rect class="bx-soft" x="130" y="128" width="80" height="36" rx="6"/>
+    <text class="tx-b" x="170" y="151" text-anchor="middle">스위치</text>
+    <rect class="bx" x="0" y="130" width="64" height="32" rx="8"/>
+    <text x="32" y="151" text-anchor="middle">A</text>
+    <rect class="bx" x="138" y="56" width="64" height="32" rx="8"/>
+    <text x="170" y="77" text-anchor="middle">B</text>
+    <rect class="bx" x="276" y="130" width="64" height="32" rx="8"/>
+    <text x="308" y="151" text-anchor="middle">C</text>
+    <rect class="bx" x="138" y="204" width="64" height="32" rx="8"/>
+    <text x="170" y="225" text-anchor="middle">D</text>
+    <text class="tx-s" x="212" y="77">받지 않음</text>
+    <text class="tx-s" x="212" y="225">받지 않음</text>
+    <text class="tx-s" x="0" y="264">포트마다 따로 오가니 충돌이 없음</text>
+  </g>
+</svg>

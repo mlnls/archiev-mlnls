@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 456">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- ① 노트북 → 데스크톱. 보내는 쪽을 배우고, 받는 쪽은 모르니 플러딩 -->
+  <g>
+    <text class="tx-b" x="0" y="16">① 노트북이 데스크톱에게 처음 보냄</text>
+    <line class="ln-ink" x1="70" y1="64" x2="128" y2="64" marker-end="url(#k)"/>
+    <line class="ln" x1="230" y1="64" x2="278" y2="64" marker-end="url(#a)"/>
+    <line class="ln" x1="180" y1="84" x2="180" y2="106" marker-end="url(#a)"/>
+    <text class="tx-s" x="100" y="56" text-anchor="middle">포트 1</text>
+    <text class="tx-s" x="255" y="56" text-anchor="middle">포트 2</text>
+    <text class="tx-s" x="188" y="100">포트 4</text>
+    <rect class="bx" x="0" y="48" width="70" height="32" rx="8"/>
+    <text x="35" y="69" text-anchor="middle">노트북</text>
+    <rect class="bx-soft" x="130" y="44" width="100" height="40" rx="6"/>
+    <text class="tx-b" x="180" y="69" text-anchor="middle">스위치</text>
+    <rect class="bx" x="280" y="48" width="76" height="32" rx="8"/>
+    <text x="318" y="69" text-anchor="middle">데스크톱</text>
+    <rect class="bx" x="140" y="108" width="80" height="28" rx="8"/>
+    <text x="180" y="127" text-anchor="middle">공유기</text>
+
+    <rect class="bx-line" x="390" y="30" width="330" height="88" rx="6"/>
+    <text class="tx-l" x="402" y="48">포트</text>
+    <text class="tx-l" x="444" y="48">MAC 주소</text>
+    <rect class="bx-soft" x="396" y="56" width="318" height="22" rx="4"/>
+    <text x="402" y="71">1</text>
+    <text class="tx-s tx-m" x="444" y="71">3c:22:fb:a1:b2:c3</text>
+    <text class="tx-s" x="584" y="71">노트북 · 새로 배움</text>
+    <text class="tx-s" x="390" y="140">데스크톱은 표에 없음 → 들어온 포트 빼고 모두로</text>
+  </g>
+
+  <line class="ln-faint" x1="0" y1="158" x2="720" y2="158"/>
+
+  <!-- ② 데스크톱의 답. 노트북은 표에 있으니 포트 1로만 -->
+  <g transform="translate(0 166)">
+    <text class="tx-b" x="0" y="16">② 데스크톱이 답함</text>
+    <line class="ln-ink" x1="128" y1="64" x2="72" y2="64" marker-end="url(#k)"/>
+    <line class="ln-ink" x1="278" y1="64" x2="232" y2="64" marker-end="url(#k)"/>
+    <line class="ln-faint" x1="180" y1="84" x2="180" y2="108"/>
+    <text class="tx-s" x="100" y="56" text-anchor="middle">포트 1</text>
+    <text class="tx-s" x="255" y="56" text-anchor="middle">포트 2</text>
+    <text class="tx-s" x="188" y="100">포트 4</text>
+    <rect class="bx" x="0" y="48" width="70" height="32" rx="8"/>
+    <text x="35" y="69" text-anchor="middle">노트북</text>
+    <rect class="bx-soft" x="130" y="44" width="100" height="40" rx="6"/>
+    <text class="tx-b" x="180" y="69" text-anchor="middle">스위치</text>
+    <rect class="bx" x="280" y="48" width="76" height="32" rx="8"/>
+    <text x="318" y="69" text-anchor="middle">데스크톱</text>
+    <rect class="bx" x="140" y="108" width="80" height="28" rx="8"/>
+    <text x="180" y="127" text-anchor="middle">공유기</text>
+
+    <rect class="bx-line" x="390" y="30" width="330" height="88" rx="6"/>
+    <text class="tx-l" x="402" y="48">포트</text>
+    <text class="tx-l" x="444" y="48">MAC 주소</text>
+    <text x="402" y="71">1</text>
+    <text class="tx-s tx-m" x="444" y="71">3c:22:fb:a1:b2:c3</text>
+    <text class="tx-s" x="584" y="71">노트북</text>
+    <rect class="bx-soft" x="396" y="80" width="318" height="22" rx="4"/>
+    <text x="402" y="95">2</text>
+    <text class="tx-s tx-m" x="444" y="95">a4:83:e7:11:22:33</text>
+    <text class="tx-s" x="584" y="95">데스크톱 · 새로 배움</text>
+    <text class="tx-s" x="390" y="140">노트북은 포트 1에 있음 → 포트 1로만</text>
+  </g>
+
+  <line class="ln-faint" x1="0" y1="316" x2="720" y2="316"/>
+
+  <!-- ③ 공유기가 보내면 포트 4도 배움 -->
+  <g transform="translate(0 316)">
+    <text class="tx-b" x="0" y="24">③ 공유기가 노트북에게 보냄</text>
+    <line class="ln-ink" x1="128" y1="72" x2="72" y2="72" marker-end="url(#k)"/>
+    <line class="ln-faint" x1="230" y1="72" x2="280" y2="72"/>
+    <line class="ln-ink" x1="180" y1="116" x2="180" y2="94" marker-end="url(#k)"/>
+    <text class="tx-s" x="100" y="64" text-anchor="middle">포트 1</text>
+    <text class="tx-s" x="255" y="64" text-anchor="middle">포트 2</text>
+    <text class="tx-s" x="188" y="108">포트 4</text>
+    <rect class="bx" x="0" y="56" width="70" height="32" rx="8"/>
+    <text x="35" y="77" text-anchor="middle">노트북</text>
+    <rect class="bx-soft" x="130" y="52" width="100" height="40" rx="6"/>
+    <text class="tx-b" x="180" y="77" text-anchor="middle">스위치</text>
+    <rect class="bx" x="280" y="56" width="76" height="32" rx="8"/>
+    <text x="318" y="77" text-anchor="middle">데스크톱</text>
+    <rect class="bx" x="140" y="116" width="80" height="28" rx="8"/>
+    <text x="180" y="135" text-anchor="middle">공유기</text>
+
+    <rect class="bx-line" x="390" y="38" width="330" height="96" rx="6"/>
+    <text class="tx-l" x="402" y="56">포트</text>
+    <text class="tx-l" x="444" y="56">MAC 주소</text>
+    <text x="402" y="79">1</text>
+    <text class="tx-s tx-m" x="444" y="79">3c:22:fb:a1:b2:c3</text>
+    <text class="tx-s" x="584" y="79">노트북</text>
+    <text x="402" y="101">2</text>
+    <text class="tx-s tx-m" x="444" y="101">a4:83:e7:11:22:33</text>
+    <text class="tx-s" x="584" y="101">데스크톱</text>
+    <rect class="bx-soft" x="396" y="106" width="318" height="22" rx="4"/>
+    <text x="402" y="121">4</text>
+    <text class="tx-s tx-m" x="444" y="121">88:36:6c:aa:bb:cc</text>
+    <text class="tx-s" x="584" y="121">공유기 · 새로 배움</text>
+  </g>
+</svg>

@@ -16,6 +16,12 @@ services:
     mem_limit: 48m
     networks: [edge]
 
+  mlnl-cs:
+    image: ${CS_IMAGE:-ghcr.io/mlnls/archiev-mlnls/cs:latest}
+    restart: unless-stopped
+    mem_limit: 48m
+    networks: [edge]
+
   mlnl-blog:
     image: ${BLOG_IMAGE:-ghcr.io/mlnls/archiev-mlnls/blog:latest}
     restart: unless-stopped

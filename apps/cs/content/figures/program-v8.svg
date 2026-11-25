@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <line class="ln" x1="298" y1="22" x2="716" y2="22" marker-end="url(#a)"/>
+  <text class="tx-s" x="298" y="14">자주 불리는 함수일수록 오른쪽 단계로</text>
+
+  <g text-anchor="middle">
+    <rect class="bx" x="0" y="40" width="124" height="64" rx="8"/>
+    <text class="tx-b" x="62" y="66">JS 소스</text>
+    <text class="tx-s tx-m" x="62" y="86">app.js</text>
+    <rect class="bx" x="149" y="40" width="124" height="64" rx="8"/>
+    <text class="tx-b" x="211" y="66">파서</text>
+    <text class="tx-s" x="211" y="86">AST로</text>
+    <rect class="bx" x="298" y="40" width="124" height="64" rx="8"/>
+    <text class="tx-b" x="360" y="66">Ignition</text>
+    <text class="tx-s" x="360" y="86">바이트코드 실행</text>
+    <rect class="bx" x="447" y="40" width="124" height="64" rx="8"/>
+    <text class="tx-b" x="509" y="60">Sparkplug</text>
+    <text class="tx-b" x="509" y="76">Maglev</text>
+    <text class="tx-s" x="509" y="94">빠르게 기계어로</text>
+    <rect class="bx-ink" x="596" y="40" width="124" height="64" rx="8"/>
+    <text class="tx-inv" x="658" y="66" font-weight="700">TurboFan</text>
+    <text class="tx-inv tx-s" x="658" y="86">최적화한 기계어</text>
+  </g>
+  <g class="ln">
+    <line x1="124" y1="72" x2="147" y2="72" marker-end="url(#a)"/>
+    <line x1="273" y1="72" x2="296" y2="72" marker-end="url(#a)"/>
+    <line x1="422" y1="72" x2="445" y2="72" marker-end="url(#a)"/>
+    <line x1="571" y1="72" x2="594" y2="72" marker-end="url(#a)"/>
+  </g>
+
+  <!-- 디옵티마이제이션 -->
+  <polyline class="ln-ink" points="658,104 658,160 360,160 360,108" marker-end="url(#k)"/>
+  <text class="tx-b" x="509" y="182" text-anchor="middle">디옵티마이제이션</text>
+  <text class="tx-s" x="509" y="200" text-anchor="middle">가정이 깨지면(문자열이 들어오면) 바이트코드로</text>
+
+  <text class="tx-s" x="0" y="232">Ignition이 실행하며 모은 타입 정보(늘 정수였다, 늘 {x, y} 모양이었다)를 믿고 최적화합니다.</text>
+</svg>

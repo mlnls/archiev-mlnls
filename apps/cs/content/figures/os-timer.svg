@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 206">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 줄 이름 -->
+  <text class="tx-b" x="0" y="57">프로그램 A</text>
+  <text class="tx-b" x="0" y="103">프로그램 B</text>
+  <text class="tx-b" x="0" y="149">커널</text>
+
+  <!-- 타이머 인터럽트 -->
+  <g class="ln ln-dash">
+    <line x1="296" y1="22" x2="296" y2="160"/>
+    <line x1="476" y1="22" x2="476" y2="160"/>
+    <line x1="656" y1="22" x2="656" y2="160"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="296" y="16">타이머 인터럽트</text>
+    <text x="476" y="16">타이머 인터럽트</text>
+    <text x="656" y="16">타이머 인터럽트</text>
+  </g>
+
+  <!-- A: 무한 루프 -->
+  <rect class="bx" x="140" y="38" width="156" height="28" rx="4"/>
+  <text class="tx-s tx-m" x="218" y="57" text-anchor="middle">while (true) {}</text>
+  <rect class="bx" x="500" y="38" width="156" height="28" rx="4"/>
+  <text class="tx-s" x="578" y="57" text-anchor="middle">멈춘 곳부터 이어서</text>
+
+  <!-- B -->
+  <rect class="bx-soft" x="320" y="84" width="156" height="28" rx="4"/>
+  <text class="tx-s" x="398" y="103" text-anchor="middle">B 차례</text>
+  <rect class="bx-soft" x="680" y="84" width="34" height="28" rx="4"/>
+
+  <!-- 커널: 스케줄러 -->
+  <rect class="bx-ink" x="296" y="130" width="24" height="28" rx="4"/>
+  <rect class="bx-ink" x="476" y="130" width="24" height="28" rx="4"/>
+  <rect class="bx-ink" x="656" y="130" width="24" height="28" rx="4"/>
+
+  <!-- 시간 -->
+  <line class="ln" x1="140" y1="176" x2="716" y2="176" marker-end="url(#a)"/>
+  <text class="tx-s" x="140" y="198">커널의 스케줄러가 끼어들어 다음 차례를 고릅니다. A가 CPU를 놓아 주지 않아도 됩니다.</text>
+  <text class="tx-s" x="716" y="198" text-anchor="end">시간</text>
+</svg>

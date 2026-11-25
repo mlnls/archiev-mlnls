@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 324">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 1. 처음 상태 -->
+  <text class="tx-l" x="0" y="16">1. 칸 8개 가운데 2~5번에 a, b, c, d가 들어 있습니다</text>
+  <g class="tx-s" text-anchor="middle">
+    <text x="130" y="44">0</text><text x="194" y="44">1</text><text x="258" y="44">2</text><text x="322" y="44">3</text>
+    <text x="386" y="44">4</text><text x="450" y="44">5</text><text x="514" y="44">6</text><text x="578" y="44">7</text>
+  </g>
+  <rect class="bx-dash" x="100" y="52" width="60" height="36" rx="5"/>
+  <rect class="bx-dash" x="164" y="52" width="60" height="36" rx="5"/>
+  <rect class="bx" x="228" y="52" width="60" height="36" rx="5"/><text x="258" y="75" text-anchor="middle">a</text>
+  <rect class="bx" x="292" y="52" width="60" height="36" rx="5"/><text x="322" y="75" text-anchor="middle">b</text>
+  <rect class="bx" x="356" y="52" width="60" height="36" rx="5"/><text x="386" y="75" text-anchor="middle">c</text>
+  <rect class="bx" x="420" y="52" width="60" height="36" rx="5"/><text x="450" y="75" text-anchor="middle">d</text>
+  <rect class="bx-dash" x="484" y="52" width="60" height="36" rx="5"/>
+  <rect class="bx-dash" x="548" y="52" width="60" height="36" rx="5"/>
+  <line class="ln-ink" x1="258" y1="116" x2="258" y2="92" marker-end="url(#k)"/>
+  <line class="ln" x1="514" y1="116" x2="514" y2="92" marker-end="url(#a)"/>
+  <text class="tx-s" x="258" y="132" text-anchor="middle">읽기 위치(head)</text>
+  <text class="tx-s" x="514" y="132" text-anchor="middle">쓰기 위치(tail)</text>
+
+  <!-- 2. 끝을 넘어 처음으로 -->
+  <text class="tx-l" x="0" y="168">2. e, f, g를 쓰고 a를 하나 읽은 뒤</text>
+  <g class="tx-s" text-anchor="middle">
+    <text x="130" y="196">0</text><text x="194" y="196">1</text><text x="258" y="196">2</text><text x="322" y="196">3</text>
+    <text x="386" y="196">4</text><text x="450" y="196">5</text><text x="514" y="196">6</text><text x="578" y="196">7</text>
+  </g>
+  <rect class="bx-ink" x="100" y="204" width="60" height="36" rx="5"/><text class="tx-inv" x="130" y="227" text-anchor="middle" font-weight="700">g</text>
+  <rect class="bx-dash" x="164" y="204" width="60" height="36" rx="5"/>
+  <rect class="bx-dash" x="228" y="204" width="60" height="36" rx="5"/>
+  <rect class="bx" x="292" y="204" width="60" height="36" rx="5"/><text x="322" y="227" text-anchor="middle">b</text>
+  <rect class="bx" x="356" y="204" width="60" height="36" rx="5"/><text x="386" y="227" text-anchor="middle">c</text>
+  <rect class="bx" x="420" y="204" width="60" height="36" rx="5"/><text x="450" y="227" text-anchor="middle">d</text>
+  <rect class="bx" x="484" y="204" width="60" height="36" rx="5"/><text x="514" y="227" text-anchor="middle">e</text>
+  <rect class="bx" x="548" y="204" width="60" height="36" rx="5"/><text x="578" y="227" text-anchor="middle">f</text>
+  <line class="ln-ink" x1="322" y1="268" x2="322" y2="244" marker-end="url(#k)"/>
+  <line class="ln" x1="194" y1="268" x2="194" y2="244" marker-end="url(#a)"/>
+  <text class="tx-s" x="322" y="284" text-anchor="middle">읽기 위치(head)</text>
+  <text class="tx-s" x="194" y="284" text-anchor="middle">쓰기 위치(tail)</text>
+  <path class="ln" fill="none" d="M612 222 C 690 222, 690 306, 612 306 L 100 306 C 30 306, 30 222, 96 222" marker-end="url(#a)"/>
+  <rect class="bx-soft" x="400" y="297" width="150" height="18" rx="4"/>
+  <text class="tx-s" x="475" y="310" text-anchor="middle">7번 다음은 다시 0번</text>
+</svg>

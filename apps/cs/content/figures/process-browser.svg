@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+  <!-- 브라우저 프로세스 -->
+  <rect class="bx" x="230" y="8" width="260" height="54" rx="8"/>
+  <text class="tx-b" x="360" y="30" text-anchor="middle">브라우저 프로세스</text>
+  <text class="tx-s" x="360" y="49" text-anchor="middle">주소창, 탭, 입력. 다른 프로세스를 띄우고 관리</text>
+  <g class="ln">
+    <path d="M360 62 V84"/><path d="M82 84 H637"/>
+    <path d="M82 84 V104"/><path d="M267 84 V104"/><path d="M452 84 V104"/><path d="M637 84 V104"/>
+  </g>
+  <text class="tx-s" x="720" y="78" text-anchor="end">선: IPC (프로세스끼리 주고받는 메시지)</text>
+
+  <!-- 자식 프로세스들 -->
+  <rect class="bx-ink" x="0" y="104" width="165" height="60" rx="8"/>
+  <text class="tx-inv" x="82" y="128" text-anchor="middle" font-weight="700">렌더러</text>
+  <text class="tx-inv tx-s" x="82" y="148" text-anchor="middle">이 페이지 (cs 사이트)</text>
+  <g class="bx">
+    <rect x="185" y="104" width="165" height="60" rx="8"/><rect x="370" y="104" width="165" height="60" rx="8"/><rect x="555" y="104" width="165" height="60" rx="8"/>
+  </g>
+  <text x="267" y="128" text-anchor="middle">렌더러</text>
+  <text class="tx-s" x="267" y="148" text-anchor="middle">다른 탭의 다른 사이트</text>
+  <text x="452" y="128" text-anchor="middle">GPU 프로세스</text>
+  <text class="tx-s" x="452" y="148" text-anchor="middle">모든 탭의 화면을 그림</text>
+  <text x="637" y="128" text-anchor="middle">네트워크 서비스</text>
+  <text class="tx-s" x="637" y="148" text-anchor="middle">모든 요청을 보내고 받음</text>
+
+  <!-- 렌더러 안의 스레드 -->
+  <line class="ln ln-dash" x1="82" y1="164" x2="82" y2="186"/>
+  <rect class="bx-dash" x="0" y="186" width="350" height="108" rx="8"/>
+  <text class="tx-l" x="14" y="204">이 렌더러 안의 스레드 (메모리를 함께 씀)</text>
+  <g class="bx">
+    <rect x="14" y="214" width="322" height="32" rx="6"/>
+    <rect x="14" y="252" width="158" height="32" rx="6"/><rect x="178" y="252" width="158" height="32" rx="6"/>
+  </g>
+  <text x="26" y="235">메인 스레드</text>
+  <text class="tx-s" x="110" y="235">app.js 실행, 스타일, 레이아웃</text>
+  <text x="93" y="273" text-anchor="middle">컴포지터 스레드</text>
+  <text x="257" y="273" text-anchor="middle">그 밖의 작업 스레드</text>
+
+  <!-- 커널 -->
+  <rect class="bx-soft" x="370" y="186" width="350" height="108" rx="8"/>
+  <text class="tx-b" x="386" y="210">커널의 스케줄러</text>
+  <text class="tx-s" x="386" y="230">이 모든 스레드를 코어 몇 개에 번갈아 올림</text>
+  <g class="bx">
+    <rect x="386" y="246" width="30" height="30" rx="4"/><rect x="422" y="246" width="30" height="30" rx="4"/>
+    <rect x="458" y="246" width="30" height="30" rx="4"/><rect x="494" y="246" width="30" height="30" rx="4"/>
+    <rect x="530" y="246" width="30" height="30" rx="4"/><rect x="566" y="246" width="30" height="30" rx="4"/>
+    <rect x="602" y="246" width="30" height="30" rx="4"/><rect x="638" y="246" width="30" height="30" rx="4"/>
+  </g>
+  <text class="tx-s" x="704" y="266" text-anchor="end">코어</text>
+</svg>

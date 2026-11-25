@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 206">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">연결 거부 (ECONNREFUSED)</text>
+  <g text-anchor="middle"><text x="40" y="42">노트북</text><text x="300" y="42">서버</text></g>
+  <g class="ln-faint"><line x1="40" y1="52" x2="40" y2="150"/><line x1="300" y1="52" x2="300" y2="150"/></g>
+  <line class="ln" x1="42" y1="74" x2="296" y2="74" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="298" y1="112" x2="44" y2="112" marker-end="url(#a)"/>
+  <g class="tx-m" text-anchor="middle"><text x="170" y="68">SYN</text><text x="170" y="106">RST</text></g>
+  <g class="tx-s"><text x="0" y="182">컴퓨터까지는 닿았지만 그 포트에서</text><text x="0" y="198">듣는 프로그램이 없음. 바로 실패</text></g>
+
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="206"/>
+
+  <g transform="translate(390 0)">
+    <text class="tx-b" x="0" y="16">시간 초과 (ETIMEDOUT)</text>
+    <g text-anchor="middle"><text x="40" y="42">노트북</text><text x="300" y="42">서버</text></g>
+    <line class="ln-faint" x1="40" y1="52" x2="40" y2="150"/>
+    <line class="ln-faint ln-dash" x1="300" y1="52" x2="300" y2="150"/>
+    <rect class="bx-ink" x="180" y="58" width="10" height="90" rx="2"/>
+    <text class="tx-l" x="185" y="166" text-anchor="middle">방화벽이 조용히 버림</text>
+    <g class="ln">
+      <line x1="42" y1="74" x2="176" y2="74" marker-end="url(#m)"/>
+      <line x1="42" y1="102" x2="176" y2="102" marker-end="url(#m)"/>
+      <line x1="42" y1="130" x2="176" y2="130" marker-end="url(#m)"/>
+    </g>
+    <g class="tx-s" text-anchor="middle"><text x="110" y="68">SYN</text><text x="110" y="96">1초 뒤 다시</text><text x="110" y="124">더 뒤에 또</text></g>
+    <g class="tx-s"><text x="0" y="198">아무 답이 없어 몇 번 더 보내다가 수십 초 뒤 포기</text></g>
+  </g>
+</svg>

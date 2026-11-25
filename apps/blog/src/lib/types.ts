@@ -15,10 +15,3 @@ export interface PostSummary {
 export interface Post extends Omit<PostSummary, "readingMinutes"> {
   body: string;
 }
-
-export interface Comment {
-  id: number;
-  body: string;
-  createdAt: string;
-  username: string;
-}

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 286">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 장비 이름 -->
+  <g class="tx-b" text-anchor="middle">
+    <text x="72" y="16">내 컴퓨터</text>
+    <text x="222" y="16">스위치</text>
+    <text x="372" y="16">공유기·라우터</text>
+    <text x="522" y="16">인터넷의 라우터들</text>
+    <text x="664" y="16">서버</text>
+  </g>
+
+  <!-- 내 컴퓨터: 네 층 모두 -->
+  <g>
+    <rect class="bx" x="24" y="32" width="96" height="34" rx="6"/>
+    <text x="72" y="54" text-anchor="middle">응용</text>
+    <rect class="bx" x="24" y="72" width="96" height="34" rx="6"/>
+    <text x="72" y="94" text-anchor="middle">전송</text>
+    <rect class="bx" x="24" y="112" width="96" height="34" rx="6"/>
+    <text x="72" y="134" text-anchor="middle">인터넷</text>
+    <rect class="bx" x="24" y="152" width="96" height="34" rx="6"/>
+    <text x="72" y="174" text-anchor="middle">네트워크 접근</text>
+    <line class="ln" x1="10" y1="38" x2="10" y2="180" marker-end="url(#m)"/>
+  </g>
+
+  <!-- 스위치: 2층까지만 -->
+  <g>
+    <rect class="bx-dash" x="174" y="32" width="96" height="34" rx="6"/>
+    <rect class="bx-dash" x="174" y="72" width="96" height="34" rx="6"/>
+    <rect class="bx-dash" x="174" y="112" width="96" height="34" rx="6"/>
+    <rect class="bx" x="174" y="152" width="96" height="34" rx="6"/>
+    <text x="222" y="174" text-anchor="middle">네트워크 접근</text>
+  </g>
+
+  <!-- 라우터: 3층까지 -->
+  <g>
+    <rect class="bx-dash" x="324" y="32" width="96" height="34" rx="6"/>
+    <rect class="bx-dash" x="324" y="72" width="96" height="34" rx="6"/>
+    <rect class="bx" x="324" y="112" width="96" height="34" rx="6"/>
+    <text x="372" y="134" text-anchor="middle">인터넷</text>
+    <rect class="bx" x="324" y="152" width="96" height="34" rx="6"/>
+    <text x="372" y="174" text-anchor="middle">네트워크 접근</text>
+  </g>
+
+  <!-- 인터넷의 라우터들: 같은 일을 홉마다 -->
+  <g>
+    <rect class="bx-dash" x="474" y="32" width="96" height="34" rx="6"/>
+    <rect class="bx-dash" x="474" y="72" width="96" height="34" rx="6"/>
+    <rect class="bx" x="474" y="112" width="96" height="34" rx="6"/>
+    <text x="522" y="134" text-anchor="middle">인터넷</text>
+    <rect class="bx" x="474" y="152" width="96" height="34" rx="6"/>
+    <text x="522" y="174" text-anchor="middle">네트워크 접근</text>
+  </g>
+
+  <!-- 서버: 네 층 모두 -->
+  <g>
+    <rect class="bx" x="616" y="32" width="96" height="34" rx="6"/>
+    <text x="664" y="54" text-anchor="middle">응용</text>
+    <rect class="bx" x="616" y="72" width="96" height="34" rx="6"/>
+    <text x="664" y="94" text-anchor="middle">전송</text>
+    <rect class="bx" x="616" y="112" width="96" height="34" rx="6"/>
+    <text x="664" y="134" text-anchor="middle">인터넷</text>
+    <rect class="bx" x="616" y="152" width="96" height="34" rx="6"/>
+    <text x="664" y="174" text-anchor="middle">네트워크 접근</text>
+  </g>
+
+  <!-- 데이터가 지나가는 길: 장비마다 자기 층까지 올라갔다 내려옴 -->
+  <g class="ln-ink">
+    <line x1="72" y1="186" x2="72" y2="214"/>
+    <line x1="222" y1="186" x2="222" y2="214"/>
+    <line x1="372" y1="146" x2="372" y2="152"/>
+    <line x1="372" y1="186" x2="372" y2="214"/>
+    <line x1="522" y1="186" x2="522" y2="214"/>
+    <polyline points="72,214 664,214 664,192" marker-end="url(#a)"/>
+  </g>
+  <g class="dot">
+    <circle cx="72" cy="214" r="4"/><circle cx="222" cy="214" r="4"/><circle cx="372" cy="214" r="4"/>
+    <circle cx="522" cy="214" r="4"/>
+  </g>
+
+  <!-- 장비마다 열어 보는 것 -->
+  <g class="tx-s" text-anchor="middle">
+    <text x="72" y="244">헤더를 모두 붙여 보냄</text>
+    <text x="222" y="244">MAC 주소만 보고</text>
+    <text x="222" y="262">같은 네트워크 안으로</text>
+    <text x="372" y="244">IP 주소까지 보고</text>
+    <text x="372" y="262">다음 라우터로</text>
+    <text x="522" y="244">홉마다 같은 일을</text>
+    <text x="522" y="262">10~20번 반복</text>
+    <text x="664" y="244">모두 벗겨서</text>
+    <text x="664" y="262">포트의 프로세스로</text>
+  </g>
+  <text class="tx-s" x="0" y="282">점선은 그 장비가 열어 보지 않는 층입니다</text>
+</svg>

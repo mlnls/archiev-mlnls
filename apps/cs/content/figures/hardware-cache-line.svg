@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 왼쪽: 행 순서 -->
+  <text class="tx-b" x="10" y="18">행 순서로 읽기</text>
+  <line class="ln-ink" x1="12" y1="38" x2="222" y2="38" marker-end="url(#a)"/>
+  <g class="bx-ink">
+    <rect x="10" y="46" width="25" height="25" rx="3"/><rect x="37" y="46" width="25" height="25" rx="3"/><rect x="64" y="46" width="25" height="25" rx="3"/><rect x="91" y="46" width="25" height="25" rx="3"/>
+    <rect x="118" y="46" width="25" height="25" rx="3"/><rect x="145" y="46" width="25" height="25" rx="3"/><rect x="172" y="46" width="25" height="25" rx="3"/><rect x="199" y="46" width="25" height="25" rx="3"/>
+  </g>
+  <g class="bx">
+    <rect x="10" y="73" width="25" height="25" rx="3"/><rect x="37" y="73" width="25" height="25" rx="3"/><rect x="64" y="73" width="25" height="25" rx="3"/><rect x="91" y="73" width="25" height="25" rx="3"/>
+    <rect x="118" y="73" width="25" height="25" rx="3"/><rect x="145" y="73" width="25" height="25" rx="3"/><rect x="172" y="73" width="25" height="25" rx="3"/><rect x="199" y="73" width="25" height="25" rx="3"/>
+    <rect x="10" y="100" width="25" height="25" rx="3"/><rect x="37" y="100" width="25" height="25" rx="3"/><rect x="64" y="100" width="25" height="25" rx="3"/><rect x="91" y="100" width="25" height="25" rx="3"/>
+    <rect x="118" y="100" width="25" height="25" rx="3"/><rect x="145" y="100" width="25" height="25" rx="3"/><rect x="172" y="100" width="25" height="25" rx="3"/><rect x="199" y="100" width="25" height="25" rx="3"/>
+    <rect x="10" y="127" width="25" height="25" rx="3"/><rect x="37" y="127" width="25" height="25" rx="3"/><rect x="64" y="127" width="25" height="25" rx="3"/><rect x="91" y="127" width="25" height="25" rx="3"/>
+    <rect x="118" y="127" width="25" height="25" rx="3"/><rect x="145" y="127" width="25" height="25" rx="3"/><rect x="172" y="127" width="25" height="25" rx="3"/><rect x="199" y="127" width="25" height="25" rx="3"/>
+  </g>
+  <text class="tx-s" x="234" y="63">← 한 줄이 캐시 라인 하나</text>
+  <text class="tx-s" x="234" y="79">(64바이트 = 값 8개)</text>
+  <text class="tx-b" x="10" y="182">가져온 라인 1개로 값 8개를 다 씀</text>
+  <text class="tx-s" x="10" y="202">대부분 캐시에서 찾음 (적중)</text>
+
+  <!-- 오른쪽: 열 순서 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="10" y="18">열 순서로 읽기</text>
+    <line class="ln-ink" x1="2" y1="48" x2="2" y2="150" marker-end="url(#a)"/>
+    <g class="bx-ink">
+      <rect x="10" y="46" width="25" height="25" rx="3"/><rect x="10" y="73" width="25" height="25" rx="3"/>
+      <rect x="10" y="100" width="25" height="25" rx="3"/><rect x="10" y="127" width="25" height="25" rx="3"/>
+    </g>
+    <g class="bx-soft">
+      <rect x="37" y="46" width="25" height="25" rx="3"/><rect x="64" y="46" width="25" height="25" rx="3"/><rect x="91" y="46" width="25" height="25" rx="3"/><rect x="118" y="46" width="25" height="25" rx="3"/><rect x="145" y="46" width="25" height="25" rx="3"/><rect x="172" y="46" width="25" height="25" rx="3"/><rect x="199" y="46" width="25" height="25" rx="3"/>
+      <rect x="37" y="73" width="25" height="25" rx="3"/><rect x="64" y="73" width="25" height="25" rx="3"/><rect x="91" y="73" width="25" height="25" rx="3"/><rect x="118" y="73" width="25" height="25" rx="3"/><rect x="145" y="73" width="25" height="25" rx="3"/><rect x="172" y="73" width="25" height="25" rx="3"/><rect x="199" y="73" width="25" height="25" rx="3"/>
+      <rect x="37" y="100" width="25" height="25" rx="3"/><rect x="64" y="100" width="25" height="25" rx="3"/><rect x="91" y="100" width="25" height="25" rx="3"/><rect x="118" y="100" width="25" height="25" rx="3"/><rect x="145" y="100" width="25" height="25" rx="3"/><rect x="172" y="100" width="25" height="25" rx="3"/><rect x="199" y="100" width="25" height="25" rx="3"/>
+      <rect x="37" y="127" width="25" height="25" rx="3"/><rect x="64" y="127" width="25" height="25" rx="3"/><rect x="91" y="127" width="25" height="25" rx="3"/><rect x="118" y="127" width="25" height="25" rx="3"/><rect x="145" y="127" width="25" height="25" rx="3"/><rect x="172" y="127" width="25" height="25" rx="3"/><rect x="199" y="127" width="25" height="25" rx="3"/>
+    </g>
+    <text class="tx-s" x="234" y="63">회색: 가져왔지만</text>
+    <text class="tx-s" x="234" y="79">쓰지 않은 값</text>
+    <text class="tx-b" x="10" y="182">가져온 라인 4개에서 1개씩만 씀</text>
+    <text class="tx-s" x="10" y="202">배열이 크면 읽을 때마다 RAM까지 감 (미스)</text>
+  </g>
+</svg>

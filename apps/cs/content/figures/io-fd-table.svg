@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="0" y="16">프로세스의 fd 표</text>
+  <g class="bx">
+    <rect x="0" y="24" width="120" height="36" rx="6"/><rect x="0" y="66" width="120" height="36" rx="6"/>
+    <rect x="0" y="108" width="120" height="36" rx="6"/><rect x="0" y="150" width="120" height="36" rx="6"/>
+  </g>
+  <rect class="bx-ink" x="0" y="192" width="120" height="36" rx="6"/>
+  <g class="tx-m">
+    <text x="14" y="47">0</text><text x="14" y="89">1</text><text x="14" y="131">2</text><text x="14" y="173">3</text>
+    <text class="tx-inv" x="14" y="215">4</text>
+  </g>
+  <g class="tx-s">
+    <text x="36" y="47">stdin</text><text x="36" y="89">stdout</text><text x="36" y="131">stderr</text><text x="36" y="173">open()</text>
+    <text class="tx-inv" x="36" y="215">socket()</text>
+  </g>
+
+  <text class="tx-l" x="200" y="16">커널의 열린 파일 기록</text>
+  <g class="bx-soft">
+    <rect x="200" y="24" width="200" height="78" rx="8"/><rect x="200" y="150" width="200" height="36" rx="8"/><rect x="200" y="192" width="200" height="36" rx="8"/>
+  </g>
+  <text x="214" y="50">터미널</text>
+  <text class="tx-s" x="214" y="68">0, 1, 2가 함께 가리킴</text>
+  <text class="tx-s" x="214" y="86">(리다이렉션하면 바뀜)</text>
+  <text x="214" y="173">파일, 읽는 위치 0</text>
+  <text x="214" y="215">TCP 연결</text>
+
+  <g class="ln">
+    <line x1="120" y1="42" x2="196" y2="50" marker-end="url(#m)"/>
+    <line x1="120" y1="84" x2="196" y2="62" marker-end="url(#m)"/>
+    <line x1="120" y1="126" x2="196" y2="76" marker-end="url(#m)"/>
+    <line x1="120" y1="168" x2="196" y2="168" marker-end="url(#m)"/>
+    <line x1="120" y1="210" x2="196" y2="210" marker-end="url(#m)"/>
+  </g>
+
+  <text class="tx-l" x="480" y="16">실제 대상</text>
+  <rect class="bx" x="480" y="24" width="240" height="78" rx="8"/>
+  <text x="494" y="50">터미널 앱의 창</text>
+  <text class="tx-s" x="494" y="70">키보드에서 오고 화면으로 감</text>
+  <rect class="bx" x="480" y="150" width="240" height="36" rx="8"/>
+  <text x="494" y="173">디스크의 data.json</text>
+  <rect class="bx" x="480" y="192" width="240" height="36" rx="8"/>
+  <text x="494" y="215">네트워크 카드 너머의 서버</text>
+  <g class="ln">
+    <line x1="400" y1="62" x2="476" y2="62" marker-end="url(#m)"/>
+    <line x1="400" y1="168" x2="476" y2="168" marker-end="url(#m)"/>
+    <line x1="400" y1="210" x2="476" y2="210" marker-end="url(#m)"/>
+  </g>
+  <text class="tx-s" x="0" y="246">파일이든 소켓이든 프로세스 쪽에서는 똑같이 번호 하나로 read, write 합니다</text>
+</svg>

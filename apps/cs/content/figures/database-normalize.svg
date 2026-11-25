@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 404">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 나누기 전 -->
+  <text class="tx-l" x="20" y="20">나누기 전: posts 하나에 작성자 정보까지</text>
+  <g>
+    <rect class="bx-soft" x="20" y="32" width="40" height="28"/><rect class="bx-soft" x="60" y="32" width="80" height="28"/><rect class="bx-soft" x="140" y="32" width="110" height="28"/><rect class="bx-soft" x="250" y="32" width="120" height="28"/>
+    <rect class="bx" x="20" y="60" width="40" height="28"/><rect class="bx" x="60" y="60" width="80" height="28"/><rect class="bx" x="140" y="60" width="110" height="28"/><rect class="bx" x="250" y="60" width="120" height="28"/>
+    <rect class="bx" x="20" y="88" width="40" height="28"/><rect class="bx" x="60" y="88" width="80" height="28"/><rect class="bx" x="140" y="88" width="110" height="28"/><rect class="bx" x="250" y="88" width="120" height="28"/>
+    <rect class="bx" x="20" y="116" width="40" height="28"/><rect class="bx" x="60" y="116" width="80" height="28"/><rect class="bx" x="140" y="116" width="110" height="28"/><rect class="bx" x="250" y="116" width="120" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="40" y="51">id</text><text class="tx-b" x="100" y="51">title</text><text class="tx-b" x="195" y="51">author_name</text><text class="tx-b" x="310" y="51">author_email</text>
+    <text x="40" y="79">10</text><text x="100" y="79">첫 글</text><text x="195" y="79">민수</text><text class="tx-s tx-m" x="310" y="79">a@ex.com</text>
+    <text x="40" y="107">11</text><text x="100" y="107">둘째 글</text><text x="195" y="107">민수</text><text class="tx-s tx-m" x="310" y="107">a@ex.com</text>
+    <text x="40" y="135">12</text><text x="100" y="135">안녕</text><text x="195" y="135">지은</text><text class="tx-s tx-m" x="310" y="135">b@ex.com</text>
+  </g>
+  <rect class="ln-ink" x="141" y="61" width="228" height="54" rx="3"/>
+  <line class="ln" x1="371" y1="88" x2="398" y2="88"/>
+
+  <!-- 이상 현상 -->
+  <g>
+    <text class="tx-b" x="408" y="58">수정 이상</text>
+    <text class="tx-s" x="408" y="76">민수가 이메일을 바꾸면 두 줄을 모두 고쳐야 함</text>
+    <text class="tx-b" x="408" y="102">삽입 이상</text>
+    <text class="tx-s" x="408" y="120">글을 쓰기 전에는 사용자를 넣을 곳이 없음</text>
+    <text class="tx-b" x="408" y="146">삭제 이상</text>
+    <text class="tx-s" x="408" y="164">글 12를 지우면 지은의 정보도 사라짐</text>
+  </g>
+
+  <line class="ln" x1="195" y1="176" x2="195" y2="214" marker-end="url(#a)"/>
+  <text class="tx-s" x="208" y="200">같은 사실은 한 곳에만 두도록 나눔</text>
+
+  <!-- 나눈 뒤 -->
+  <text class="tx-l" x="20" y="244">나눈 뒤: posts</text>
+  <g>
+    <rect class="bx-soft" x="20" y="256" width="40" height="28"/><rect class="bx-soft" x="60" y="256" width="70" height="28"/><rect class="bx-soft" x="130" y="256" width="80" height="28"/>
+    <rect class="bx" x="20" y="284" width="40" height="28"/><rect class="bx" x="60" y="284" width="70" height="28"/><rect class="bx" x="130" y="284" width="80" height="28"/>
+    <rect class="bx" x="20" y="312" width="40" height="28"/><rect class="bx" x="60" y="312" width="70" height="28"/><rect class="bx" x="130" y="312" width="80" height="28"/>
+    <rect class="bx" x="20" y="340" width="40" height="28"/><rect class="bx" x="60" y="340" width="70" height="28"/><rect class="bx" x="130" y="340" width="80" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="40" y="275">id</text><text class="tx-b" x="95" y="275">user_id</text><text class="tx-b" x="170" y="275">title</text>
+    <text x="40" y="303">10</text><text x="95" y="303">1</text><text x="170" y="303">첫 글</text>
+    <text x="40" y="331">11</text><text x="95" y="331">1</text><text x="170" y="331">둘째 글</text>
+    <text x="40" y="359">12</text><text x="95" y="359">2</text><text x="170" y="359">안녕</text>
+  </g>
+
+  <text class="tx-l" x="290" y="244">나눈 뒤: users</text>
+  <g>
+    <rect class="bx-soft" x="290" y="256" width="40" height="28"/><rect class="bx-soft" x="330" y="256" width="70" height="28"/><rect class="bx-soft" x="400" y="256" width="100" height="28"/>
+    <rect class="bx" x="290" y="284" width="40" height="28"/><rect class="bx" x="330" y="284" width="70" height="28"/><rect class="bx" x="400" y="284" width="100" height="28"/>
+    <rect class="bx" x="290" y="312" width="40" height="28"/><rect class="bx" x="330" y="312" width="70" height="28"/><rect class="bx" x="400" y="312" width="100" height="28"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="tx-b" x="310" y="275">id</text><text class="tx-b" x="365" y="275">name</text><text class="tx-b" x="450" y="275">email</text>
+    <text x="310" y="303">1</text><text x="365" y="303">민수</text><text class="tx-s tx-m" x="450" y="303">a@ex.com</text>
+    <text x="310" y="331">2</text><text x="365" y="331">지은</text><text class="tx-s tx-m" x="450" y="331">b@ex.com</text>
+  </g>
+  <rect class="ln-ink" x="331" y="285" width="168" height="26" rx="3"/>
+  <line class="ln" x1="501" y1="298" x2="522" y2="298"/>
+  <text class="tx-s" x="530" y="294">민수의 이메일은 이 한 곳에만.</text>
+  <text class="tx-s" x="530" y="312">바꿀 때도 한 줄만 고칩니다.</text>
+
+  <text class="tx-s" x="20" y="394">글의 작성자는 user_id로 users를 찾아 조인해서 봅니다. 글이 없는 사용자도 users에 따로 남습니다.</text>
+</svg>

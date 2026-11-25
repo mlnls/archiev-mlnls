@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 350">
+  <!-- 꽉 차면 두 배 크기 새 메모리로 옮깁니다 -->
+  <g class="tx-m">
+    <text x="0" y="51">push(a)</text>
+    <text x="0" y="97">push(b)</text>
+    <text x="0" y="143">push(c)</text>
+    <text x="0" y="189">push(d)</text>
+    <text x="0" y="235">push(e)</text>
+  </g>
+  <text class="tx-l" x="130" y="18">메모리 칸</text>
+
+  <!-- 1: 용량 1 -->
+  <rect class="bx-ink" x="130" y="30" width="44" height="32" rx="5"/>
+  <text class="tx-inv" x="152" y="51" text-anchor="middle" font-weight="700">a</text>
+  <!-- 2: 용량 2 -->
+  <rect class="bx-soft" x="130" y="76" width="44" height="32" rx="5"/><text x="152" y="97" text-anchor="middle">a</text>
+  <rect class="bx-ink" x="178" y="76" width="44" height="32" rx="5"/><text class="tx-inv" x="200" y="97" text-anchor="middle" font-weight="700">b</text>
+  <!-- 3: 용량 4 -->
+  <rect class="bx-soft" x="130" y="122" width="44" height="32" rx="5"/><text x="152" y="143" text-anchor="middle">a</text>
+  <rect class="bx-soft" x="178" y="122" width="44" height="32" rx="5"/><text x="200" y="143" text-anchor="middle">b</text>
+  <rect class="bx-ink" x="226" y="122" width="44" height="32" rx="5"/><text class="tx-inv" x="248" y="143" text-anchor="middle" font-weight="700">c</text>
+  <rect class="bx-dash" x="274" y="122" width="44" height="32" rx="5"/>
+  <!-- 4: 빈칸에 넣기 -->
+  <rect class="bx" x="130" y="168" width="44" height="32" rx="5"/><text x="152" y="189" text-anchor="middle">a</text>
+  <rect class="bx" x="178" y="168" width="44" height="32" rx="5"/><text x="200" y="189" text-anchor="middle">b</text>
+  <rect class="bx" x="226" y="168" width="44" height="32" rx="5"/><text x="248" y="189" text-anchor="middle">c</text>
+  <rect class="bx-ink" x="274" y="168" width="44" height="32" rx="5"/><text class="tx-inv" x="296" y="189" text-anchor="middle" font-weight="700">d</text>
+  <!-- 5: 용량 8 -->
+  <rect class="bx-soft" x="130" y="214" width="44" height="32" rx="5"/><text x="152" y="235" text-anchor="middle">a</text>
+  <rect class="bx-soft" x="178" y="214" width="44" height="32" rx="5"/><text x="200" y="235" text-anchor="middle">b</text>
+  <rect class="bx-soft" x="226" y="214" width="44" height="32" rx="5"/><text x="248" y="235" text-anchor="middle">c</text>
+  <rect class="bx-soft" x="274" y="214" width="44" height="32" rx="5"/><text x="296" y="235" text-anchor="middle">d</text>
+  <rect class="bx-ink" x="322" y="214" width="44" height="32" rx="5"/><text class="tx-inv" x="344" y="235" text-anchor="middle" font-weight="700">e</text>
+  <rect class="bx-dash" x="370" y="214" width="44" height="32" rx="5"/>
+  <rect class="bx-dash" x="418" y="214" width="44" height="32" rx="5"/>
+  <rect class="bx-dash" x="466" y="214" width="44" height="32" rx="5"/>
+
+  <!-- 오른쪽 설명 -->
+  <g class="tx-s">
+    <text x="540" y="51">용량 1, 옮김 없음</text>
+    <text x="540" y="97">용량 1→2, 1개 옮김</text>
+    <text x="540" y="143">용량 2→4, 2개 옮김</text>
+    <text x="540" y="189">빈칸에 넣기만, 옮김 없음</text>
+    <text x="540" y="235">용량 4→8, 4개 옮김</text>
+  </g>
+
+  <line class="ln-faint" x1="0" y1="262" x2="720" y2="262"/>
+  <text x="0" y="286">push 5번 동안 옮긴 원소는 1 + 2 + 4 = 7개입니다.</text>
+  <text x="0" y="306">n번 push해도 옮긴 총량은 2n을 넘지 않아, 한 번당 분할 상환 O(1)입니다.</text>
+  <!-- 범례 -->
+  <rect class="bx-soft" x="0" y="324" width="16" height="14" rx="3"/><text class="tx-s" x="22" y="336">새 메모리로 옮긴 원소</text>
+  <rect class="bx-ink" x="170" y="324" width="16" height="14" rx="3"/><text class="tx-s" x="192" y="336">새로 넣은 원소</text>
+  <rect class="bx-dash" x="300" y="324" width="16" height="14" rx="3"/><text class="tx-s" x="322" y="336">빈 칸</text>
+</svg>

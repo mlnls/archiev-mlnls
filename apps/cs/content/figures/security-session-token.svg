@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 왼쪽: 세션 -->
+  <g>
+    <text class="tx-b" x="0" y="16">세션: 서버가 기억한다</text>
+    <text class="tx-s" x="0" y="36">쿠키에는 무작위 ID만 들어 있습니다</text>
+    <rect class="bx" x="0" y="56" width="140" height="60" rx="8"/>
+    <text class="tx-b" x="70" y="80" text-anchor="middle">브라우저</text>
+    <text class="tx-s tx-m" x="70" y="101" text-anchor="middle">sid=8f3a…</text>
+    <line class="ln" x1="140" y1="86" x2="198" y2="86" marker-end="url(#a)"/>
+    <rect class="bx" x="200" y="56" width="140" height="60" rx="8"/>
+    <text class="tx-b" x="270" y="80" text-anchor="middle">서버</text>
+    <text class="tx-s" x="270" y="101" text-anchor="middle">ID로 저장소를 찾음</text>
+    <line class="ln" x1="270" y1="116" x2="270" y2="148" marker-end="url(#a)"/>
+    <text class="tx-s" x="280" y="137">요청마다</text>
+    <rect class="bx-ink" x="120" y="150" width="220" height="86" rx="8"/>
+    <text class="tx-inv" x="230" y="174" text-anchor="middle" font-weight="700">세션 저장소</text>
+    <text class="tx-inv tx-s" x="230" y="198" text-anchor="middle">8f3a… → 사용자 42</text>
+    <text class="tx-inv tx-s" x="230" y="220" text-anchor="middle">c71d… → 사용자 7</text>
+    <text class="tx-s" x="0" y="268">강제 로그아웃: 저장소에서 지우면 끝</text>
+    <text class="tx-s" x="0" y="286">대신 요청마다 저장소를 한 번 찾습니다</text>
+  </g>
+
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="296"/>
+
+  <!-- 오른쪽: 토큰 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">토큰: 값 자체가 증명한다</text>
+    <text class="tx-s" x="0" y="36">쿠키에 내용과 서명이 다 들어 있습니다</text>
+    <rect class="bx" x="0" y="56" width="70" height="32" rx="6"/>
+    <text class="tx-s tx-m" x="35" y="76" text-anchor="middle">HS256</text>
+    <text class="tx-b" x="75" y="78" text-anchor="middle">.</text>
+    <rect class="bx" x="80" y="56" width="160" height="32" rx="6"/>
+    <text class="tx-s tx-m" x="160" y="76" text-anchor="middle">sub:42, exp:…</text>
+    <text class="tx-b" x="245" y="78" text-anchor="middle">.</text>
+    <rect class="bx" x="250" y="56" width="90" height="32" rx="6"/>
+    <text class="tx-s tx-m" x="295" y="76" text-anchor="middle">9fK2…</text>
+    <g class="tx-s" text-anchor="middle">
+      <text x="35" y="106">헤더</text>
+      <text x="160" y="106">내용: 누구나 읽음</text>
+      <text x="295" y="106">서명: 변조 막음</text>
+    </g>
+    <line class="ln" x1="220" y1="114" x2="220" y2="148" marker-end="url(#a)"/>
+    <rect class="bx-dash" x="0" y="150" width="84" height="60" rx="8"/>
+    <text class="tx-s" x="42" y="176" text-anchor="middle">저장소</text>
+    <text class="tx-s" x="42" y="193" text-anchor="middle">필요 없음</text>
+    <rect class="bx" x="100" y="150" width="240" height="60" rx="8"/>
+    <text class="tx-b" x="220" y="174" text-anchor="middle">서버</text>
+    <text class="tx-s" x="220" y="195" text-anchor="middle">비밀 키로 서명만 확인</text>
+    <text class="tx-s" x="0" y="268">강제 로그아웃: 만료 전까지 막기 어려움</text>
+    <text class="tx-s" x="0" y="286">막으려면 차단 목록을 따로 둬야 합니다</text>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 372">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 왼쪽: 스택 -->
+  <text class="tx-b" x="0" y="16">스택</text>
+  <text class="tx-s" x="0" y="36">한쪽 끝(위)에서만 넣고 뺍니다</text>
+  <polyline class="ln" fill="none" points="60,112 60,262 200,262 200,112"/>
+  <rect class="bx" x="70" y="222" width="120" height="34" rx="6"/><text x="130" y="244" text-anchor="middle">A</text>
+  <rect class="bx" x="70" y="184" width="120" height="34" rx="6"/><text x="130" y="206" text-anchor="middle">B</text>
+  <rect class="bx-ink" x="70" y="146" width="120" height="34" rx="6"/><text class="tx-inv" x="130" y="168" text-anchor="middle" font-weight="700">C</text>
+  <line class="ln" x1="100" y1="74" x2="100" y2="140" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="160" y1="140" x2="160" y2="74" marker-end="url(#k)"/>
+  <text class="tx-m" x="100" y="64" text-anchor="middle">push</text>
+  <text class="tx-m" x="160" y="64" text-anchor="middle">pop</text>
+  <text class="tx-s" x="0" y="292">마지막에 넣은 C가 가장 먼저 나옵니다 (LIFO)</text>
+
+  <line class="ln-faint" x1="350" y1="0" x2="350" y2="372"/>
+
+  <!-- 오른쪽: 큐 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">큐</text>
+    <text class="tx-s" x="0" y="36">뒤로 넣고 앞에서 뺍니다 (FIFO)</text>
+    <rect class="bx-ink" x="70" y="62" width="50" height="34" rx="6"/><text class="tx-inv" x="95" y="84" text-anchor="middle" font-weight="700">A</text>
+    <rect class="bx" x="124" y="62" width="50" height="34" rx="6"/><text x="149" y="84" text-anchor="middle">B</text>
+    <rect class="bx" x="178" y="62" width="50" height="34" rx="6"/><text x="203" y="84" text-anchor="middle">C</text>
+    <rect class="bx" x="232" y="62" width="50" height="34" rx="6"/><text x="257" y="84" text-anchor="middle">D</text>
+    <line class="ln-ink" x1="66" y1="79" x2="18" y2="79" marker-end="url(#k)"/>
+    <line class="ln" x1="334" y1="79" x2="288" y2="79" marker-end="url(#a)"/>
+    <text class="tx-s" x="40" y="116" text-anchor="middle">꺼내기</text>
+    <text class="tx-s" x="310" y="116" text-anchor="middle">넣기</text>
+
+    <text class="tx-l" x="0" y="148">arr.shift()로 꺼내면</text>
+    <rect class="bx" x="70" y="158" width="50" height="34" rx="6"/><text x="95" y="180" text-anchor="middle">B</text>
+    <rect class="bx" x="124" y="158" width="50" height="34" rx="6"/><text x="149" y="180" text-anchor="middle">C</text>
+    <rect class="bx" x="178" y="158" width="50" height="34" rx="6"/><text x="203" y="180" text-anchor="middle">D</text>
+    <rect class="bx-dash" x="232" y="158" width="50" height="34" rx="6"/>
+    <path class="ln" fill="none" d="M145 198 Q122 216 101 198" marker-end="url(#a)"/>
+    <path class="ln" fill="none" d="M199 198 Q176 216 155 198" marker-end="url(#a)"/>
+    <path class="ln" fill="none" d="M253 198 Q230 216 209 198" marker-end="url(#a)"/>
+    <text class="tx-s" x="70" y="238">남은 원소를 모두 한 칸씩 당김: O(n)</text>
+
+    <text class="tx-l" x="0" y="272">앞 번호(head)를 두면</text>
+    <rect class="bx-dash" x="70" y="282" width="50" height="34" rx="6"/><text class="tx-s" x="95" y="304" text-anchor="middle">A</text>
+    <rect class="bx" x="124" y="282" width="50" height="34" rx="6"/><text x="149" y="304" text-anchor="middle">B</text>
+    <rect class="bx" x="178" y="282" width="50" height="34" rx="6"/><text x="203" y="304" text-anchor="middle">C</text>
+    <rect class="bx" x="232" y="282" width="50" height="34" rx="6"/><text x="257" y="304" text-anchor="middle">D</text>
+    <line class="ln" x1="149" y1="342" x2="149" y2="320" marker-end="url(#a)"/>
+    <text class="tx-m" x="158" y="340">head</text>
+    <text class="tx-s" x="70" y="364">원소는 두고 번호만 한 칸 옮김: O(1)</text>
+  </g>
+</svg>

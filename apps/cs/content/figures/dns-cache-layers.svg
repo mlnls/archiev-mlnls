@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-s" x="0" y="16">질문은 왼쪽부터 차례로 갑니다. 어느 칸에서든 답을 찾으면 거기서 끝나고, 없으면 오른쪽으로 넘어갑니다</text>
+
+  <rect class="bx" x="0" y="34" width="118" height="64" rx="8"/>
+  <text class="tx-b" x="59" y="60" text-anchor="middle">브라우저</text>
+  <text class="tx-s" x="59" y="81" text-anchor="middle">브라우저 캐시</text>
+
+  <rect class="bx" x="138" y="34" width="118" height="64" rx="8"/>
+  <text class="tx-b" x="197" y="60" text-anchor="middle">운영체제</text>
+  <text class="tx-s" x="197" y="81" text-anchor="middle">hosts 파일, 캐시</text>
+
+  <rect class="bx" x="276" y="34" width="118" height="64" rx="8"/>
+  <text class="tx-b" x="335" y="60" text-anchor="middle">공유기</text>
+  <text class="tx-s" x="335" y="81" text-anchor="middle">캐시 (중계)</text>
+
+  <rect class="bx-ink" x="414" y="34" width="118" height="64" rx="8"/>
+  <text class="tx-b tx-inv" x="473" y="60" text-anchor="middle">재귀 리졸버</text>
+  <text class="tx-s tx-inv" x="473" y="81" text-anchor="middle">모두가 나눠 쓰는 캐시</text>
+
+  <rect class="bx-dash" x="552" y="34" width="168" height="64" rx="8"/>
+  <text class="tx-b" x="636" y="60" text-anchor="middle">네임서버들</text>
+  <text class="tx-s" x="636" y="81" text-anchor="middle">루트 → TLD → 권한</text>
+
+  <line class="ln" x1="118" y1="66" x2="136" y2="66" marker-end="url(#a)"/>
+  <line class="ln" x1="256" y1="66" x2="274" y2="66" marker-end="url(#a)"/>
+  <line class="ln" x1="394" y1="66" x2="412" y2="66" marker-end="url(#a)"/>
+  <line class="ln" x1="532" y1="66" x2="550" y2="66" marker-end="url(#a)"/>
+
+  <!-- 돌아오는 답: 지나가는 칸마다 TTL 동안 저장 -->
+  <line class="ln ln-dash" x1="59" y1="98" x2="59" y2="140"/>
+  <line class="ln ln-dash" x1="197" y1="98" x2="197" y2="140"/>
+  <line class="ln ln-dash" x1="335" y1="98" x2="335" y2="140"/>
+  <line class="ln ln-dash" x1="473" y1="98" x2="473" y2="140"/>
+  <line class="ln-ink" x1="636" y1="98" x2="636" y2="140"/>
+  <line class="ln-ink" x1="636" y1="140" x2="20" y2="140" marker-end="url(#k)"/>
+  <circle class="dot" cx="59" cy="140" r="4"/>
+  <circle class="dot" cx="197" cy="140" r="4"/>
+  <circle class="dot" cx="335" cy="140" r="4"/>
+  <circle class="dot" cx="473" cy="140" r="4"/>
+  <text class="tx-s" x="636" y="160" text-anchor="middle">답과 TTL 3600</text>
+  <text x="0" y="186">답이 돌아오며 지나가는 칸마다 TTL 동안 저장됩니다.</text>
+  <text class="tx-s" x="0" y="208">유명한 이름은 다른 사람이 이미 물어 둔 덕에 대개 재귀 리졸버에서 끝납니다.</text>
+  <text class="tx-s" x="0" y="226">"전파"란 없습니다. 각 칸의 옛 답이 TTL이 다해 사라질 때까지 기다리는 것뿐입니다.</text>
+</svg>

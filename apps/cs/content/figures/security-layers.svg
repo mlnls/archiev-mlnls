@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 겹: 위가 바깥, 아래가 안쪽 -->
+  <rect class="bx-soft" x="0" y="60" width="720" height="42" rx="8"/>
+  <text class="tx-b" x="14" y="78">클라우드 방화벽</text>
+  <text class="tx-s" x="14" y="94">22, 80, 443 포트만 연다</text>
+  <rect class="bx-soft" x="0" y="112" width="720" height="42" rx="8"/>
+  <text class="tx-b" x="14" y="130">서버 방화벽</text>
+  <text class="tx-s" x="14" y="146">서버에서 한 번 더 거른다</text>
+  <rect class="bx-soft" x="0" y="164" width="720" height="42" rx="8"/>
+  <text class="tx-b" x="14" y="182">앱의 인증과 인가</text>
+  <text class="tx-s" x="14" y="198">요청마다 자원의 주인인지 확인</text>
+  <rect class="bx-soft" x="0" y="216" width="720" height="42" rx="8"/>
+  <text class="tx-b" x="14" y="234">DB 권한</text>
+  <text class="tx-s" x="14" y="250">앱 계정엔 필요한 테이블만</text>
+  <rect class="bx-ink" x="0" y="268" width="720" height="42" rx="8"/>
+  <text class="tx-inv" x="14" y="286" font-weight="700">암호화된 데이터</text>
+  <text class="tx-inv tx-s" x="14" y="302">털려도 읽을 수 없게</text>
+
+  <!-- 공격 네 가지. 각각 다른 겹에서 멈춤 -->
+  <g class="tx-s" text-anchor="middle">
+    <text x="340" y="18">닫힌 포트 접속</text>
+    <text x="450" y="18">남의 주문 조회</text>
+    <text x="560" y="18">SQL 인젝션</text>
+    <text x="670" y="18">백업 파일 유출</text>
+  </g>
+  <line class="ln" x1="340" y1="26" x2="340" y2="58" marker-end="url(#a)"/>
+  <line class="ln" x1="450" y1="26" x2="450" y2="162" marker-end="url(#a)"/>
+  <line class="ln" x1="560" y1="26" x2="560" y2="214" marker-end="url(#a)"/>
+  <line class="ln" x1="670" y1="26" x2="670" y2="266" marker-end="url(#a)"/>
+  <g class="ln-ink">
+    <line x1="322" y1="60" x2="358" y2="60"/>
+    <line x1="432" y1="164" x2="468" y2="164"/>
+    <line x1="542" y1="216" x2="578" y2="216"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="340" y="88">막힘</text>
+    <text x="450" y="192">403</text>
+    <text x="560" y="244">권한 없음</text>
+  </g>
+  <text class="tx-inv tx-s" x="670" y="296" text-anchor="middle">암호문뿐</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 488">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 사용자 공간: JS에서 libuv까지 -->
+  <rect class="bx" x="220" y="8" width="280" height="36" rx="6"/>
+  <text class="tx-m" x="360" y="31" text-anchor="middle">fs.readFile("a.txt")</text>
+  <line class="ln" x1="360" y1="44" x2="360" y2="60" marker-end="url(#a)"/>
+  <rect class="bx" x="220" y="62" width="280" height="36" rx="6"/>
+  <text x="360" y="85" text-anchor="middle">Node의 C++ 바인딩</text>
+  <line class="ln" x1="360" y1="98" x2="360" y2="114" marker-end="url(#a)"/>
+  <rect class="bx" x="220" y="116" width="280" height="46" rx="6"/>
+  <text x="360" y="136" text-anchor="middle">libuv</text>
+  <text class="tx-s" x="360" y="153" text-anchor="middle">운영체제 차이를 감싸는 라이브러리</text>
+
+  <!-- 운영체제별 갈림길 -->
+  <polyline class="ln" points="360,162 360,172 200,172 200,184" marker-end="url(#a)"/>
+  <polyline class="ln" points="360,172 520,172 520,184"  marker-end="url(#a)"/>
+  <text class="tx-l" x="60" y="180">macOS · Linux</text>
+  <text class="tx-l" x="660" y="180" text-anchor="end">Windows</text>
+
+  <rect class="bx" x="60" y="186" width="280" height="46" rx="6"/>
+  <text class="tx-m" x="200" y="206" text-anchor="middle">open() read() close()</text>
+  <text class="tx-s" x="200" y="223" text-anchor="middle">libSystem, glibc의 POSIX 함수</text>
+
+  <rect class="bx" x="380" y="186" width="280" height="46" rx="6"/>
+  <text class="tx-m" x="520" y="206" text-anchor="middle">CreateFileW() ReadFile()</text>
+  <text class="tx-s" x="520" y="223" text-anchor="middle">kernel32.dll의 Win32 API</text>
+  <line class="ln" x1="520" y1="232" x2="520" y2="246" marker-end="url(#a)"/>
+  <rect class="bx" x="380" y="248" width="280" height="46" rx="6"/>
+  <text class="tx-m" x="520" y="268" text-anchor="middle">NtCreateFile NtReadFile</text>
+  <text class="tx-s" x="520" y="285" text-anchor="middle">ntdll.dll의 Native API</text>
+
+  <!-- 경계 -->
+  <line class="ln ln-dash" x1="0" y1="316" x2="720" y2="316"/>
+  <text class="tx-s" x="0" y="310">사용자 모드</text>
+  <text class="tx-s" x="0" y="332">커널 모드</text>
+  <line class="ln-ink" x1="200" y1="232" x2="200" y2="346" marker-end="url(#k)"/>
+  <line class="ln-ink" x1="520" y1="294" x2="520" y2="346" marker-end="url(#k)"/>
+  <text class="tx-b" x="210" y="310">시스템 콜</text>
+  <text class="tx-b" x="530" y="310">시스템 콜</text>
+
+  <!-- 커널 안 -->
+  <rect class="bx" x="60" y="348" width="600" height="36" rx="6"/>
+  <text x="360" y="371" text-anchor="middle">커널의 파일 시스템</text>
+  <line class="ln" x1="360" y1="384" x2="360" y2="400" marker-end="url(#a)"/>
+  <rect class="bx" x="220" y="402" width="280" height="36" rx="6"/>
+  <text x="360" y="425" text-anchor="middle">디스크 드라이버</text>
+  <line class="ln" x1="360" y1="438" x2="360" y2="450" marker-end="url(#a)"/>
+  <rect class="bx-soft" x="220" y="452" width="280" height="34" rx="6"/>
+  <text class="tx-b" x="360" y="474" text-anchor="middle">SSD</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 246">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 디렉터리 -->
+  <text class="tx-l" x="0" y="16">디렉터리 notes/ (이름 → inode 번호 목록)</text>
+  <rect class="bx" x="0" y="24" width="220" height="120" rx="8"/>
+  <g class="tx-m">
+    <text class="tx-s" x="14" y="50">a.txt</text><text class="tx-s" x="160" y="50">→ 812</text>
+    <text x="14" y="80">report.pdf</text><text x="160" y="80">→ 4096</text>
+    <text class="tx-s" x="14" y="110">todo.md</text><text class="tx-s" x="160" y="110">→ 915</text>
+  </g>
+  <rect class="bx-ink" x="6" y="64" width="208" height="24" rx="4" opacity="0.08"/>
+  <text class="tx-l" x="0" y="172">다른 디렉터리 backup/</text>
+  <rect class="bx-dash" x="0" y="180" width="220" height="40" rx="8"/>
+  <text class="tx-s tx-m" x="14" y="205">copy.pdf</text><text class="tx-s tx-m" x="160" y="205">→ 4096</text>
+
+  <!-- inode -->
+  <rect class="bx-ink" x="300" y="44" width="180" height="116" rx="8"/>
+  <text class="tx-inv" x="316" y="68" font-weight="700">inode 4096</text>
+  <g class="tx-inv tx-s">
+    <text x="316" y="90">크기 2.1MB, 주인 me</text>
+    <text x="316" y="108">권한 rw-r--r--</text>
+    <text x="316" y="126">고친 때 11월 25일</text>
+    <text x="316" y="144">데이터: 블록 7, 8, 9, 23</text>
+  </g>
+  <line class="ln-ink" x1="220" y1="76" x2="296" y2="90" marker-end="url(#a)"/>
+  <line class="ln ln-dash" x1="220" y1="200" x2="296" y2="140" marker-end="url(#m)"/>
+  <text class="tx-s" x="228" y="236">하드 링크: 같은 inode를 가리키는 이름 하나 더</text>
+
+  <!-- 블록 -->
+  <text class="tx-l" x="540" y="16">디스크 블록</text>
+  <g class="bx">
+    <rect x="540" y="24" width="56" height="30" rx="4"/><rect x="600" y="24" width="56" height="30" rx="4"/><rect x="660" y="24" width="56" height="30" rx="4"/>
+    <rect x="540" y="130" width="56" height="30" rx="4"/>
+  </g>
+  <g class="tx-s tx-m" text-anchor="middle">
+    <text x="568" y="44">7</text><text x="628" y="44">8</text><text x="688" y="44">9</text><text x="568" y="150">23</text>
+  </g>
+  <text class="tx-s" x="610" y="96" text-anchor="middle">⋮</text>
+  <line class="ln" x1="480" y1="96" x2="536" y2="44" marker-end="url(#m)"/>
+  <line class="ln" x1="480" y1="120" x2="536" y2="144" marker-end="url(#m)"/>
+  <text class="tx-s" x="540" y="190">이름을 바꾸면(mv) 왼쪽 목록의</text>
+  <text class="tx-s" x="540" y="206">한 줄만 고치고, inode와 블록은</text>
+  <text class="tx-s" x="540" y="222">그대로입니다</text>
+</svg>

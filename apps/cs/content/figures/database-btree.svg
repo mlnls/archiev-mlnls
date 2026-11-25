@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <g class="tx-l">
+    <text x="20" y="52">루트</text>
+    <text x="20" y="132">중간 노드</text>
+  </g>
+
+  <!-- 루트 -->
+  <rect class="bx" x="320" y="30" width="80" height="34" rx="6"/>
+  <text class="tx-s tx-m" x="360" y="52" text-anchor="middle">m@</text>
+  <text class="tx-s" x="412" y="52">a@는 m@보다 앞이니 왼쪽으로</text>
+
+  <!-- 중간 노드 -->
+  <rect class="bx" x="126" y="110" width="120" height="34" rx="6"/>
+  <text class="tx-s tx-m" x="186" y="132" text-anchor="middle">c@  |  g@</text>
+  <text class="tx-s" x="256" y="132">c@보다 앞이니 첫 리프로</text>
+  <rect class="bx" x="474" y="110" width="120" height="34" rx="6"/>
+  <text class="tx-s tx-m" x="534" y="132" text-anchor="middle">r@  |  w@</text>
+
+  <!-- 가지 -->
+  <g class="ln-faint">
+    <line x1="380" y1="64" x2="534" y2="110"/>
+    <line x1="186" y1="144" x2="186" y2="200"/>
+    <line x1="236" y1="144" x2="302" y2="200"/>
+    <line x1="484" y1="144" x2="418" y2="200"/>
+    <line x1="534" y1="144" x2="534" y2="200"/>
+    <line x1="584" y1="144" x2="650" y2="200"/>
+  </g>
+  <g class="ln-ink">
+    <line x1="340" y1="64" x2="190" y2="108" marker-end="url(#k)"/>
+    <line x1="136" y1="144" x2="74" y2="197" marker-end="url(#k)"/>
+  </g>
+
+  <!-- 리프 -->
+  <g>
+    <rect class="bx" x="20" y="200" width="100" height="50" rx="6"/>
+    <rect class="bx" x="136" y="200" width="100" height="50" rx="6"/>
+    <rect class="bx" x="252" y="200" width="100" height="50" rx="6"/>
+    <rect class="bx" x="368" y="200" width="100" height="50" rx="6"/>
+    <rect class="bx" x="484" y="200" width="100" height="50" rx="6"/>
+    <rect class="bx" x="600" y="200" width="100" height="50" rx="6"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text class="tx-b" x="70" y="221">a@ → 행 5</text><text x="70" y="239">b@ → 행 9</text>
+    <text x="186" y="221">c@ → 행 2</text><text x="186" y="239">e@ → 행 7</text>
+    <text x="302" y="221">g@ → 행 1</text><text x="302" y="239">k@ → 행 4</text>
+    <text x="418" y="221">m@ → 행 3</text><text x="418" y="239">p@ → 행 8</text>
+    <text x="534" y="221">r@ → 행 6</text><text x="534" y="239">t@ → 행 10</text>
+    <text x="650" y="221">w@ → 행 11</text><text x="650" y="239">y@ → 행 12</text>
+  </g>
+  <g class="ln">
+    <line x1="121" y1="225" x2="134" y2="225" marker-end="url(#a)"/>
+    <line x1="237" y1="225" x2="250" y2="225" marker-end="url(#a)"/>
+    <line x1="353" y1="225" x2="366" y2="225" marker-end="url(#a)"/>
+    <line x1="469" y1="225" x2="482" y2="225" marker-end="url(#a)"/>
+    <line x1="585" y1="225" x2="598" y2="225" marker-end="url(#a)"/>
+  </g>
+  <text class="tx-s" x="136" y="270">리프: 정렬된 값과 행 위치. 옆 리프와 이어져 있어 범위는 옆으로 따라 읽습니다</text>
+
+  <!-- 테이블 본체 -->
+  <line class="ln-ink" x1="70" y1="250" x2="70" y2="290" marker-end="url(#k)"/>
+  <rect class="bx-ink" x="20" y="294" width="220" height="38" rx="6"/>
+  <text class="tx-inv" x="130" y="318" text-anchor="middle">테이블의 행 5 (a@ex.com, 민수)</text>
+  <text class="tx-s" x="256" y="310">루트 → 중간 노드 → 리프 → 테이블. 페이지 몇 개만 읽고 끝납니다.</text>
+  <text class="tx-s" x="256" y="328">행이 1000만 개여도 높이는 3~4 정도라 O(log n)입니다.</text>
+</svg>

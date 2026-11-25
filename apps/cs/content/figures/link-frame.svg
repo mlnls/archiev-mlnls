@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <!-- 이더넷 프레임의 칸. 길이는 비례가 아님 -->
+  <g class="ln">
+    <line x1="0" y1="30" x2="310" y2="30"/>
+    <line x1="0" y1="24" x2="0" y2="36"/>
+    <line x1="310" y1="24" x2="310" y2="36"/>
+    <line x1="310" y1="30" x2="640" y2="30"/>
+    <line x1="640" y1="24" x2="640" y2="36"/>
+  </g>
+  <rect class="bx-soft" x="105" y="21" width="100" height="18" rx="4"/>
+  <text class="tx-s" x="155" y="34" text-anchor="middle">헤더 14바이트</text>
+  <rect class="bx-soft" x="385" y="21" width="180" height="18" rx="4"/>
+  <text class="tx-s" x="475" y="34" text-anchor="middle">MTU: 최대 1500바이트</text>
+
+  <rect class="bx-ink" x="0" y="50" width="120" height="56" rx="6"/>
+  <text class="tx-inv" x="60" y="74" text-anchor="middle" font-weight="700">받는 쪽 MAC</text>
+  <text class="tx-inv tx-s" x="60" y="93" text-anchor="middle">6바이트</text>
+  <rect class="bx" x="120" y="50" width="120" height="56" rx="6"/>
+  <text x="180" y="74" text-anchor="middle">보내는 쪽 MAC</text>
+  <text class="tx-s" x="180" y="93" text-anchor="middle">6바이트</text>
+  <rect class="bx" x="240" y="50" width="70" height="56" rx="6"/>
+  <text x="275" y="74" text-anchor="middle">타입</text>
+  <text class="tx-s" x="275" y="93" text-anchor="middle">2바이트</text>
+  <rect class="bx-soft" x="310" y="50" width="330" height="56" rx="6"/>
+  <text x="475" y="74" text-anchor="middle">페이로드 (대개 IP 패킷)</text>
+  <text class="tx-s" x="475" y="93" text-anchor="middle">46~1500바이트</text>
+  <rect class="bx" x="640" y="50" width="80" height="56" rx="6"/>
+  <text x="680" y="74" text-anchor="middle">FCS</text>
+  <text class="tx-s" x="680" y="93" text-anchor="middle">4바이트</text>
+
+  <!-- 칸 설명 -->
+  <line class="ln" x1="60" y1="106" x2="60" y2="128"/>
+  <text class="tx-s" x="0" y="144">네트워크 카드와 스위치가</text>
+  <text class="tx-s" x="0" y="160">가장 먼저 보는 칸</text>
+  <line class="ln" x1="275" y1="106" x2="275" y2="128"/>
+  <text class="tx-s tx-m" x="240" y="144">0x0800 IPv4 · 0x86DD IPv6 · 0x0806 ARP</text>
+  <line class="ln" x1="680" y1="106" x2="680" y2="158"/>
+  <text class="tx-s" x="672" y="176" text-anchor="end">앞의 칸 전체로 계산한 CRC. 받는 쪽이 다시 계산해 다르면 버림</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380">
+  <defs>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <text class="tx-l" x="20" y="16">반복문으로 글마다 작성자 조회</text>
+  <text class="tx-l" x="420" y="16">조인(include)으로 한 번에</text>
+
+  <!-- 왼쪽: N+1 -->
+  <rect class="bx" x="30" y="30" width="80" height="30" rx="6"/>
+  <rect class="bx" x="220" y="30" width="80" height="30" rx="6"/>
+  <text class="tx-b" x="70" y="50" text-anchor="middle">앱 서버</text>
+  <text class="tx-b" x="260" y="50" text-anchor="middle">DB</text>
+  <line class="ln-faint" x1="70" y1="60" x2="70" y2="340"/>
+  <line class="ln-faint" x1="260" y1="60" x2="260" y2="340"/>
+  <polyline class="ln-ink" points="70,68 260,74 70,80"/>
+  <polyline class="ln" points="70,80 260,86 70,92 70,92 260,98 70,104 70,104 260,110 70,116 70,116 260,122 70,128 70,128 260,134 70,140 70,140 260,146 70,152 70,152 260,158 70,164 70,164 260,170 70,176 70,176 260,182 70,188 70,188 260,194 70,200 70,200 260,206 70,212 70,212 260,218 70,224 70,224 260,230 70,236 70,236 260,242 70,248 70,248 260,254 70,260 70,260 260,266 70,272 70,272 260,278 70,284 70,284 260,290 70,296 70,296 260,302 70,308 70,308 260,314 70,320"/>
+  <text class="tx-s" x="282" y="72">글 20개: 1번</text>
+  <path class="ln" d="M276 84 H284 V320 H276"/>
+  <text class="tx-s" x="294" y="202">작성자를</text>
+  <text class="tx-s" x="294" y="218">1명씩: 20번</text>
+
+  <!-- 오른쪽: 한 번 -->
+  <rect class="bx" x="430" y="30" width="80" height="30" rx="6"/>
+  <rect class="bx" x="620" y="30" width="80" height="30" rx="6"/>
+  <text class="tx-b" x="470" y="50" text-anchor="middle">앱 서버</text>
+  <text class="tx-b" x="660" y="50" text-anchor="middle">DB</text>
+  <line class="ln-faint" x1="470" y1="60" x2="470" y2="340"/>
+  <line class="ln-faint" x1="660" y1="60" x2="660" y2="340"/>
+  <polyline class="ln-ink" points="470,68 660,74 470,80"/>
+  <text class="tx-s" x="480" y="104">글 20개와 작성자를 함께: 1번</text>
+  <text class="tx-s" x="480" y="122">ID를 모아 IN (...)으로 가져와도 2번</text>
+
+  <line class="ln-faint" x1="380" y1="10" x2="380" y2="370"/>
+  <text class="tx-b" x="20" y="366">왕복 21번. 왕복이 1ms면 21ms 이상</text>
+  <text class="tx-b" x="420" y="366">왕복 1번. 1ms</text>
+</svg>

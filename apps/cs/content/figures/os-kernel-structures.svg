@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 404">
+  <!-- 세 구조를 같은 높이의 경계로 나란히 -->
+  <g class="tx-b" text-anchor="middle">
+    <text x="120" y="18">모놀리식</text>
+    <text x="360" y="18">마이크로커널</text>
+    <text x="600" y="18">하이브리드</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="120" y="36">Linux</text>
+    <text x="360" y="36">Mach, MINIX, QNX</text>
+    <text x="600" y="36">Windows NT, macOS XNU</text>
+  </g>
+
+  <!-- 사용자 공간 -->
+  <rect class="bx-soft" x="10" y="48" width="220" height="140" rx="8"/>
+  <rect class="bx-soft" x="250" y="48" width="220" height="140" rx="8"/>
+  <rect class="bx-soft" x="490" y="48" width="220" height="140" rx="8"/>
+  <g class="tx-l">
+    <text x="22" y="66">사용자 공간</text>
+    <text x="262" y="66">사용자 공간</text>
+    <text x="502" y="66">사용자 공간</text>
+  </g>
+
+  <line class="ln ln-dash" x1="0" y1="198" x2="720" y2="198"/>
+
+  <!-- 커널 -->
+  <rect class="bx-line" x="10" y="208" width="220" height="148" rx="8"/>
+  <rect class="bx-line" x="250" y="208" width="220" height="148" rx="8"/>
+  <rect class="bx-line" x="490" y="208" width="220" height="148" rx="8"/>
+  <g class="tx-l">
+    <text x="22" y="226">커널</text>
+    <text x="262" y="226">커널</text>
+    <text x="502" y="226">커널</text>
+  </g>
+
+  <g text-anchor="middle">
+    <!-- 모놀리식 -->
+    <rect class="bx" x="22" y="74" width="196" height="26" rx="6"/><text x="120" y="92">앱</text>
+    <rect class="bx" x="22" y="234" width="196" height="26" rx="6"/><text x="120" y="252">프로세스 · 메모리</text>
+    <rect class="bx" x="22" y="264" width="196" height="26" rx="6"/><text x="120" y="282">파일 시스템</text>
+    <rect class="bx" x="22" y="294" width="196" height="26" rx="6"/><text x="120" y="312">네트워크</text>
+    <rect class="bx" x="22" y="324" width="196" height="26" rx="6"/><text x="120" y="342">드라이버</text>
+
+    <!-- 마이크로커널 -->
+    <rect class="bx" x="262" y="74" width="196" height="26" rx="6"/><text x="360" y="92">앱</text>
+    <rect class="bx" x="262" y="104" width="196" height="26" rx="6"/><text x="360" y="122">파일 시스템 서버</text>
+    <rect class="bx" x="262" y="134" width="196" height="26" rx="6"/><text x="360" y="152">네트워크 서버</text>
+    <rect class="bx" x="262" y="164" width="196" height="20" rx="6"/><text x="360" y="178" class="tx-s">드라이버 서버</text>
+    <rect class="bx" x="262" y="234" width="196" height="26" rx="6"/><text x="360" y="252">프로세스 · 메모리</text>
+    <rect class="bx-ink" x="262" y="264" width="196" height="26" rx="6"/><text class="tx-inv" x="360" y="282">메시지 전달</text>
+    <text class="tx-s" x="360" y="316">나머지는 모두 메시지로</text>
+    <text class="tx-s" x="360" y="334">주고받습니다</text>
+
+    <!-- 하이브리드 -->
+    <rect class="bx" x="502" y="74" width="196" height="26" rx="6"/><text x="600" y="92">앱</text>
+    <rect class="bx" x="502" y="234" width="196" height="26" rx="6"/><text x="600" y="252">마이크로커널 핵심</text>
+    <rect class="bx" x="502" y="264" width="196" height="26" rx="6"/><text x="600" y="282">파일 시스템</text>
+    <rect class="bx" x="502" y="294" width="196" height="26" rx="6"/><text x="600" y="312">네트워크</text>
+    <rect class="bx" x="502" y="324" width="196" height="26" rx="6"/><text x="600" y="342">드라이버</text>
+  </g>
+
+  <!-- 장단점 -->
+  <g class="tx-s" text-anchor="middle">
+    <text x="120" y="378">함수 호출이라 빠름</text>
+    <text x="120" y="396">버그 하나가 전체를 멈춤</text>
+    <text x="360" y="378">서버가 죽어도 다시 띄움</text>
+    <text x="360" y="396">메시지 비용으로 느려지기 쉬움</text>
+    <text x="600" y="378">마이크로커널 구조에</text>
+    <text x="600" y="396">성능 때문에 다시 넣음</text>
+  </g>
+</svg>

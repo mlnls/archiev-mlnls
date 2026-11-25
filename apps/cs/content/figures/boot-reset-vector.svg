@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="230" y="12">CPU가 보는 주소 공간</text>
+  <g class="tx-s tx-m" text-anchor="end">
+    <text x="220" y="30">0xFFFFFFFF</text>
+    <text x="220" y="250">0x00000000</text>
+  </g>
+
+  <rect class="bx-ink" x="230" y="20" width="230" height="44" rx="6"/>
+  <text class="tx-inv" x="345" y="40" text-anchor="middle" font-weight="700">펌웨어</text>
+  <text class="tx-inv tx-s" x="345" y="56" text-anchor="middle">메인보드 플래시 칩에 연결</text>
+  <rect class="bx" x="230" y="68" width="230" height="34" rx="6"/>
+  <text class="tx-s" x="345" y="90" text-anchor="middle">장치들 (그래픽, PCIe 등)</text>
+  <rect class="bx-dash" x="230" y="106" width="230" height="146" rx="6"/>
+  <text x="345" y="176" text-anchor="middle">RAM</text>
+  <text class="tx-s" x="345" y="194" text-anchor="middle">아직 아무것도 없음</text>
+
+  <!-- CPU -->
+  <rect class="bx" x="530" y="110" width="186" height="70" rx="8"/>
+  <text class="tx-b" x="546" y="134">CPU</text>
+  <text class="tx-s tx-m" x="546" y="156">PC = 0xFFFFFFF0</text>
+  <text class="tx-s" x="546" y="172">리셋 벡터</text>
+  <path class="ln-ink" d="M530 145 H496 V36 H466" marker-end="url(#a)"/>
+  <text class="tx-s" x="530" y="210">리셋이 풀리면 프로그램 카운터에</text>
+  <text class="tx-s" x="530" y="226">정해진 주소가 들어 있고, 그곳은</text>
+  <text class="tx-s" x="530" y="242">RAM이 아니라 플래시 칩입니다</text>
+
+  <!-- 플래시 칩 -->
+  <rect class="bx" x="0" y="80" width="150" height="50" rx="8"/>
+  <text class="tx-b" x="16" y="102">플래시 칩</text>
+  <text class="tx-s" x="16" y="120">전원이 꺼져도 남음</text>
+  <path class="ln ln-dash" d="M150 105 H190 V42 H226"/>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 왼쪽: 연결마다 스레드 -->
+  <text class="tx-b" x="0" y="16">연결마다 스레드 하나</text>
+  <text class="tx-s" x="0" y="34">스레드마다 스택 메모리, 대부분은 잠들어 기다림</text>
+  <g class="bx">
+    <rect x="0" y="50" width="120" height="30" rx="5"/><rect x="0" y="86" width="120" height="30" rx="5"/>
+    <rect x="0" y="122" width="120" height="30" rx="5"/><rect x="0" y="194" width="120" height="30" rx="5"/>
+  </g>
+  <g class="tx-s">
+    <text x="12" y="70">스레드 1 · 대기</text><text x="12" y="106">스레드 2 · 대기</text>
+    <text x="12" y="142">스레드 3 · 대기</text><text x="12" y="214">스레드 1만</text>
+  </g>
+  <text class="tx-s" x="60" y="178" text-anchor="middle">⋮</text>
+  <g class="bx-soft">
+    <rect x="200" y="50" width="100" height="30" rx="5"/><rect x="200" y="86" width="100" height="30" rx="5"/>
+    <rect x="200" y="122" width="100" height="30" rx="5"/><rect x="200" y="194" width="100" height="30" rx="5"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="250" y="70">연결 1</text><text x="250" y="106">연결 2</text><text x="250" y="142">연결 3</text><text x="250" y="214">연결 1만</text>
+  </g>
+  <g class="ln">
+    <line x1="120" y1="65" x2="196" y2="65"/><line x1="120" y1="101" x2="196" y2="101"/>
+    <line x1="120" y1="137" x2="196" y2="137"/><line x1="120" y1="209" x2="196" y2="209"/>
+  </g>
+
+  <line class="ln-faint" x1="350" y1="0" x2="350" y2="246"/>
+
+  <!-- 오른쪽: I/O 다중화 -->
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">스레드 하나 + epoll</text>
+    <text class="tx-s" x="0" y="34">커널이 "준비된 것"만 알려 주면 그것만 처리</text>
+    <rect class="bx-ink" x="0" y="100" width="110" height="56" rx="8"/>
+    <text class="tx-inv" x="55" y="124" text-anchor="middle" font-weight="700">스레드 1개</text>
+    <text class="tx-inv tx-s" x="55" y="142" text-anchor="middle">이벤트 루프</text>
+    <rect class="bx" x="150" y="94" width="80" height="68" rx="8"/>
+    <text x="190" y="124" text-anchor="middle">epoll</text>
+    <text class="tx-s" x="190" y="142" text-anchor="middle">커널</text>
+    <g class="bx-soft">
+      <rect x="270" y="50" width="70" height="26" rx="5"/><rect x="270" y="82" width="70" height="26" rx="5"/>
+      <rect x="270" y="146" width="70" height="26" rx="5"/><rect x="270" y="194" width="70" height="26" rx="5"/>
+    </g>
+    <rect class="bx-ink" x="270" y="114" width="70" height="26" rx="5"/>
+    <g class="tx-s" text-anchor="middle">
+      <text x="305" y="68">연결 1</text><text x="305" y="100">연결 2</text><text class="tx-inv" x="305" y="132">연결 3</text>
+      <text x="305" y="164">연결 4</text><text x="305" y="212">연결 1만</text>
+    </g>
+    <text class="tx-s" x="305" y="186" text-anchor="middle">⋮</text>
+    <g class="ln-faint">
+      <line x1="230" y1="110" x2="268" y2="63"/><line x1="230" y1="118" x2="268" y2="95"/>
+      <line x1="230" y1="138" x2="268" y2="159"/><line x1="230" y1="150" x2="268" y2="207"/>
+    </g>
+    <line class="ln-ink" x1="268" y1="127" x2="234" y2="127" marker-end="url(#a)"/>
+    <line class="ln-ink" x1="150" y1="128" x2="114" y2="128" marker-end="url(#a)"/>
+    <text class="tx-s" x="0" y="196">"연결 3에 데이터 옴"</text>
+    <text class="tx-s" x="0" y="214">그것만 읽고 다시 잠듦</text>
+  </g>
+</svg>

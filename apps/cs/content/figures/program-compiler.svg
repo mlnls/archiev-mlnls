@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 소스 -->
+  <rect class="bx" x="0" y="20" width="130" height="36" rx="6"/>
+  <text class="tx-m" x="65" y="43" text-anchor="middle">y = x * 2;</text>
+  <text class="tx-s" x="65" y="76" text-anchor="middle">글자 덩어리</text>
+
+  <line class="ln" x1="130" y1="38" x2="186" y2="38" marker-end="url(#a)"/>
+  <text class="tx-s" x="158" y="28" text-anchor="middle">어휘 분석</text>
+
+  <!-- 토큰 -->
+  <g text-anchor="middle">
+    <rect class="bx" x="190" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="204" y="43">y</text>
+    <rect class="bx" x="222" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="236" y="43">=</text>
+    <rect class="bx" x="254" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="268" y="43">x</text>
+    <rect class="bx" x="286" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="300" y="43">*</text>
+    <rect class="bx" x="318" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="332" y="43">2</text>
+    <rect class="bx" x="350" y="24" width="28" height="28" rx="4"/><text class="tx-m" x="364" y="43">;</text>
+    <text class="tx-s" x="284" y="76">토큰</text>
+  </g>
+
+  <line class="ln" x1="382" y1="38" x2="440" y2="38" marker-end="url(#a)"/>
+  <text class="tx-s" x="411" y="28" text-anchor="middle">구문 분석</text>
+
+  <!-- AST -->
+  <g class="ln">
+    <line x1="530" y1="44" x2="484" y2="84"/>
+    <line x1="530" y1="44" x2="590" y2="84"/>
+    <line x1="590" y1="108" x2="556" y2="138"/>
+    <line x1="590" y1="108" x2="624" y2="138"/>
+  </g>
+  <g text-anchor="middle">
+    <rect class="bx" x="502" y="20" width="56" height="26" rx="13"/><text x="530" y="38">대입</text>
+    <rect class="bx" x="466" y="84" width="36" height="26" rx="13"/><text class="tx-m" x="484" y="101">y</text>
+    <rect class="bx" x="562" y="84" width="56" height="26" rx="13"/><text x="590" y="102">곱하기</text>
+    <rect class="bx" x="538" y="138" width="36" height="26" rx="13"/><text class="tx-m" x="556" y="155">x</text>
+    <rect class="bx" x="606" y="138" width="36" height="26" rx="13"/><text class="tx-m" x="624" y="155">2</text>
+  </g>
+  <text class="tx-b" x="660" y="38">AST</text>
+  <text class="tx-s" x="452" y="155" text-anchor="middle">의미 분석</text>
+  <text class="tx-s" x="452" y="171" text-anchor="middle">타입 검사</text>
+
+  <!-- 같은 AST, 다른 출력 -->
+  <polyline class="ln" points="560,172 560,188"/>
+  <line class="ln" x1="113" y1="188" x2="607" y2="188"/>
+  <g class="ln">
+    <line x1="113" y1="188" x2="113" y2="204" marker-end="url(#a)"/>
+    <line x1="360" y1="188" x2="360" y2="204" marker-end="url(#a)"/>
+    <line x1="607" y1="188" x2="607" y2="204" marker-end="url(#a)"/>
+  </g>
+  <g text-anchor="middle">
+    <rect class="bx" x="0" y="206" width="226" height="48" rx="8"/>
+    <text class="tx-b" x="113" y="226">ESLint</text>
+    <text class="tx-s" x="113" y="244">AST를 검사해 경고만</text>
+    <rect class="bx" x="247" y="206" width="226" height="48" rx="8"/>
+    <text class="tx-b" x="360" y="226">Prettier, Babel</text>
+    <text class="tx-s" x="360" y="244">AST를 다시 JS 소스로 출력</text>
+    <rect class="bx-ink" x="494" y="206" width="226" height="48" rx="8"/>
+    <text class="tx-inv" x="607" y="226" font-weight="700">C 컴파일러</text>
+    <text class="tx-inv tx-s" x="607" y="244">최적화한 뒤 기계어로</text>
+  </g>
+</svg>

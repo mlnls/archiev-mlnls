@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 왼쪽: 터미널에서 띄운 서버 -->
+  <rect class="bx-soft" x="0" y="0" width="340" height="340" rx="10"/>
+  <text class="tx-b" x="20" y="28">터미널에서 node server.js</text>
+  <rect class="bx" x="40" y="48" width="150" height="40" rx="6"/>
+  <text x="115" y="73" text-anchor="middle">터미널 창</text>
+  <rect class="bx" x="40" y="128" width="150" height="40" rx="6"/>
+  <text x="115" y="153" text-anchor="middle">셸 (zsh, bash)</text>
+  <rect class="bx" x="40" y="208" width="150" height="40" rx="6"/>
+  <text x="115" y="233" text-anchor="middle">node · PID 812</text>
+  <g class="ln">
+    <line x1="115" y1="88" x2="115" y2="126" marker-end="url(#a)"/>
+    <line x1="115" y1="168" x2="115" y2="206" marker-end="url(#a)"/>
+  </g>
+  <g class="tx-s">
+    <text x="125" y="112">자식 프로세스</text>
+    <text x="125" y="192">자식 프로세스</text>
+  </g>
+  <g class="tx-s">
+    <text x="20" y="282">터미널을 닫거나 로그아웃하면 함께 끝남</text>
+    <text x="20" y="302">죽어도 아무도 다시 띄우지 않음</text>
+    <text x="20" y="322">로그는 터미널 화면에만 지나감</text>
+  </g>
+
+  <!-- 오른쪽: systemd가 띄우고 지켜보는 서버 -->
+  <rect class="bx-soft" x="380" y="0" width="340" height="340" rx="10"/>
+  <text class="tx-b" x="400" y="28">systemd 서비스로 등록</text>
+  <rect class="bx" x="400" y="48" width="150" height="40" rx="6"/>
+  <text x="475" y="73" text-anchor="middle">systemd · PID 1</text>
+  <rect class="bx-dash" x="400" y="128" width="150" height="40" rx="6"/>
+  <text x="475" y="153" text-anchor="middle">node · PID 812 죽음</text>
+  <rect class="bx" x="400" y="208" width="150" height="40" rx="6"/>
+  <text x="475" y="233" text-anchor="middle">node · PID 845</text>
+  <rect class="bx" x="400" y="280" width="150" height="44" rx="6"/>
+  <text x="475" y="298" text-anchor="middle">저널</text>
+  <text class="tx-s tx-m" x="475" y="315" text-anchor="middle">journalctl -u myapp</text>
+
+  <line class="ln" x1="475" y1="88" x2="475" y2="126" marker-end="url(#a)"/>
+  <text class="tx-s" x="485" y="112">띄움</text>
+  <!-- 죽으면 systemd가 다시 띄움 -->
+  <polyline class="ln-ink" points="550,68 690,68 690,228 552,228" marker-end="url(#k)"/>
+  <text class="tx-s tx-m" x="566" y="140">Restart=always</text>
+  <text class="tx-s" x="566" y="158">2초 뒤 다시 띄움</text>
+  <line class="ln" x1="475" y1="248" x2="475" y2="278" marker-end="url(#a)"/>
+  <text class="tx-s" x="485" y="268">표준 출력</text>
+</svg>

@@ -45,11 +45,11 @@ export function useCoverPicker({ onChange, onError, onUploadingChange }: PickerO
   return { pick: () => input.current?.click(), uploading, fileInput };
 }
 
-/** 공개 글과 같은 자리, 같은 크기로 커버를 보여 줍니다 */
+/** 공개 글과 같은 자리, 같은 크기(화면 끝까지)로 커버를 보여 줍니다 */
 export function CoverImage({ value, uploading, onPick, onRemove }: { value: string; uploading: boolean; onPick: () => void; onRemove: () => void }) {
   return (
-    <div className="cover">
-      <img className="post-hero" src={value} alt="커버 이미지" />
+    <div className="post-hero cover">
+      <img src={value} alt="커버 이미지" />
       <div className="cover-actions">
         <button type="button" disabled={uploading} onClick={onPick}>{uploading ? "올리는 중" : "커버 변경"}</button>
         <button type="button" disabled={uploading} onClick={onRemove}>제거</button>

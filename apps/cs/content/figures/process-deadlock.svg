@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <rect class="bx" x="100" y="20" width="140" height="50" rx="25"/>
+  <text class="tx-b" x="170" y="50" text-anchor="middle">스레드 A</text>
+  <rect class="bx-soft" x="480" y="20" width="140" height="50" rx="8"/>
+  <text x="550" y="50" text-anchor="middle">자물쇠 1</text>
+  <rect class="bx" x="480" y="150" width="140" height="50" rx="25"/>
+  <text class="tx-b" x="550" y="180" text-anchor="middle">스레드 B</text>
+  <rect class="bx-soft" x="100" y="150" width="140" height="50" rx="8"/>
+  <text x="170" y="180" text-anchor="middle">자물쇠 2</text>
+
+  <!-- 잡고 있음: 자물쇠 → 주인 (실선) -->
+  <line class="ln-ink" x1="480" y1="45" x2="244" y2="45" marker-end="url(#a)"/>
+  <text class="tx-s" x="360" y="36" text-anchor="middle">A가 잡고 있음</text>
+  <line class="ln-ink" x1="240" y1="175" x2="476" y2="175" marker-end="url(#a)"/>
+  <text class="tx-s" x="360" y="166" text-anchor="middle">B가 잡고 있음</text>
+  <!-- 기다림: 스레드 → 자물쇠 (점선) -->
+  <line class="ln ln-dash" x1="170" y1="70" x2="170" y2="146" marker-end="url(#m)"/>
+  <text class="tx-s" x="160" y="112" text-anchor="end">A는 2를 기다림</text>
+  <line class="ln ln-dash" x1="550" y1="150" x2="550" y2="74" marker-end="url(#m)"/>
+  <text class="tx-s" x="560" y="112">B는 1을 기다림</text>
+
+  <text class="tx-b" x="360" y="116" text-anchor="middle">기다림이 원을 이룸</text>
+  <text class="tx-s" x="360" y="236" text-anchor="middle">모두가 "1을 먼저, 그다음 2" 순서로 잡기로 하면 B도 1부터 기다리게 되어 원이 생기지 않습니다</text>
+</svg>

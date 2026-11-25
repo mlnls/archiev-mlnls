@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 268">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-m" x="360" y="16" text-anchor="middle">ssh -L 5432:localhost:5432 서버</text>
+
+  <!-- 내 컴퓨터 -->
+  <rect class="bx-soft" x="0" y="32" width="230" height="196" rx="10"/>
+  <text class="tx-l" x="14" y="52">내 컴퓨터</text>
+  <rect class="bx" x="16" y="64" width="198" height="40" rx="6"/>
+  <text x="115" y="89" text-anchor="middle">psql (DB 클라이언트)</text>
+  <line class="ln" x1="40" y1="104" x2="40" y2="154" marker-end="url(#a)"/>
+  <text class="tx-s" x="50" y="126">localhost:5432로 접속</text>
+  <rect class="bx" x="16" y="156" width="198" height="56" rx="6"/>
+  <text class="tx-b" x="115" y="179" text-anchor="middle">ssh</text>
+  <text class="tx-s" x="115" y="198" text-anchor="middle">5432번에서 대신 받음</text>
+
+  <!-- 서버 -->
+  <rect class="bx-soft" x="490" y="32" width="230" height="196" rx="10"/>
+  <text class="tx-l" x="504" y="52">서버</text>
+  <rect class="bx" x="506" y="64" width="198" height="40" rx="6"/>
+  <text x="605" y="89" text-anchor="middle">PostgreSQL · 127.0.0.1:5432</text>
+  <line class="ln" x1="530" y1="154" x2="530" y2="106" marker-end="url(#a)"/>
+  <text class="tx-s" x="540" y="126">localhost:5432로 대신 접속</text>
+  <rect class="bx" x="506" y="156" width="198" height="56" rx="6"/>
+  <text class="tx-b" x="605" y="179" text-anchor="middle">sshd :22</text>
+  <text class="tx-s" x="605" y="198" text-anchor="middle">통로에서 꺼내 넘김</text>
+
+  <!-- SSH 통로 -->
+  <line class="ln-ink" x1="214" y1="184" x2="506" y2="184"/>
+  <text x="330" y="174" text-anchor="middle">SSH 연결 (22번, 암호화)</text>
+  <text class="tx-s" x="330" y="202" text-anchor="middle">DB 데이터가 이 통로 안으로 오감</text>
+
+  <!-- 방화벽: 5432는 바깥에서 막힘 -->
+  <line class="ln ln-dash" x1="460" y1="36" x2="460" y2="232"/>
+  <line class="ln ln-dash" x1="250" y1="84" x2="452" y2="84" marker-end="url(#a)"/>
+  <text class="tx-s" x="300" y="76" text-anchor="middle">인터넷에서 5432로 직접</text>
+  <text class="tx-b" x="472" y="89" text-anchor="middle">✕</text>
+  <text class="tx-s" x="460" y="252" text-anchor="middle">서버 방화벽: 22번만 열림</text>
+</svg>

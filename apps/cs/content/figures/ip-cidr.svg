@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240">
+  <g class="ln"><line x1="120" y1="22" x2="542" y2="22"/><line x1="120" y1="16" x2="120" y2="28"/><line x1="542" y1="16" x2="542" y2="28"/><line x1="548" y1="22" x2="684" y2="22"/><line x1="548" y1="16" x2="548" y2="28"/><line x1="684" y1="16" x2="684" y2="28"/></g>
+  <rect class="bx-soft" x="256" y="13" width="150" height="18" rx="4"/>
+  <text class="tx-s" x="331" y="26" text-anchor="middle">네트워크 부분 24비트</text>
+  <rect class="bx-soft" x="566" y="13" width="100" height="18" rx="4"/>
+  <text class="tx-s" x="616" y="26" text-anchor="middle">호스트 부분 8비트</text>
+  <text class="tx-b" x="0" y="62">주소</text>
+  <text class="tx-s tx-m" x="0" y="80">192.168.0.23</text>
+  <text class="tx-b" x="0" y="122">마스크 /24</text>
+  <text class="tx-s tx-m" x="0" y="140">255.255.255.0</text>
+  <rect class="bx-soft" x="120" y="40" width="138" height="50" rx="6"/>
+  <text class="tx-b" x="189" y="60" text-anchor="middle">192</text>
+  <text class="tx-m" x="189" y="80" text-anchor="middle">11000000</text>
+  <rect class="bx-line" x="120" y="100" width="138" height="50" rx="6"/>
+  <text x="189" y="120" text-anchor="middle">255</text>
+  <text class="tx-s tx-m" x="189" y="140" text-anchor="middle">11111111</text>
+  <rect class="bx-soft" x="262" y="40" width="138" height="50" rx="6"/>
+  <text class="tx-b" x="331" y="60" text-anchor="middle">168</text>
+  <text class="tx-m" x="331" y="80" text-anchor="middle">10101000</text>
+  <rect class="bx-line" x="262" y="100" width="138" height="50" rx="6"/>
+  <text x="331" y="120" text-anchor="middle">255</text>
+  <text class="tx-s tx-m" x="331" y="140" text-anchor="middle">11111111</text>
+  <rect class="bx-soft" x="404" y="40" width="138" height="50" rx="6"/>
+  <text class="tx-b" x="473" y="60" text-anchor="middle">0</text>
+  <text class="tx-m" x="473" y="80" text-anchor="middle">00000000</text>
+  <rect class="bx-line" x="404" y="100" width="138" height="50" rx="6"/>
+  <text x="473" y="120" text-anchor="middle">255</text>
+  <text class="tx-s tx-m" x="473" y="140" text-anchor="middle">11111111</text>
+  <rect class="bx-ink" x="546" y="40" width="138" height="50" rx="6"/>
+  <text class="tx-inv" x="615" y="60" text-anchor="middle" font-weight="700">23</text>
+  <text class="tx-inv tx-m" x="615" y="80" text-anchor="middle">00010111</text>
+  <rect class="bx-line" x="546" y="100" width="138" height="50" rx="6"/>
+  <text x="615" y="120" text-anchor="middle">0</text>
+  <text class="tx-s tx-m" x="615" y="140" text-anchor="middle">00000000</text>
+  <text class="tx-s" x="120" y="184">네트워크의 이름</text>
+  <text class="tx-m" x="290" y="184">192.168.0.0/24</text>
+  <text class="tx-s" x="520" y="184">호스트 부분이 모두 0</text>
+  <text class="tx-s" x="120" y="206">브로드캐스트 주소</text>
+  <text class="tx-m" x="290" y="206">192.168.0.255</text>
+  <text class="tx-s" x="520" y="206">호스트 부분이 모두 1</text>
+  <text class="tx-s" x="120" y="228">기기에 줄 수 있는 주소</text>
+  <text class="tx-m" x="290" y="228">192.168.0.1 ~ 192.168.0.254</text>
+  <text class="tx-s" x="520" y="228">254개</text>
+  <line class="ln-faint" x1="120" y1="164" x2="720" y2="164"/>
+</svg>

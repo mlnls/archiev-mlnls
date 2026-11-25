@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-b" x="0" y="66">A = 1</text>
+  <text class="tx-b" x="0" y="171">B = 1</text>
+
+  <!-- A는 XOR 위 입력과 AND 위 입력으로 -->
+  <g class="ln-ink">
+    <path d="M56 60 H300"/>
+    <path d="M150 60 V140 H300"/>
+    <path d="M56 165 H300"/>
+    <path d="M200 165 V85 H300"/>
+  </g>
+  <circle class="dot" cx="150" cy="60" r="4"/>
+  <circle class="dot" cx="200" cy="165" r="4"/>
+
+  <rect class="bx" x="300" y="44" width="110" height="58" rx="10"/>
+  <text class="tx-b" x="355" y="72" text-anchor="middle">XOR</text>
+  <text class="tx-s" x="355" y="90" text-anchor="middle">다르면 1</text>
+  <rect class="bx" x="300" y="124" width="110" height="58" rx="10"/>
+  <text class="tx-b" x="355" y="152" text-anchor="middle">AND</text>
+  <text class="tx-s" x="355" y="170" text-anchor="middle">둘 다 1이면 1</text>
+
+  <line class="ln-ink" x1="410" y1="73" x2="500" y2="73" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="410" y1="153" x2="500" y2="153" marker-end="url(#a)"/>
+  <text class="tx-b" x="512" y="78">합 = 0</text>
+  <text class="tx-b" x="512" y="158">자리올림 = 1</text>
+  <text class="tx-s" x="512" y="112">1 + 1 = 2진수 10</text>
+
+  <line class="ln-faint" x1="0" y1="200" x2="720" y2="200"/>
+  <text class="tx-l" x="0" y="224">A B → 합 올림</text>
+  <g class="tx-s tx-m">
+    <text x="120" y="224">0 0 → 0 0</text>
+    <text x="260" y="224">0 1 → 1 0</text>
+    <text x="400" y="224">1 0 → 1 0</text>
+    <text x="540" y="224">1 1 → 0 1</text>
+  </g>
+</svg>

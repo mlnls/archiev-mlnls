@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 네트워크 카드 -->
+  <rect class="bx" x="0" y="80" width="150" height="70" rx="8"/>
+  <text class="tx-b" x="16" y="106">네트워크 카드</text>
+  <text class="tx-s" x="16" y="126">이 페이지의 패킷이</text>
+  <text class="tx-s" x="16" y="142">하나씩 도착</text>
+
+  <!-- RAM의 고리 -->
+  <text class="tx-l" x="240" y="16">RAM: 커널이 마련한 빈 칸들 (고리 모양)</text>
+  <g class="bx-ink">
+    <rect x="240" y="26" width="70" height="40" rx="5"/><rect x="316" y="26" width="70" height="40" rx="5"/>
+  </g>
+  <rect class="bx-soft" x="392" y="26" width="70" height="40" rx="5"/>
+  <g class="bx-dash">
+    <rect x="468" y="26" width="70" height="40" rx="5"/><rect x="544" y="26" width="70" height="40" rx="5"/>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text class="tx-inv" x="275" y="51">패킷 1</text><text class="tx-inv" x="351" y="51">패킷 2</text>
+    <text x="427" y="51">패킷 3</text><text x="503" y="51">빈 칸</text><text x="579" y="51">빈 칸</text>
+  </g>
+  <path class="ln ln-dash" d="M614 46 H640 V84 H220 V46 H236" marker-end="url(#m)"/>
+  <text class="tx-s" x="640" y="100" text-anchor="end">끝에 닿으면 처음 칸으로</text>
+
+  <path class="ln-ink" d="M150 104 H200 V130 H427 V70" marker-end="url(#a)"/>
+  <text class="tx-s" x="300" y="150">① DMA: CPU를 거치지 않고 다음 빈 칸에 씀</text>
+
+  <!-- 인터럽트와 커널 -->
+  <rect class="bx" x="240" y="180" width="200" height="56" rx="8"/>
+  <text x="256" y="202">커널의 네트워크 스택</text>
+  <text class="tx-s" x="256" y="222">헤더를 벗겨 소켓 버퍼로</text>
+  <rect class="bx" x="500" y="180" width="220" height="56" rx="8"/>
+  <text x="516" y="202">브라우저의 소켓 fd</text>
+  <text class="tx-s" x="516" y="222">epoll·kqueue가 "읽을 게 있다"</text>
+  <path class="ln" d="M75 150 V208 H236" marker-end="url(#m)"/>
+  <text class="tx-s" x="84" y="200">② 인터럽트</text>
+  <line class="ln" x1="440" y1="208" x2="496" y2="208" marker-end="url(#m)"/>
+  <text class="tx-s" x="468" y="200" text-anchor="middle">③</text>
+</svg>

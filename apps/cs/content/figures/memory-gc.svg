@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+
+  <!-- 뿌리 -->
+  <rect class="bx-soft" x="0" y="20" width="160" height="150" rx="10"/>
+  <text class="tx-l" x="14" y="40">뿌리</text>
+  <rect class="bx" x="14" y="50" width="132" height="44" rx="6"/>
+  <text x="80" y="70" text-anchor="middle">전역</text>
+  <text class="tx-s tx-m" x="80" y="86" text-anchor="middle">window, document</text>
+  <rect class="bx" x="14" y="106" width="132" height="44" rx="6"/>
+  <text x="80" y="126" text-anchor="middle">콜 스택</text>
+  <text class="tx-s" x="80" y="142" text-anchor="middle">실행 중 함수의 변수</text>
+
+  <!-- 닿는 객체들 -->
+  <rect class="bx" x="220" y="30" width="170" height="44" rx="6"/>
+  <text x="305" y="50" text-anchor="middle">change 리스너</text>
+  <text class="tx-s" x="305" y="66" text-anchor="middle">document에 붙어 있음</text>
+  <rect class="bx-ink" x="460" y="30" width="200" height="44" rx="6"/>
+  <text class="tx-inv tx-m" x="560" y="50" text-anchor="middle">done 객체</text>
+  <text class="tx-inv tx-s tx-m" x="560" y="66" text-anchor="middle">{"bits:read": 1}</text>
+  <rect class="bx" x="220" y="106" width="170" height="44" rx="6"/>
+  <text x="305" y="126" text-anchor="middle">진행 막대 DOM</text>
+  <text class="tx-s" x="305" y="142" text-anchor="middle">문서 트리 안</text>
+
+  <line class="ln-ink" x1="146" y1="64" x2="216" y2="52" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="390" y1="52" x2="456" y2="52" marker-end="url(#a)"/>
+  <text class="tx-s" x="423" y="92" text-anchor="middle">클로저로 참조</text>
+  <line class="ln-ink" x1="146" y1="80" x2="216" y2="120" marker-end="url(#a)"/>
+
+  <!-- 닿지 않는 객체들 -->
+  <rect class="bx-dash" x="220" y="180" width="500" height="76" rx="10"/>
+  <text class="tx-l" x="234" y="198">어느 뿌리에서도 닿지 않음 → 다음 GC 때 치움</text>
+  <rect class="bx-dash" x="234" y="208" width="200" height="38" rx="6"/>
+  <text class="tx-s" x="334" y="232" text-anchor="middle">user = null로 버린 객체</text>
+  <rect class="bx-dash" x="500" y="208" width="200" height="38" rx="6"/>
+  <text class="tx-s tx-m" x="600" y="232" text-anchor="middle">ArrayBuffer (1MB)</text>
+  <line class="ln ln-dash" x1="434" y1="227" x2="496" y2="227" marker-end="url(#m)"/>
+  <text class="tx-s" x="0" y="232">서로 참조하고 있어도</text>
+  <text class="tx-s" x="0" y="248">뿌리에서 못 닿으면 쓰레기</text>
+</svg>

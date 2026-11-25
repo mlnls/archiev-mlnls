@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-l" x="40" y="14">콜 스택 (위가 꼭대기)</text>
+  <rect class="bx-ink" x="40" y="24" width="280" height="56" rx="6"/>
+  <text class="tx-inv" x="56" y="46" font-weight="700">format <tspan class="tx-s">지금 실행 중</tspan></text>
+  <text class="tx-inv tx-s" x="56" y="66">지역 변수 · 돌아갈 곳(render 안)</text>
+  <rect class="bx" x="40" y="86" width="280" height="56" rx="6"/>
+  <text class="tx-b" x="56" y="108">render</text>
+  <text class="tx-s" x="56" y="128">지역 변수 · 돌아갈 곳(main 안)</text>
+  <rect class="bx" x="40" y="148" width="280" height="40" rx="6"/>
+  <text class="tx-b" x="56" y="173">main</text>
+
+  <!-- 끝나면 돌아가는 곳 -->
+  <g class="ln">
+    <polyline points="40,60 22,60 22,104 38,104" marker-end="url(#a)"/>
+    <polyline points="40,122 22,122 22,162 38,162" marker-end="url(#a)"/>
+  </g>
+
+  <!-- JS 오류 스택 -->
+  <text class="tx-l" x="400" y="14">JS 오류 스택</text>
+  <rect class="bx-soft" x="400" y="24" width="320" height="164" rx="6"/>
+  <g class="tx-s tx-m">
+    <text x="414" y="56">at format (app.js:12)</text>
+    <text x="414" y="118">at render (app.js:30)</text>
+    <text x="414" y="172">at main …</text>
+  </g>
+  <g class="ln-faint">
+    <line x1="320" y1="52" x2="406" y2="52"/>
+    <line x1="320" y1="114" x2="406" y2="114"/>
+    <line x1="320" y1="168" x2="406" y2="168"/>
+  </g>
+  <text class="tx-s" x="0" y="214">부를 때 위에 쌓고, 끝나면 맨 위 칸을 걷어 내고 그 칸에 적힌 곳으로 돌아갑니다.</text>
+  <text class="tx-s" x="0" y="232">오류 스택은 이 칸들을 위에서부터 읽은 것입니다.</text>
+</svg>

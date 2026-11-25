@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <g class="tx-b" text-anchor="middle">
+    <text x="150" y="18">스레드 A</text><text x="360" y="18">메모리의 count</text><text x="570" y="18">스레드 B</text>
+  </g>
+  <line class="ln" x1="12" y1="30" x2="12" y2="210" marker-end="url(#m)"/>
+  <text class="tx-s" x="20" y="226">시간</text>
+
+  <!-- 1 A 읽기 -->
+  <rect class="bx" x="40" y="30" width="220" height="26" rx="5"/><text x="150" y="48" text-anchor="middle">읽기: 5</text>
+  <!-- 2 B 읽기 -->
+  <rect class="bx" x="460" y="60" width="220" height="26" rx="5"/><text x="570" y="78" text-anchor="middle">읽기: 5</text>
+  <!-- 3 A 더하기 -->
+  <rect class="bx" x="40" y="90" width="220" height="26" rx="5"/><text x="150" y="108" text-anchor="middle">더하기: 6 (레지스터에)</text>
+  <!-- 4 B 더하기 -->
+  <rect class="bx" x="460" y="120" width="220" height="26" rx="5"/><text x="570" y="138" text-anchor="middle">더하기: 6 (레지스터에)</text>
+  <!-- 5 A 쓰기 -->
+  <rect class="bx" x="40" y="150" width="220" height="26" rx="5"/><text x="150" y="168" text-anchor="middle">쓰기: 6</text>
+  <!-- 6 B 쓰기 -->
+  <rect class="bx-ink" x="460" y="180" width="220" height="26" rx="5"/><text class="tx-inv" x="570" y="198" text-anchor="middle">쓰기: 6 (A의 결과를 덮음)</text>
+
+  <g class="bx-soft">
+    <rect x="320" y="30" width="80" height="26" rx="5"/><rect x="320" y="60" width="80" height="26" rx="5"/>
+    <rect x="320" y="90" width="80" height="26" rx="5"/><rect x="320" y="120" width="80" height="26" rx="5"/>
+    <rect x="320" y="150" width="80" height="26" rx="5"/>
+  </g>
+  <rect class="bx-ink" x="320" y="180" width="80" height="26" rx="5"/>
+  <g class="tx-m" text-anchor="middle">
+    <text x="360" y="48">5</text><text x="360" y="78">5</text><text x="360" y="108">5</text><text x="360" y="138">5</text><text x="360" y="168">6</text>
+    <text class="tx-inv" x="360" y="198">6</text>
+  </g>
+  <g class="ln-faint">
+    <line x1="260" y1="43" x2="320" y2="43"/><line x1="400" y1="73" x2="460" y2="73"/>
+    <line x1="260" y1="163" x2="320" y2="163"/><line x1="400" y1="193" x2="460" y2="193"/>
+  </g>
+  <text class="tx-b" x="360" y="236" text-anchor="middle">count++를 두 번 했는데 7이 아니라 6</text>
+  <text class="tx-s" x="360" y="254" text-anchor="middle">"읽기 → 더하기 → 쓰기" 사이에 다른 스레드가 끼어든 탓입니다</text>
+</svg>

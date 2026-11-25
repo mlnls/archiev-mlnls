@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 364">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <g class="ln ln-dash">
+    <line x1="110" y1="54" x2="110" y2="300"/>
+    <line x1="610" y1="54" x2="610" y2="300"/>
+  </g>
+  <rect class="bx" x="20" y="6" width="180" height="48" rx="8"/>
+  <text class="tx-b" x="110" y="26" text-anchor="middle">노트북</text>
+  <text class="tx-s" x="110" y="44" text-anchor="middle">새로 붙음, 주소 없음</text>
+  <rect class="bx" x="520" y="6" width="180" height="48" rx="8"/>
+  <text class="tx-b" x="610" y="26" text-anchor="middle">공유기</text>
+  <text class="tx-s" x="610" y="44" text-anchor="middle">DHCP 서버</text>
+  <text x="360" y="92" text-anchor="middle">① Discover: 주소 줄 서버 있나요?</text>
+  <line class="ln" x1="110" y1="100" x2="606" y2="100" marker-end="url(#a)"/>
+  <text class="tx-s" x="360" y="118" text-anchor="middle">브로드캐스트 · 0.0.0.0 → 255.255.255.255</text>
+  <text x="360" y="152" text-anchor="middle">② Offer: 192.168.0.23 어때요?</text>
+  <line class="ln" x1="610" y1="160" x2="114" y2="160" marker-end="url(#a)"/>
+  <text x="360" y="212" text-anchor="middle">③ Request: 192.168.0.23 쓸게요</text>
+  <line class="ln" x1="110" y1="220" x2="606" y2="220" marker-end="url(#a)"/>
+  <text class="tx-s" x="360" y="238" text-anchor="middle">브로드캐스트 · 다른 DHCP 서버도 듣고 물러남</text>
+  <text x="360" y="272" text-anchor="middle">④ Ack: 확정. 하루 동안 쓰세요</text>
+  <line class="ln-ink" x1="610" y1="280" x2="114" y2="280" marker-end="url(#k)"/>
+  <rect class="bx-soft" x="0" y="310" width="720" height="52" rx="8"/>
+  <text class="tx-l" x="14" y="330">노트북이 받은 것</text>
+  <text class="tx-s" x="14" y="350">IP <tspan class="tx-m">192.168.0.23</tspan>와 마스크 <tspan class="tx-m">/24</tspan> · 기본 게이트웨이 <tspan class="tx-m">192.168.0.1</tspan> · DNS 서버 주소 · 임대 기간</text>
+</svg>

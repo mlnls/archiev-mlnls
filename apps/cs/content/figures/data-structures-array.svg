@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 위: 4바이트 정수 5개가 빈틈없이 -->
+  <text class="tx-l" x="0" y="16">4바이트 정수 배열 [5, 2, 9, 4, 7]</text>
+  <g class="tx-s" text-anchor="end">
+    <text x="104" y="50">인덱스</text>
+    <text x="104" y="80">값</text>
+    <text x="104" y="112">주소</text>
+  </g>
+  <g class="tx-s" text-anchor="middle">
+    <text x="165" y="50">[0]</text><text x="255" y="50">[1]</text><text x="345" y="50">[2]</text><text x="435" y="50">[3]</text><text x="525" y="50">[4]</text>
+  </g>
+  <rect class="bx" x="120" y="58" width="90" height="36" rx="6"/>
+  <rect class="bx" x="210" y="58" width="90" height="36" rx="6"/>
+  <rect class="bx" x="300" y="58" width="90" height="36" rx="6"/>
+  <rect class="bx-ink" x="390" y="58" width="90" height="36" rx="6"/>
+  <rect class="bx" x="480" y="58" width="90" height="36" rx="6"/>
+  <g text-anchor="middle">
+    <text x="165" y="81">5</text><text x="255" y="81">2</text><text x="345" y="81">9</text>
+    <text class="tx-inv" x="435" y="81" font-weight="700">4</text><text x="525" y="81">7</text>
+  </g>
+  <g class="tx-s tx-m" text-anchor="middle">
+    <text x="165" y="112">0x1000</text><text x="255" y="112">0x1004</text><text x="345" y="112">0x1008</text>
+    <text x="435" y="112">0x100C</text><text x="525" y="112">0x1010</text>
+  </g>
+  <line class="ln-ink" x1="435" y1="140" x2="435" y2="122" marker-end="url(#k)"/>
+  <text class="tx-b" x="435" y="158" text-anchor="middle">arr[3]의 주소 = 0x1000 + 3 × 4 = 0x100C</text>
+  <text class="tx-s" x="435" y="176" text-anchor="middle">몇 번째든 곱셈 한 번으로 바로 갑니다: O(1)</text>
+
+  <line class="ln-faint" x1="0" y1="196" x2="720" y2="196"/>
+
+  <!-- 아래: 중간에 끼워 넣기 -->
+  <text class="tx-l" x="0" y="222">[2] 자리에 6을 끼워 넣기</text>
+  <path class="ln" fill="none" d="M355 248 Q390 226 425 248" marker-end="url(#a)"/>
+  <path class="ln" fill="none" d="M445 248 Q480 226 515 248" marker-end="url(#a)"/>
+  <path class="ln" fill="none" d="M535 248 Q570 226 605 248" marker-end="url(#a)"/>
+  <rect class="bx" x="120" y="254" width="90" height="36" rx="6"/>
+  <rect class="bx" x="210" y="254" width="90" height="36" rx="6"/>
+  <rect class="bx-ink" x="300" y="254" width="90" height="36" rx="6"/>
+  <rect class="bx-soft" x="390" y="254" width="90" height="36" rx="6"/>
+  <rect class="bx-soft" x="480" y="254" width="90" height="36" rx="6"/>
+  <rect class="bx-soft" x="570" y="254" width="90" height="36" rx="6"/>
+  <g text-anchor="middle">
+    <text x="165" y="277">5</text><text x="255" y="277">2</text>
+    <text class="tx-inv" x="345" y="277" font-weight="700">6</text>
+    <text x="435" y="277">9</text><text x="525" y="277">4</text><text x="615" y="277">7</text>
+  </g>
+  <text class="tx-s" x="120" y="312">자리를 만들려고 뒤의 원소 3개를 한 칸씩 옮겼습니다. 원소가 n개면 최악에 n개를 옮깁니다: O(n)</text>
+</svg>

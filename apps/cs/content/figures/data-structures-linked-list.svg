@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <!-- 위: 노드마다 값 칸과 "다음 노드의 주소" 칸 -->
+  <text class="tx-l" x="0" y="16">노드는 메모리 아무 데나 있고, 다음 칸에 다음 노드의 주소를 적어 잇습니다</text>
+  <g class="tx-s tx-m" text-anchor="middle">
+    <text x="135" y="46">0x3A20</text><text x="305" y="46">0x1F08</text><text x="475" y="46">0x52C0</text>
+  </g>
+  <text class="tx-m" x="0" y="77">head</text>
+  <line class="ln" x1="40" y1="72" x2="78" y2="72" marker-end="url(#a)"/>
+  <g>
+    <rect class="bx" x="80" y="54" width="110" height="36" rx="6"/><line class="ln" x1="124" y1="54" x2="124" y2="90"/>
+    <text class="tx-b" x="102" y="77" text-anchor="middle">3</text><text class="tx-s tx-m" x="157" y="76" text-anchor="middle">0x1F08</text>
+    <rect class="bx" x="250" y="54" width="110" height="36" rx="6"/><line class="ln" x1="294" y1="54" x2="294" y2="90"/>
+    <text class="tx-b" x="272" y="77" text-anchor="middle">7</text><text class="tx-s tx-m" x="327" y="76" text-anchor="middle">0x52C0</text>
+    <rect class="bx" x="420" y="54" width="110" height="36" rx="6"/><line class="ln" x1="464" y1="54" x2="464" y2="90"/>
+    <text class="tx-b" x="442" y="77" text-anchor="middle">1</text><text class="tx-s tx-m" x="497" y="76" text-anchor="middle">null</text>
+  </g>
+  <line class="ln" x1="190" y1="72" x2="248" y2="72" marker-end="url(#a)"/>
+  <line class="ln" x1="360" y1="72" x2="418" y2="72" marker-end="url(#a)"/>
+  <text class="tx-s" x="560" y="68">k번째를 찾으려면 head부터</text>
+  <text class="tx-s" x="560" y="86">k번 따라가야 합니다: O(n)</text>
+
+  <line class="ln-faint" x1="0" y1="114" x2="720" y2="114"/>
+
+  <!-- 아래: 7 뒤에 5 끼우기 -->
+  <text class="tx-l" x="0" y="140">7 뒤에 5 끼우기: 주소 칸 두 개만 고칩니다</text>
+  <text class="tx-m" x="0" y="173">head</text>
+  <line class="ln" x1="40" y1="168" x2="78" y2="168" marker-end="url(#a)"/>
+  <rect class="bx" x="80" y="150" width="110" height="36" rx="6"/><line class="ln" x1="124" y1="150" x2="124" y2="186"/>
+  <text class="tx-b" x="102" y="173" text-anchor="middle">3</text><text class="tx-s tx-m" x="157" y="172" text-anchor="middle">0x1F08</text>
+  <rect class="bx" x="250" y="150" width="110" height="36" rx="6"/><line class="ln" x1="294" y1="150" x2="294" y2="186"/>
+  <text class="tx-b" x="272" y="173" text-anchor="middle">7</text><text class="tx-b tx-m" x="327" y="172" text-anchor="middle">0x47A0</text>
+  <rect class="bx" x="420" y="150" width="110" height="36" rx="6"/><line class="ln" x1="464" y1="150" x2="464" y2="186"/>
+  <text class="tx-b" x="442" y="173" text-anchor="middle">1</text><text class="tx-s tx-m" x="497" y="172" text-anchor="middle">null</text>
+  <line class="ln" x1="190" y1="168" x2="248" y2="168" marker-end="url(#a)"/>
+  <line class="ln ln-dash" x1="360" y1="168" x2="418" y2="168"/>
+  <!-- 새 노드 5 -->
+  <rect class="bx-ink" x="300" y="222" width="110" height="36" rx="6"/><line class="ln" x1="344" y1="222" x2="344" y2="258"/>
+  <text class="tx-inv" x="322" y="245" text-anchor="middle" font-weight="700">5</text><text class="tx-inv tx-s tx-m" x="377" y="244" text-anchor="middle">0x52C0</text>
+  <text class="tx-s tx-m" x="355" y="278" text-anchor="middle">0x47A0</text>
+  <line class="ln-ink" x1="327" y1="186" x2="327" y2="220" marker-end="url(#k)"/>
+  <polyline class="ln-ink" fill="none" points="410,240 442,240 442,190" marker-end="url(#k)"/>
+  <text class="tx-s" x="560" y="236">옮기는 원소가 없어서,</text>
+  <text class="tx-s" x="560" y="254">노드를 알고 있으면 O(1)</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260">
+  <!-- 2.4GHz 채널: 중심이 5MHz씩, 폭은 약 20MHz. 1, 6, 11번만 서로 겹치지 않음 -->
+  <text class="tx-b" x="0" y="16">2.4GHz 대역의 채널</text>
+  <text class="tx-s" x="0" y="36">채널 중심은 5MHz씩 떨어져 있는데, 한 채널의 폭은 약 20MHz라서 이웃 채널과 겹칩니다</text>
+  <g>
+    <path class="ln-faint" d="M80 170 C108 70, 212 70, 240 170"/>
+    <path class="ln-faint" d="M120 170 C148 70, 252 70, 280 170"/>
+    <path class="ln-faint" d="M160 170 C188 70, 292 70, 320 170"/>
+    <path class="ln-faint" d="M200 170 C228 70, 332 70, 360 170"/>
+    <path class="ln-faint" d="M280 170 C308 70, 412 70, 440 170"/>
+    <path class="ln-faint" d="M320 170 C348 70, 452 70, 480 170"/>
+    <path class="ln-faint" d="M360 170 C388 70, 492 70, 520 170"/>
+    <path class="ln-faint" d="M400 170 C428 70, 532 70, 560 170"/>
+    <path class="ln-faint" d="M480 170 C508 70, 612 70, 640 170"/>
+    <path class="ln-faint" d="M520 170 C548 70, 652 70, 680 170"/>
+  </g>
+  <g>
+    <path class="ln-ink" d="M40 170 C68 70, 172 70, 200 170"/>
+    <path class="ln-ink" d="M240 170 C268 70, 372 70, 400 170"/>
+    <path class="ln-ink" d="M440 170 C468 70, 572 70, 600 170"/>
+  </g>
+  <line class="ln" x1="24" y1="170" x2="700" y2="170"/>
+  <line class="ln" x1="120" y1="170" x2="120" y2="176"/><text class="tx-b" x="120" y="192" text-anchor="middle">1</text>
+  <line class="ln" x1="160" y1="170" x2="160" y2="176"/><text class="tx-s" x="160" y="192" text-anchor="middle">2</text>
+  <line class="ln" x1="200" y1="170" x2="200" y2="176"/><text class="tx-s" x="200" y="192" text-anchor="middle">3</text>
+  <line class="ln" x1="240" y1="170" x2="240" y2="176"/><text class="tx-s" x="240" y="192" text-anchor="middle">4</text>
+  <line class="ln" x1="280" y1="170" x2="280" y2="176"/><text class="tx-s" x="280" y="192" text-anchor="middle">5</text>
+  <line class="ln" x1="320" y1="170" x2="320" y2="176"/><text class="tx-b" x="320" y="192" text-anchor="middle">6</text>
+  <line class="ln" x1="360" y1="170" x2="360" y2="176"/><text class="tx-s" x="360" y="192" text-anchor="middle">7</text>
+  <line class="ln" x1="400" y1="170" x2="400" y2="176"/><text class="tx-s" x="400" y="192" text-anchor="middle">8</text>
+  <line class="ln" x1="440" y1="170" x2="440" y2="176"/><text class="tx-s" x="440" y="192" text-anchor="middle">9</text>
+  <line class="ln" x1="480" y1="170" x2="480" y2="176"/><text class="tx-s" x="480" y="192" text-anchor="middle">10</text>
+  <line class="ln" x1="520" y1="170" x2="520" y2="176"/><text class="tx-b" x="520" y="192" text-anchor="middle">11</text>
+  <line class="ln" x1="560" y1="170" x2="560" y2="176"/><text class="tx-s" x="560" y="192" text-anchor="middle">12</text>
+  <line class="ln" x1="600" y1="170" x2="600" y2="176"/><text class="tx-s" x="600" y="192" text-anchor="middle">13</text>
+  <text class="tx-s" x="700" y="192" text-anchor="end">채널</text>
+  <text class="tx-s tx-m" x="120" y="210" text-anchor="middle">2412MHz</text>
+  <text class="tx-s tx-m" x="320" y="210" text-anchor="middle">2437MHz</text>
+  <text class="tx-s tx-m" x="520" y="210" text-anchor="middle">2462MHz</text>
+  <text class="tx-s" x="0" y="244">진한 곡선(1, 6, 11번)만 서로 겹치지 않습니다. 이웃 AP가 3번을 쓰면 1번과 6번 모두와 겹칩니다.</text>
+</svg>

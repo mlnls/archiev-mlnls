@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 176">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="ah-ink" d="M0 1 L9 5 L0 9 z"/>
+    </marker>
+  </defs>
+  <text class="tx-s" x="0" y="14"><tspan class="tx-m">cc hello.c -o hello</tspan> 한 줄 안에서 차례로 도는 네 단계</text>
+
+  <g text-anchor="middle">
+    <rect class="bx" x="0" y="40" width="96" height="40" rx="6"/><text class="tx-m" x="48" y="64">hello.c</text>
+    <rect class="bx" x="156" y="40" width="96" height="40" rx="6"/><text x="204" y="64">펼친 C</text>
+    <rect class="bx" x="312" y="40" width="96" height="40" rx="6"/><text class="tx-m" x="360" y="64">hello.s</text>
+    <rect class="bx" x="468" y="40" width="96" height="40" rx="6"/><text class="tx-m" x="516" y="64">hello.o</text>
+    <rect class="bx-ink" x="624" y="40" width="96" height="40" rx="6"/><text class="tx-m tx-inv" x="672" y="64">hello</text>
+  </g>
+
+  <g class="ln">
+    <line x1="96" y1="60" x2="154" y2="60" marker-end="url(#a)"/>
+    <line x1="252" y1="60" x2="310" y2="60" marker-end="url(#a)"/>
+    <line x1="408" y1="60" x2="466" y2="60" marker-end="url(#a)"/>
+  </g>
+  <line class="ln-ink" x1="564" y1="60" x2="622" y2="60" marker-end="url(#k)"/>
+  <g class="tx-b" text-anchor="middle">
+    <text x="125" y="50">전처리</text>
+    <text x="281" y="50">컴파일</text>
+    <text x="437" y="50">어셈블</text>
+    <text x="593" y="50">링크</text>
+  </g>
+
+  <g class="tx-s" text-anchor="middle">
+    <text x="48" y="100">C 소스</text>
+    <text x="204" y="100">#include가 펼쳐짐</text>
+    <text x="360" y="100">어셈블리어</text>
+    <text x="516" y="100">기계어 + 빈칸</text>
+    <text x="672" y="100">실행 파일</text>
+  </g>
+
+  <!-- 링크 때 함께 들어오는 라이브러리 -->
+  <rect class="bx-soft" x="500" y="128" width="188" height="40" rx="6"/>
+  <text x="594" y="146" text-anchor="middle">표준 C 라이브러리</text>
+  <text class="tx-s" x="594" y="161" text-anchor="middle">printf가 여기 있음</text>
+  <line class="ln" x1="594" y1="128" x2="594" y2="64" marker-end="url(#a)"/>
+</svg>
