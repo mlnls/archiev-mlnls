@@ -28,9 +28,7 @@ export const parts = [
 ];
 
 /** 차례에는 있지만 아직 쓰지 않은 장. 파일이 없어도 빌드가 멈추지 않고, 차례에 "준비 중"으로 보입니다 */
-export const upcoming = {
-  journey: "주소창에 엔터를 누른 순간부터 이 페이지가 화면에 그려지기까지, 앞의 모든 장을 한 번에 따라갑니다.",
-};
+export const upcoming = {};
 
 /** 차례를 짤 때 목차를 직접 열어 본 저장소들. 별 수는 2026년 11월 24일 기준입니다 */
 export const sources = [

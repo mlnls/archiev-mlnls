@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 210">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-l" x="0" y="14">60Hz 화면: 16.7ms마다 한 장</text>
+  <g class="ln-faint"><line x1="40" y1="24" x2="40" y2="120"/><line x1="320" y1="24" x2="320" y2="120"/><line x1="600" y1="24" x2="600" y2="120"/></g>
+  <g class="tx-m" text-anchor="middle"><text x="40" y="136">0</text><text x="320" y="136">16.7ms</text><text x="600" y="136">33.3ms</text></g>
+  <text class="tx-l" x="40" y="28">좋은 프레임</text>
+  <rect class="bx-soft" x="40" y="32" width="110" height="26" rx="4"/><rect class="bx" x="152" y="32" width="40" height="26" rx="4"/><rect class="bx" x="194" y="32" width="46" height="26" rx="4"/><rect class="bx" x="242" y="32" width="36" height="26" rx="4"/><rect class="bx-ink" x="280" y="32" width="30" height="26" rx="4"/>
+  <g class="tx-s" text-anchor="middle"><text x="95" y="50">JS (클릭 처리)</text><text x="172" y="50">스타일</text><text x="217" y="50">레이아웃</text><text x="260" y="50">페인트</text><text class="tx-inv" x="295" y="50">합성</text></g>
+  <text class="tx-l" x="40" y="76">롱 태스크</text>
+  <rect class="bx-soft" x="40" y="80" width="420" height="26" rx="4"/>
+  <rect class="bx" x="462" y="80" width="40" height="26" rx="4"/><rect class="bx" x="504" y="80" width="46" height="26" rx="4"/><rect class="bx-ink" x="552" y="80" width="40" height="26" rx="4"/>
+  <text class="tx-s" x="250" y="98" text-anchor="middle">JS가 25ms 동안 메인 스레드를 붙잡음</text>
+  <text class="tx-s" x="330" y="74">← 16.7ms에 낼 장을 놓침</text>
+  <g class="tx-s"><text x="0" y="168">한 프레임 안에서 JS, 스타일, 레이아웃, 페인트가 메인 스레드에서 차례로 돌고, 합성은 따로 돕니다.</text>
+  <text x="0" y="186">JS가 오래 붙잡으면 그 프레임을 놓쳐 화면이 멈칫합니다. transform 애니메이션은 합성 스레드만 쓰니</text>
+  <text x="0" y="204">JS가 바빠도 부드럽게 움직입니다</text></g>
+</svg>

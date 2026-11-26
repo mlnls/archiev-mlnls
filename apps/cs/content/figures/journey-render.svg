@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <rect class="bx" x="0" y="20" width="110" height="36" rx="6"/><text x="12" y="43">HTML 바이트</text>
+  <rect class="bx" x="0" y="92" width="110" height="36" rx="6"/><text x="12" y="115">CSS 바이트</text>
+  <rect class="bx-soft" x="150" y="20" width="96" height="36" rx="6"/><text x="162" y="43">DOM</text>
+  <rect class="bx-soft" x="150" y="92" width="96" height="36" rx="6"/><text x="162" y="115">CSSOM</text>
+  <g class="ln"><line x1="110" y1="38" x2="146" y2="38" marker-end="url(#m)"/><line x1="110" y1="110" x2="146" y2="110" marker-end="url(#m)"/>
+  <path d="M246 38 H266 V66 H282" marker-end="url(#m)"/><path d="M246 110 H266 V82 H282" marker-end="url(#m)"/></g>
+  <text class="tx-l" x="128" y="30" text-anchor="middle">파싱</text>
+  <rect class="bx" x="286" y="56" width="96" height="36" rx="6"/><text x="298" y="79">렌더 트리</text>
+  <rect class="bx-ink" x="412" y="56" width="90" height="36" rx="6"/><text class="tx-inv" x="424" y="79">레이아웃</text>
+  <rect class="bx-ink" x="532" y="56" width="80" height="36" rx="6"/><text class="tx-inv" x="544" y="79">페인트</text>
+  <rect class="bx-ink" x="642" y="56" width="78" height="36" rx="6"/><text class="tx-inv" x="654" y="79">합성</text>
+  <g class="ln"><line x1="382" y1="74" x2="408" y2="74" marker-end="url(#m)"/><line x1="502" y1="74" x2="528" y2="74" marker-end="url(#m)"/><line x1="612" y1="74" x2="638" y2="74" marker-end="url(#m)"/></g>
+  <g class="tx-s"><text x="412" y="112">위치와 크기</text><text x="532" y="112">그리기 명령</text><text x="642" y="112">레이어를 GPU가</text><text x="642" y="128">겹쳐 화면에</text></g>
+
+  <line class="ln-faint" x1="0" y1="150" x2="720" y2="150"/>
+  <text class="tx-l" x="0" y="172">무엇을 바꾸면 어디서부터 다시 하나</text>
+  <g class="tx-m"><text x="0" y="200">width, top, 글자 추가</text><text x="0" y="232">color, background</text><text x="0" y="264">transform, opacity</text></g>
+  <g class="bx-ink">
+    <rect x="412" y="186" width="308" height="22" rx="4"/>
+    <rect x="532" y="218" width="188" height="22" rx="4"/>
+    <rect x="642" y="250" width="78" height="22" rx="4"/>
+  </g>
+  <g class="tx-s"><text x="230" y="201">리플로우: 레이아웃부터</text><text x="230" y="233">리페인트: 페인트부터</text><text x="230" y="265">합성만: 가장 쌈</text></g>
+</svg>
