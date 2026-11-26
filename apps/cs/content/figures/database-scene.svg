@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <rect class="bx-soft" x="0" y="0" width="720" height="84" rx="8"/>
+  <g class="tx-m">
+    <text x="14" y="22">SELECT c.id, c.body, c.created_at, u.username</text>
+    <text x="14" y="40">FROM comments c JOIN comment_users u ON u.id = c.user_id</text>
+    <text x="14" y="58">WHERE c.post_id = 42</text>
+    <text x="14" y="76">ORDER BY c.created_at</text>
+  </g>
+  <text class="tx-l" x="706" y="22" text-anchor="end">블로그 API의 listComments</text>
+
+  <text class="tx-l" x="0" y="110">인덱스 comments_post_idx</text>
+  <text class="tx-l" x="0" y="124">(post_id, created_at) 순으로 정렬된 리프</text>
+  <rect class="bx" x="0" y="132" width="220" height="118" rx="8"/>
+  <g class="tx-m">
+    <text class="tx-s" x="12" y="152">(41, …) → 행 …</text>
+  </g>
+  <g class="bx-ink"><rect x="8" y="160" width="204" height="22" rx="4"/><rect x="8" y="184" width="204" height="22" rx="4"/><rect x="8" y="208" width="204" height="22" rx="4"/></g>
+  <g class="tx-m tx-inv"><text x="16" y="176">(42, 10:02) → 행 7</text><text x="16" y="200">(42, 10:15) → 행 9</text><text x="16" y="224">(42, 11:40) → 행 3</text></g>
+  <text class="tx-s tx-m" x="12" y="244">(43, …) → 행 …</text>
+
+  <text class="tx-l" x="250" y="124">comments 테이블</text>
+  <rect class="bx" x="250" y="132" width="200" height="118" rx="8"/>
+  <g class="tx-m">
+    <text x="262" y="176">행 7 · user 1 · "좋아요"</text>
+    <text x="262" y="200">행 9 · user 2 · "질문이…"</text>
+    <text x="262" y="224">행 3 · user 1 · "감사…"</text>
+  </g>
+
+  <text class="tx-l" x="480" y="124">comment_users (기본 키 id)</text>
+  <rect class="bx" x="480" y="132" width="240" height="118" rx="8"/>
+  <g class="tx-m"><text x="492" y="176">id 1 → 민수</text><text x="492" y="200">id 2 → 지은</text></g>
+  <text class="tx-s" x="492" y="228">user_id마다 한 번씩 찾아 이름을 붙임</text>
+
+  <line class="ln-ink" x1="220" y1="191" x2="246" y2="191" marker-end="url(#a)"/>
+  <line class="ln-ink" x1="450" y1="191" x2="476" y2="191" marker-end="url(#a)"/>
+  <text class="tx-s" x="0" y="274">리프가 이미 created_at 순이라 따로 정렬하지 않고, 댓글이 몇만 개여도 42번 글의 구간만 읽습니다</text>
+</svg>

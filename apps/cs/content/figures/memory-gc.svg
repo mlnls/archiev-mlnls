@@ -24,7 +24,7 @@
   <text class="tx-s" x="305" y="66" text-anchor="middle">document에 붙어 있음</text>
   <rect class="bx-ink" x="460" y="30" width="200" height="44" rx="6"/>
   <text class="tx-inv tx-m" x="560" y="50" text-anchor="middle">done 객체</text>
-  <text class="tx-inv tx-s tx-m" x="560" y="66" text-anchor="middle">{"bits:read": 1}</text>
+  <text class="tx-inv tx-s tx-m" x="560" y="66" text-anchor="middle">{"bits:s:intro": 1}</text>
   <rect class="bx" x="220" y="106" width="170" height="44" rx="6"/>
   <text x="305" y="126" text-anchor="middle">진행 막대 DOM</text>
   <text class="tx-s" x="305" y="142" text-anchor="middle">문서 트리 안</text>

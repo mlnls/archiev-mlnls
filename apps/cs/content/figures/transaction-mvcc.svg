@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200">
+  <text class="tx-l" x="0" y="14">posts 42번 행의 제목</text>
+  <rect class="bx" x="100" y="26" width="300" height="32" rx="5"/>
+  <rect class="bx-ink" x="400" y="26" width="300" height="32" rx="5"/>
+  <text class="tx-s" x="112" y="47">버전 1: "트랜잭션"</text>
+  <text class="tx-inv tx-s" x="412" y="47">버전 2: "트랜잭션과 동시성" (T9가 고침)</text>
+  <line class="ln" x1="60" y1="150" x2="710" y2="150"/>
+  <g class="ln"><line x1="100" y1="146" x2="100" y2="154"/><line x1="280" y1="146" x2="280" y2="154"/><line x1="400" y1="146" x2="400" y2="154"/><line x1="460" y1="146" x2="460" y2="154"/></g>
+  <g class="tx-m" text-anchor="middle"><text x="100" y="170">10:00</text><text x="280" y="170">10:03</text><text x="400" y="170">10:05</text><text x="460" y="170">10:06</text></g>
+  <g class="ln ln-dash"><line x1="280" y1="64" x2="280" y2="146"/><line x1="460" y1="64" x2="460" y2="146"/></g>
+  <text class="tx-s" x="272" y="100" text-anchor="end">T8 보고서 시작: 끝날 때까지 버전 1</text>
+  <text class="tx-s" x="468" y="124">T10 시작: 버전 2</text>
+  <text class="tx-s" x="0" y="194">고치는 쪽은 새 버전을 더할 뿐 옛 버전을 지우지 않아서, 읽기와 쓰기가 서로 기다리지 않습니다</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <rect class="bx" x="0" y="24" width="170" height="40" rx="6"/>
+  <text x="12" y="49">트랜잭션 T7: 댓글 넣기</text>
+  <text class="tx-l" x="210" y="14">① 로그 파일: 끝에 덧붙이기만</text>
+  <g class="bx-soft"><rect x="210" y="28" width="80" height="32" rx="4"/><rect x="294" y="28" width="130" height="32" rx="4"/></g>
+  <rect class="bx-ink" x="428" y="28" width="80" height="32" rx="4"/>
+  <g class="tx-s" text-anchor="middle"><text x="250" y="49">T7 시작</text><text x="359" y="49">comments에 한 줄</text><text class="tx-inv" x="468" y="49">T7 커밋</text></g>
+  <line class="ln-ink" x1="170" y1="44" x2="206" y2="44" marker-end="url(#a)"/>
+  <text class="tx-b" x="524" y="40">② fsync</text>
+  <text class="tx-s" x="524" y="56">끝나야 "성공" 응답</text>
+
+  <line class="ln" x1="120" y1="64" x2="206" y2="116" marker-end="url(#m)"/>
+  <rect class="bx-soft" x="210" y="100" width="200" height="40" rx="6"/>
+  <text x="222" y="125">버퍼 풀: 고친 페이지</text>
+  <line class="ln ln-dash" x1="410" y1="120" x2="496" y2="120" marker-end="url(#m)"/>
+  <text class="tx-s" x="453" y="112" text-anchor="middle">③ 나중에</text>
+  <rect class="bx" x="500" y="100" width="220" height="40" rx="6"/>
+  <text x="512" y="125">데이터 파일 (체크포인트)</text>
+  <text class="tx-s" x="0" y="172">④ 서버가 죽었다 켜지면 로그를 따라가며 커밋된 T7은 다시 하고,</text>
+  <text class="tx-s" x="0" y="188">커밋 기록이 없는 일은 버립니다</text>
+</svg>

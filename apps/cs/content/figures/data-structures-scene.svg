@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <rect class="bx" x="0" y="64" width="150" height="116" rx="8"/>
+  <text class="tx-b" x="12" y="86">본문의 [[용어]]</text>
+  <text class="tx-s" x="12" y="104">25개 장에 729곳</text>
+  <g class="tx-m"><text x="12" y="128">[[패킷]]</text><text x="12" y="146">[[소켓]]</text><text x="12" y="164">[[DNS]] …</text></g>
+  <line class="ln" x1="150" y1="96" x2="196" y2="56" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="150" y1="150" x2="196" y2="166" marker-end="url(#a)"/>
+
+  <text class="tx-l" x="200" y="16">배열에 담으면: find</text>
+  <g class="bx">
+    <rect x="200" y="26" width="44" height="32" rx="4"/><rect x="250" y="26" width="44" height="32" rx="4"/><rect x="300" y="26" width="44" height="32" rx="4"/>
+    <rect x="350" y="26" width="44" height="32" rx="4"/><rect x="400" y="26" width="44" height="32" rx="4"/><rect x="450" y="26" width="44" height="32" rx="4"/>
+    <rect x="500" y="26" width="44" height="32" rx="4"/>
+  </g>
+  <rect class="bx-ink" x="550" y="26" width="44" height="32" rx="4"/>
+  <g class="tx-s" text-anchor="middle">
+    <text x="222" y="47">ACK</text><text x="272" y="47">API</text><text x="322" y="47">ARP</text><text x="372" y="47">…</text>
+    <text x="422" y="47">소켓</text><text x="472" y="47">…</text><text x="522" y="47">…</text><text class="tx-inv" x="572" y="47">패킷</text>
+  </g>
+  <line class="ln" x1="200" y1="70" x2="590" y2="70" marker-end="url(#m)"/>
+  <text class="tx-s" x="200" y="88">앞에서부터 하나씩 비교: 참조 하나에 최대 657번</text>
+  <text class="tx-b" x="612" y="44">약 48만 번</text>
+  <text class="tx-s" x="612" y="62">729 × 657</text>
+
+  <line class="ln-faint" x1="200" y1="108" x2="720" y2="108"/>
+  <text class="tx-l" x="200" y="130">Map에 담으면: get</text>
+  <rect class="bx" x="200" y="142" width="120" height="40" rx="6"/>
+  <text x="260" y="167" text-anchor="middle">해시 함수</text>
+  <line class="ln-ink" x1="320" y1="162" x2="356" y2="162" marker-end="url(#a)"/>
+  <g class="bx">
+    <rect x="360" y="146" width="28" height="32" rx="4"/><rect x="392" y="146" width="28" height="32" rx="4"/><rect x="424" y="146" width="28" height="32" rx="4"/>
+    <rect x="456" y="146" width="28" height="32" rx="4"/><rect x="520" y="146" width="28" height="32" rx="4"/><rect x="552" y="146" width="28" height="32" rx="4"/>
+  </g>
+  <rect class="bx-ink" x="488" y="146" width="28" height="32" rx="4"/>
+  <text class="tx-s" x="200" y="206">"패킷" → 해시 → 칸 번호 → 그 칸으로 바로</text>
+  <text class="tx-b" x="612" y="160">약 729번</text>
+  <text class="tx-s" x="612" y="178">참조마다 한 번</text>
+  <text class="tx-s" x="0" y="230">지금 크기에서는 둘 다 순식간이지만, 용어와 참조가 늘면 배열 쪽은 곱으로 늘어납니다</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 226">
+  <text class="tx-b" x="0" y="16">가상 머신</text>
+  <g class="bx-dash"><rect x="0" y="28" width="166" height="118" rx="8"/><rect x="174" y="28" width="166" height="118" rx="8"/></g>
+  <g class="bx"><rect x="8" y="36" width="150" height="30" rx="5"/><rect x="8" y="72" width="150" height="30" rx="5"/><rect x="182" y="36" width="150" height="30" rx="5"/><rect x="182" y="72" width="150" height="30" rx="5"/></g>
+  <g class="bx-ink"><rect x="8" y="108" width="150" height="30" rx="5"/><rect x="182" y="108" width="150" height="30" rx="5"/></g>
+  <g text-anchor="middle">
+    <text x="83" y="56">앱</text><text x="83" y="92">라이브러리</text><text x="257" y="56">앱</text><text x="257" y="92">라이브러리</text>
+    <text class="tx-inv" x="83" y="128">게스트 커널</text><text class="tx-inv" x="257" y="128">게스트 커널</text>
+  </g>
+  <rect class="bx" x="0" y="154" width="340" height="30" rx="5"/>
+  <rect class="bx-soft" x="0" y="190" width="340" height="30" rx="5"/>
+  <g text-anchor="middle"><text x="170" y="174">하이퍼바이저 (KVM, Hyper-V)</text><text x="170" y="210">하드웨어</text></g>
+
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">컨테이너</text>
+    <g class="tx-s"><text x="0" y="40">커널은 하나를 함께 쓰고</text><text x="0" y="56">보이는 것과 쓰는 양만 나눔</text></g>
+    <g class="bx-dash"><rect x="0" y="72" width="166" height="76" rx="8"/><rect x="174" y="72" width="166" height="76" rx="8"/></g>
+    <g class="bx"><rect x="8" y="80" width="150" height="30" rx="5"/><rect x="8" y="114" width="150" height="30" rx="5"/><rect x="182" y="80" width="150" height="30" rx="5"/><rect x="182" y="114" width="150" height="30" rx="5"/></g>
+    <g text-anchor="middle"><text x="83" y="100">앱</text><text x="83" y="134">라이브러리</text><text x="257" y="100">앱</text><text x="257" y="134">라이브러리</text></g>
+    <rect class="bx-ink" x="0" y="154" width="340" height="30" rx="5"/>
+    <rect class="bx-soft" x="0" y="190" width="340" height="30" rx="5"/>
+    <g text-anchor="middle"><text class="tx-inv" x="170" y="174">호스트 커널 하나 · 네임스페이스, cgroups</text><text x="170" y="210">하드웨어</text></g>
+  </g>
+</svg>

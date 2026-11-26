@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 166">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">포워드 프록시: 클라이언트 편</text>
+  <rect class="bx-dash" x="0" y="30" width="226" height="80" rx="10"/>
+  <text class="tx-l" x="10" y="46">회사 네트워크</text>
+  <rect class="bx" x="10" y="54" width="90" height="44" rx="6"/><rect class="bx-ink" x="126" y="54" width="90" height="44" rx="6"/><rect class="bx" x="250" y="54" width="90" height="44" rx="6"/>
+  <g text-anchor="middle"><text x="55" y="81">PC들</text><text class="tx-inv" x="171" y="81" font-weight="700">프록시</text><text x="295" y="81">바깥 서버들</text></g>
+  <g class="ln"><line x1="100" y1="76" x2="122" y2="76" marker-end="url(#m)"/><line x1="216" y1="76" x2="246" y2="76" marker-end="url(#m)"/></g>
+  <g class="tx-s"><text x="0" y="134">PC 대신 바깥으로 나가 줍니다.</text><text x="0" y="150">바깥 서버는 프록시만 봅니다</text></g>
+
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="166"/>
+  <g transform="translate(380 0)">
+    <text class="tx-b" x="0" y="16">리버스 프록시: 서버 편</text>
+    <rect class="bx-dash" x="114" y="30" width="226" height="80" rx="10"/>
+    <text class="tx-l" x="124" y="46">이 서버</text>
+    <rect class="bx" x="0" y="54" width="90" height="44" rx="6"/><rect class="bx-ink" x="124" y="54" width="90" height="44" rx="6"/><rect class="bx" x="240" y="54" width="90" height="44" rx="6"/>
+    <g text-anchor="middle"><text x="45" y="81">브라우저들</text><text class="tx-inv" x="169" y="81" font-weight="700">Caddy</text><text x="285" y="81">nginx, Node</text></g>
+    <g class="ln"><line x1="90" y1="76" x2="120" y2="76" marker-end="url(#m)"/><line x1="214" y1="76" x2="236" y2="76" marker-end="url(#m)"/></g>
+    <g class="tx-s"><text x="0" y="134">서버 대신 요청을 받아 뒤로 넘깁니다.</text><text x="0" y="150">브라우저는 Caddy만 봅니다</text></g>
+  </g>
+</svg>

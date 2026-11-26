@@ -18,9 +18,9 @@
   <text class="tx-m" x="260" y="216" text-anchor="middle">Finished + GET /http/</text>
   <text class="tx-s" x="110" y="196">브라우저: 체인을 루트까지 확인하고 대칭키를 계산</text>
   <g class="tx-s">
-    <text x="450" y="58">암호 방식, 키 교환 값</text><text x="450" y="74">SNI: cs.mlnl.…sslip.io, ALPN: h2</text>
+    <text x="450" y="58">암호 방식, 키 교환 값</text><text x="450" y="74">SNI: cs.mlnl.cloud, ALPN: h2</text>
     <text x="450" y="102">고른 방식, 서버의 키 교환 값</text>
-    <text x="450" y="158">"이 공개키는 cs.mlnl.…의 것" 보증서와</text><text x="450" y="174">개인키로 한 서명</text>
+    <text x="450" y="158">"이 공개키는 cs.mlnl.cloud의 것" 보증서와</text><text x="450" y="174">개인키로 한 서명</text>
     <text x="450" y="232">첫 요청이 Finished와 함께 감</text>
   </g>
   <path class="ln" d="M46 48 H40 V174 H46"/>

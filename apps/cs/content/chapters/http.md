@@ -25,7 +25,7 @@ https://blog.example.com:443/posts/hello?ref=home#comments
 - 경로와 쿼리는 서버에 그대로 전달됩니다.
 - `#` 뒤의 프래그먼트는 **서버로 보내지 않습니다.** 브라우저 안에서만 씁니다. 해시 라우팅 SPA가 서버 설정 없이 동작하는 이유이고, 서버 로그에 `#` 뒷부분이 남지 않는 이유입니다.
 
-:::quiz fragment 이 페이지에서 `https://cs.mlnl.…sslip.io/http/#tls`로 이동할 때, 서버가 받는 요청의 경로는?
+:::quiz fragment 이 페이지에서 `https://cs.mlnl.cloud/http/#tls`로 이동할 때, 서버가 받는 요청의 경로는?
 = /http/
 
 **`/http/`**입니다. `#` 뒤의 프래그먼트는 서버로 보내지 않고 브라우저가 페이지 안에서 그 위치로 스크롤하는 데만 씁니다. 이 책의 목차 링크가 페이지를 다시 받지 않고 움직이는 이유입니다.

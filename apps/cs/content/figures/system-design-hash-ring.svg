@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236">
+<text class="tx-b" x="0" y="16">hash % 서버 수</text>
+<g class="tx-l"><text x="0" y="40">해시</text><text x="60" y="40">3대일 때</text><text x="140" y="40">4대일 때</text></g>
+<text class="tx-m" x="0" y="58">7</text><text class="tx-m" x="60" y="58">서버 1</text>
+<text class="tx-m" x="140" y="58" font-weight="700">서버 3 ←</text>
+<text class="tx-m" x="0" y="82">8</text><text class="tx-m" x="60" y="82">서버 2</text>
+<text class="tx-m" x="140" y="82" font-weight="700">서버 0 ←</text>
+<text class="tx-m" x="0" y="106">9</text><text class="tx-m" x="60" y="106">서버 0</text>
+<text class="tx-m" x="140" y="106" font-weight="700">서버 1 ←</text>
+<text class="tx-m" x="0" y="130">10</text><text class="tx-m" x="60" y="130">서버 1</text>
+<text class="tx-m" x="140" y="130" font-weight="700">서버 2 ←</text>
+<text class="tx-m" x="0" y="154">11</text><text class="tx-m" x="60" y="154">서버 2</text>
+<text class="tx-m" x="140" y="154" font-weight="700">서버 3 ←</text>
+<text class="tx-m" x="0" y="178">12</text><text class="tx-m" x="60" y="178">서버 0</text>
+<text class="tx-m" x="140" y="178" >서버 0</text>
+<text class="tx-s" x="0" y="214">서버 하나를 더하자 6개 중 5개가 자리를 옮깁니다</text>
+<line class="ln-faint" x1="300" y1="0" x2="300" y2="236"/>
+<text class="tx-b" x="330" y="16">일관된 해싱</text>
+<circle class="ln" cx="470" cy="122" r="86" fill="none"/>
+<path class="ln-ink" d="M499.4 41.2 A86 86 0 0 1 550.8 92.6" fill="none" style="stroke-width:4"/>
+<rect class="bx" x="486.4" y="29.2" width="26" height="24" rx="5"/><text class="tx-m" x="499.4" y="45.7" text-anchor="middle">A</text>
+<rect class="bx-ink" x="537.8" y="80.6" width="26" height="24" rx="5"/><text class="tx-m tx-inv" x="550.8" y="97.1" text-anchor="middle">D</text>
+<rect class="bx" x="500.0" y="184.5" width="26" height="24" rx="5"/><text class="tx-m" x="513.0" y="201.0" text-anchor="middle">B</text>
+<rect class="bx" x="372.3" y="124.9" width="26" height="24" rx="5"/><text class="tx-m" x="385.3" y="141.4" text-anchor="middle">C</text>
+<circle class="dot" cx="525.3" cy="56.1" r="4"/>
+<circle class="dot" cx="540.4" cy="72.7" r="4"/>
+<circle class="dot-soft" cx="550.8" cy="151.4" r="4"/>
+<circle class="dot-soft" cx="440.6" cy="202.8" r="4"/>
+<circle class="dot-soft" cx="404.1" cy="177.3" r="4"/>
+<circle class="dot-soft" cx="395.5" cy="79.0" r="4"/>
+<circle class="dot-soft" cx="440.6" cy="41.2" r="4"/>
+<g class="tx-s"><text x="580" y="70">키는 원을 따라 시계 방향으로</text><text x="580" y="86">처음 만나는 서버에 놓입니다.</text>
+<text x="580" y="118">새 서버 D를 더하면</text><text x="580" y="134">A와 D 사이(굵은 호)의 키만</text><text x="580" y="150">D로 옮기고 나머지는 그대로</text></g>
+</svg>

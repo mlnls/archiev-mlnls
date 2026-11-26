@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 234">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <g class="tx-b" text-anchor="middle"><text x="90" y="16">서버의 Caddy</text><text x="630" y="16">Let's Encrypt</text></g>
+  <g class="ln-faint"><line x1="90" y1="26" x2="90" y2="230"/><line x1="630" y1="26" x2="630" y2="230"/></g>
+  <line class="ln" x1="92" y1="52" x2="626" y2="52" marker-end="url(#m)"/>
+  <line class="ln ln-dash" x1="628" y1="90" x2="94" y2="90" marker-end="url(#m)"/>
+  <line class="ln" x1="628" y1="134" x2="94" y2="134" marker-end="url(#m)"/>
+  <line class="ln ln-dash" x1="92" y1="182" x2="626" y2="182" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="628" y1="218" x2="94" y2="218" marker-end="url(#a)"/>
+  <g class="tx-s" text-anchor="middle">
+    <text x="360" y="46">① "cs.mlnl.cloud의 인증서를 주세요"</text>
+    <text x="360" y="84">② "주인이면 토큰 abc를 이 주소에 올려 두세요"</text>
+    <text x="360" y="128">③ DNS로 IP를 찾아 80번으로 직접 접속</text>
+    <text x="360" y="176">④ 정해진 값으로 답함</text>
+    <text x="360" y="212">⑤ 서명한 인증서 (90일)</text>
+  </g>
+  <text class="tx-m" x="360" y="150" text-anchor="middle">GET /.well-known/acme-challenge/abc</text>
+</svg>

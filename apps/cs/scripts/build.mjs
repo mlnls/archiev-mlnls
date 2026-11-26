@@ -9,6 +9,33 @@ import { book, parts, sources, upcoming } from "../content/book.mjs";
 import { esc, extractTerms, inline, parseFrontmatter, plain, render, termId } from "./markdown.mjs";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
+
+/** 블로그와 같은 글꼴 고르기. 고른 글꼴은 이 사이트의 localStorage에 남습니다 */
+const FONTS = [
+  { id: "pretendard", label: "Pretendard", family: '"Pretendard Variable"', href: null },
+  { id: "wanted", label: "원티드 산스", family: '"Wanted Sans Variable"', href: "https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" },
+  { id: "suit", label: "SUIT", family: '"SUIT Variable"', href: "https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2.0.5/fonts/variable/woff2/SUIT-Variable.css" },
+  { id: "plex", label: "IBM Plex Sans", family: '"IBM Plex Sans KR"', href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" },
+  { id: "noto-serif", label: "노토 세리프", family: '"Noto Serif KR"', href: "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap" },
+  { id: "gowun", label: "고운바탕", family: '"Gowun Batang"', href: "https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" },
+];
+function applyFontSource(fonts, id) {
+  const font = fonts.find((f) => f.id === id) ?? fonts[0];
+  const root = document.documentElement;
+  root.style.setProperty("--font", font.family);
+  root.dataset.font = font.id;
+  const old = document.getElementById("font-css");
+  if (!font.href) old?.remove();
+  else if (old) old.href = font.href;
+  else {
+    const link = document.createElement("link");
+    link.id = "font-css";
+    link.rel = "stylesheet";
+    link.href = font.href;
+    document.head.append(link);
+  }
+}
+const FONT_INIT = `try{window.__applyFont=function(id){(${applyFontSource.toString()})(${JSON.stringify(FONTS).replace(/</g, "\\u003c")},id)};window.__applyFont(localStorage.getItem("mlnl-cs:font")||"pretendard")}catch(e){}`;
 export const SITE = "https://cs.mlnl.site";
 const BLOG = "https://blog.mlnl.site";
 const CV = "https://mlnl.site/";
@@ -17,7 +44,7 @@ const GITHUB = "https://github.com/mlnls";
 const num = (i) => String(i + 1).padStart(2, "0");
 const pathOf = (ch) => `/${ch.slug}/`;
 /** 실습 수 + 다 읽음 하나 */
-const countOf = (ch) => ch.practice.length + 1;
+const countOf = (ch) => ch.parts.length;
 /** 한국어 기술 글을 1분에 450자쯤 읽는다고 봅니다 */
 const minutesOf = (html) => Math.max(1, Math.round(html.replace(/<svg[\s\S]*?<\/svg>/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, "").length / 450));
 
@@ -32,6 +59,65 @@ async function loadFigures(dir = FIGURES) {
     else if (RASTER.test(f)) figures.set(f, {});
   }
   return figures;
+}
+
+const unescapeHtml = (s) => s.replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+
+const textLength = (html) => html.replace(/<svg[\s\S]*?<\/svg>/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").length;
+/** 본문 파트 하나의 목표 길이(글자). 이만큼 모이면 파트를 닫습니다 */
+const PART_TARGET = 2500;
+
+/** 장 본문을 공부 단위인 파트로 나눕니다.
+ *  1. ## 제목마다 절로 자릅니다. 첫 제목 앞은 "들어가며"(intro) 절입니다.
+ *  2. 본문 절들은 PART_TARGET 글자쯤 되도록 이어서 한 파트로 묶습니다.
+ *  3. "다시 장면으로"부터는 정리 / 용어 정리 / 직접 해보기 / 장 전체 문제와 스스로 점검(더 읽을거리 포함)으로 묶습니다.
+ *  파트의 id는 첫 절의 id라서, 학습 완료 기록("<slug>:s:<id>")은 그 제목을 바꾸지 않는 한 그대로 남습니다 */
+export function splitParts(html) {
+  const secs = [];
+  for (const chunk of html.split(/(?=<h2 id=")/)) {
+    const m = /^<h2 id="([^"]+)">([\s\S]*?)<\/h2>/.exec(chunk);
+    if (!m) {
+      if (chunk.trim()) secs.push({ id: "intro", titleHtml: "들어가며", text: "들어가며", html: `<h2 id="intro">들어가며</h2>\n${chunk}` });
+      continue;
+    }
+    secs.push({ id: m[1], titleHtml: m[2].replace(/<a [^>]*>|<\/a>/g, ""), text: unescapeHtml(m[2]).trim(), html: chunk });
+  }
+  const at = (name) => secs.findIndex((x) => x.text.startsWith(name));
+  let tail = at("다시 장면으로");
+  if (tail < 0) tail = [at("프론트엔드와 이어지는 곳"), at("용어 정리")].filter((n) => n >= 0).sort((a, b) => a - b)[0] ?? secs.length;
+  const groups = [];
+  let cur = null;
+  for (const sec of secs.slice(0, tail)) {
+    if (!cur) groups.push((cur = [sec]));
+    else cur.push(sec);
+    if (cur.reduce((n, x) => n + textLength(x.html), 0) >= PART_TARGET) cur = null;
+  }
+  // 마지막 본문 파트가 너무 짧으면 앞 파트에 붙입니다
+  const size = (g) => g.reduce((n, x) => n + textLength(x.html), 0);
+  if (groups.length > 1 && size(groups.at(-1)) < PART_TARGET / 3) groups.at(-2).push(...groups.pop());
+  // 끝부분: 정리, 용어 정리, 직접 해보기, 문제와 점검
+  const rest = secs.slice(tail);
+  const terms = rest.findIndex((x) => x.text === "용어 정리");
+  const wrap = terms < 0 ? rest : rest.slice(0, terms);
+  if (wrap.length) groups.push(wrap);
+  for (const x of terms < 0 ? [] : rest.slice(terms)) {
+    const last = groups.at(-1);
+    if (["스스로 점검", "더 읽을거리"].includes(x.text) && last[0].text === "장 전체 문제") last.push(x);
+    else if (x.text === "더 읽을거리" || (x.text === "스스로 점검" && !["용어 정리", "직접 해보기"].includes(last[0].text))) last.push(x);
+    else groups.push([x]);
+  }
+  return groups.map((g) => ({
+    id: g[0].id,
+    titleHtml: g[0].titleHtml,
+    text: g[0].text,
+    subs: g.slice(1).filter((x) => x.text !== "더 읽을거리").map((x) => ({ id: x.id, titleHtml: x.titleHtml })),
+    html: g.map((x) => x.html).join(""),
+    side: g.every((x) => x.text.startsWith("곁가지")),
+    heads: [...g.map((x) => x.html).join("").matchAll(/<h([23]) id="([^"]+)">([\s\S]*?)<\/h\1>/g)]
+      .filter((m) => unescapeHtml(m[3]).trim() !== "더 읽을거리")
+      .map((m) => ({ level: Number(m[1]), id: m[2], html: m[3].replace(/<a [^>]*>|<\/a>/g, "") })),
+    quizzes: g.reduce((n, x) => n + (x.html.match(/ data-quiz="/g) || []).length, 0),
+  }));
 }
 
 /** 차례 순서대로 장을 읽고, 모든 장의 용어를 모은 뒤 본문을 그립니다 */
@@ -77,6 +163,7 @@ export async function loadBook(dir = join(ROOT, "content", "chapters"), { draft 
     ch.refs = new Set();
     Object.assign(ch, render(ch.body, { slug: ch.slug, terms, refs: ch.refs, draft, missing, figures }));
     ch.minutes = minutesOf(ch.html);
+    ch.parts = splitParts(ch.html);
   }
   return { chapters, terms, missing, figures, soon };
 }
@@ -101,6 +188,7 @@ function page({ title, description, path, body, assets }) {
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="${assets.css}">
+  <script>${FONT_INIT}</script>
   <script src="${assets.js}" defer></script>
 </head>
 <body>
@@ -108,7 +196,10 @@ function page({ title, description, path, body, assets }) {
     <div class="site-header-in">
       <a class="wordmark" href="/">mlnl<span>cs</span></a>
       <nav aria-label="주요 메뉴">
+        <select class="font-pick" aria-label="글꼴" data-font-pick>${FONTS.map((f) => `<option value="${f.id}">${esc(f.label)}</option>`).join("")}</select>
         <a href="/terms/">용어 사전</a>
+        <a href="/notes/">내 메모</a>
+        <a href="/account/" data-account-link>로그인</a>
         <a href="${BLOG}">블로그</a>
         <a href="${CV}">소개</a>
       </nav>
@@ -147,9 +238,9 @@ function indexPage({ chapters, terms, soon }, assets) {
             <div class="row-text">
               <h2>${esc(c.title)}</h2>
               <p>${inline(c.summary, { slug: c.slug, terms })}</p>
-              <div class="meta"><span>${c.minutes}분</span><span>용어 ${c.terms.length}</span><span>실습 ${c.practice.length}</span>${c.quiz.length ? `<span>문제 ${c.quiz.length}</span>` : ""}</div>
+              <div class="meta"><span>${c.minutes}분</span><span>파트 ${c.parts.length}</span>${c.quiz.length ? `<span>문제 ${c.quiz.length}</span>` : ""}<span>용어 ${c.terms.length}</span></div>
             </div>
-            ${progress(c.slug, countOf(c), `${c.title} 진행`)}
+            ${progress(`${c.slug}:s`, countOf(c), `${c.title} 학습한 파트`)}
           </a>
         </li>`,
         )
@@ -199,8 +290,8 @@ ${repoRows}
       <p class="side-text">${inline(book.summary, { terms })}</p>
       <p class="side-meta">${parts.length}부 ${chapters.length}장 · 용어 ${terms.size}개 · 약 ${Math.round(minutes / 60)}시간</p>
       <p class="side-link"><a href="/terms/">용어 사전 보기</a></p>
-      <p class="side-title">전체 진행</p>
-      ${progress("*", total, "전체 진행")}
+      <p class="side-title">전체 진도율 (학습한 파트)</p>
+      ${progress("*", total, "전체 진도율")}
       <p class="side-title">이렇게 읽어요</p>
       <ul class="tips">
 ${book.tips.map((t) => `        <li>${inline(t, { terms })}</li>`).join("\n")}
@@ -214,36 +305,138 @@ ${book.tips.map((t) => `        <li>${inline(t, { terms })}</li>`).join("\n")}
 function chapterPage(ch, { chapters, terms }, assets) {
   const prev = chapters[ch.index - 1];
   const next = chapters[ch.index + 1];
-  const nav = `<nav class="stage-nav" aria-label="다른 장">
-          ${prev ? `<a href="${pathOf(prev)}"><span>이전 장</span>${num(prev.index)} ${esc(prev.title)}</a>` : `<a href="/"><span>처음</span>차례로 돌아가기</a>`}
-          ${next ? `<a class="next" href="${pathOf(next)}"><span>다음 장</span>${num(next.index)} ${esc(next.title)}</a>` : `<a class="next" href="/"><span>끝</span>차례로 돌아가기</a>`}
-        </nav>`;
+  const secs = ch.parts;
+  const chapterLink = (c, dir) =>
+    c
+      ? `<a${dir === "next" ? ' class="next"' : ""} href="${pathOf(c)}"><span>${dir === "next" ? "다음 장" : "이전 장"}</span>${num(c.index)} ${esc(c.title)}</a>`
+      : `<a${dir === "next" ? ' class="next"' : ""} href="/"><span>${dir === "next" ? "끝" : "처음"}</span>차례로 돌아가기</a>`;
+  const sections = secs
+    .map((p, i) => {
+      const before = secs[i - 1];
+      const after = secs[i + 1];
+      const back = before ? `<a href="#part-${before.id}"><span>이전 파트</span>${before.titleHtml}</a>` : chapterLink(prev, "prev");
+      const fwd = after ? `<a class="next" href="#part-${after.id}"><span>다음 파트</span>${after.titleHtml}</a>` : chapterLink(next, "next");
+      return `          <section class="part" id="part-${p.id}" data-part="${p.id}">
+            <p class="part-step"><a class="back-hub" href="#parts">← 파트 목록</a><span>파트 ${i + 1} / ${secs.length}${p.side ? " · 곁가지" : ""}${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}</span><button type="button" class="memo-open" data-memo-open>메모</button></p>
+            <div class="prose">
+${p.html}
+            </div>
+            <div class="part-end">
+              <label class="finish"><input type="checkbox" data-key="${esc(`${ch.slug}:s:${p.id}`)}"><span>이 파트 학습 완료</span></label>
+              <p class="part-hint" data-part-hint></p>
+              <nav class="stage-nav" aria-label="파트 넘기기">
+                ${back}
+                ${fwd}
+              </nav>
+            </div>
+          </section>`;
+    })
+    .join("\n");
+  const cards = secs
+    .map(
+      (p, i) => `            <li><a class="part-card" href="#part-${p.id}" data-part-card="${p.id}">
+              <span class="card-top"><span class="card-num">파트 ${i + 1}</span><span class="card-state" data-card-state></span></span>
+              <span class="card-title">${p.titleHtml}</span>
+              ${p.subs.length ? `<span class="card-subs">${p.subs.map((x) => x.titleHtml).join(" · ")}</span>` : ""}
+              <span class="card-meta">약 ${minutesOf(p.html)}분${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}${p.side ? " · 곁가지" : ""}</span>
+            </a></li>`,
+    )
+    .join("\n");
+  const list = secs
+    .map(
+      (p) =>
+        `              <li><a href="#part-${p.id}" data-part-link="${p.id}"><span class="mark" aria-hidden="true"></span><span class="t">${p.titleHtml}</span></a>${
+          p.subs.length ? `<ul class="parts-sub">${p.subs.map((x) => `<li><a href="#${x.id}">${x.titleHtml}</a></li>`).join("")}</ul>` : ""
+        }</li>`,
+    )
+    .join("\n");
   const body = `  <main class="page">
     <article>
       <header class="stage-head">
-        <p class="stage-meta"><a href="/">차례</a><span>${ch.part + 1}부 ${esc(parts[ch.part].title)}</span><span>${num(ch.index)}장</span><span>읽는 데 ${ch.minutes}분</span></p>
+        <p class="stage-meta"><a href="/">차례</a><span>${ch.part + 1}부 ${esc(parts[ch.part].title)}</span><span>${num(ch.index)}장</span><span>파트 ${secs.length}개</span><span>읽는 데 ${ch.minutes}분</span></p>
         <h1>${esc(ch.title)}</h1>
         <p class="stage-goal">${inline(ch.summary, { slug: ch.slug, terms })}</p>
-        ${progress(ch.slug, countOf(ch), "이 장 진행")}
+        ${progress(`${ch.slug}:s`, secs.length, "이 장에서 학습한 파트")}
       </header>
       <div class="stage-layout">
         <div class="stage-main">
-          <div class="prose">
-${ch.html}
-          </div>
-          <label class="finish"><input type="checkbox" data-key="${esc(`${ch.slug}:read`)}"><span>이 장을 다 읽었어요</span></label>
-          ${nav}
+          <section class="hub" id="parts" aria-labelledby="hub-title">
+            <div class="hub-head">
+              <h2 id="hub-title">이 장의 파트 ${secs.length}개</h2>
+              <a class="hub-resume" href="#part-${secs[0].id}" data-resume>파트 1부터 시작하기</a>
+            </div>
+            <p class="hub-text">파트를 골라 들어갑니다. 파트의 문제를 다 풀고 맨 아래 "이 파트 학습 완료"를 체크하면 진도에 들어갑니다.</p>
+            <ol class="part-cards">
+${cards}
+            </ol>
+          </section>
+${sections}
         </div>
-        <nav class="toc" aria-label="목차">
-          <p class="toc-title">이 장의 차례</p>
-          <ul>
-${ch.toc.map((t) => `            <li><a href="#${t.id}">${esc(t.text)}</a></li>`).join("\n")}
-          </ul>
-        </nav>
+        <aside class="study" aria-label="이 파트의 차례">
+          <p class="study-step"><a href="#parts">파트 목록</a></p>
+${secs
+  .map(
+    (p, i) => `          <div class="toc-part" data-toc-for="${p.id}">
+            <p class="toc-title">파트 ${i + 1} · ${p.titleHtml}</p>
+            <ul>${p.heads.map((h) => `<li class="h${h.level}"><a href="#${h.id}">${h.html}</a></li>`).join("")}</ul>
+          </div>`,
+  )
+  .join("\n")}
+          <button type="button" class="memo-open is-side" data-memo-open>이 파트 메모</button>
+        </aside>
       </div>
     </article>
+    <aside class="memo-panel" data-memo-panel data-src="${assets.memo}" aria-label="메모" hidden>
+      <div class="memo-head">
+        <div>
+          <p class="memo-kicker">메모</p>
+          <p class="memo-title" data-memo-title></p>
+        </div>
+        <button type="button" class="memo-close" data-memo-close aria-label="메모 닫기">×</button>
+      </div>
+      <div class="memo-body prose" data-memo-editor></div>
+      <p class="memo-foot"><span data-memo-status>이 브라우저에만 저장됩니다</span><a href="/notes/">내 메모 모아 보기</a></p>
+    </aside>
   </main>`;
   return page({ title: `${num(ch.index)} ${ch.title} | ${book.title}`, description: plain(ch.summary), path: pathOf(ch), body, assets });
+}
+
+function accountPage(assets) {
+  const body = `  <main class="page account-page">
+    <header class="stage-head">
+      <p class="stage-meta"><a href="/">차례</a><span>계정</span></p>
+      <h1>계정</h1>
+      <p class="stage-goal">로그인하면 진행 기록, 푼 문제, 메모가 계정에 저장되어 다른 기기와 브라우저에서도 이어집니다. 처음 쓰는 아이디면 그대로 만들어집니다.</p>
+    </header>
+    <form class="account-form" data-login>
+      <label>아이디<input name="username" autocomplete="username" required minlength="2" maxlength="20" placeholder="2~20자, 한글·영문 소문자·숫자"></label>
+      <label>비밀번호<input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="8자 이상"></label>
+      <button type="submit">로그인 · 처음이면 가입</button>
+    </form>
+    <div class="account-in" data-signed-in hidden>
+      <p><strong data-account-name></strong> 계정으로 로그인했습니다. 체크와 메모가 이 계정에 저장됩니다.</p>
+      <button type="button" data-logout>로그아웃</button>
+    </div>
+    <p class="account-msg" data-login-msg aria-live="polite"></p>
+    <p class="account-note">비밀번호는 scrypt와 솔트로 만든 해시로만 저장되고(23장), 로그인 쿠키는 HttpOnly입니다. 로그인하지 않으면 기록은 지금처럼 이 브라우저에만 남습니다. 로그인한 기기끼리는 계정의 기록을 따르고, 처음 로그인할 때만 이 브라우저의 기록을 계정에 올립니다.</p>
+  </main>`;
+  return page({ title: `계정 | ${book.title}`, description: "로그인하면 학습 기록과 메모가 계정에 저장됩니다.", path: "/account/", body, assets });
+}
+
+function notesPage({ chapters }, assets) {
+  const map = chapters.map((c) => ({ slug: c.slug, num: num(c.index), title: c.title, parts: c.parts.map((p) => ({ id: p.id, title: p.text })) }));
+  const body = `  <main class="page notes-page">
+    <header class="stage-head">
+      <p class="stage-meta"><a href="/">차례</a><span>내 메모</span></p>
+      <h1>내 메모</h1>
+      <p class="stage-goal">파트마다 남긴 메모를 장 순서대로 모았습니다. 메모는 이 브라우저에만 저장되어, 다른 기기나 브라우저에서는 보이지 않습니다.</p>
+    </header>
+    <div class="notes" data-notes>
+      <p class="notes-empty">아직 남긴 메모가 없습니다. 각 장의 오른쪽 칸에서 파트마다 메모를 남길 수 있습니다.</p>
+    </div>
+    <script type="application/json" id="book-map">${JSON.stringify(map).replace(/</g, "\\u003c")}</script>
+  </main>`;
+  return page({ title: `내 메모 | ${book.title}`, description: "파트마다 남긴 메모를 모아 봅니다.", path: "/notes/", body, assets });
 }
 
 const CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
@@ -315,6 +508,16 @@ async function asset(out, file, ext) {
   return name;
 }
 
+/** 메모 편집기(Tiptap)를 한 파일로 묶습니다. 메모 칸을 처음 열 때만 불러옵니다 */
+async function bundleMemo(out) {
+  const { build: bundle } = await import("esbuild");
+  const result = await bundle({ entryPoints: [join(ROOT, "src", "memo", "editor.js")], bundle: true, format: "esm", minify: true, write: false, target: "es2022", legalComments: "none" });
+  const text = result.outputFiles[0].text;
+  const name = `/assets/memo.${createHash("sha256").update(text).digest("hex").slice(0, 10)}.js`;
+  await writeFile(join(out, name), text);
+  return name;
+}
+
 async function write(out, path, text) {
   const file = join(out, path);
   await mkdir(dirname(file), { recursive: true });
@@ -325,10 +528,12 @@ export async function build(out = join(ROOT, "dist"), { draft = false } = {}) {
   const data = await loadBook(undefined, { draft });
   await rm(out, { recursive: true, force: true });
   await mkdir(join(out, "assets"), { recursive: true });
-  const assets = { css: await asset(out, "style.css", "css"), js: await asset(out, "app.js", "js") };
+  const assets = { css: await asset(out, "style.css", "css"), js: await asset(out, "app.js", "js"), memo: await bundleMemo(out) };
   await write(out, "index.html", indexPage(data, assets));
   for (const ch of data.chapters) await write(out, `${ch.slug}/index.html`, chapterPage(ch, data, assets));
   await write(out, "terms/index.html", termsPage(data, assets));
+  await write(out, "notes/index.html", notesPage(data, assets));
+  await write(out, "account/index.html", accountPage(assets));
   const photos = [...data.figures].filter(([, f]) => !f.svg).map(([name]) => name);
   if (photos.length) await mkdir(join(out, "figures"), { recursive: true });
   for (const name of photos) await copyFile(join(FIGURES, name), join(out, "figures", name));

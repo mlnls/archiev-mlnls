@@ -19,3 +19,6 @@ data/profile.local.json
 *.key
 id_rsa*
 id_ed25519*
+
+# cs-api를 로컬에서 띄우면 생기는 SQLite 파일
+apps/cs-api/cs.db*

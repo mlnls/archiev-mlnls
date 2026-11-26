@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 210">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">커밋은 부모를 가리키는 DAG</text>
+  <g class="bx">
+    <rect x="0" y="40" width="44" height="32" rx="6"/><rect x="90" y="40" width="44" height="32" rx="6"/><rect x="180" y="40" width="44" height="32" rx="6"/>
+    <rect x="180" y="110" width="44" height="32" rx="6"/><rect x="270" y="110" width="44" height="32" rx="6"/>
+  </g>
+  <rect class="bx-ink" x="270" y="40" width="44" height="32" rx="6"/>
+  <g class="tx-m" text-anchor="middle"><text x="22" y="61">A</text><text x="112" y="61">B</text><text x="202" y="61">C</text><text class="tx-inv" x="292" y="61">F</text><text x="202" y="131">D</text><text x="292" y="131">E</text></g>
+  <g class="ln"><line x1="88" y1="56" x2="48" y2="56" marker-end="url(#m)"/><line x1="178" y1="56" x2="138" y2="56" marker-end="url(#m)"/><line x1="268" y1="56" x2="228" y2="56" marker-end="url(#m)"/>
+  <line x1="178" y1="120" x2="134" y2="74" marker-end="url(#m)"/><line x1="268" y1="126" x2="228" y2="126" marker-end="url(#m)"/></g>
+  <g class="bx-soft"><rect x="350" y="40" width="66" height="32" rx="6"/><rect x="350" y="110" width="80" height="32" rx="6"/><rect x="450" y="40" width="64" height="32" rx="6"/></g>
+  <g class="tx-m" text-anchor="middle"><text x="383" y="61">main</text><text x="390" y="131">feature</text><text x="482" y="61">HEAD</text></g>
+  <g class="ln ln-dash"><line x1="348" y1="56" x2="318" y2="56" marker-end="url(#m)"/><line x1="348" y1="126" x2="318" y2="126" marker-end="url(#m)"/><line x1="448" y1="56" x2="420" y2="56" marker-end="url(#m)"/></g>
+  <g class="tx-s"><text x="0" y="172">화살표는 "부모가 누구인가"입니다. 커밋의 해시에 부모의 해시가 들어가니</text><text x="0" y="188">과거의 커밋 하나를 바꾸면 그 뒤의 해시가 모두 바뀝니다.</text><text x="0" y="204">브랜치(main, feature)와 HEAD는 커밋 하나를 가리키는 작은 포인터일 뿐입니다</text></g>
+  <g class="tx-s"><text x="540" y="52">커밋 F 안에는</text><text x="540" y="70">· 최상위 tree의 해시</text><text x="540" y="88">· 부모 C의 해시</text><text x="540" y="106">· 작성자, 시각, 메시지</text></g>
+</svg>

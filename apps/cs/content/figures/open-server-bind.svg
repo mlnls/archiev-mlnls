@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 156">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+    <text class="tx-m" x="0" y="16">listen(3000, "127.0.0.1")</text>
+    <g class="bx"><rect x="0" y="34" width="140" height="34" rx="6"/><rect x="0" y="96" width="140" height="34" rx="6"/></g>
+    <g class="tx-s"><text x="12" y="56">lo · 127.0.0.1</text><text x="12" y="118">en0 · 192.168.0.23</text>
+    <text x="0" y="84">같은 노트북에서</text><text x="0" y="146">같은 Wi-Fi의 휴대폰에서</text></g>
+    <rect class="bx-ink" x="220" y="54" width="110" height="56" rx="8"/>
+    <text class="tx-inv" x="275" y="87" text-anchor="middle" font-weight="700">서버 :3000</text>
+    <line class="ln-ink" x1="140" y1="51" x2="216" y2="72" marker-end="url(#a)"/>
+    <line class="ln ln-dash" x1="140" y1="113" x2="180" y2="104"/>
+    <text class="tx-b" x="186" y="108">✕</text><text class="tx-s" x="200" y="140">연결 거부</text>
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="156"/>
+  <g transform="translate(380 0)">
+    <text class="tx-m" x="0" y="16">listen(3000, "0.0.0.0")</text>
+    <g class="bx"><rect x="0" y="34" width="140" height="34" rx="6"/><rect x="0" y="96" width="140" height="34" rx="6"/></g>
+    <g class="tx-s"><text x="12" y="56">lo · 127.0.0.1</text><text x="12" y="118">en0 · 192.168.0.23</text>
+    <text x="0" y="84">같은 노트북에서</text><text x="0" y="146">같은 Wi-Fi의 휴대폰에서</text></g>
+    <rect class="bx-ink" x="220" y="54" width="110" height="56" rx="8"/>
+    <text class="tx-inv" x="275" y="87" text-anchor="middle" font-weight="700">서버 :3000</text>
+    <line class="ln-ink" x1="140" y1="51" x2="216" y2="72" marker-end="url(#a)"/>
+    <line class="ln-ink" x1="140" y1="113" x2="216" y2="94" marker-end="url(#a)"/>
+  </g>
+</svg>

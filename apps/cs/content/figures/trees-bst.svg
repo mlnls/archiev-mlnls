@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 192">
+<line class="ln" x1="170" y1="38" x2="240" y2="66"/>
+<g class="ln"><line x1="240" y1="96" x2="280" y2="124"/><line x1="100" y1="96" x2="60" y2="124"/></g>
+<g class="ln-ink"><line x1="170" y1="38" x2="100" y2="66"/><line x1="100" y1="96" x2="140" y2="124"/></g>
+<rect class="bx" x="150" y="8" width="40" height="30" rx="5"/><text class="tx-m" x="170.0" y="28.0" text-anchor="middle">8</text>
+<rect class="bx" x="80" y="66" width="40" height="30" rx="5"/><text class="tx-m" x="100.0" y="86.0" text-anchor="middle">3</text>
+<rect class="bx" x="220" y="66" width="40" height="30" rx="5"/><text class="tx-m" x="240.0" y="86.0" text-anchor="middle">10</text>
+<rect class="bx" x="40" y="124" width="40" height="30" rx="5"/><text class="tx-m" x="60.0" y="144.0" text-anchor="middle">1</text>
+<rect class="bx-ink" x="120" y="124" width="40" height="30" rx="5"/><text class="tx-m tx-inv" x="140.0" y="144.0" text-anchor="middle">6</text>
+<rect class="bx" x="260" y="124" width="40" height="30" rx="5"/><text class="tx-m" x="280.0" y="144.0" text-anchor="middle">14</text>
+<text class="tx-s" x="0" y="182">6 찾기: 8보다 작으니 왼쪽, 3보다 크니 오른쪽. 세 번 만에 찾음</text>
+<line class="ln-faint" x1="360" y1="0" x2="360" y2="192"/>
+<g transform="translate(380 0)">
+<g class="ln"><line x1="30" y1="38" x2="80" y2="43"/><line x1="80" y1="73" x2="130" y2="78"/><line x1="130" y1="108" x2="180" y2="113"/><line x1="180" y1="143" x2="230" y2="148"/></g>
+<rect class="bx" x="10" y="8" width="40" height="30" rx="5"/><text class="tx-m" x="30.0" y="28.0" text-anchor="middle">1</text>
+<rect class="bx" x="60" y="43" width="40" height="30" rx="5"/><text class="tx-m" x="80.0" y="63.0" text-anchor="middle">2</text>
+<rect class="bx" x="110" y="78" width="40" height="30" rx="5"/><text class="tx-m" x="130.0" y="98.0" text-anchor="middle">3</text>
+<rect class="bx" x="160" y="113" width="40" height="30" rx="5"/><text class="tx-m" x="180.0" y="133.0" text-anchor="middle">4</text>
+<rect class="bx-ink" x="210" y="148" width="40" height="30" rx="5"/><text class="tx-m tx-inv" x="230.0" y="168.0" text-anchor="middle">5</text>
+<g class="tx-s"><text x="170" y="24">1, 2, 3, 4, 5 순서로 넣으면</text><text x="170" y="40">오른쪽으로만 붙어 한 줄이 됩니다.</text><text x="170" y="56">5를 찾는 데 다섯 번: O(n)</text></g>
+</g>
+</svg>

@@ -26,7 +26,7 @@
   <line class="ln" x1="82" y1="60" x2="296" y2="60" marker-end="url(#m)"/>
   <line class="ln ln-dash" x1="298" y1="84" x2="84" y2="84" marker-end="url(#m)"/>
   <g class="tx-s" text-anchor="middle">
-    <text x="190" y="54">cs.mlnl.…sslip.io의 IP는?</text>
+    <text x="190" y="54">cs.mlnl.cloud의 IP는?</text>
     <text x="190" y="78">54.116.117.190</text>
   </g>
   <!-- 왕복 2~4: 서버와 -->

@@ -21,7 +21,7 @@
   <rect class="bx-soft" x="0" y="78" width="340" height="80" rx="8"/>
   <g class="tx-m">
     <text x="12" y="100">GET /http/ HTTP/2</text>
-    <text x="12" y="120">Host: cs.mlnl.…sslip.io</text>
+    <text x="12" y="120">Host: cs.mlnl.cloud</text>
     <text x="12" y="140">Accept-Encoding: gzip, br, zstd</text>
   </g>
   <text class="tx-l" x="330" y="120" text-anchor="end">Caddy가 보고 나눔</text>

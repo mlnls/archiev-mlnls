@@ -23,7 +23,7 @@ GitHub Actions의 키는 `authorized_keys`의 `command=`로 묶여 `deploy.sh`�
 
 도메인은 한 곳에서만 정합니다. 서버 `/srv/archiev/.env`의 `SITE_DOMAIN`(Caddy 라우트, 허용 Origin, 쿠키 도메인)과
 GitHub Actions Variables의 `SITE_DOMAIN`(CV와 블로그 이미지 안의 주소)을 같은 값으로 둡니다.
-지금은 도메인 없이 `mlnl.54-116-117-190.sslip.io`를 씁니다. 도메인을 다시 사면 두 값을 바꾸고
+지금은 `mlnl.cloud`(가비아, `*.mlnl.cloud` 와일드카드 A 레코드)를 씁니다. 도메인을 바꾸면 두 값을 바꾸고
 `server-setup.sh`를 다시 실행한 뒤 cv, blog를 다시 배포하고 api 컨테이너를 다시 만듭니다.
 
 ## 주의: more-mlnls 배포와의 관계

@@ -17,7 +17,7 @@
   <!-- 브라우저 -->
   <rect class="bx-ink" x="100" y="16" width="210" height="50" rx="8"/>
   <text class="tx-inv tx-m" x="205" y="37" text-anchor="middle">localStorage.setItem</text>
-  <text class="tx-inv tx-s" x="205" y="55" text-anchor="middle">{"bits:read":1}</text>
+  <text class="tx-inv tx-s" x="205" y="55" text-anchor="middle">{"bits:s:intro":1}</text>
   <rect class="bx" x="360" y="16" width="360" height="50" rx="8"/>
   <text x="376" y="37">브라우저 프로필 폴더의 저장소 파일</text>
   <text class="tx-s tx-m" x="376" y="55">…/Default/Local Storage/leveldb/000123.log</text>

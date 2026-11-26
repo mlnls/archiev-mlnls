@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+<defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+<text class="tx-l" x="0" y="16">① 내 컴퓨터에서 바깥으로</text>
+<rect class="bx" x="0" y="24" width="126" height="44" rx="7"/>
+<text  x="10" y="43">키 입력, 주소창</text>
+<text class="tx-s" x="10" y="60">4·6·14장</text>
+<line class="ln" x1="126" y1="46" x2="146" y2="46" marker-end="url(#m)"/>
+<rect class="bx" x="148" y="24" width="126" height="44" rx="7"/>
+<text  x="158" y="43">DNS</text>
+<text class="tx-s" x="158" y="60">10·13장</text>
+<line class="ln" x1="275" y1="46" x2="295" y2="46" marker-end="url(#m)"/>
+<rect class="bx" x="297" y="24" width="126" height="44" rx="7"/>
+<text  x="307" y="43">TCP</text>
+<text class="tx-s" x="307" y="60">11·12장</text>
+<line class="ln" x1="423" y1="46" x2="443" y2="46" marker-end="url(#m)"/>
+<rect class="bx" x="445" y="24" width="126" height="44" rx="7"/>
+<text  x="455" y="43">TLS</text>
+<text class="tx-s" x="455" y="60">14장</text>
+<line class="ln" x1="572" y1="46" x2="592" y2="46" marker-end="url(#m)"/>
+<rect class="bx" x="594" y="24" width="126" height="44" rx="7"/>
+<text  x="604" y="43">GET /</text>
+<text class="tx-s" x="604" y="60">9·14장</text>
+<path class="ln-ink" d="M700 70 V86 H20 V96" marker-end="url(#a)"/>
+<text class="tx-l" x="0" y="110">② 서버 안에서</text>
+<rect class="bx" x="0" y="118" width="164" height="44" rx="7"/>
+<text  x="10" y="137">네트워크 카드, 커널</text>
+<text class="tx-s" x="10" y="154">8·12장</text>
+<line class="ln" x1="164" y1="140" x2="184" y2="140" marker-end="url(#m)"/>
+<rect class="bx" x="186" y="118" width="164" height="44" rx="7"/>
+<text  x="196" y="137">Caddy</text>
+<text class="tx-s" x="196" y="154">15~17장</text>
+<line class="ln" x1="349" y1="140" x2="369" y2="140" marker-end="url(#m)"/>
+<rect class="bx" x="371" y="118" width="164" height="44" rx="7"/>
+<text  x="381" y="137">nginx</text>
+<text class="tx-s" x="381" y="154">17장</text>
+<line class="ln" x1="534" y1="140" x2="554" y2="140" marker-end="url(#m)"/>
+<rect class="bx" x="556" y="118" width="164" height="44" rx="7"/>
+<text  x="566" y="137">페이지 캐시, sendfile</text>
+<text class="tx-s" x="566" y="154">8장</text>
+<path class="ln-ink" d="M700 164 V180 H20 V190" marker-end="url(#a)"/>
+<text class="tx-l" x="0" y="204">③ 돌아와서 브라우저 안에서</text>
+<rect class="bx" x="0" y="212" width="126" height="44" rx="7"/>
+<text  x="10" y="231">UTF-8 해독</text>
+<text class="tx-s" x="10" y="248">1·6장</text>
+<line class="ln" x1="126" y1="234" x2="146" y2="234" marker-end="url(#m)"/>
+<rect class="bx" x="148" y="212" width="126" height="44" rx="7"/>
+<text  x="158" y="231">DOM, CSSOM</text>
+<text class="tx-s" x="158" y="248">19장</text>
+<line class="ln" x1="275" y1="234" x2="295" y2="234" marker-end="url(#m)"/>
+<rect class="bx-ink" x="297" y="212" width="126" height="44" rx="7"/>
+<text class="tx-inv" x="307" y="231">레이아웃, 페인트</text>
+<text class="tx-s tx-inv" x="307" y="248">이 장</text>
+<line class="ln" x1="423" y1="234" x2="443" y2="234" marker-end="url(#m)"/>
+<rect class="bx-ink" x="445" y="212" width="126" height="44" rx="7"/>
+<text class="tx-inv" x="455" y="231">합성, GPU</text>
+<text class="tx-s tx-inv" x="455" y="248">2장·이 장</text>
+<line class="ln" x1="572" y1="234" x2="592" y2="234" marker-end="url(#m)"/>
+<rect class="bx" x="594" y="212" width="126" height="44" rx="7"/>
+<text  x="604" y="231">app.js</text>
+<text class="tx-s" x="604" y="248">5·7장</text>
+<text class="tx-s" x="0" y="290">④ "학습 완료"를 누르면: 인터럽트 → 렌더러의 이벤트 루프 → localStorage → 프로필 폴더의 파일 → SSD (4·6·8장)</text>
+</svg>

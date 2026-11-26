@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 254">
+<defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+<text class="tx-l" x="0" y="14">빌드할 때 한 번: 정렬</text>
+<rect class="bx" x="0" y="24" width="150" height="88" rx="8"/>
+<text x="12" y="44">용어 657개</text><g class="tx-s"><text x="12" y="64">장 순서대로 모인 채</text><text x="12" y="82">패킷, 프로토콜, 소켓,</text><text x="12" y="98">ACK, DNS, …</text></g>
+<line class="ln-ink" x1="150" y1="68" x2="236" y2="68" marker-end="url(#a)"/>
+<text class="tx-m" x="193" y="58" text-anchor="middle">sort</text>
+<text class="tx-l" x="193" y="86" text-anchor="middle">Intl.Collator</text>
+<rect class="bx-ink" x="240" y="24" width="190" height="88" rx="8"/>
+<text class="tx-inv" x="252" y="44" font-weight="700">용어 사전</text>
+<g class="tx-inv tx-s"><text x="252" y="64">ㄱ 가상 머신, 가상 호스팅, …</text><text x="252" y="82">ㄴ 네임스페이스, 네트워크 …</text><text x="252" y="98">A ACK, API, ARP, …</text></g>
+<g class="tx-s"><text x="460" y="48">TimSort: 비교가 많아야 약 6천 번</text><text x="460" y="66">(657 × log₂657)</text><text x="460" y="92">버블 정렬이었다면 약 21만 번</text></g>
+<line class="ln-faint" x1="0" y1="128" x2="720" y2="128"/>
+<text class="tx-l" x="0" y="150">검색창에 글자를 칠 때마다: 훑기</text>
+<rect class="bx" x="0" y="164" width="150" height="40" rx="6"/>
+<text class="tx-m" x="12" y="189">패킷</text><text class="tx-l" x="146" y="189" text-anchor="end">입력</text>
+<line class="ln-ink" x1="150" y1="184" x2="236" y2="184" marker-end="url(#a)"/>
+<text class="tx-s" x="193" y="176" text-anchor="middle">줄마다 includes</text>
+<rect class="bx-soft" x="240" y="152" width="190" height="18" rx="4"/><text class="tx-s" x="335.0" y="165.5" text-anchor="middle">가상 머신</text>
+<rect class="bx" x="240" y="172" width="190" height="18" rx="4"/><text class="tx-s" x="335.0" y="185.5" text-anchor="middle">패킷</text>
+<rect class="bx" x="240" y="192" width="190" height="18" rx="4"/><text class="tx-s" x="335.0" y="205.5" text-anchor="middle">패킷 교환</text>
+<rect class="bx-soft" x="240" y="212" width="190" height="18" rx="4"/><text class="tx-s" x="335.0" y="225.5" text-anchor="middle">포트</text>
+<rect class="bx-soft" x="240" y="232" width="190" height="18" rx="4"/><text class="tx-s" x="335.0" y="245.5" text-anchor="middle">…</text>
+<g class="tx-s"><text x="460" y="176">657줄을 모두 보고 맞는 줄만 남김</text><text x="460" y="194">글자 하나에 O(n), 1ms 안쪽</text><text x="460" y="220">이 크기에서는 단순한 방법으로 충분</text></g>
+</svg>
