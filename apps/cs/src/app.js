@@ -20,13 +20,15 @@
   };
 
   let done = read();
+  // 파트 화면이 있는 쪽에서 아래에서 채웁니다
+  let refreshParts = () => {};
 
   function render() {
     const keys = Object.keys(done);
     for (const el of document.querySelectorAll("[data-progress]")) {
       const scope = el.dataset.progress;
       const total = Number(el.dataset.total) || 0;
-      const count = scope === "*" ? keys.length : keys.filter((k) => k.startsWith(`${scope}:`)).length;
+      const count = scope === "*" ? keys.filter((k) => k.includes(":s:")).length : keys.filter((k) => k.startsWith(`${scope}:`)).length;
       // 내용이 바뀌어 사라진 항목의 기록이 남아 있어도 전체를 넘지 않게 합니다
       const n = Math.min(total, count);
       el.querySelector(".n").textContent = String(n);
@@ -48,6 +50,7 @@
     else delete done[box.dataset.key];
     write(done);
     render();
+    refreshParts();
   });
 
   document.querySelector("[data-reset]")?.addEventListener("click", () => {
@@ -62,6 +65,7 @@
     if (e.key !== KEY) return;
     done = read();
     sync();
+    refreshParts();
   });
 
   sync();
@@ -136,6 +140,7 @@
         saveQuiz(answers);
         for (const q of quizzes) showQuiz(q);
         score(set);
+        refreshParts();
       });
       set.append(bar);
     }
@@ -151,6 +156,7 @@
     showQuiz(quiz);
     const set = quiz.closest("[data-quiz-set]");
     if (set) score(set);
+    refreshParts();
   }
 
   for (const quiz of document.querySelectorAll("[data-quiz]")) {
@@ -173,7 +179,158 @@
     answers = loadQuiz();
     for (const quiz of document.querySelectorAll("[data-quiz]")) showQuiz(quiz);
     for (const set of document.querySelectorAll("[data-quiz-set]")) score(set);
+    refreshParts();
   });
+
+  // 장을 파트로 나눠 한 번에 하나씩 보여 줍니다. 파트의 문제를 모두 풀어야 "학습 완료"를 체크할 수 있고,
+  // 파트마다 메모를 남깁니다. 진행, 메모, 마지막으로 본 파트는 모두 이 브라우저에만 남습니다
+  const NOTES = "mlnl-cs:notes";
+  const LAST = "mlnl-cs:last";
+  const loadMap = (key) => {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "{}");
+      return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+    } catch {
+      return {};
+    }
+  };
+  const saveMap = (key, value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      // 저장이 막혀 있으면 이 페이지에서만 유지됩니다
+    }
+  };
+
+  const sections = [...document.querySelectorAll("section.part[data-part]")];
+  if (sections.length) {
+    document.documentElement.classList.add("js-parts");
+    const slug = location.pathname.split("/").filter(Boolean)[0] ?? "";
+    const links = [...document.querySelectorAll("[data-part-link]")];
+    const memo = document.querySelector("[data-memo]");
+    const status = document.querySelector("[data-memo-status]");
+    const panel = document.querySelector(".parts-panel");
+    if (panel && window.matchMedia?.("(max-width: 1023px)").matches) panel.open = false;
+    let current = sections[0];
+    const noteKey = (sec) => `${slug}:${sec.dataset.part}`;
+
+    const show = (sec) => {
+      current = sec;
+      for (const s of sections) s.classList.toggle("is-current", s === sec);
+      for (const a of links) {
+        const on = a.dataset.partLink === sec.dataset.part;
+        a.classList.toggle("is-current", on);
+        if (on) a.setAttribute("aria-current", "step");
+        else a.removeAttribute("aria-current");
+      }
+      if (memo) {
+        memo.value = loadMap(NOTES)[noteKey(sec)] ?? "";
+        status.textContent = "이 브라우저에만 저장됩니다";
+      }
+      saveMap(LAST, { ...loadMap(LAST), [slug]: sec.dataset.part });
+    };
+    // 주소의 #가 파트이거나 파트 안의 제목이면 그 파트를 엽니다
+    const target = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const el = id && document.getElementById(id);
+      if (!el) return null;
+      const sec = el.matches("section.part") ? el : el.closest("section.part");
+      return sec ? { sec, el } : null;
+    };
+
+    refreshParts = () => {
+      const progress = read();
+      const notes = loadMap(NOTES);
+      for (const sec of sections) {
+        const quizzes = [...sec.querySelectorAll("[data-quiz]")];
+        const solved = quizzes.filter((q) => answers[q.dataset.quiz]).length;
+        const box = sec.querySelector(".part-end input[data-key]");
+        const hint = sec.querySelector("[data-part-hint]");
+        const ready = solved === quizzes.length;
+        box.disabled = !ready && !box.checked;
+        hint.textContent = !quizzes.length
+          ? ""
+          : ready
+            ? `이 파트의 문제 ${quizzes.length}개를 모두 풀었어요`
+            : `이 파트의 문제 ${quizzes.length}개 중 ${solved}개를 풀었어요. 모두 풀면 체크할 수 있어요`;
+        const link = links.find((a) => a.dataset.partLink === sec.dataset.part);
+        link?.classList.toggle("is-done", Boolean(progress[box.dataset.key]));
+        link?.classList.toggle("has-memo", Boolean(notes[noteKey(sec)]));
+      }
+    };
+
+    const first = target();
+    if (first) {
+      show(first.sec);
+      first.el.scrollIntoView?.();
+    } else {
+      const last = loadMap(LAST)[slug];
+      show(sections.find((s) => s.dataset.part === last) ?? sections[0]);
+    }
+    refreshParts();
+    window.addEventListener("hashchange", () => {
+      const t = target();
+      if (!t) return;
+      show(t.sec);
+      t.el.scrollIntoView?.();
+    });
+
+    let timer = 0;
+    memo?.addEventListener("input", () => {
+      clearTimeout(timer);
+      status.textContent = "저장하는 중…";
+      const sec = current;
+      timer = setTimeout(() => {
+        const notes = loadMap(NOTES);
+        if (memo.value.trim()) notes[noteKey(sec)] = memo.value;
+        else delete notes[noteKey(sec)];
+        saveMap(NOTES, notes);
+        status.textContent = "저장했어요. 이 브라우저에만 남습니다";
+        refreshParts();
+      }, 400);
+    });
+    window.addEventListener("storage", (e) => {
+      if (e.key !== NOTES) return;
+      if (memo && document.activeElement !== memo) memo.value = loadMap(NOTES)[noteKey(current)] ?? "";
+      refreshParts();
+    });
+  }
+
+  // 내 메모: 장 순서대로 모아 보여 줍니다. 메모 글자는 textContent로만 넣습니다
+  const notesBox = document.querySelector("[data-notes]");
+  const bookMap = document.getElementById("book-map");
+  if (notesBox && bookMap) {
+    const notes = loadMap(NOTES);
+    const chapters = JSON.parse(bookMap.textContent || "[]");
+    const el = (tag, cls, text) => {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      return node;
+    };
+    let count = 0;
+    const frag = document.createDocumentFragment();
+    for (const ch of chapters) {
+      const items = ch.parts.filter((p) => notes[`${ch.slug}:${p.id}`]);
+      if (!items.length) continue;
+      const box = el("section", "notes-chapter");
+      const h = el("h2");
+      const a = el("a", null, `${ch.num} ${ch.title}`);
+      a.href = `/${ch.slug}/`;
+      h.append(a);
+      box.append(h);
+      for (const p of items) {
+        const item = el("div", "note");
+        const link = el("a", "note-part", p.title);
+        link.href = `/${ch.slug}/#part-${encodeURIComponent(p.id)}`;
+        item.append(link, el("p", "note-text", notes[`${ch.slug}:${p.id}`]));
+        box.append(item);
+        count++;
+      }
+      frag.append(box);
+    }
+    if (count) notesBox.replaceChildren(frag);
+  }
 
   // 용어 사전: 입력한 글자가 용어나 뜻에 들어 있는 줄만 남깁니다
   const filter = document.querySelector("[data-filter]");

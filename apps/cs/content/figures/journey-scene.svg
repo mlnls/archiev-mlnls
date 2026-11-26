@@ -61,5 +61,5 @@
 <rect class="bx" x="594" y="212" width="126" height="44" rx="7"/>
 <text  x="604" y="231">app.js</text>
 <text class="tx-s" x="604" y="248">5·7장</text>
-<text class="tx-s" x="0" y="290">④ "다 읽었어요"를 누르면: 인터럽트 → 렌더러의 이벤트 루프 → localStorage → 프로필 폴더의 파일 → SSD (4·6·8장)</text>
+<text class="tx-s" x="0" y="290">④ "학습 완료"를 누르면: 인터럽트 → 렌더러의 이벤트 루프 → localStorage → 프로필 폴더의 파일 → SSD (4·6·8장)</text>
 </svg>

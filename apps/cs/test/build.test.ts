@@ -8,7 +8,7 @@ import { build } from "../scripts/build.mjs";
 let out = "";
 let slugs: string[] = [];
 const read = (path: string) => readFileSync(join(out, path), "utf8");
-const pages = () => ["index.html", "terms/index.html", ...slugs.map((s) => `${s}/index.html`)];
+const pages = () => ["index.html", "terms/index.html", "notes/index.html", ...slugs.map((s) => `${s}/index.html`)];
 
 beforeAll(async () => {
   out = mkdtempSync(join(tmpdir(), "cs-build-"));
@@ -40,6 +40,7 @@ describe("만든 사이트", () => {
     for (const p of pages()) expect(existsSync(join(out, p)), p).toBe(true);
     expect(read("robots.txt")).toContain("Sitemap: https://cs.mlnl.site/sitemap.xml");
     expect(read("sitemap.xml").match(/<loc>/g)).toHaveLength(slugs.length + 2);
+    expect(read("notes/index.html")).toContain('id="book-map"');
   });
 
   it("쪽마다 h1이 하나입니다", () => {
@@ -83,7 +84,20 @@ describe("만든 사이트", () => {
       [...read(`${s}/index.html`).matchAll(/data-(?:key|quiz)="([^"]+)"/g)].map((m) => m[1]),
     );
     expect(new Set(keys).size).toBe(keys.length);
-    for (const s of slugs) expect(read(`${s}/index.html`), s).toContain(`data-key="${s}:read"`);
+    for (const s of slugs) expect(read(`${s}/index.html`), s).toContain(`data-key="${s}:s:intro"`);
+  });
+
+  it("장마다 파트로 나누고, 파트마다 학습 완료 체크 하나와 목록의 링크 하나가 있습니다", () => {
+    for (const s of slugs) {
+      const html = read(`${s}/index.html`);
+      const ids = [...html.matchAll(/<section class="part" id="part-([^"]+)" data-part="\1">/g)].map((m) => m[1]);
+      expect(ids.length, s).toBeGreaterThan(3);
+      const checks = [...html.matchAll(/data-key="([^"]+:s:[^"]+)"/g)].map((m) => m[1]);
+      expect(checks, s).toEqual(ids.map((id) => `${s}:s:${id}`));
+      const links = [...html.matchAll(/data-part-link="([^"]+)"/g)].map((m) => m[1]);
+      expect(links, s).toEqual(ids);
+      expect(html, s).not.toContain('id="part-더-읽을거리"');
+    }
   });
 
   it("선택형 문제마다 정답이 하나입니다", () => {
