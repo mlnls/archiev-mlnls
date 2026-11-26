@@ -1,0 +1,14 @@
+{
+  "name": "@archiev/cs-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "COOKIE_SECURE=0 DB_FILE=./cs.db SESSION_SECRET=dev ALLOWED_ORIGINS=http://localhost:3005 node src/server.mjs",
+    "start": "node src/server.mjs",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

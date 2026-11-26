@@ -14,6 +14,7 @@ const FOLDER_SCOPES = [
   ["apps/api/", "API"],
   ["apps/archive/", "ARCHIVE"],
   ["apps/cs/", "CS"],
+  ["apps/cs-api/", "CS"],
 ];
 
 export function scopeOfFile(file) {

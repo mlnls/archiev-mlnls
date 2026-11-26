@@ -22,6 +22,10 @@
   let done = read();
   // 파트 화면이 있는 쪽에서 아래에서 채웁니다
   let refreshParts = () => {};
+  // 로그인한 계정과, 바뀐 기록을 cs API로 보내는 함수. 맨 아래 계정 부분에서 채웁니다
+  let account = null;
+  let push = () => {};
+  const storeLabel = () => (account ? `${account.username} 계정에 저장됩니다` : "이 브라우저에만 저장됩니다");
 
   function render() {
     const keys = Object.keys(done);
@@ -49,6 +53,7 @@
     if (box.checked) done[box.dataset.key] = 1;
     else delete done[box.dataset.key];
     write(done);
+    push("progress", box.dataset.key, box.checked ? 1 : null);
     render();
     refreshParts();
   });
@@ -57,6 +62,7 @@
     if (!window.confirm("체크한 기록을 모두 지울까요?")) return;
     done = {};
     write(done);
+    push("progress", "*", null);
     sync();
   });
 
@@ -136,7 +142,10 @@
       bar.innerHTML = '<span></span><button type="button">다시 풀기</button>';
       bar.querySelector("button").addEventListener("click", () => {
         answers = loadQuiz();
-        for (const q of quizzes) delete answers[q.dataset.quiz];
+        for (const q of quizzes) {
+          delete answers[q.dataset.quiz];
+          push("quiz", q.dataset.quiz, null);
+        }
         saveQuiz(answers);
         for (const q of quizzes) showQuiz(q);
         score(set);
@@ -153,6 +162,7 @@
     if (answers[quiz.dataset.quiz]) return;
     answers[quiz.dataset.quiz] = { pick, ok };
     saveQuiz(answers);
+    push("quiz", quiz.dataset.quiz, { pick, ok });
     showQuiz(quiz);
     const set = quiz.closest("[data-quiz-set]");
     if (set) score(set);
@@ -185,6 +195,8 @@
   // 장을 파트로 나눠 한 번에 하나씩 보여 줍니다. 파트의 문제를 모두 풀어야 "학습 완료"를 체크할 수 있고,
   // 파트마다 메모를 남깁니다. 진행, 메모, 마지막으로 본 파트는 모두 이 브라우저에만 남습니다
   const NOTES = "mlnl-cs:notes";
+  /** 계정의 기록을 받아 온 뒤 화면을 다시 맞출 함수들 */
+  const onSynced = [];
   const LAST = "mlnl-cs:last";
   const MEMO_OPEN = "mlnl-cs:memo-open";
   const loadMap = (key) => {
@@ -251,6 +263,7 @@
       for (const s of sections) s.classList.toggle("is-current", s === sec);
       for (const t of tocs) t.classList.toggle("is-current", t.dataset.tocFor === sec.dataset.part);
       saveMap(LAST, { ...loadMap(LAST), [slug]: sec.dataset.part });
+      push("last", slug, sec.dataset.part);
       if (memo) {
         memo.setContent(asHtml(loadMap(NOTES)[noteKey(sec)]));
         panel.querySelector("[data-memo-title]").textContent = titleOf(sec);
@@ -306,7 +319,8 @@
       if (html) notes[noteKey(current)] = html;
       else delete notes[noteKey(current)];
       saveMap(NOTES, notes);
-      status.textContent = "저장했어요. 이 브라우저에만 남습니다";
+      push("notes", noteKey(current), html || null);
+      status.textContent = `저장했어요. ${storeLabel()}`;
       refreshParts();
     }
     async function openMemo() {
@@ -315,6 +329,7 @@
       root.classList.add("is-memo-open");
       saveMap(MEMO_OPEN, { open: true });
       panel.querySelector("[data-memo-title]").textContent = titleOf(current);
+      status.textContent = storeLabel();
       if (!memo) {
         loading ??= import(panel.dataset.src)
           .then((mod) => {
@@ -392,10 +407,13 @@
     };
     route();
     window.addEventListener("hashchange", route);
-    window.addEventListener("storage", (e) => {
-      if (e.key !== NOTES) return;
+    const reloadMemo = () => {
       if (memo && current && !dirty) memo.setContent(asHtml(loadMap(NOTES)[noteKey(current)]));
       refreshParts();
+    };
+    onSynced.push(reloadMemo);
+    window.addEventListener("storage", (e) => {
+      if (e.key === NOTES) reloadMemo();
     });
   }
 
@@ -432,7 +450,8 @@
 
   const notesBox = document.querySelector("[data-notes]");
   const bookMap = document.getElementById("book-map");
-  if (notesBox && bookMap) {
+  const renderNotes = () => {
+    if (!notesBox || !bookMap) return;
     const notes = loadMap(NOTES);
     const chapters = JSON.parse(bookMap.textContent || "[]");
     const el = (tag, cls, text) => {
@@ -465,7 +484,9 @@
       frag.append(box);
     }
     if (count) notesBox.replaceChildren(frag);
-  }
+  };
+  renderNotes();
+  onSynced.push(renderNotes);
 
   // 글꼴 고르기 (블로그와 같은 목록)
   const fontPick = document.querySelector("[data-font-pick]");
@@ -478,6 +499,113 @@
       } catch {
         // 저장이 막혀 있으면 이번 페이지에만 적용됩니다
       }
+    });
+  }
+
+  // 계정: 로그인하면 진행, 푼 문제, 메모, 마지막으로 본 파트를 cs API(/api)에 저장해 기기끼리 이어 줍니다.
+  // 로그인하지 않았거나 API가 없는 곳(로컬 미리보기)에서는 지금처럼 이 브라우저에만 남습니다
+  const api = (path, init = {}) =>
+    fetch(`/api${path}`, { credentials: "same-origin", ...init, headers: { "content-type": "application/json", ...(init.headers ?? {}) } });
+  const queue = new Map();
+  let flushTimer = 0;
+  async function flush(leaving = false) {
+    clearTimeout(flushTimer);
+    if (!account || !queue.size) return;
+    const changes = [...queue].map(([k, value]) => {
+      const [kind, key] = k.split("\u0001");
+      return { kind, key, value };
+    });
+    queue.clear();
+    try {
+      const r = await api("/state", { method: "POST", body: JSON.stringify({ changes }), keepalive: leaving });
+      if (r.status === 401) setAccount(null);
+    } catch {
+      // 네트워크가 끊겼으면 다음에 다시 보냅니다
+      for (const c of changes) if (!queue.has(`${c.kind}\u0001${c.key}`)) queue.set(`${c.kind}\u0001${c.key}`, c.value);
+    }
+  }
+  push = (kind, key, value) => {
+    if (!account) return;
+    queue.set(`${kind}\u0001${key}`, value ?? null);
+    clearTimeout(flushTimer);
+    flushTimer = setTimeout(flush, 400);
+  };
+  window.addEventListener("pagehide", () => flush(true));
+
+  function setAccount(a) {
+    account = a;
+    document.documentElement.classList.toggle("is-signed-in", Boolean(a));
+    for (const el of document.querySelectorAll("[data-account-link]")) el.textContent = a ? a.username : "로그인";
+    for (const el of document.querySelectorAll("[data-account-name]")) el.textContent = a?.username ?? "";
+    const form = document.querySelector("[data-login]");
+    const signed = document.querySelector("[data-signed-in]");
+    if (form) form.hidden = Boolean(a);
+    if (signed) signed.hidden = !a;
+  }
+  /** 계정의 기록을 받아 옵니다. 계정이 비어 있으면(처음 로그인) 이 브라우저의 기록을 올립니다 */
+  async function pull() {
+    const r = await api("/state");
+    if (!r.ok) return;
+    const state = await r.json();
+    const empty = !Object.values(state).some((o) => o && Object.keys(o).length);
+    if (empty) {
+      for (const [k, v] of Object.entries(read())) push("progress", k, v);
+      for (const [k, v] of Object.entries(loadQuiz())) push("quiz", k, v);
+      for (const [k, v] of Object.entries(loadMap(NOTES))) push("notes", k, v);
+      for (const [k, v] of Object.entries(loadMap(LAST))) push("last", k, v);
+      await flush();
+    } else {
+      write(state.progress ?? {});
+      saveQuiz(state.quiz ?? {});
+      saveMap(NOTES, state.notes ?? {});
+      saveMap(LAST, state.last ?? {});
+    }
+    done = read();
+    answers = loadQuiz();
+    sync();
+    for (const quiz of document.querySelectorAll("[data-quiz]")) showQuiz(quiz);
+    for (const set of document.querySelectorAll("[data-quiz-set]")) score(set);
+    refreshParts();
+    for (const f of onSynced) f();
+  }
+  const accountReady = (async () => {
+    try {
+      const r = await api("/me");
+      if (!r.ok) return setAccount(null);
+      setAccount(await r.json());
+      await pull();
+    } catch {
+      setAccount(null);
+    }
+  })();
+
+  const loginForm = document.querySelector("[data-login]");
+  if (loginForm instanceof HTMLFormElement) {
+    const msg = document.querySelector("[data-login-msg]");
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await accountReady;
+      const data = Object.fromEntries(new FormData(loginForm));
+      msg.textContent = "확인하는 중…";
+      try {
+        const r = await api("/login", { method: "POST", body: JSON.stringify(data) });
+        const body = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          msg.textContent = body.error ?? "로그인하지 못했어요";
+          return;
+        }
+        setAccount({ username: body.username });
+        await pull();
+        msg.textContent = body.created ? "계정을 만들고 이 브라우저의 기록을 올렸어요" : "로그인했어요. 계정의 기록을 불러왔어요";
+      } catch {
+        msg.textContent = "서버에 닿지 못했어요. 잠시 뒤 다시 시도해 주세요";
+      }
+    });
+    document.querySelector("[data-logout]")?.addEventListener("click", async () => {
+      await flush();
+      await api("/logout", { method: "POST" }).catch(() => {});
+      setAccount(null);
+      msg.textContent = "로그아웃했어요. 기록은 이 브라우저에 그대로 남아 있습니다";
     });
   }
 

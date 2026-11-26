@@ -44,7 +44,16 @@ employ.__SITE_DOMAIN__ {
 }
 cs.__SITE_DOMAIN__ {
 	import mlnl_common
-	reverse_proxy mlnl-cs:80
+	# 계정과 학습 기록은 cs API로, 나머지는 책(nginx)으로
+	handle /api/* {
+		request_body {
+			max_size 512KB
+		}
+		reverse_proxy mlnl-cs-api:4100
+	}
+	handle {
+		reverse_proxy mlnl-cs:80
+	}
 }
 
 archiev.__SITE_DOMAIN__ {

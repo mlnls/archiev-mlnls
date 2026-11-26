@@ -5,7 +5,8 @@
 | `apps/cv` | [mlnl.54-116-117-190.sslip.io](https://mlnl.54-116-117-190.sslip.io) | 한 페이지 이력 (정적 HTML) |
 | `apps/blog` | [blog.mlnl.54-116-117-190.sslip.io](https://blog.mlnl.54-116-117-190.sslip.io) | 마크다운 블로그 (Next.js, JSON-LD 자동 생성) |
 | `apps/archive` | archiev.mlnl.54-116-117-190.sslip.io | 사진과 동영상 보관함 (혼자 쓰는 로그인) |
-| `apps/cs` | [cs.mlnl.54-116-117-190.sslip.io](https://cs.mlnl.54-116-117-190.sslip.io) | 비트에서 네트워크까지 컴퓨터 기초 로드맵 (정적 HTML) |
+| `apps/cs` | [cs.mlnl.cloud](https://cs.mlnl.cloud) | 컴퓨터 기초, 처음부터 끝까지 (26장짜리 책, 정적 HTML) |
+| `apps/cs-api` | cs.mlnl.cloud/api | 책의 계정과 학습 기록, 메모 저장 (Node 기본 기능, SQLite) |
 | `apps/employ` | employ.mlnl.54-116-117-190.sslip.io | 채용 공고 추천과 맞춤 이력서 (관리자 전용) |
 | `apps/employ-worker` | Mac에서 실행 | 이력서 요청을 Claude Code로 처리 |
 | `apps/api` | `/api/*` | Node.js(Hono) API, SQLite, 매일 8시 수집 |

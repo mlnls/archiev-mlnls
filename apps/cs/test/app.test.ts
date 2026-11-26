@@ -19,10 +19,11 @@ beforeAll(async () => {
 afterAll(() => rmSync(out, { recursive: true, force: true }));
 
 /** 페이지를 열고 app.js를 실행합니다. 같은 저장소를 이어 쓰려면 storage를 넘깁니다 */
-function open(path: string, hash = "", storage?: Record<string, string>) {
+function open(path: string, hash = "", storage?: Record<string, string>, fetchImpl?: (url: string, init?: RequestInit) => Promise<Response>) {
   const html = readFileSync(join(out, path, "index.html"), "utf8").replace(/<script src="[^"]+" defer><\/script>/, "");
   const dom = new JSDOM(html, { url: `https://cs.mlnl.cloud/${path}/${hash}`, runScripts: "outside-only" });
   for (const [k, v] of Object.entries(storage ?? {})) dom.window.localStorage.setItem(k, v);
+  if (fetchImpl) (dom.window as unknown as { fetch: unknown }).fetch = fetchImpl;
   dom.window.eval(appJs);
   return dom.window;
 }
@@ -118,5 +119,34 @@ describe("장 페이지의 파트", () => {
     const resume = again.document.querySelector("[data-resume]")!;
     expect(resume.getAttribute("href")).toBe("#part-용어-정리");
     expect(resume.textContent).toMatch(/^이어서 보기: 파트 \d+$/);
+  });
+
+  it("로그인한 계정이 있으면 계정의 기록을 받아 와 이 브라우저의 기록과 카드를 맞춥니다", async () => {
+    const state = { progress: { "io:s:intro": 1 }, quiz: {}, notes: { "io:디렉터리-구조": "<p>서버 메모</p>" }, last: { io: "권한" } };
+    const api = async (url: string) =>
+      new Response(JSON.stringify(url.endsWith("/me") ? { username: "minsu" } : state), { status: 200, headers: { "content-type": "application/json" } });
+    const w = open("io", "", {}, api);
+    await new Promise((r) => setTimeout(r, 20));
+    expect(JSON.parse(w.localStorage.getItem("mlnl-cs:progress")!)).toEqual({ "io:s:intro": 1 });
+    expect(w.document.querySelector('[data-part-card="intro"]')!.classList.contains("is-done")).toBe(true);
+    expect(w.document.querySelector('[data-part-card="디렉터리-구조"]')!.classList.contains("has-memo")).toBe(true);
+    expect(w.document.querySelector("[data-account-link]")!.textContent).toBe("minsu");
+  });
+
+  it("처음 로그인해 계정이 비어 있으면 이 브라우저의 기록을 올리고, 그 뒤의 체크도 계정에 보냅니다", async () => {
+    const sent: { kind: string; key: string; value: unknown }[] = [];
+    const empty = { progress: {}, quiz: {}, notes: {}, last: {} };
+    const api = async (url: string, init?: RequestInit) => {
+      if (init?.method === "POST") sent.push(...JSON.parse(String(init.body)).changes);
+      return new Response(JSON.stringify(url.endsWith("/me") ? { username: "jieun" } : init?.method === "POST" ? { ok: true } : empty), { status: 200 });
+    };
+    const w = open("io", "#part-용어-정리", { "mlnl-cs:notes": JSON.stringify({ "io:intro": "<p>로컬 메모</p>" }) }, api);
+    await new Promise((r) => setTimeout(r, 20));
+    expect(sent).toContainEqual({ kind: "notes", key: "io:intro", value: "<p>로컬 메모</p>" });
+    const sec = current(w);
+    box(sec).checked = true;
+    box(sec).dispatchEvent(new w.Event("change", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 450));
+    expect(sent).toContainEqual({ kind: "progress", key: "io:s:용어-정리", value: 1 });
   });
 });

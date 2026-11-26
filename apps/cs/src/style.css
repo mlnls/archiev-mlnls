@@ -273,6 +273,17 @@ code { padding: 0.12em 0.36em; background: var(--soft); border-radius: 5px; font
 .select-tool[aria-pressed="true"] { color: var(--accent); background: var(--soft); }
 @media (hover: hover) { .select-tool:hover { background: var(--soft); } }
 
+/* 계정 */
+.account-form, .account-in { display: grid; gap: 14px; max-width: 360px; margin-top: 28px; }
+.account-form[hidden], .account-in[hidden] { display: none; }
+.account-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 650; color: var(--muted); }
+.account-form input { height: 40px; padding: 0 12px; background: var(--raised); border: 1px solid var(--rule); border-radius: 10px; font: inherit; font-size: 15px; color: var(--ink); }
+.account-form input:focus { outline: none; border-color: var(--accent); }
+.account-form button, .account-in button { height: 40px; padding: 0 16px; background: var(--ink); border: 0; border-radius: 10px; font: inherit; font-size: 14px; font-weight: 650; color: var(--paper); cursor: pointer; }
+.account-in button { justify-self: start; background: var(--raised); border: 1px solid var(--rule); color: var(--ink); }
+.account-msg { min-height: 1.6em; margin-top: 12px; font-size: 13.5px; color: var(--muted); }
+.account-note { max-width: 560px; margin-top: 24px; font-size: 13px; line-height: 1.7; color: var(--label); }
+
 /* 내 메모 */
 .notes-page .notes { max-width: 720px; margin-top: 32px; }
 .notes-chapter + .notes-chapter { margin-top: 36px; }

@@ -8,7 +8,7 @@ import { build } from "../scripts/build.mjs";
 let out = "";
 let slugs: string[] = [];
 const read = (path: string) => readFileSync(join(out, path), "utf8");
-const pages = () => ["index.html", "terms/index.html", "notes/index.html", ...slugs.map((s) => `${s}/index.html`)];
+const pages = () => ["index.html", "terms/index.html", "notes/index.html", "account/index.html", ...slugs.map((s) => `${s}/index.html`)];
 
 beforeAll(async () => {
   out = mkdtempSync(join(tmpdir(), "cs-build-"));

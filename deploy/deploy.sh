@@ -12,11 +12,12 @@ IMAGES="$DIR/images.env"
 read -r -a ARGS <<< "${SSH_ORIGINAL_COMMAND:-}"
 [ "${#ARGS[@]}" -eq 4 ] && [ "${ARGS[0]}" = "deploy" ] || { echo "허용되지 않은 명령입니다" >&2; exit 2; }
 APP="${ARGS[1]}"; TAG="${ARGS[2]}"; GHCR_USER="${ARGS[3]}"
-[[ "$APP" =~ ^(cv|blog|employ|api|archive|cs)$ ]] || { echo "앱 이름이 잘못되었습니다" >&2; exit 2; }
+[[ "$APP" =~ ^(cv|blog|employ|api|archive|cs|cs-api)$ ]] || { echo "앱 이름이 잘못되었습니다" >&2; exit 2; }
 [[ "$TAG" =~ ^sha-[0-9a-f]{7}$ ]] || { echo "이미지 태그가 잘못되었습니다" >&2; exit 2; }
 [[ "$GHCR_USER" =~ ^[A-Za-z0-9-]{1,39}(\[bot\])?$ ]] || { echo "사용자 이름이 잘못되었습니다" >&2; exit 2; }
 
-VAR="$(echo "$APP" | tr '[:lower:]' '[:upper:]')_IMAGE"
+# cs-api → CS_API_IMAGE (환경 변수 이름에는 -를 쓸 수 없습니다)
+VAR="$(echo "$APP" | tr '[:lower:]-' '[:upper:]_')_IMAGE"
 SERVICE="mlnl-$APP"
 NEW="$REPO/$APP:$TAG"
 

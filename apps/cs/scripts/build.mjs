@@ -199,6 +199,7 @@ function page({ title, description, path, body, assets }) {
         <select class="font-pick" aria-label="글꼴" data-font-pick>${FONTS.map((f) => `<option value="${f.id}">${esc(f.label)}</option>`).join("")}</select>
         <a href="/terms/">용어 사전</a>
         <a href="/notes/">내 메모</a>
+        <a href="/account/" data-account-link>로그인</a>
         <a href="${BLOG}">블로그</a>
         <a href="${CV}">소개</a>
       </nav>
@@ -400,6 +401,28 @@ ${secs
   return page({ title: `${num(ch.index)} ${ch.title} | ${book.title}`, description: plain(ch.summary), path: pathOf(ch), body, assets });
 }
 
+function accountPage(assets) {
+  const body = `  <main class="page account-page">
+    <header class="stage-head">
+      <p class="stage-meta"><a href="/">차례</a><span>계정</span></p>
+      <h1>계정</h1>
+      <p class="stage-goal">로그인하면 진행 기록, 푼 문제, 메모가 계정에 저장되어 다른 기기와 브라우저에서도 이어집니다. 처음 쓰는 아이디면 그대로 만들어집니다.</p>
+    </header>
+    <form class="account-form" data-login>
+      <label>아이디<input name="username" autocomplete="username" required minlength="2" maxlength="20" placeholder="2~20자, 한글·영문 소문자·숫자"></label>
+      <label>비밀번호<input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="8자 이상"></label>
+      <button type="submit">로그인 · 처음이면 가입</button>
+    </form>
+    <div class="account-in" data-signed-in hidden>
+      <p><strong data-account-name></strong> 계정으로 로그인했습니다. 체크와 메모가 이 계정에 저장됩니다.</p>
+      <button type="button" data-logout>로그아웃</button>
+    </div>
+    <p class="account-msg" data-login-msg aria-live="polite"></p>
+    <p class="account-note">비밀번호는 scrypt와 솔트로 만든 해시로만 저장되고(23장), 로그인 쿠키는 HttpOnly입니다. 로그인하지 않으면 기록은 지금처럼 이 브라우저에만 남습니다. 로그인한 기기끼리는 계정의 기록을 따르고, 처음 로그인할 때만 이 브라우저의 기록을 계정에 올립니다.</p>
+  </main>`;
+  return page({ title: `계정 | ${book.title}`, description: "로그인하면 학습 기록과 메모가 계정에 저장됩니다.", path: "/account/", body, assets });
+}
+
 function notesPage({ chapters }, assets) {
   const map = chapters.map((c) => ({ slug: c.slug, num: num(c.index), title: c.title, parts: c.parts.map((p) => ({ id: p.id, title: p.text })) }));
   const body = `  <main class="page notes-page">
@@ -510,6 +533,7 @@ export async function build(out = join(ROOT, "dist"), { draft = false } = {}) {
   for (const ch of data.chapters) await write(out, `${ch.slug}/index.html`, chapterPage(ch, data, assets));
   await write(out, "terms/index.html", termsPage(data, assets));
   await write(out, "notes/index.html", notesPage(data, assets));
+  await write(out, "account/index.html", accountPage(assets));
   const photos = [...data.figures].filter(([, f]) => !f.svg).map(([name]) => name);
   if (photos.length) await mkdir(join(out, "figures"), { recursive: true });
   for (const name of photos) await copyFile(join(FIGURES, name), join(out, "figures", name));
