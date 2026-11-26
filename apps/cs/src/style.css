@@ -174,7 +174,9 @@ code { padding: 0.12em 0.36em; background: var(--soft); border-radius: 5px; font
 @media (hover: hover) { .part-card:hover { border-color: var(--label); } }
 .card-top { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 650; color: var(--label); font-variant-numeric: tabular-nums; }
 .card-state:empty { display: none; }
-.part-card.is-done .card-state { color: var(--ink); }
+.card-state { padding: 1px 8px; border: 1px solid var(--rule); border-radius: 999px; font-size: 11.5px; color: var(--muted); }
+.part-card.is-done { border-color: var(--ink); }
+.part-card.is-done .card-state { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .part-card.is-done .card-state::before { content: "✓ "; }
 .card-title { font-size: 15.5px; font-weight: 700; line-height: 1.45; }
 .card-subs { font-size: 12.5px; line-height: 1.55; color: var(--muted); }
