@@ -284,7 +284,7 @@ function chapterPage(ch, { chapters, terms }, assets) {
       const back = before ? `<a href="#part-${before.id}"><span>이전 파트</span>${before.titleHtml}</a>` : chapterLink(prev, "prev");
       const fwd = after ? `<a class="next" href="#part-${after.id}"><span>다음 파트</span>${after.titleHtml}</a>` : chapterLink(next, "next");
       return `          <section class="part" id="part-${p.id}" data-part="${p.id}">
-            <p class="part-step">파트 ${i + 1} / ${secs.length}${p.side ? " · 곁가지" : ""}${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}</p>
+            <p class="part-step"><a class="back-hub" href="#parts">← 파트 목록</a><span>파트 ${i + 1} / ${secs.length}${p.side ? " · 곁가지" : ""}${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}</span></p>
             <div class="prose">
 ${p.html}
             </div>
@@ -298,6 +298,16 @@ ${p.html}
             </div>
           </section>`;
     })
+    .join("\n");
+  const cards = secs
+    .map(
+      (p, i) => `            <li><a class="part-card" href="#part-${p.id}" data-part-card="${p.id}">
+              <span class="card-top"><span class="card-num">파트 ${i + 1}</span><span class="card-state" data-card-state></span></span>
+              <span class="card-title">${p.titleHtml}</span>
+              ${p.subs.length ? `<span class="card-subs">${p.subs.map((x) => x.titleHtml).join(" · ")}</span>` : ""}
+              <span class="card-meta">약 ${minutesOf(p.html)}분${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}${p.side ? " · 곁가지" : ""}</span>
+            </a></li>`,
+    )
     .join("\n");
   const list = secs
     .map(
@@ -317,11 +327,21 @@ ${p.html}
       </header>
       <div class="stage-layout">
         <div class="stage-main">
+          <section class="hub" id="parts" aria-labelledby="hub-title">
+            <div class="hub-head">
+              <h2 id="hub-title">이 장의 파트 ${secs.length}개</h2>
+              <a class="hub-resume" href="#part-${secs[0].id}" data-resume>파트 1부터 시작하기</a>
+            </div>
+            <p class="hub-text">파트를 골라 들어갑니다. 파트의 문제를 다 풀고 맨 아래 "이 파트 학습 완료"를 체크하면 진도에 들어갑니다.</p>
+            <ol class="part-cards">
+${cards}
+            </ol>
+          </section>
 ${sections}
         </div>
         <aside class="study" aria-label="파트와 메모">
           <details class="parts-panel" open>
-            <summary>이 장의 파트</summary>
+            <summary>이 장의 파트 <a class="hub-link" href="#parts">목록</a></summary>
             <ol class="parts-list">
 ${list}
             </ol>

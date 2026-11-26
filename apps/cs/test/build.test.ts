@@ -96,6 +96,8 @@ describe("만든 사이트", () => {
       expect(checks, s).toEqual(ids.map((id) => `${s}:s:${id}`));
       const links = [...html.matchAll(/data-part-link="([^"]+)"/g)].map((m) => m[1]);
       expect(links, s).toEqual(ids);
+      const cards = [...html.matchAll(/data-part-card="([^"]+)"/g)].map((m) => m[1]);
+      expect(cards, s).toEqual(ids);
       expect(html, s).not.toContain('id="part-더-읽을거리"');
     }
   });

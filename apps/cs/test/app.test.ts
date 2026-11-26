@@ -31,15 +31,26 @@ const current = (w: Window) => w.document.querySelector("section.part.is-current
 const box = (sec: HTMLElement) => sec.querySelector(".part-end input[data-key]") as HTMLInputElement;
 
 describe("장 페이지의 파트", () => {
-  it("한 번에 한 파트만 보이고, 처음에는 첫 파트를 엽니다", () => {
+  it("장에 들어가면 먼저 파트 카드 목록을 보여 주고, 카드를 누르면 그 파트 하나만 엽니다", () => {
     const w = open("io");
-    expect(w.document.documentElement.classList.contains("js-parts")).toBe(true);
+    const root = w.document.documentElement;
+    expect(root.classList.contains("js-parts")).toBe(true);
+    expect(root.classList.contains("is-hub")).toBe(true);
+    expect(w.document.querySelectorAll("section.part.is-current")).toHaveLength(0);
+    const cards = [...w.document.querySelectorAll("[data-part-card]")];
+    expect(cards.length).toBe(w.document.querySelectorAll("section.part").length);
+    w.location.hash = (cards[1] as HTMLAnchorElement).getAttribute("href")!;
+    w.dispatchEvent(new w.HashChangeEvent("hashchange"));
+    expect(root.classList.contains("is-hub")).toBe(false);
     expect(w.document.querySelectorAll("section.part.is-current")).toHaveLength(1);
-    expect(current(w).dataset.part).toBe("intro");
+    expect(current(w).dataset.part).toBe((cards[1] as HTMLElement).dataset.partCard);
+    w.location.hash = "#parts";
+    w.dispatchEvent(new w.HashChangeEvent("hashchange"));
+    expect(root.classList.contains("is-hub")).toBe(true);
   });
 
   it("파트의 문제를 다 풀어야 학습 완료를 체크할 수 있고, 체크하면 진도에 들어갑니다", () => {
-    const w = open("io");
+    const w = open("io", "#part-intro");
     const sec = current(w);
     const quizzes = [...sec.querySelectorAll("[data-quiz]")];
     expect(quizzes.length).toBeGreaterThan(0);
@@ -58,6 +69,9 @@ describe("장 페이지의 파트", () => {
     expect(JSON.parse(w.localStorage.getItem("mlnl-cs:progress")!)).toHaveProperty("io:s:intro", 1);
     expect(w.document.querySelector('[data-part-link="intro"]')!.classList.contains("is-done")).toBe(true);
     expect(w.document.querySelector('.stage-head [data-progress] .n')!.textContent).toBe("1");
+    const card = w.document.querySelector('[data-part-card="intro"]')!;
+    expect(card.classList.contains("is-done")).toBe(true);
+    expect(card.querySelector("[data-card-state]")!.textContent).toBe("학습 완료");
   });
 
   it("주소의 #로 파트를 옮기고, 파트 안의 제목을 가리키면 그 파트를 엽니다", () => {
@@ -87,10 +101,12 @@ describe("장 페이지의 파트", () => {
     }
   });
 
-  it("다시 열면 마지막으로 본 파트를 엽니다", () => {
+  it("다시 들어오면 카드 목록 위에 마지막으로 본 파트로 가는 이어서 보기가 있습니다", () => {
     const first = open("io", "#part-용어-정리");
     const last = first.localStorage.getItem("mlnl-cs:last")!;
     const again = open("io", "", { "mlnl-cs:last": last });
-    expect(current(again).dataset.part).toBe("용어-정리");
+    const resume = again.document.querySelector("[data-resume]")!;
+    expect(resume.getAttribute("href")).toBe("#part-용어-정리");
+    expect(resume.textContent).toMatch(/^이어서 보기: 파트 \d+$/);
   });
 });

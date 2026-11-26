@@ -214,7 +214,23 @@
     let current = sections[0];
     const noteKey = (sec) => `${slug}:${sec.dataset.part}`;
 
+    const hub = document.querySelector("[data-hub], #parts");
+    const cards = [...document.querySelectorAll("[data-part-card]")];
+    const resume = document.querySelector("[data-resume]");
+    // 장의 첫 화면: 파트 카드 목록. 이어서 볼 파트가 있으면 그 버튼을 보여 줍니다
+    const showHub = () => {
+      document.documentElement.classList.add("is-hub");
+      for (const s of sections) s.classList.remove("is-current");
+      for (const a of links) a.classList.remove("is-current");
+      const last = sections.find((s) => s.dataset.part === loadMap(LAST)[slug]);
+      if (resume && last) {
+        const n = sections.indexOf(last) + 1;
+        resume.href = `#part-${last.dataset.part}`;
+        resume.textContent = `이어서 보기: 파트 ${n}`;
+      }
+    };
     const show = (sec) => {
+      document.documentElement.classList.remove("is-hub");
       current = sec;
       for (const s of sections) s.classList.toggle("is-current", s === sec);
       for (const a of links) {
@@ -253,27 +269,37 @@
           : ready
             ? `이 파트의 문제 ${quizzes.length}개를 모두 풀었어요`
             : `이 파트의 문제 ${quizzes.length}개 중 ${solved}개를 풀었어요. 모두 풀면 체크할 수 있어요`;
+        const isDone = Boolean(progress[box.dataset.key]);
+        const hasMemo = Boolean(notes[noteKey(sec)]);
         const link = links.find((a) => a.dataset.partLink === sec.dataset.part);
-        link?.classList.toggle("is-done", Boolean(progress[box.dataset.key]));
-        link?.classList.toggle("has-memo", Boolean(notes[noteKey(sec)]));
+        link?.classList.toggle("is-done", isDone);
+        link?.classList.toggle("has-memo", hasMemo);
+        const card = cards.find((a) => a.dataset.partCard === sec.dataset.part);
+        if (card) {
+          card.classList.toggle("is-done", isDone);
+          card.classList.toggle("has-memo", hasMemo);
+          card.querySelector("[data-card-state]").textContent = isDone
+            ? "학습 완료"
+            : quizzes.length && solved
+              ? `문제 ${solved}/${quizzes.length}`
+              : "";
+        }
       }
     };
 
-    const first = target();
-    if (first) {
-      show(first.sec);
-      first.el.scrollIntoView?.();
-    } else {
-      const last = loadMap(LAST)[slug];
-      show(sections.find((s) => s.dataset.part === last) ?? sections[0]);
-    }
-    refreshParts();
-    window.addEventListener("hashchange", () => {
+    const route = () => {
       const t = target();
-      if (!t) return;
-      show(t.sec);
-      t.el.scrollIntoView?.();
-    });
+      if (t) {
+        show(t.sec);
+        t.el.scrollIntoView?.();
+      } else {
+        showHub();
+        if (location.hash === "#parts") hub?.scrollIntoView?.();
+      }
+    };
+    route();
+    refreshParts();
+    window.addEventListener("hashchange", route);
 
     let timer = 0;
     memo?.addEventListener("input", () => {

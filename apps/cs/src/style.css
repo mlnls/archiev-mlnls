@@ -160,6 +160,33 @@ code { padding: 0.12em 0.36em; background: var(--soft); border-radius: 5px; font
 .part-hint:empty { display: none; }
 .part-end .stage-nav { margin-top: 24px; }
 
+/* 장의 첫 화면: 파트 카드 */
+.hub { padding-top: 32px; }
+.js-parts:not(.is-hub) .hub { display: none; }
+.is-hub .stage-layout { grid-template-columns: minmax(0, 1fr); }
+.is-hub .study { display: none; }
+.hub-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.hub-head h2 { font-size: 18px; font-weight: 750; }
+.hub-resume { padding: 8px 14px; background: var(--ink); color: var(--paper); border-radius: 999px; font-size: 13.5px; font-weight: 650; text-decoration: none; }
+.hub-text { margin-top: 8px; font-size: 14px; line-height: 1.7; color: var(--muted); }
+.part-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 20px; padding: 0; list-style: none; }
+.part-card { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 16px 18px; background: var(--raised); border: 1px solid var(--rule); border-radius: 12px; color: var(--ink); text-decoration: none; transition: border-color 140ms ease-out; }
+@media (hover: hover) { .part-card:hover { border-color: var(--label); } }
+.card-top { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 650; color: var(--label); font-variant-numeric: tabular-nums; }
+.card-state:empty { display: none; }
+.part-card.is-done .card-state { color: var(--ink); }
+.part-card.is-done .card-state::before { content: "✓ "; }
+.card-title { font-size: 15.5px; font-weight: 700; line-height: 1.45; }
+.card-subs { font-size: 12.5px; line-height: 1.55; color: var(--muted); }
+.card-meta { margin-top: auto; padding-top: 6px; font-size: 12px; color: var(--label); }
+.part-card.has-memo .card-meta::after { content: " · 메모 ✎"; }
+.part-step { display: flex; justify-content: space-between; gap: 12px; }
+.back-hub { display: none; color: var(--label); text-decoration: none; }
+.js-parts .back-hub { display: inline; }
+@media (hover: hover) { .back-hub:hover { color: var(--ink); } }
+.hub-link { display: none; margin-left: 6px; font-weight: 500; color: var(--label); }
+.js-parts .hub-link { display: inline; }
+
 /* 오른쪽 칸: 이 장의 파트와 메모 */
 .study { position: sticky; top: 24px; align-self: start; display: grid; gap: 28px; max-height: calc(100dvh - 48px); overflow-y: auto; padding-top: 36px; scrollbar-width: none; }
 .parts-panel summary { margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--label); list-style: none; cursor: pointer; }
