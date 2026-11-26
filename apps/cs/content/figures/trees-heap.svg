@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 152">
+<text class="tx-l" x="0" y="16">배열 하나에 담은 최소 힙</text>
+<text class="tx-l" x="21" y="44" text-anchor="middle">0</text>
+<rect class="bx-ink" x="0" y="52" width="42" height="34" rx="5"/><text class="tx-m tx-inv" x="21.0" y="74.0" text-anchor="middle">1</text>
+<text class="tx-l" x="67" y="44" text-anchor="middle">1</text>
+<rect class="bx" x="46" y="52" width="42" height="34" rx="5"/><text class="tx-m" x="67.0" y="74.0" text-anchor="middle">3</text>
+<text class="tx-l" x="113" y="44" text-anchor="middle">2</text>
+<rect class="bx" x="92" y="52" width="42" height="34" rx="5"/><text class="tx-m" x="113.0" y="74.0" text-anchor="middle">2</text>
+<text class="tx-l" x="159" y="44" text-anchor="middle">3</text>
+<rect class="bx" x="138" y="52" width="42" height="34" rx="5"/><text class="tx-m" x="159.0" y="74.0" text-anchor="middle">7</text>
+<text class="tx-l" x="205" y="44" text-anchor="middle">4</text>
+<rect class="bx" x="184" y="52" width="42" height="34" rx="5"/><text class="tx-m" x="205.0" y="74.0" text-anchor="middle">4</text>
+<text class="tx-l" x="251" y="44" text-anchor="middle">5</text>
+<rect class="bx" x="230" y="52" width="42" height="34" rx="5"/><text class="tx-m" x="251.0" y="74.0" text-anchor="middle">5</text>
+<g class="tx-s"><text x="0" y="118">i번의 자식은 2i+1번과 2i+2번,</text><text x="0" y="134">부모는 (i−1)÷2를 내린 번호입니다</text></g>
+<g class="ln"><line x1="560" y1="38" x2="490" y2="62"/><line x1="560" y1="38" x2="630" y2="62"/><line x1="490" y1="92" x2="450" y2="116"/><line x1="490" y1="92" x2="530" y2="116"/><line x1="630" y1="92" x2="610" y2="116"/></g>
+<rect class="bx-ink" x="540" y="8" width="40" height="30" rx="5"/><text class="tx-m tx-inv" x="560.0" y="28.0" text-anchor="middle">1</text>
+<text class="tx-l" x="584" y="20">0</text>
+<rect class="bx" x="470" y="62" width="40" height="30" rx="5"/><text class="tx-m" x="490.0" y="82.0" text-anchor="middle">3</text>
+<text class="tx-l" x="514" y="74">1</text>
+<rect class="bx" x="610" y="62" width="40" height="30" rx="5"/><text class="tx-m" x="630.0" y="82.0" text-anchor="middle">2</text>
+<text class="tx-l" x="654" y="74">2</text>
+<rect class="bx" x="430" y="116" width="40" height="30" rx="5"/><text class="tx-m" x="450.0" y="136.0" text-anchor="middle">7</text>
+<text class="tx-l" x="474" y="128">3</text>
+<rect class="bx" x="510" y="116" width="40" height="30" rx="5"/><text class="tx-m" x="530.0" y="136.0" text-anchor="middle">4</text>
+<text class="tx-l" x="554" y="128">4</text>
+<rect class="bx" x="590" y="116" width="40" height="30" rx="5"/><text class="tx-m" x="610.0" y="136.0" text-anchor="middle">5</text>
+<text class="tx-l" x="634" y="128">5</text>
+<text class="tx-s" x="600" y="22">루트가 늘 가장 작음</text>
+</svg>

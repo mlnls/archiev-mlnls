@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236">
+<path class="ln" d="M100 10 H94 V100 H100"/><text class="tx-s" x="0" y="58">나누기</text><text class="tx-l" x="0" y="74">log n 단계</text>
+<path class="ln" d="M100 124 H94 V224 H100"/><text class="tx-s" x="0" y="172">합치기</text><text class="tx-l" x="0" y="188">단계마다 n개</text>
+<rect class="bx-soft" x="284.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="298.0" y="25.5" text-anchor="middle">8</text>
+<rect class="bx-soft" x="316.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="330.0" y="25.5" text-anchor="middle">3</text>
+<rect class="bx-soft" x="348.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="362.0" y="25.5" text-anchor="middle">5</text>
+<rect class="bx-soft" x="380.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="394.0" y="25.5" text-anchor="middle">1</text>
+<rect class="bx-soft" x="412.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="426.0" y="25.5" text-anchor="middle">7</text>
+<rect class="bx-soft" x="444.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="458.0" y="25.5" text-anchor="middle">2</text>
+<rect class="bx-soft" x="476.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="490.0" y="25.5" text-anchor="middle">6</text>
+<rect class="bx-soft" x="508.0" y="8" width="28" height="26" rx="4"/><text class="tx-m" x="522.0" y="25.5" text-anchor="middle">4</text>
+<rect class="bx-soft" x="275.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="289.0" y="63.5" text-anchor="middle">8</text>
+<rect class="bx-soft" x="307.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="321.0" y="63.5" text-anchor="middle">3</text>
+<rect class="bx-soft" x="339.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="353.0" y="63.5" text-anchor="middle">5</text>
+<rect class="bx-soft" x="371.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="385.0" y="63.5" text-anchor="middle">1</text>
+<rect class="bx-soft" x="421.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="435.0" y="63.5" text-anchor="middle">7</text>
+<rect class="bx-soft" x="453.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="467.0" y="63.5" text-anchor="middle">2</text>
+<rect class="bx-soft" x="485.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="499.0" y="63.5" text-anchor="middle">6</text>
+<rect class="bx-soft" x="517.0" y="46" width="28" height="26" rx="4"/><text class="tx-m" x="531.0" y="63.5" text-anchor="middle">4</text>
+<rect class="bx-soft" x="257.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="271.0" y="101.5" text-anchor="middle">8</text>
+<rect class="bx-soft" x="289.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="303.0" y="101.5" text-anchor="middle">3</text>
+<rect class="bx-soft" x="339.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="353.0" y="101.5" text-anchor="middle">5</text>
+<rect class="bx-soft" x="371.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="385.0" y="101.5" text-anchor="middle">1</text>
+<rect class="bx-soft" x="421.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="435.0" y="101.5" text-anchor="middle">7</text>
+<rect class="bx-soft" x="453.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="467.0" y="101.5" text-anchor="middle">2</text>
+<rect class="bx-soft" x="503.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="517.0" y="101.5" text-anchor="middle">6</text>
+<rect class="bx-soft" x="535.0" y="84" width="28" height="26" rx="4"/><text class="tx-m" x="549.0" y="101.5" text-anchor="middle">4</text>
+<rect class="bx" x="257.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="271.0" y="139.5" text-anchor="middle">3</text>
+<rect class="bx" x="289.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="303.0" y="139.5" text-anchor="middle">8</text>
+<rect class="bx" x="339.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="353.0" y="139.5" text-anchor="middle">1</text>
+<rect class="bx" x="371.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="385.0" y="139.5" text-anchor="middle">5</text>
+<rect class="bx" x="421.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="435.0" y="139.5" text-anchor="middle">2</text>
+<rect class="bx" x="453.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="467.0" y="139.5" text-anchor="middle">7</text>
+<rect class="bx" x="503.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="517.0" y="139.5" text-anchor="middle">4</text>
+<rect class="bx" x="535.0" y="122" width="28" height="26" rx="4"/><text class="tx-m" x="549.0" y="139.5" text-anchor="middle">6</text>
+<rect class="bx" x="275.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="289.0" y="177.5" text-anchor="middle">1</text>
+<rect class="bx" x="307.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="321.0" y="177.5" text-anchor="middle">3</text>
+<rect class="bx" x="339.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="353.0" y="177.5" text-anchor="middle">5</text>
+<rect class="bx" x="371.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="385.0" y="177.5" text-anchor="middle">8</text>
+<rect class="bx" x="421.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="435.0" y="177.5" text-anchor="middle">2</text>
+<rect class="bx" x="453.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="467.0" y="177.5" text-anchor="middle">4</text>
+<rect class="bx" x="485.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="499.0" y="177.5" text-anchor="middle">6</text>
+<rect class="bx" x="517.0" y="160" width="28" height="26" rx="4"/><text class="tx-m" x="531.0" y="177.5" text-anchor="middle">7</text>
+<rect class="bx-ink" x="284.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="298.0" y="215.5" text-anchor="middle">1</text>
+<rect class="bx-ink" x="316.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="330.0" y="215.5" text-anchor="middle">2</text>
+<rect class="bx-ink" x="348.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="362.0" y="215.5" text-anchor="middle">3</text>
+<rect class="bx-ink" x="380.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="394.0" y="215.5" text-anchor="middle">4</text>
+<rect class="bx-ink" x="412.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="426.0" y="215.5" text-anchor="middle">5</text>
+<rect class="bx-ink" x="444.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="458.0" y="215.5" text-anchor="middle">6</text>
+<rect class="bx-ink" x="476.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="490.0" y="215.5" text-anchor="middle">7</text>
+<rect class="bx-ink" x="508.0" y="198" width="28" height="26" rx="4"/><text class="tx-m tx-inv" x="522.0" y="215.5" text-anchor="middle">8</text>
+</svg>

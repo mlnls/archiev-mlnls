@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 212">
+<text class="tx-b" x="0" y="16">너비 우선 (BFS): 큐</text>
+<g class="ln"><line x1="170" y1="64" x2="100" y2="92"/><line x1="170" y1="64" x2="240" y2="92"/><line x1="100" y1="122" x2="60" y2="150"/><line x1="100" y1="122" x2="140" y2="150"/><line x1="240" y1="122" x2="280" y2="150"/></g>
+<rect class="bx" x="150" y="34" width="40" height="30" rx="5"/><text class="tx-m" x="170.0" y="54.0" text-anchor="middle">A</text>
+<text class="tx-b" x="194" y="46">1</text>
+<rect class="bx" x="80" y="92" width="40" height="30" rx="5"/><text class="tx-m" x="100.0" y="112.0" text-anchor="middle">B</text>
+<text class="tx-b" x="124" y="104">2</text>
+<rect class="bx" x="220" y="92" width="40" height="30" rx="5"/><text class="tx-m" x="240.0" y="112.0" text-anchor="middle">C</text>
+<text class="tx-b" x="264" y="104">3</text>
+<rect class="bx" x="40" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="60.0" y="170.0" text-anchor="middle">D</text>
+<text class="tx-b" x="84" y="162">4</text>
+<rect class="bx" x="120" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="140.0" y="170.0" text-anchor="middle">E</text>
+<text class="tx-b" x="164" y="162">5</text>
+<rect class="bx" x="260" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="280.0" y="170.0" text-anchor="middle">F</text>
+<text class="tx-b" x="304" y="162">6</text>
+<text class="tx-s" x="0" y="204">방문 순서 A B C D E F: 가까운 겹부터</text>
+<line class="ln-faint" x1="360" y1="0" x2="360" y2="212"/>
+<g transform="translate(380 0)">
+<text class="tx-b" x="0" y="16">깊이 우선 (DFS): 스택, 재귀</text>
+<g class="ln"><line x1="170" y1="64" x2="100" y2="92"/><line x1="170" y1="64" x2="240" y2="92"/><line x1="100" y1="122" x2="60" y2="150"/><line x1="100" y1="122" x2="140" y2="150"/><line x1="240" y1="122" x2="280" y2="150"/></g>
+<rect class="bx" x="150" y="34" width="40" height="30" rx="5"/><text class="tx-m" x="170.0" y="54.0" text-anchor="middle">A</text>
+<text class="tx-b" x="194" y="46">1</text>
+<rect class="bx" x="80" y="92" width="40" height="30" rx="5"/><text class="tx-m" x="100.0" y="112.0" text-anchor="middle">B</text>
+<text class="tx-b" x="124" y="104">2</text>
+<rect class="bx" x="220" y="92" width="40" height="30" rx="5"/><text class="tx-m" x="240.0" y="112.0" text-anchor="middle">C</text>
+<text class="tx-b" x="264" y="104">5</text>
+<rect class="bx" x="40" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="60.0" y="170.0" text-anchor="middle">D</text>
+<text class="tx-b" x="84" y="162">3</text>
+<rect class="bx" x="120" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="140.0" y="170.0" text-anchor="middle">E</text>
+<text class="tx-b" x="164" y="162">4</text>
+<rect class="bx" x="260" y="150" width="40" height="30" rx="5"/><text class="tx-m" x="280.0" y="170.0" text-anchor="middle">F</text>
+<text class="tx-b" x="304" y="162">6</text>
+<text class="tx-s" x="0" y="204">방문 순서 A B D E C F: 한 갈래 끝까지</text>
+</g>
+</svg>
