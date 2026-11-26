@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 276">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">요청 A: 새 아이디 neo로 첫 댓글</text>
+  <text class="tx-b" x="720" y="16" text-anchor="end">요청 B: 같은 순간, 같은 아이디 neo</text>
+  <line class="ln-faint" x1="350" y1="28" x2="350" y2="206" marker-end="url(#m)"/>
+  <text class="tx-l" x="350" y="222" text-anchor="middle">시간</text>
+
+  <g class="bx">
+    <rect x="0" y="30" width="330" height="30" rx="5"/><rect x="390" y="66" width="330" height="30" rx="5"/>
+    <rect x="0" y="102" width="330" height="30" rx="5"/><rect x="0" y="174" width="330" height="30" rx="5"/>
+  </g>
+  <rect class="bx-ink" x="390" y="138" width="330" height="30" rx="5"/>
+  <g class="tx-s">
+    <text x="12" y="50">① 아이디 neo 찾기 → 없음</text>
+    <text x="402" y="86">① 아이디 neo 찾기 → 없음</text>
+    <text x="12" y="122">② neo 만들기 → 성공</text>
+    <text class="tx-inv" x="402" y="158">② neo 만들기 → UNIQUE 위반으로 실패</text>
+    <text x="12" y="194">③ 댓글 넣기 → 성공</text>
+  </g>
+  <g class="tx-s">
+    <text x="0" y="242">B는 ①에서 본 "없음"을 믿고 ②를 했지만, 그사이 A가 먼저 만들었습니다(6장의 경쟁 조건).</text>
+    <text x="0" y="258">중복을 막은 것은 앱 코드가 아니라 username의 UNIQUE 인덱스입니다.</text>
+    <text x="0" y="274">A가 ②와 ③ 사이에 죽었다면 아이디만 남고 댓글은 없습니다.</text>
+  </g>
+</svg>
