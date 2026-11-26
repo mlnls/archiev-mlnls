@@ -9,6 +9,12 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@tiptap/core": "^3.32.2",
+    "@tiptap/extension-list": "^3.32.2",
+    "@tiptap/extensions": "^3.32.2",
+    "@tiptap/pm": "^3.32.2",
+    "@tiptap/starter-kit": "^3.32.2",
+    "esbuild": "^0.25.12",
     "jsdom": "^27.0.0",
     "vitest": "^3.2.4"
   }

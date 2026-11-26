@@ -87,14 +87,14 @@ describe("만든 사이트", () => {
     for (const s of slugs) expect(read(`${s}/index.html`), s).toContain(`data-key="${s}:s:intro"`);
   });
 
-  it("장마다 파트로 나누고, 파트마다 학습 완료 체크 하나와 목록의 링크 하나가 있습니다", () => {
+  it("장마다 파트로 나누고, 파트마다 학습 완료 체크, 카드, 오른쪽 목차가 하나씩 있습니다", () => {
     for (const s of slugs) {
       const html = read(`${s}/index.html`);
       const ids = [...html.matchAll(/<section class="part" id="part-([^"]+)" data-part="\1">/g)].map((m) => m[1]);
       expect(ids.length, s).toBeGreaterThan(3);
       const checks = [...html.matchAll(/data-key="([^"]+:s:[^"]+)"/g)].map((m) => m[1]);
       expect(checks, s).toEqual(ids.map((id) => `${s}:s:${id}`));
-      const links = [...html.matchAll(/data-part-link="([^"]+)"/g)].map((m) => m[1]);
+      const links = [...html.matchAll(/data-toc-for="([^"]+)"/g)].map((m) => m[1]);
       expect(links, s).toEqual(ids);
       const cards = [...html.matchAll(/data-part-card="([^"]+)"/g)].map((m) => m[1]);
       expect(cards, s).toEqual(ids);

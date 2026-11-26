@@ -1,8 +1,12 @@
 # 컴퓨터 기초 로드맵 (cs.<도메인>). 내용으로 정적 HTML을 만들고 nginx로 내보냅니다.
 FROM node:24-slim AS build
+ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
+RUN corepack enable
 WORKDIR /app
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/cs ./apps/cs
-# 의존성 없이 Node 기본 기능만으로 만듭니다
+# 본문은 Node 기본 기능만으로 만들고, 메모 편집기(Tiptap)만 esbuild로 묶습니다
+RUN pnpm install --frozen-lockfile --filter @archiev/cs --ignore-scripts
 RUN node apps/cs/scripts/build.mjs
 
 FROM nginx:1.29-alpine

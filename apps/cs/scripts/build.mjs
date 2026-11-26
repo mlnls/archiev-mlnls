@@ -9,6 +9,33 @@ import { book, parts, sources, upcoming } from "../content/book.mjs";
 import { esc, extractTerms, inline, parseFrontmatter, plain, render, termId } from "./markdown.mjs";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
+
+/** 블로그와 같은 글꼴 고르기. 고른 글꼴은 이 사이트의 localStorage에 남습니다 */
+const FONTS = [
+  { id: "pretendard", label: "Pretendard", family: '"Pretendard Variable"', href: null },
+  { id: "wanted", label: "원티드 산스", family: '"Wanted Sans Variable"', href: "https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" },
+  { id: "suit", label: "SUIT", family: '"SUIT Variable"', href: "https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2.0.5/fonts/variable/woff2/SUIT-Variable.css" },
+  { id: "plex", label: "IBM Plex Sans", family: '"IBM Plex Sans KR"', href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" },
+  { id: "noto-serif", label: "노토 세리프", family: '"Noto Serif KR"', href: "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap" },
+  { id: "gowun", label: "고운바탕", family: '"Gowun Batang"', href: "https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" },
+];
+function applyFontSource(fonts, id) {
+  const font = fonts.find((f) => f.id === id) ?? fonts[0];
+  const root = document.documentElement;
+  root.style.setProperty("--font", font.family);
+  root.dataset.font = font.id;
+  const old = document.getElementById("font-css");
+  if (!font.href) old?.remove();
+  else if (old) old.href = font.href;
+  else {
+    const link = document.createElement("link");
+    link.id = "font-css";
+    link.rel = "stylesheet";
+    link.href = font.href;
+    document.head.append(link);
+  }
+}
+const FONT_INIT = `try{window.__applyFont=function(id){(${applyFontSource.toString()})(${JSON.stringify(FONTS).replace(/</g, "\\u003c")},id)};window.__applyFont(localStorage.getItem("mlnl-cs:font")||"pretendard")}catch(e){}`;
 export const SITE = "https://cs.mlnl.site";
 const BLOG = "https://blog.mlnl.site";
 const CV = "https://mlnl.site/";
@@ -86,6 +113,9 @@ export function splitParts(html) {
     subs: g.slice(1).filter((x) => x.text !== "더 읽을거리").map((x) => ({ id: x.id, titleHtml: x.titleHtml })),
     html: g.map((x) => x.html).join(""),
     side: g.every((x) => x.text.startsWith("곁가지")),
+    heads: [...g.map((x) => x.html).join("").matchAll(/<h([23]) id="([^"]+)">([\s\S]*?)<\/h\1>/g)]
+      .filter((m) => unescapeHtml(m[3]).trim() !== "더 읽을거리")
+      .map((m) => ({ level: Number(m[1]), id: m[2], html: m[3].replace(/<a [^>]*>|<\/a>/g, "") })),
     quizzes: g.reduce((n, x) => n + (x.html.match(/ data-quiz="/g) || []).length, 0),
   }));
 }
@@ -158,6 +188,7 @@ function page({ title, description, path, body, assets }) {
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="${assets.css}">
+  <script>${FONT_INIT}</script>
   <script src="${assets.js}" defer></script>
 </head>
 <body>
@@ -165,6 +196,7 @@ function page({ title, description, path, body, assets }) {
     <div class="site-header-in">
       <a class="wordmark" href="/">mlnl<span>cs</span></a>
       <nav aria-label="주요 메뉴">
+        <select class="font-pick" aria-label="글꼴" data-font-pick>${FONTS.map((f) => `<option value="${f.id}">${esc(f.label)}</option>`).join("")}</select>
         <a href="/terms/">용어 사전</a>
         <a href="/notes/">내 메모</a>
         <a href="${BLOG}">블로그</a>
@@ -284,7 +316,7 @@ function chapterPage(ch, { chapters, terms }, assets) {
       const back = before ? `<a href="#part-${before.id}"><span>이전 파트</span>${before.titleHtml}</a>` : chapterLink(prev, "prev");
       const fwd = after ? `<a class="next" href="#part-${after.id}"><span>다음 파트</span>${after.titleHtml}</a>` : chapterLink(next, "next");
       return `          <section class="part" id="part-${p.id}" data-part="${p.id}">
-            <p class="part-step"><a class="back-hub" href="#parts">← 파트 목록</a><span>파트 ${i + 1} / ${secs.length}${p.side ? " · 곁가지" : ""}${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}</span></p>
+            <p class="part-step"><a class="back-hub" href="#parts">← 파트 목록</a><span>파트 ${i + 1} / ${secs.length}${p.side ? " · 곁가지" : ""}${p.quizzes ? ` · 문제 ${p.quizzes}` : ""}</span><button type="button" class="memo-open" data-memo-open>메모</button></p>
             <div class="prose">
 ${p.html}
             </div>
@@ -339,22 +371,31 @@ ${cards}
           </section>
 ${sections}
         </div>
-        <aside class="study" aria-label="파트와 메모">
-          <details class="parts-panel" open>
-            <summary>이 장의 파트 <a class="hub-link" href="#parts">목록</a></summary>
-            <ol class="parts-list">
-${list}
-            </ol>
-          </details>
-          <div class="memo">
-            <label for="memo">이 파트 메모</label>
-            <textarea id="memo" data-memo rows="7" placeholder="기억할 것, 헷갈린 것, 다시 볼 것을 적어 두세요"></textarea>
-            <p class="memo-status" data-memo-status>이 브라우저에만 저장됩니다</p>
-            <p class="memo-all"><a href="/notes/">내 메모 모아 보기</a></p>
-          </div>
+        <aside class="study" aria-label="이 파트의 차례">
+          <p class="study-step"><a href="#parts">파트 목록</a></p>
+${secs
+  .map(
+    (p, i) => `          <div class="toc-part" data-toc-for="${p.id}">
+            <p class="toc-title">파트 ${i + 1} · ${p.titleHtml}</p>
+            <ul>${p.heads.map((h) => `<li class="h${h.level}"><a href="#${h.id}">${h.html}</a></li>`).join("")}</ul>
+          </div>`,
+  )
+  .join("\n")}
+          <button type="button" class="memo-open is-side" data-memo-open>이 파트 메모</button>
         </aside>
       </div>
     </article>
+    <aside class="memo-panel" data-memo-panel data-src="${assets.memo}" aria-label="메모" hidden>
+      <div class="memo-head">
+        <div>
+          <p class="memo-kicker">메모</p>
+          <p class="memo-title" data-memo-title></p>
+        </div>
+        <button type="button" class="memo-close" data-memo-close aria-label="메모 닫기">×</button>
+      </div>
+      <div class="memo-body prose" data-memo-editor></div>
+      <p class="memo-foot"><span data-memo-status>이 브라우저에만 저장됩니다</span><a href="/notes/">내 메모 모아 보기</a></p>
+    </aside>
   </main>`;
   return page({ title: `${num(ch.index)} ${ch.title} | ${book.title}`, description: plain(ch.summary), path: pathOf(ch), body, assets });
 }
@@ -444,6 +485,16 @@ async function asset(out, file, ext) {
   return name;
 }
 
+/** 메모 편집기(Tiptap)를 한 파일로 묶습니다. 메모 칸을 처음 열 때만 불러옵니다 */
+async function bundleMemo(out) {
+  const { build: bundle } = await import("esbuild");
+  const result = await bundle({ entryPoints: [join(ROOT, "src", "memo", "editor.js")], bundle: true, format: "esm", minify: true, write: false, target: "es2022", legalComments: "none" });
+  const text = result.outputFiles[0].text;
+  const name = `/assets/memo.${createHash("sha256").update(text).digest("hex").slice(0, 10)}.js`;
+  await writeFile(join(out, name), text);
+  return name;
+}
+
 async function write(out, path, text) {
   const file = join(out, path);
   await mkdir(dirname(file), { recursive: true });
@@ -454,7 +505,7 @@ export async function build(out = join(ROOT, "dist"), { draft = false } = {}) {
   const data = await loadBook(undefined, { draft });
   await rm(out, { recursive: true, force: true });
   await mkdir(join(out, "assets"), { recursive: true });
-  const assets = { css: await asset(out, "style.css", "css"), js: await asset(out, "app.js", "js") };
+  const assets = { css: await asset(out, "style.css", "css"), js: await asset(out, "app.js", "js"), memo: await bundleMemo(out) };
   await write(out, "index.html", indexPage(data, assets));
   for (const ch of data.chapters) await write(out, `${ch.slug}/index.html`, chapterPage(ch, data, assets));
   await write(out, "terms/index.html", termsPage(data, assets));

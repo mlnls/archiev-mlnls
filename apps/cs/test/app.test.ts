@@ -67,7 +67,6 @@ describe("장 페이지의 파트", () => {
     box(sec).checked = true;
     box(sec).dispatchEvent(new w.Event("change", { bubbles: true }));
     expect(JSON.parse(w.localStorage.getItem("mlnl-cs:progress")!)).toHaveProperty("io:s:intro", 1);
-    expect(w.document.querySelector('[data-part-link="intro"]')!.classList.contains("is-done")).toBe(true);
     expect(w.document.querySelector('.stage-head [data-progress] .n')!.textContent).toBe("1");
     const card = w.document.querySelector('[data-part-card="intro"]')!;
     expect(card.classList.contains("is-done")).toBe(true);
@@ -82,23 +81,34 @@ describe("장 페이지의 파트", () => {
     expect(current(w).querySelector("#권한")).not.toBeNull();
   });
 
-  it("메모는 파트마다 저장되고, 내 메모 페이지에 모여 보입니다", () => {
-    vi.useFakeTimers();
-    try {
-      const w = open("io", "#part-디렉터리-구조");
-      const memo = w.document.querySelector("[data-memo]") as HTMLTextAreaElement;
-      memo.value = "inode와 이름은 따로 산다";
-      memo.dispatchEvent(new w.Event("input"));
-      vi.advanceTimersByTime(500);
-      const notes = JSON.parse(w.localStorage.getItem("mlnl-cs:notes")!);
-      expect(notes["io:디렉터리-구조"]).toBe("inode와 이름은 따로 산다");
-      expect(w.document.querySelector('[data-part-link="디렉터리-구조"]')!.classList.contains("has-memo")).toBe(true);
-      const n = open("notes", "", { "mlnl-cs:notes": JSON.stringify(notes) });
-      expect(n.document.querySelector(".note-text")!.textContent).toBe("inode와 이름은 따로 산다");
-      expect(n.document.querySelector(".note-part")!.getAttribute("href")).toBe(`/io/#part-${encodeURIComponent("디렉터리-구조")}`);
-    } finally {
-      vi.useRealTimers();
-    }
+  it("메모 버튼을 누르면 오른쪽 메모 칸이 열리고, 오른쪽 목차는 지금 파트의 제목만 보여 줍니다", () => {
+    const w = open("io", "#part-디렉터리-구조");
+    const toc = w.document.querySelector("[data-toc-for].is-current") as HTMLElement;
+    expect(toc.dataset.tocFor).toBe("디렉터리-구조");
+    expect(w.document.querySelectorAll("[data-toc-for].is-current")).toHaveLength(1);
+    (w.document.querySelector("section.part.is-current [data-memo-open]") as HTMLButtonElement).click();
+    const panel = w.document.querySelector("[data-memo-panel]") as HTMLElement;
+    expect(panel.hidden).toBe(false);
+    expect(w.document.documentElement.classList.contains("is-memo-open")).toBe(true);
+    expect(panel.querySelector("[data-memo-title]")!.textContent).toMatch(/^파트 \d+ · 디렉터리 구조$/);
+    (panel.querySelector("[data-memo-close]") as HTMLButtonElement).click();
+    expect(panel.hidden).toBe(true);
+  });
+
+  it("내 메모 페이지는 편집기가 만든 서식만 남기고, 예전 글자 메모도 문단으로 보여 줍니다", () => {
+    const notes = {
+      "io:디렉터리-구조": '<p>inode와 <strong>이름</strong></p><script>alert(1)</script><img src=x onerror="alert(1)">',
+      "io:intro": "첫 줄\n\n둘째 문단",
+    };
+    const n = open("notes", "", { "mlnl-cs:notes": JSON.stringify(notes) });
+    const texts = [...n.document.querySelectorAll(".note-text")];
+    expect(texts).toHaveLength(2);
+    expect(texts[0]!.querySelectorAll("p")).toHaveLength(2);
+    const html = texts[1]!.innerHTML;
+    expect(html).toContain("<strong>이름</strong>");
+    expect(html).not.toContain("script");
+    expect(html).not.toContain("onerror");
+    expect(n.document.querySelector(".note-part")!.getAttribute("href")).toBe(`/io/#part-${encodeURIComponent("intro")}`);
   });
 
   it("다시 들어오면 카드 목록 위에 마지막으로 본 파트로 가는 이어서 보기가 있습니다", () => {

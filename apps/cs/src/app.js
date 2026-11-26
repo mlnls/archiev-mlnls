@@ -186,6 +186,7 @@
   // 파트마다 메모를 남깁니다. 진행, 메모, 마지막으로 본 파트는 모두 이 브라우저에만 남습니다
   const NOTES = "mlnl-cs:notes";
   const LAST = "mlnl-cs:last";
+  const MEMO_OPEN = "mlnl-cs:memo-open";
   const loadMap = (key) => {
     try {
       const value = JSON.parse(localStorage.getItem(key) || "{}");
@@ -202,48 +203,59 @@
     }
   };
 
+  // 예전에 글자만 저장한 메모는 문단 HTML로 바꿔 읽습니다
+  const asHtml = (v) => {
+    if (!v) return "";
+    if (/^\s*</.test(v)) return v;
+    const d = document.createElement("div");
+    return v
+      .split(/\n{2,}/)
+      .map((para) => {
+        d.textContent = para;
+        return `<p>${d.innerHTML.replace(/\n/g, "<br>")}</p>`;
+      })
+      .join("");
+  };
+
   const sections = [...document.querySelectorAll("section.part[data-part]")];
   if (sections.length) {
-    document.documentElement.classList.add("js-parts");
+    const root = document.documentElement;
+    root.classList.add("js-parts");
     const slug = location.pathname.split("/").filter(Boolean)[0] ?? "";
-    const links = [...document.querySelectorAll("[data-part-link]")];
-    const memo = document.querySelector("[data-memo]");
-    const status = document.querySelector("[data-memo-status]");
-    const panel = document.querySelector(".parts-panel");
-    if (panel && window.matchMedia?.("(max-width: 1023px)").matches) panel.open = false;
-    let current = sections[0];
-    const noteKey = (sec) => `${slug}:${sec.dataset.part}`;
-
-    const hub = document.querySelector("[data-hub], #parts");
     const cards = [...document.querySelectorAll("[data-part-card]")];
+    const tocs = [...document.querySelectorAll("[data-toc-for]")];
     const resume = document.querySelector("[data-resume]");
+    const hub = document.getElementById("parts");
+    const panel = document.querySelector("[data-memo-panel]");
+    const status = document.querySelector("[data-memo-status]");
+    let current = null;
+    const noteKey = (sec) => `${slug}:${sec.dataset.part}`;
+    const titleOf = (sec) => `파트 ${sections.indexOf(sec) + 1} · ${sec.querySelector("h2")?.textContent ?? ""}`;
+
     // 장의 첫 화면: 파트 카드 목록. 이어서 볼 파트가 있으면 그 버튼을 보여 줍니다
     const showHub = () => {
-      document.documentElement.classList.add("is-hub");
+      root.classList.add("is-hub");
+      current = null;
       for (const s of sections) s.classList.remove("is-current");
-      for (const a of links) a.classList.remove("is-current");
       const last = sections.find((s) => s.dataset.part === loadMap(LAST)[slug]);
       if (resume && last) {
-        const n = sections.indexOf(last) + 1;
         resume.href = `#part-${last.dataset.part}`;
-        resume.textContent = `이어서 보기: 파트 ${n}`;
+        resume.textContent = `이어서 보기: 파트 ${sections.indexOf(last) + 1}`;
       }
+      closeMemo(false);
     };
     const show = (sec) => {
-      document.documentElement.classList.remove("is-hub");
+      root.classList.remove("is-hub");
+      if (current && current !== sec) saveMemo();
       current = sec;
       for (const s of sections) s.classList.toggle("is-current", s === sec);
-      for (const a of links) {
-        const on = a.dataset.partLink === sec.dataset.part;
-        a.classList.toggle("is-current", on);
-        if (on) a.setAttribute("aria-current", "step");
-        else a.removeAttribute("aria-current");
-      }
-      if (memo) {
-        memo.value = loadMap(NOTES)[noteKey(sec)] ?? "";
-        status.textContent = "이 브라우저에만 저장됩니다";
-      }
+      for (const t of tocs) t.classList.toggle("is-current", t.dataset.tocFor === sec.dataset.part);
       saveMap(LAST, { ...loadMap(LAST), [slug]: sec.dataset.part });
+      if (memo) {
+        memo.setContent(asHtml(loadMap(NOTES)[noteKey(sec)]));
+        panel.querySelector("[data-memo-title]").textContent = titleOf(sec);
+      }
+      spy();
     };
     // 주소의 #가 파트이거나 파트 안의 제목이면 그 파트를 엽니다
     const target = () => {
@@ -253,6 +265,90 @@
       const sec = el.matches("section.part") ? el : el.closest("section.part");
       return sec ? { sec, el } : null;
     };
+
+    // 오른쪽 목차: 지금 읽는 제목만 진하게 (블로그의 목차와 같습니다)
+    function spy() {
+      const toc = tocs.find((t) => t.classList.contains("is-current"));
+      if (!toc || !current) return;
+      const heads = [...current.querySelectorAll("h2[id], h3[id]")];
+      let on = heads[0];
+      for (const h of heads) if (h.getBoundingClientRect().top < 120) on = h;
+      for (const a of toc.querySelectorAll("a")) {
+        if (on && a.getAttribute("href") === `#${on.id}`) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      }
+    }
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          spy();
+        });
+      },
+      { passive: true },
+    );
+
+    // 메모: 오른쪽에서 열리는 칸에 노션처럼 쓰는 편집기. 편집기 코드는 처음 열 때 불러옵니다
+    let memo = null;
+    let loading = null;
+    let dirty = false;
+    let timer = 0;
+    function saveMemo() {
+      clearTimeout(timer);
+      if (!dirty || !current || !memo) return;
+      dirty = false;
+      const notes = loadMap(NOTES);
+      const html = memo.editor.isEmpty ? "" : memo.editor.getHTML();
+      if (html) notes[noteKey(current)] = html;
+      else delete notes[noteKey(current)];
+      saveMap(NOTES, notes);
+      status.textContent = "저장했어요. 이 브라우저에만 남습니다";
+      refreshParts();
+    }
+    async function openMemo() {
+      if (!panel || !current) return;
+      panel.hidden = false;
+      root.classList.add("is-memo-open");
+      saveMap(MEMO_OPEN, { open: true });
+      panel.querySelector("[data-memo-title]").textContent = titleOf(current);
+      if (!memo) {
+        loading ??= import(panel.dataset.src)
+          .then((mod) => {
+            memo = mod.mount(panel.querySelector("[data-memo-editor]"), {
+              content: asHtml(loadMap(NOTES)[noteKey(current)]),
+              placeholder: "'/'로 블록 고르기 · # 제목 · - 목록 · [] 체크리스트",
+              onChange: () => {
+                dirty = true;
+                status.textContent = "저장하는 중…";
+                clearTimeout(timer);
+                timer = setTimeout(saveMemo, 500);
+              },
+            });
+          })
+          .catch(() => {
+            status.textContent = "편집기를 불러오지 못했어요. 새로고침해 보세요";
+          });
+        await loading;
+      }
+      memo?.focus();
+    }
+    function closeMemo(remember = true) {
+      if (!panel || panel.hidden) return;
+      saveMemo();
+      panel.hidden = true;
+      root.classList.remove("is-memo-open");
+      if (remember) saveMap(MEMO_OPEN, { open: false });
+    }
+    for (const b of document.querySelectorAll("[data-memo-open]")) b.addEventListener("click", () => (panel?.hidden ? openMemo() : closeMemo()));
+    panel?.querySelector("[data-memo-close]")?.addEventListener("click", () => closeMemo());
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && panel && !panel.hidden) closeMemo();
+    });
+    window.addEventListener("pagehide", saveMemo);
 
     refreshParts = () => {
       const progress = read();
@@ -271,20 +367,15 @@
             : `이 파트의 문제 ${quizzes.length}개 중 ${solved}개를 풀었어요. 모두 풀면 체크할 수 있어요`;
         const isDone = Boolean(progress[box.dataset.key]);
         const hasMemo = Boolean(notes[noteKey(sec)]);
-        const link = links.find((a) => a.dataset.partLink === sec.dataset.part);
-        link?.classList.toggle("is-done", isDone);
-        link?.classList.toggle("has-memo", hasMemo);
+        sec.classList.toggle("has-memo", hasMemo);
         const card = cards.find((a) => a.dataset.partCard === sec.dataset.part);
         if (card) {
           card.classList.toggle("is-done", isDone);
           card.classList.toggle("has-memo", hasMemo);
-          card.querySelector("[data-card-state]").textContent = isDone
-            ? "학습 완료"
-            : quizzes.length && solved
-              ? `문제 ${solved}/${quizzes.length}`
-              : "";
+          card.querySelector("[data-card-state]").textContent = isDone ? "학습 완료" : quizzes.length && solved ? `문제 ${solved}/${quizzes.length}` : "";
         }
       }
+      if (current) root.classList.toggle("part-has-memo", current.classList.contains("has-memo"));
     };
 
     const route = () => {
@@ -292,37 +383,53 @@
       if (t) {
         show(t.sec);
         t.el.scrollIntoView?.();
+        if (loadMap(MEMO_OPEN).open && window.matchMedia?.("(min-width: 1280px)").matches) openMemo();
       } else {
         showHub();
         if (location.hash === "#parts") hub?.scrollIntoView?.();
       }
+      refreshParts();
     };
     route();
-    refreshParts();
     window.addEventListener("hashchange", route);
-
-    let timer = 0;
-    memo?.addEventListener("input", () => {
-      clearTimeout(timer);
-      status.textContent = "저장하는 중…";
-      const sec = current;
-      timer = setTimeout(() => {
-        const notes = loadMap(NOTES);
-        if (memo.value.trim()) notes[noteKey(sec)] = memo.value;
-        else delete notes[noteKey(sec)];
-        saveMap(NOTES, notes);
-        status.textContent = "저장했어요. 이 브라우저에만 남습니다";
-        refreshParts();
-      }, 400);
-    });
     window.addEventListener("storage", (e) => {
       if (e.key !== NOTES) return;
-      if (memo && document.activeElement !== memo) memo.value = loadMap(NOTES)[noteKey(current)] ?? "";
+      if (memo && current && !dirty) memo.setContent(asHtml(loadMap(NOTES)[noteKey(current)]));
       refreshParts();
     });
   }
 
   // 내 메모: 장 순서대로 모아 보여 줍니다. 메모 글자는 textContent로만 넣습니다
+  // 저장된 메모 HTML에서 편집기가 만드는 태그만 남깁니다
+  const ALLOWED = new Set(["P", "BR", "H1", "H2", "H3", "UL", "OL", "LI", "STRONG", "EM", "S", "CODE", "PRE", "BLOCKQUOTE", "HR", "A", "LABEL", "INPUT", "DIV", "SPAN", "U"]);
+  function clean(html) {
+    const src = new DOMParser().parseFromString(html, "text/html").body;
+    const frag = document.createDocumentFragment();
+    const walk = (from, to) => {
+      for (const node of from.childNodes) {
+        if (node.nodeType === 3) to.append(node.textContent);
+        else if (node.nodeType === 1 && ALLOWED.has(node.tagName)) {
+          const copy = document.createElement(node.tagName.toLowerCase());
+          if (node.tagName === "A" && /^https?:/i.test(node.getAttribute("href") ?? "")) {
+            copy.href = node.getAttribute("href");
+            copy.rel = "noopener";
+          }
+          if (node.tagName === "INPUT") {
+            if (node.getAttribute("type") !== "checkbox") continue;
+            copy.type = "checkbox";
+            copy.disabled = true;
+            copy.checked = node.hasAttribute("checked");
+          }
+          for (const attr of ["data-type", "data-checked"]) if (node.hasAttribute(attr)) copy.setAttribute(attr, node.getAttribute(attr));
+          walk(node, copy);
+          to.append(copy);
+        } else if (node.nodeType === 1) walk(node, to);
+      }
+    };
+    walk(src, frag);
+    return frag;
+  }
+
   const notesBox = document.querySelector("[data-notes]");
   const bookMap = document.getElementById("book-map");
   if (notesBox && bookMap) {
@@ -349,13 +456,29 @@
         const item = el("div", "note");
         const link = el("a", "note-part", p.title);
         link.href = `/${ch.slug}/#part-${encodeURIComponent(p.id)}`;
-        item.append(link, el("p", "note-text", notes[`${ch.slug}:${p.id}`]));
+        const body = el("div", "note-text prose");
+        body.append(clean(asHtml(notes[`${ch.slug}:${p.id}`])));
+        item.append(link, body);
         box.append(item);
         count++;
       }
       frag.append(box);
     }
     if (count) notesBox.replaceChildren(frag);
+  }
+
+  // 글꼴 고르기 (블로그와 같은 목록)
+  const fontPick = document.querySelector("[data-font-pick]");
+  if (fontPick instanceof HTMLSelectElement) {
+    fontPick.value = document.documentElement.dataset.font || "pretendard";
+    fontPick.addEventListener("change", () => {
+      window.__applyFont?.(fontPick.value);
+      try {
+        localStorage.setItem("mlnl-cs:font", fontPick.value);
+      } catch {
+        // 저장이 막혀 있으면 이번 페이지에만 적용됩니다
+      }
+    });
   }
 
   // 용어 사전: 입력한 글자가 용어나 뜻에 들어 있는 줄만 남깁니다
