@@ -200,6 +200,7 @@ for (const el of items) el.style.width = `${half}px`;
 - 첫 화면에 필요한 CSS는 작게(12장의 14KB), 나머지 스크립트는 `defer`로.
 - 움직임은 `transform`과 `opacity`로, 위치를 읽는 코드와 쓰는 코드는 묶어서.
 - DevTools의 Performance 패널은 이 장의 그림을 실제 시간 막대로 보여 줍니다.
+- 이 장의 단계는 어느 브라우저에나 있지만, 그 일을 하는 렌더링 엔진은 다릅니다. Chrome과 Edge는 Blink, Safari는 WebKit, Firefox는 Gecko입니다. 같은 CSS도 엔진마다 조금 다르게 그려지거나 지원 시기가 달라서, 여러 브라우저에서 같은 화면이 나오게 맞추는 일을 크로스 브라우징이라고 합니다. iPhone의 브라우저는 이름이 Chrome이어도 속은 WebKit입니다.
 
 ## 용어 정리
 
