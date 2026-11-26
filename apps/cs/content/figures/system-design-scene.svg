@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">지금: 서버 한 대</text>
+  <rect class="bx-dash" x="0" y="26" width="330" height="226" rx="10"/>
+  <g class="bx"><rect x="14" y="38" width="302" height="32" rx="6"/><rect x="14" y="78" width="302" height="32" rx="6"/></g>
+  <rect class="bx-ink" x="14" y="118" width="302" height="48" rx="6"/>
+  <rect class="bx-ink" x="14" y="174" width="302" height="48" rx="6"/>
+  <text x="26" y="59">Caddy</text><text x="26" y="99">mlnl-blog · Next.js 한 개</text>
+  <text class="tx-inv" x="26" y="138" font-weight="700">mlnl-api · Node 프로세스 하나</text>
+  <text class="tx-inv tx-s" x="26" y="156">요청 수 계수기는 이 프로세스 메모리의 Map</text>
+  <text class="tx-inv" x="26" y="194" font-weight="700">SQLite 파일 하나</text>
+  <text class="tx-inv tx-s" x="26" y="212">이 서버의 볼륨에만 있음, 쓰기는 한 번에 하나</text>
+  <text class="tx-s" x="14" y="244">VM이 죽으면 전부 멈춤: 단일 장애 지점</text>
+
+  <line class="ln-ink" x1="338" y1="140" x2="382" y2="140" marker-end="url(#a)"/>
+  <text class="tx-l" x="360" y="132" text-anchor="middle">1000배</text>
+
+  <text class="tx-b" x="390" y="16">1000배가 되면</text>
+  <rect class="bx" x="390" y="26" width="330" height="32" rx="6"/><text x="402" y="47">로드 밸런서 (둘 이상)</text>
+  <g class="bx"><rect x="390" y="70" width="102" height="40" rx="6"/><rect x="504" y="70" width="102" height="40" rx="6"/><rect x="618" y="70" width="102" height="40" rx="6"/></g>
+  <g text-anchor="middle"><text x="441" y="95">API</text><text x="555" y="95">API</text><text x="669" y="95">API</text></g>
+  <text class="tx-s" x="390" y="128">상태를 품지 않은 앱 서버 여러 대</text>
+  <g class="bx-ink"><rect x="390" y="138" width="158" height="48" rx="6"/><rect x="562" y="138" width="158" height="48" rx="6"/></g>
+  <text class="tx-inv" x="402" y="158" font-weight="700">Redis</text><text class="tx-inv tx-s" x="402" y="176">함께 세는 계수기</text>
+  <text class="tx-inv" x="574" y="158" font-weight="700">공유 DB 서버</text><text class="tx-inv tx-s" x="574" y="176">주 서버 + 복제본</text>
+  <rect class="bx" x="390" y="196" width="330" height="32" rx="6"/><text x="402" y="217">이미지: 오브젝트 스토리지 + CDN</text>
+  <text class="tx-s" x="390" y="252">관리자 쿠키는 서명만 확인하니 그대로 둬도 됨</text>
+</svg>

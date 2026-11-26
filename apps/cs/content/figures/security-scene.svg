@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 276">
+<defs><marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker></defs>
+<text class="tx-l" x="0" y="14">공격하는 쪽</text><text class="tx-l" x="290" y="14">블로그 API가 막는 것</text>
+<rect class="bx-dash" x="0" y="24" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="46">DB 파일을 통째로 가져감</text>
+<line class="ln" x1="250" y1="41" x2="286" y2="41" marker-end="url(#m)"/>
+<rect class="bx-ink" x="290" y="24" width="430" height="34" rx="6"/><text class="tx-s tx-inv" x="302" y="46">scrypt와 사용자마다 다른 솔트로 해시: 되돌릴 수 없고 일부러 느림</text>
+<rect class="bx-dash" x="0" y="66" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="88">관리자 비밀번호를 수천 번 넣어 봄</text>
+<line class="ln" x1="250" y1="83" x2="286" y2="83" marker-end="url(#m)"/>
+<rect class="bx" x="290" y="66" width="430" height="34" rx="6"/><text class="tx-s" x="302" y="88">로그인은 IP마다 15분에 8번까지 (RateLimiter)</text>
+<rect class="bx-dash" x="0" y="108" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="130">관리자 쿠키를 훔치거나 고쳐 씀</text>
+<line class="ln" x1="250" y1="125" x2="286" y2="125" marker-end="url(#m)"/>
+<rect class="bx" x="290" y="108" width="430" height="34" rx="6"/><text class="tx-s" x="302" y="130">HttpOnly, Secure, SameSite=Lax, HMAC 서명 쿠키</text>
+<rect class="bx-dash" x="0" y="150" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="172">다른 사이트에서 몰래 POST</text>
+<line class="ln" x1="250" y1="167" x2="286" y2="167" marker-end="url(#m)"/>
+<rect class="bx" x="290" y="150" width="430" height="34" rx="6"/><text class="tx-s" x="302" y="172">SameSite=Lax 쿠키, Origin이 허락 목록 밖이면 403</text>
+<rect class="bx-dash" x="0" y="192" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="214">이미지라며 HTML 파일을 올림</text>
+<line class="ln" x1="250" y1="209" x2="286" y2="209" marker-end="url(#m)"/>
+<rect class="bx" x="290" y="192" width="430" height="34" rx="6"/><text class="tx-s" x="302" y="214">파일 앞 바이트(1장의 매직 넘버)로 진짜 이미지인지 확인</text>
+<rect class="bx-dash" x="0" y="234" width="250" height="34" rx="6"/><text class="tx-s" x="12" y="256">본문에 &lt;script&gt;를 넣음</text>
+<line class="ln" x1="250" y1="251" x2="286" y2="251" marker-end="url(#m)"/>
+<rect class="bx" x="290" y="234" width="430" height="34" rx="6"/><text class="tx-s" x="302" y="256">출력할 때 이스케이프해 글자로만 보이게</text>
+</svg>

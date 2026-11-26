@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 176">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-b" x="0" y="16">일관성을 고르면</text>
+    <rect class="bx" x="0" y="64" width="120" height="40" rx="6"/><rect class="bx-ink" x="210" y="64" width="120" height="40" rx="6"/>
+    <text x="60" y="89" text-anchor="middle">서버 A</text><text class="tx-inv" x="270" y="89" text-anchor="middle">B: 거절</text>
+    <line class="ln ln-dash" x1="120" y1="84" x2="210" y2="84"/><text class="tx-b" x="165" y="89" text-anchor="middle">✕</text>
+    <text class="tx-l" x="165" y="122" text-anchor="middle">네트워크 끊김</text>
+    <line class="ln" x1="60" y1="30" x2="60" y2="60" marker-end="url(#m)"/><line class="ln" x1="270" y1="30" x2="270" y2="60" marker-end="url(#m)"/>
+    <g class="tx-m"><text x="70" y="44">x = 1</text><text x="280" y="44">x = 2</text></g>
+    <g class="tx-s"><text x="0" y="150">B는 A와 확인할 수 없으니 쓰기를 거절합니다.</text><text x="0" y="166">틀린 값은 없지만 그동안 일부가 멈춥니다</text></g>
+  <line class="ln-faint" x1="360" y1="0" x2="360" y2="176"/>
+  <g transform="translate(390 0)">
+  <text class="tx-b" x="0" y="16">가용성을 고르면</text>
+    <rect class="bx" x="0" y="64" width="120" height="40" rx="6"/><rect class="bx" x="210" y="64" width="120" height="40" rx="6"/>
+    <text x="60" y="89" text-anchor="middle">서버 A</text><text class="" x="270" y="89" text-anchor="middle">B: 받음</text>
+    <line class="ln ln-dash" x1="120" y1="84" x2="210" y2="84"/><text class="tx-b" x="165" y="89" text-anchor="middle">✕</text>
+    <text class="tx-l" x="165" y="122" text-anchor="middle">네트워크 끊김</text>
+    <line class="ln" x1="60" y1="30" x2="60" y2="60" marker-end="url(#m)"/><line class="ln" x1="270" y1="30" x2="270" y2="60" marker-end="url(#m)"/>
+    <g class="tx-m"><text x="70" y="44">x = 1</text><text x="280" y="44">x = 2</text></g>
+    <g class="tx-s"><text x="0" y="150">둘 다 받아 처리합니다. 서비스는 계속되지만</text><text x="0" y="166">잠시 A는 1, B는 2이고 나중에 합쳐야 합니다</text></g>
+  </g>
+</svg>
