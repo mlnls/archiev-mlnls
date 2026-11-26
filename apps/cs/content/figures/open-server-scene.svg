@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 284">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <rect class="bx-dash" x="0" y="24" width="520" height="252" rx="12"/>
+  <text class="tx-l" x="14" y="44">집 네트워크 · 셋째 겹: 공유기 NAT</text>
+  <rect class="bx" x="16" y="56" width="316" height="206" rx="10"/>
+  <text class="tx-l" x="30" y="76">노트북 · 둘째 겹: 운영체제 방화벽</text>
+  <rect class="bx-soft" x="32" y="88" width="284" height="160" rx="8"/>
+  <text class="tx-l" x="46" y="108">첫째 겹: 바인드 주소</text>
+  <rect class="bx-ink" x="48" y="150" width="120" height="76" rx="8"/>
+  <text class="tx-inv" x="108" y="182" text-anchor="middle" font-weight="700">개발 서버</text>
+  <text class="tx-inv tx-m" x="108" y="202" text-anchor="middle">:3000</text>
+  <rect class="bx" x="186" y="104" width="118" height="38" rx="6"/>
+  <text x="245" y="128" text-anchor="middle">브라우저</text>
+  <line class="ln" x1="200" y1="142" x2="164" y2="152" marker-end="url(#m)"/>
+
+  <rect class="bx" x="360" y="150" width="140" height="40" rx="6"/>
+  <text x="372" y="168">휴대폰</text><text class="tx-s" x="372" y="183">같은 Wi-Fi</text>
+  <line class="ln" x1="360" y1="172" x2="172" y2="172" marker-end="url(#m)"/>
+
+  <rect class="bx" x="560" y="196" width="160" height="40" rx="6"/>
+  <text x="572" y="214">인터넷의 친구</text><text class="tx-s" x="572" y="229">포트 포워딩이나 터널</text>
+  <line class="ln-ink" x1="560" y1="206" x2="172" y2="206" marker-end="url(#a)"/>
+
+  <g class="tx-s">
+    <text x="0" y="14">바깥 사람일수록 지나야 하는 겹이 늘어납니다</text>
+    <text x="548" y="60">클라우드 서버에는</text>
+    <text x="548" y="76">셋째 겹(NAT)이 없습니다.</text>
+    <text x="548" y="92">공인 고정 IP가 붙어 있어</text>
+    <text x="548" y="108">클라우드 방화벽만 열면</text>
+    <text x="548" y="124">누구나 들어옵니다</text>
+  </g>
+</svg>

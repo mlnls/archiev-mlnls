@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 324">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 L9 5 L0 9 z"/></marker>
+  </defs>
+  <text class="tx-l" x="0" y="40">인터넷에서</text>
+  <rect class="bx-dash" x="110" y="0" width="610" height="324" rx="10"/>
+  <text class="tx-l" x="124" y="16">AWS 데이터센터의 물리 서버 · 하이퍼바이저(KVM)</text>
+  <rect class="bx" x="124" y="26" width="582" height="290" rx="8"/>
+  <text class="tx-b" x="138" y="46">Lightsail 가상 머신</text>
+  <text class="tx-s" x="270" y="46">Ubuntu 24.04 · 네트워크 카드는 172.26.x.x</text>
+
+  <rect class="bx" x="140" y="60" width="150" height="40" rx="6"/>
+  <text x="152" y="78">sshd :22</text>
+  <text class="tx-s" x="152" y="93">systemd가 띄운 데몬</text>
+  <text class="tx-s" x="306" y="85">관리자 키와 배포 전용 키만 들어옴</text>
+
+  <rect class="bx-soft" x="140" y="112" width="552" height="152" rx="8"/>
+  <text class="tx-l" x="152" y="130">dockerd: 컨테이너를 띄우고, 죽으면 다시 띄움</text>
+  <rect class="bx-ink" x="152" y="146" width="150" height="52" rx="6"/>
+  <text class="tx-inv" x="164" y="168" font-weight="700">Caddy</text>
+  <text class="tx-inv tx-s" x="164" y="186">:80, :443만 바깥에 열림</text>
+  <rect class="bx-dash" x="330" y="140" width="350" height="116" rx="8"/>
+  <text class="tx-l" x="342" y="156">Docker 네트워크 edge · 바깥에서 안 보임</text>
+  <rect class="bx-ink" x="342" y="166" width="160" height="30" rx="5"/>
+  <g class="bx"><rect x="510" y="166" width="160" height="30" rx="5"/><rect x="342" y="202" width="160" height="30" rx="5"/><rect x="510" y="202" width="160" height="30" rx="5"/></g>
+  <text class="tx-inv" x="354" y="186" font-weight="700">mlnl-cs · nginx</text>
+  <g class="tx-s"><text x="522" y="186">mlnl-blog · Node</text><text x="354" y="222">mlnl-api · Node</text><text x="522" y="222">mlnl-cv · nginx</text></g>
+  <text class="tx-s" x="342" y="250">그 밖에 employ, archive · 컨테이너마다 mem_limit</text>
+  <line class="ln-ink" x1="302" y1="174" x2="338" y2="180" marker-end="url(#a)"/>
+
+  <rect class="bx" x="140" y="274" width="552" height="32" rx="6"/>
+  <text class="tx-s" x="152" y="294">Linux 커널 하나: 네임스페이스와 cgroups로 컨테이너들을 서로 나눔</text>
+
+  <g class="tx-s"><text x="0" y="74">SSH :22</text><text x="0" y="164">HTTPS :443</text></g>
+  <line class="ln" x1="0" y1="80" x2="136" y2="80" marker-end="url(#m)"/>
+  <line class="ln-ink" x1="0" y1="172" x2="148" y2="172" marker-end="url(#a)"/>
+</svg>
